@@ -60,6 +60,20 @@
         backdrop-filter: blur(18px);
       }
 
+      /* DataTables Custom Overrides */
+      .datatable-wrapper .datatable-container {
+        overflow-x: auto;
+      }
+
+      .datatable-bottom {
+        padding: 1.25rem 1.5rem;
+        border-top: 1px solid rgb(226 232 240);
+      }
+
+      .datatable-info {
+        color: rgb(71 85 105); /* slate-600 */
+      }
+
       .datatable-input,
       .datatable-selector {
         border-radius: 0.875rem !important;
@@ -116,108 +130,100 @@
       <section
         class="backdrop-card overflow-hidden rounded-3xl border border-white/70 shadow-soft ring-1 ring-slate-200/60"
       >
-        <div class="overflow-x-auto">
-          <table
-            id="inventory-table"
-            class="min-w-[1200px] w-full text-left text-sm text-slate-700"
+        <table
+          id="inventory-table"
+          class="min-w-[1200px] w-full text-left text-sm text-slate-700"
+        >
+          <thead
+            class="bg-slate-50 text-xs uppercase tracking-[0.18em] text-slate-500"
           >
-            <thead
-              class="bg-slate-50 text-xs uppercase tracking-[0.18em] text-slate-500"
-            >
-              <tr>
-                <th scope="col" class="px-6 py-4 font-semibold">No.</th>
-                <th scope="col" class="px-6 py-4 font-semibold">Item</th>
-                <th scope="col" class="px-6 py-4 font-semibold">Description</th>
-                <th scope="col" class="px-6 py-4 font-semibold">Brand</th>
-                <th scope="col" class="px-6 py-4 font-semibold">Model</th>
-                <th scope="col" class="px-6 py-4 font-semibold">
-                  Serial Number
-                </th>
-                <th scope="col" class="px-6 py-4 font-semibold">Quantity</th>
-                <th scope="col" class="px-6 py-4 font-semibold">
-                  Inventory Date
-                </th>
-                <th scope="col" class="px-6 py-4 font-semibold">
-                  Disposal Date
-                </th>
-                <th scope="col" class="px-6 py-4 font-semibold">Location</th>
-                <th scope="col" class="px-6 py-4 font-semibold">Status</th>
-                <th scope="col" class="px-6 py-4 font-semibold">
-                  Defect Description
-                </th>
-              </tr>
-            </thead>
-            <tbody class="divide-y divide-slate-200 bg-white">
-              {% for item in inventory_items %}
-              <tr class="transition-colors hover:bg-slate-50/80">
-                <td class="px-6 py-4 align-top font-semibold text-slate-900">
-                  {{ forloop.counter }}
-                </td>
-                <td class="px-6 py-4 align-top">
-                  <div class="text-base font-semibold text-slate-900">
-                    {{ item.item_type }}
-                  </div>
-                </td>
-                <td class="px-6 py-4 align-top leading-6 text-slate-600">
-                  {{ item.item_description }}
-                </td>
-                <td class="px-6 py-4 align-top font-medium text-slate-800">
-                  {{ item.brand }}
-                </td>
-                <td class="px-6 py-4 align-top font-medium text-slate-800">
-                  {{ item.model }}
-                </td>
-                <td
-                  class="px-6 py-4 align-top font-mono text-sm text-slate-700"
+            <tr>
+              <th scope="col" class="px-6 py-4 font-semibold">No.</th>
+              <th scope="col" class="px-6 py-4 font-semibold">Item</th>
+              <th scope="col" class="px-6 py-4 font-semibold">Description</th>
+              <th scope="col" class="px-6 py-4 font-semibold">Brand</th>
+              <th scope="col" class="px-6 py-4 font-semibold">Model</th>
+              <th scope="col" class="px-6 py-4 font-semibold">Serial Number</th>
+              <th scope="col" class="px-6 py-4 font-semibold">Quantity</th>
+              <th scope="col" class="px-6 py-4 font-semibold">
+                Inventory Date
+              </th>
+              <th scope="col" class="px-6 py-4 font-semibold">Disposal Date</th>
+              <th scope="col" class="px-6 py-4 font-semibold">Location</th>
+              <th scope="col" class="px-6 py-4 font-semibold">Status</th>
+              <th scope="col" class="px-6 py-4 font-semibold">
+                Defect Description
+              </th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-200 bg-white">
+            {% for item in inventory_items %}
+            <tr class="transition-colors hover:bg-slate-50/80">
+              <td class="px-6 py-4 align-top font-semibold text-slate-900">
+                {{ forloop.counter }}
+              </td>
+              <td class="px-6 py-4 align-top">
+                <div class="text-base font-semibold text-slate-900">
+                  {{ item.item_type }}
+                </div>
+              </td>
+              <td class="px-6 py-4 align-top leading-6 text-slate-600">
+                {{ item.item_description }}
+              </td>
+              <td class="px-6 py-4 align-top font-medium text-slate-800">
+                {{ item.brand }}
+              </td>
+              <td class="px-6 py-4 align-top font-medium text-slate-800">
+                {{ item.model }}
+              </td>
+              <td class="px-6 py-4 align-top font-mono text-sm text-slate-700">
+                {{ item.serial_number }}
+              </td>
+              <td class="px-6 py-4 align-top font-semibold text-slate-900">
+                {{ item.quantity }}
+              </td>
+              <td class="px-6 py-4 align-top text-slate-700">
+                {{ item.date_inventory|date:"M d, Y" }}
+              </td>
+              <td class="px-6 py-4 align-top text-slate-700">
+                {{ item.date_disposal|date:"M d, Y"|default:"-" }}
+              </td>
+              <td class="px-6 py-4 align-top text-slate-700">
+                {{ item.location }}
+              </td>
+              <td class="px-6 py-4 align-top">
+                {% if item.status == 'available' %}
+                <span
+                  class="inline-flex items-center rounded-full bg-emerald-100 px-3 py-1.5 text-xs font-semibold text-emerald-800 ring-1 ring-emerald-200"
+                  >{{ item.get_status_display }}</span
                 >
-                  {{ item.serial_number }}
-                </td>
-                <td class="px-6 py-4 align-top font-semibold text-slate-900">
-                  {{ item.quantity }}
-                </td>
-                <td class="px-6 py-4 align-top text-slate-700">
-                  {{ item.date_inventory|date:"M d, Y" }}
-                </td>
-                <td class="px-6 py-4 align-top text-slate-700">
-                  {{ item.date_disposal|date:"M d, Y"|default:"-" }}
-                </td>
-                <td class="px-6 py-4 align-top text-slate-700">
-                  {{ item.location }}
-                </td>
-                <td class="px-6 py-4 align-top">
-                  {% if item.status == 'available' %}
-                  <span
-                    class="inline-flex items-center rounded-full bg-emerald-100 px-3 py-1.5 text-xs font-semibold text-emerald-800 ring-1 ring-emerald-200"
-                    >{{ item.get_status_display }}</span
-                  >
-                  {% elif item.status == 'in_use' %}
-                  <span
-                    class="inline-flex items-center rounded-full bg-sky-100 px-3 py-1.5 text-xs font-semibold text-sky-800 ring-1 ring-sky-200"
-                    >{{ item.get_status_display }}</span
-                  >
-                  {% elif item.status == 'repair' %}
-                  <span
-                    class="inline-flex items-center rounded-full bg-amber-100 px-3 py-1.5 text-xs font-semibold text-amber-800 ring-1 ring-amber-200"
-                    >{{ item.get_status_display }}</span
-                  >
-                  {% else %}
-                  <span
-                    class="inline-flex items-center rounded-full bg-rose-100 px-3 py-1.5 text-xs font-semibold text-rose-800 ring-1 ring-rose-200"
-                    >{{ item.get_status_display }}</span
-                  >
-                  {% endif %}
-                </td>
-                <td class="px-6 py-4 align-top leading-6 text-slate-600">
-                  {% if item.defect_description %} {{ item.defect_description }}
-                  {% else %}
-                  <span class="text-slate-400">No defect reported</span>
-                  {% endif %}
-                </td>
-              </tr>
-              {% endfor %}
-            </tbody>
-          </table>
-        </div>
+                {% elif item.status == 'in_use' %}
+                <span
+                  class="inline-flex items-center rounded-full bg-sky-100 px-3 py-1.5 text-xs font-semibold text-sky-800 ring-1 ring-sky-200"
+                  >{{ item.get_status_display }}</span
+                >
+                {% elif item.status == 'repair' %}
+                <span
+                  class="inline-flex items-center rounded-full bg-amber-100 px-3 py-1.5 text-xs font-semibold text-amber-800 ring-1 ring-amber-200"
+                  >{{ item.get_status_display }}</span
+                >
+                {% else %}
+                <span
+                  class="inline-flex items-center rounded-full bg-rose-100 px-3 py-1.5 text-xs font-semibold text-rose-800 ring-1 ring-rose-200"
+                  >{{ item.get_status_display }}</span
+                >
+                {% endif %}
+              </td>
+              <td class="px-6 py-4 align-top leading-6 text-slate-600">
+                {% if item.defect_description %} {{ item.defect_description }}
+                {% else %}
+                <span class="text-slate-400">No defect reported</span>
+                {% endif %}
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
       </section>
       {% else %}
       <section
