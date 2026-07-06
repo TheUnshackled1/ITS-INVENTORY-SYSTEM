@@ -33,6 +33,10 @@
       };
     </script>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/simple-datatables@9.0.3/dist/style.css"
+    />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -62,7 +66,22 @@
 
       /* DataTables Custom Overrides */
       .datatable-wrapper .datatable-container {
-        overflow-x: auto;
+        overflow-x: hidden;
+      }
+
+      #inventory-table {
+        table-layout: auto;
+      }
+
+      #inventory-table th,
+      #inventory-table td {
+        white-space: normal;
+        word-break: break-word;
+        vertical-align: top;
+      }
+
+      #inventory-table td {
+        line-height: 1.45;
       }
       .datatable-bottom {
         padding: 1.25rem 1.5rem;
@@ -127,7 +146,7 @@
                 type="file"
                 name="excel_file"
                 id="excel-upload-header"
-                accept=".xlsx, .xls, .csv"
+                accept=".xlsx, .csv"
                 class="hidden"
                 onchange="this.form.submit()"
               />
@@ -166,7 +185,7 @@
       >
         <table
           id="inventory-table"
-          class="w-full text-left text-sm text-slate-700 whitespace-nowrap"
+          class="w-full text-left text-sm text-slate-700"
         >
           <thead
             class="bg-slate-50 text-xs uppercase tracking-[0.18em] text-slate-500"
@@ -194,28 +213,26 @@
               </td>
               <td class="px-3 py-3 align-middle">
                 <div class="text-sm font-semibold text-slate-900">
-                  {{ item.item_type }}
+                  {% firstof item.item_type "-" %}
                 </div>
               </td>
               <td
-                class="px-3 py-3 align-middle text-slate-600 truncate max-w-[150px]"
+                class="px-3 py-3 align-middle text-slate-600"
                 title="{{ item.item_description }}"
               >
-                {{ item.item_description }}
+                {% firstof item.item_description "-" %}
               </td>
               <td class="px-3 py-3 align-middle font-medium text-slate-800">
-                {{ item.brand }}
+                {% firstof item.brand "-" %}
               </td>
               <td class="px-3 py-3 align-middle font-medium text-slate-800">
-                {{ item.model }}
+                {% firstof item.model "-" %}
               </td>
-              <td
-                class="px-3 py-3 align-middle font-mono text-xs text-slate-700"
-              >
-                {{ item.serial_number }}
+              <td class="px-3 py-3 align-middle font-mono text-xs text-slate-700">
+                {% firstof item.serial_number "-" %}
               </td>
               <td class="px-3 py-3 align-middle font-semibold text-slate-900">
-                {{ item.quantity }}
+                {% firstof item.quantity "-" %}
               </td>
               <td class="px-3 py-3 align-middle text-slate-700">
                 {{ item.date_inventory|date:"M d, Y" }}
@@ -224,7 +241,7 @@
                 {{ item.date_disposal|date:"M d, Y"|default:"-" }}
               </td>
               <td class="px-3 py-3 align-middle text-slate-700">
-                {{ item.location }}
+                {% firstof item.location "-" %}
               </td>
               <td class="px-3 py-3 align-middle">
                 {% if item.status == 'available' %}
@@ -250,12 +267,12 @@
                 {% endif %}
               </td>
               <td
-                class="px-3 py-3 align-middle text-slate-600 truncate max-w-[150px]"
+                class="px-3 py-3 align-middle text-slate-600"
                 title="{{ item.defect_description }}"
               >
                 {% if item.defect_description %} {{ item.defect_description }}
                 {% else %}
-                <span class="text-slate-400">No defect reported</span>
+                <span class="text-slate-400">-</span>
                 {% endif %}
               </td>
             </tr>
@@ -293,7 +310,7 @@
                 type="file"
                 name="excel_file"
                 id="excel-upload-empty"
-                accept=".xlsx, .xls, .csv"
+                accept=".xlsx, .csv"
                 class="hidden"
                 onchange="this.form.submit()"
               />
@@ -327,7 +344,7 @@
           new simpleDatatables.DataTable(table, {
             searchable: false,
             fixedHeight: true,
-            perPage: 10,
+            perPage: 50,
             perPageSelect: false,
           });
         }
