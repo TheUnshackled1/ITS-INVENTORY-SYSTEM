@@ -1,0 +1,306 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Inventory Interface</title>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              brand: {
+                50: "#eefaf8",
+                100: "#d7f3ed",
+                200: "#b0e6da",
+                300: "#7fd4c1",
+                400: "#47bfa5",
+                500: "#219a83",
+                600: "#177865",
+                700: "#155f53",
+                800: "#154d45",
+                900: "#123f3a",
+              },
+            },
+            boxShadow: {
+              soft: "0 20px 50px rgba(15, 23, 42, 0.12)",
+            },
+            fontFamily: {
+              sans: ["Inter", "Segoe UI", "system-ui", "sans-serif"],
+            },
+          },
+        },
+      };
+    </script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        background:
+          radial-gradient(
+            circle at top left,
+            rgba(33, 154, 131, 0.2),
+            transparent 26%
+          ),
+          radial-gradient(
+            circle at top right,
+            rgba(59, 130, 246, 0.16),
+            transparent 22%
+          ),
+          linear-gradient(180deg, #f8fafc 0%, #eff6f8 100%);
+      }
+
+      .backdrop-card {
+        background: rgba(255, 255, 255, 0.82);
+        backdrop-filter: blur(18px);
+      }
+
+      .datatable-input,
+      .datatable-selector {
+        border-radius: 0.875rem !important;
+        border: 1px solid rgb(226 232 240) !important;
+        background-color: rgb(255 255 255 / 0.95) !important;
+        color: rgb(15 23 42) !important;
+        padding: 0.75rem 0.9rem !important;
+        box-shadow: 0 10px 24px rgba(15, 23, 42, 0.06);
+      }
+
+      .datatable-input {
+        min-width: min(24rem, 100%);
+      }
+
+      .datatable-pagination a {
+        border-radius: 0.75rem;
+      }
+
+      .datatable-pagination .active a {
+        background: rgb(33 154 131) !important;
+        color: #fff !important;
+      }
+    </style>
+  </head>
+  <body class="min-h-screen font-sans text-slate-900 antialiased">
+    <main
+      class="mx-auto flex w-full max-w-7xl flex-col gap-6 px-4 py-6 sm:px-6 lg:px-8 lg:py-8"
+    >
+      <section
+        class="backdrop-card overflow-hidden rounded-3xl border border-white/70 shadow-soft ring-1 ring-slate-200/60"
+      >
+        <div class="grid gap-6 p-6 lg:grid-cols-[1.5fr_0.9fr] lg:p-8">
+          <div class="space-y-5">
+            <div
+              class="inline-flex items-center gap-2 rounded-full border border-brand-100 bg-brand-50 px-4 py-2 text-xs font-semibold uppercase tracking-[0.22em] text-brand-700"
+            >
+              <span class="h-2 w-2 rounded-full bg-brand-500"></span>
+              Inventory Interface
+            </div>
+            <div class="space-y-3">
+              <h1
+                class="max-w-3xl text-3xl font-extrabold leading-tight tracking-tight text-slate-900 sm:text-4xl lg:text-5xl"
+              >
+                Asset tracking that feels fast, structured, and easy to scan.
+              </h1>
+              <p
+                class="max-w-3xl text-base leading-7 text-slate-600 sm:text-lg"
+              >
+                Review the inventory catalogue, search across records, and
+                inspect item status, location, and condition from a single
+                workspace.
+              </p>
+            </div>
+            <div class="flex flex-wrap gap-3">
+              <span
+                class="inline-flex items-center rounded-full bg-slate-900 px-4 py-2 text-sm font-medium text-white shadow-sm"
+                >Django rendering</span
+              >
+              <span
+                class="inline-flex items-center rounded-full bg-brand-100 px-4 py-2 text-sm font-medium text-brand-800"
+                >Flowbite-style UI</span
+              >
+              <span
+                class="inline-flex items-center rounded-full bg-emerald-100 px-4 py-2 text-sm font-medium text-emerald-800"
+                >Simple-DataTables</span
+              >
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {% if inventory_items %}
+      <section
+        class="backdrop-card overflow-hidden rounded-3xl border border-white/70 shadow-soft ring-1 ring-slate-200/60"
+      >
+        <div
+          class="flex flex-col gap-4 border-b border-slate-200/80 px-6 py-5 sm:flex-row sm:items-end sm:justify-between lg:px-8"
+        >
+          <div class="flex flex-wrap items-center gap-3">
+            <a
+              href="/admin/inventory/inventory/add/"
+              class="inline-flex items-center rounded-full bg-brand-600 px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-brand-700"
+              >Add record</a
+            >
+            <div
+              class="inline-flex items-center gap-2 rounded-full bg-brand-50 px-4 py-2 text-sm font-medium text-brand-800 ring-1 ring-brand-100"
+            >
+              Sorted by item type and serial number
+            </div>
+          </div>
+        </div>
+
+        <div class="overflow-x-auto">
+          <table
+            id="inventory-table"
+            class="min-w-[1200px] w-full text-left text-sm text-slate-700"
+          >
+            <thead
+              class="bg-slate-50 text-xs uppercase tracking-[0.18em] text-slate-500"
+            >
+              <tr>
+                <th scope="col" class="px-6 py-4 font-semibold">Item</th>
+                <th scope="col" class="px-6 py-4 font-semibold">Description</th>
+                <th scope="col" class="px-6 py-4 font-semibold">Brand</th>
+                <th scope="col" class="px-6 py-4 font-semibold">Model</th>
+                <th scope="col" class="px-6 py-4 font-semibold">
+                  Serial Number
+                </th>
+                <th scope="col" class="px-6 py-4 font-semibold">Quantity</th>
+                <th scope="col" class="px-6 py-4 font-semibold">
+                  Inventory Date
+                </th>
+                <th scope="col" class="px-6 py-4 font-semibold">
+                  Disposal Date
+                </th>
+                <th scope="col" class="px-6 py-4 font-semibold">Location</th>
+                <th scope="col" class="px-6 py-4 font-semibold">Status</th>
+                <th scope="col" class="px-6 py-4 font-semibold">
+                  Defect Description
+                </th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-200 bg-white">
+              {% for item in inventory_items %}
+              <tr class="transition-colors hover:bg-slate-50/80">
+                <td class="px-6 py-4 align-top">
+                  <div class="space-y-1">
+                    <div class="text-base font-semibold text-slate-900">
+                      {{ item.item_type }}
+                    </div>
+                    <div
+                      class="text-xs font-medium uppercase tracking-[0.18em] text-slate-500"
+                    >
+                      Record {{ forloop.counter }}
+                    </div>
+                  </div>
+                </td>
+                <td class="px-6 py-4 align-top leading-6 text-slate-600">
+                  {{ item.item_description }}
+                </td>
+                <td class="px-6 py-4 align-top font-medium text-slate-800">
+                  {{ item.brand }}
+                </td>
+                <td class="px-6 py-4 align-top font-medium text-slate-800">
+                  {{ item.model }}
+                </td>
+                <td
+                  class="px-6 py-4 align-top font-mono text-sm text-slate-700"
+                >
+                  {{ item.serial_number }}
+                </td>
+                <td class="px-6 py-4 align-top font-semibold text-slate-900">
+                  {{ item.quantity }}
+                </td>
+                <td class="px-6 py-4 align-top text-slate-700">
+                  {{ item.date_inventory|date:"M d, Y" }}
+                </td>
+                <td class="px-6 py-4 align-top text-slate-700">
+                  {% if item.date_disposal %} {{ item.date_disposal|date:"M d,
+                  Y" }} {% else %}
+                  <span
+                    class="rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-500"
+                    >-</span
+                  >
+                  {% endif %}
+                </td>
+                <td class="px-6 py-4 align-top text-slate-700">
+                  {{ item.location }}
+                </td>
+                <td class="px-6 py-4 align-top">
+                  {% if item.status == 'available' %}
+                  <span
+                    class="inline-flex items-center rounded-full bg-emerald-100 px-3 py-1.5 text-xs font-semibold text-emerald-800 ring-1 ring-emerald-200"
+                    >{{ item.get_status_display }}</span
+                  >
+                  {% elif item.status == 'in_use' %}
+                  <span
+                    class="inline-flex items-center rounded-full bg-sky-100 px-3 py-1.5 text-xs font-semibold text-sky-800 ring-1 ring-sky-200"
+                    >{{ item.get_status_display }}</span
+                  >
+                  {% elif item.status == 'repair' %}
+                  <span
+                    class="inline-flex items-center rounded-full bg-amber-100 px-3 py-1.5 text-xs font-semibold text-amber-800 ring-1 ring-amber-200"
+                    >{{ item.get_status_display }}</span
+                  >
+                  {% else %}
+                  <span
+                    class="inline-flex items-center rounded-full bg-rose-100 px-3 py-1.5 text-xs font-semibold text-rose-800 ring-1 ring-rose-200"
+                    >{{ item.get_status_display }}</span
+                  >
+                  {% endif %}
+                </td>
+                <td class="px-6 py-4 align-top leading-6 text-slate-600">
+                  {% if item.defect_description %} {{ item.defect_description }}
+                  {% else %}
+                  <span class="text-slate-400">No defect reported</span>
+                  {% endif %}
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </section>
+      {% else %}
+      <section
+        class="backdrop-card rounded-3xl border border-white/70 p-10 text-center shadow-soft ring-1 ring-slate-200/60"
+      >
+        <div class="mx-auto flex max-w-md flex-col items-center gap-3">
+          <div
+            class="flex h-16 w-16 items-center justify-center rounded-2xl bg-brand-50 text-2xl text-brand-700 ring-1 ring-brand-100"
+          >
+            0
+          </div>
+          <h2 class="text-2xl font-bold tracking-tight text-slate-900">
+            No inventory records yet.
+          </h2>
+          <p class="text-base leading-7 text-slate-600">
+            Add items to the Inventory model and they will appear here
+            automatically.
+          </p>
+        </div>
+      </section>
+      {% endif %}
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/simple-datatables@9.0.3"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const table = document.querySelector("#inventory-table");
+
+        if (table && window.simpleDatatables) {
+          new simpleDatatables.DataTable(table, {
+            searchable: true,
+            fixedHeight: true,
+            perPage: 10,
+            perPageSelect: [10, 25, 50, 100],
+          });
+        }
+      });
+    </script>
+  </body>
+</html>
