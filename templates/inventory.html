@@ -84,6 +84,85 @@
         text-align: center;
       }
 
+      #inventory-table th:nth-child(2),
+      #inventory-table td:nth-child(2) {
+        white-space: normal;
+        word-break: break-word;
+        overflow: visible;
+        text-overflow: clip;
+      }
+
+      #inventory-table th:nth-child(3),
+      #inventory-table td:nth-child(3) {
+        white-space: normal;
+        word-break: break-word;
+        overflow: visible;
+        text-overflow: clip;
+        text-align: center;
+      }
+
+      #inventory-table th:nth-child(4),
+      #inventory-table td:nth-child(4) {
+        white-space: normal;
+        word-break: break-word;
+        overflow: visible;
+        text-overflow: clip;
+        text-align: center;
+      }
+
+      #inventory-table td:nth-child(2) {
+        line-height: 1.25;
+      }
+
+      #inventory-table td:nth-child(3) {
+        line-height: 1.25;
+        text-align: center;
+      }
+
+      #inventory-table td:nth-child(4) {
+        line-height: 1.25;
+        text-align: center;
+      }
+
+      #inventory-table th:nth-child(7),
+      #inventory-table td:nth-child(7) {
+        width: 5rem;
+      }
+
+      #inventory-table th:nth-child(8),
+      #inventory-table td:nth-child(8) {
+        width: 9rem;
+      }
+
+      #inventory-table th:nth-child(9),
+      #inventory-table td:nth-child(9) {
+        width: 9rem;
+      }
+
+      #inventory-table th:nth-child(10),
+      #inventory-table td:nth-child(10) {
+        width: 12rem;
+      }
+
+      #inventory-table th:nth-child(11),
+      #inventory-table td:nth-child(11) {
+        width: 9rem;
+      }
+
+      #inventory-table th:nth-child(12),
+      #inventory-table td:nth-child(12) {
+        width: 12rem;
+      }
+
+      #inventory-table td:nth-child(7),
+      #inventory-table td:nth-child(8),
+      #inventory-table td:nth-child(9),
+      #inventory-table td:nth-child(10),
+      #inventory-table td:nth-child(11),
+      #inventory-table td:nth-child(12) {
+        white-space: nowrap;
+      }
+
       #inventory-table td {
         line-height: 1.1;
       }
@@ -196,9 +275,9 @@
           >
             <tr>
               <th scope="col" class="px-2 py-2 font-semibold w-12">No.</th>
-              <th scope="col" class="px-2 py-2 font-semibold w-20">Item</th>
-              <th scope="col" class="px-2 py-2 font-semibold w-[18rem]">Description</th>
-              <th scope="col" class="px-2 py-2 font-semibold w-24">Brand</th>
+              <th scope="col" class="px-2 py-2 font-semibold w-[18rem]">Item</th>
+              <th scope="col" class="px-2 py-2 font-semibold w-[24rem]">Description</th>
+              <th scope="col" class="px-2 py-2 font-semibold w-[14rem]">Brand</th>
               <th scope="col" class="px-2 py-2 font-semibold w-28">Model</th>
               <th scope="col" class="px-2 py-2 font-semibold w-[14rem]">Serial Number</th>
               <th scope="col" class="px-2 py-2 font-semibold w-14">Qty</th>
@@ -218,17 +297,21 @@
               <td class="px-2 py-2 align-middle">
                 <a
                   href="{% url 'inventory-edit' item.pk %}"
-                  class="inline-flex text-xs font-semibold leading-tight text-slate-900 transition hover:text-brand-700 hover:underline"
+                  class="block w-full text-xs font-semibold leading-tight text-slate-900 transition hover:text-brand-700 hover:underline"
                   title="Edit {{ item.item_type }}"
                 >
                   {% firstof item.item_type "-" %}
                 </a>
               </td>
               <td class="px-2 py-2 align-middle text-xs text-slate-600" title="{{ item.item_description }}">
-                {% firstof item.item_description "-" %}
+                <span class="block w-full text-center">
+                  {% firstof item.item_description "-" %}
+                </span>
               </td>
               <td class="px-2 py-2 align-middle text-xs font-medium text-slate-800">
-                {% firstof item.brand "-" %}
+                <span class="block w-full text-center">
+                  {% firstof item.brand "-" %}
+                </span>
               </td>
               <td class="px-2 py-2 align-middle text-xs font-medium text-slate-800">
                 {% firstof item.model "-" %}

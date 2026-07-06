@@ -46,14 +46,53 @@ def add_inventory(request):
 
 def edit_inventory(request, pk):
     inventory_item = get_object_or_404(Inventory, pk=pk)
-
+    optional_fields = {
+        'item_type',
+        'item_description',
+        'brand',
+        'model',
+        'serial_number',
+        'quantity',
+        'date_inventory',
+        'date_disposal',
+        'location',
+        'status',
+        'defect_description',
+    }
     if request.method == 'POST':
         form = InventoryForm(request.POST, instance=inventory_item)
+        for field_name in optional_fields:
+            form.fields[field_name].required = False
         if form.is_valid():
-            form.save()
+            updated_item = form.save(commit=False)
+            if not updated_item.item_type:
+                updated_item.item_type = inventory_item.item_type
+            if not updated_item.item_description:
+                updated_item.item_description = inventory_item.item_description
+            if not updated_item.brand:
+                updated_item.brand = inventory_item.brand
+            if not updated_item.model:
+                updated_item.model = inventory_item.model
+            if updated_item.serial_number in ('', None):
+                updated_item.serial_number = inventory_item.serial_number
+            if updated_item.quantity in ('', None):
+                updated_item.quantity = inventory_item.quantity or 1
+            if updated_item.date_inventory in ('', None):
+                updated_item.date_inventory = inventory_item.date_inventory
+            if updated_item.date_disposal == '':
+                updated_item.date_disposal = inventory_item.date_disposal
+            if not updated_item.location:
+                updated_item.location = inventory_item.location
+            if not updated_item.status:
+                updated_item.status = inventory_item.status or 'available'
+            if updated_item.defect_description in ('', None):
+                updated_item.defect_description = inventory_item.defect_description
+            updated_item.save()
             return redirect('inventory-list')
     else:
         form = InventoryForm(instance=inventory_item)
+        for field_name in optional_fields:
+            form.fields[field_name].required = False
     return render(
         request,
         'add_inventory.html',
@@ -62,7 +101,6 @@ def edit_inventory(request, pk):
             'inventory_item': inventory_item,
         },
     )
-
 def parse_date(date_val):
     if not date_val:
         return None
@@ -74,7 +112,6 @@ def parse_date(date_val):
         except ValueError:
             continue
     return None
-
 
 def upload_excel(request):
     if request.method == 'POST':
@@ -141,7 +178,6 @@ def upload_excel(request):
                             'status': status,
                             'defect_description': get_row_value(row, 10, "") or ""
                         })
-
                 elif filename.endswith('.csv'):
                     data = excel_file.read().decode('utf-8').splitlines()
                     reader = csv.reader(data)
