@@ -110,6 +110,15 @@
         text-align: center;
       }
 
+      #inventory-table th:nth-child(5),
+      #inventory-table td:nth-child(5) {
+        white-space: normal;
+        word-break: break-word;
+        overflow: visible;
+        text-overflow: clip;
+        text-align: center;
+      }
+
       #inventory-table td:nth-child(2) {
         line-height: 1.25;
       }
@@ -121,6 +130,17 @@
 
       #inventory-table td:nth-child(4) {
         line-height: 1.25;
+        text-align: center;
+      }
+
+      #inventory-table td:nth-child(5) {
+        line-height: 1.25;
+        text-align: center;
+      }
+
+      #inventory-table th:nth-child(1),
+      #inventory-table td:nth-child(1) {
+        width: 5rem;
         text-align: center;
       }
 
@@ -274,11 +294,11 @@
             class="bg-slate-50 text-xs uppercase tracking-[0.18em] text-slate-500"
           >
             <tr>
-              <th scope="col" class="px-2 py-2 font-semibold w-12">No.</th>
+              <th scope="col" class="px-2 py-2 font-semibold w-20">No.</th>
               <th scope="col" class="px-2 py-2 font-semibold w-[18rem]">Item</th>
               <th scope="col" class="px-2 py-2 font-semibold w-[24rem]">Description</th>
               <th scope="col" class="px-2 py-2 font-semibold w-[14rem]">Brand</th>
-              <th scope="col" class="px-2 py-2 font-semibold w-28">Model</th>
+              <th scope="col" class="px-2 py-2 font-semibold w-[14rem]">Model</th>
               <th scope="col" class="px-2 py-2 font-semibold w-[14rem]">Serial Number</th>
               <th scope="col" class="px-2 py-2 font-semibold w-14">Qty</th>
               <th scope="col" class="px-2 py-2 font-semibold w-24">Inv Date</th>
@@ -314,7 +334,9 @@
                 </span>
               </td>
               <td class="px-2 py-2 align-middle text-xs font-medium text-slate-800">
-                {% firstof item.model "-" %}
+                <span class="block w-full text-center">
+                  {% firstof item.model "-" %}
+                </span>
               </td>
               <td class="px-2 py-2 align-middle font-mono text-[11px] text-slate-700" title="{{ item.serial_number }}">
                 {% firstof item.serial_number "-" %}

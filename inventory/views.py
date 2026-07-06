@@ -15,7 +15,6 @@ def get_row_value(row, index, default=""):
     value = row[index]
     return default if value is None else value
 
-
 def inventory_list(request):
     inventory_items = Inventory.objects.all().order_by('item_type', 'serial_number')
     return render(
@@ -25,7 +24,6 @@ def inventory_list(request):
             'inventory_items': inventory_items,
         },
     )
-
 
 def add_inventory(request):
     if request.method == 'POST':
@@ -42,7 +40,6 @@ def add_inventory(request):
             'form': form,
         },
     )
-
 
 def edit_inventory(request, pk):
     inventory_item = get_object_or_404(Inventory, pk=pk)
