@@ -216,9 +216,13 @@
                 {{ forloop.counter }}
               </td>
               <td class="px-2 py-2 align-middle">
-                <div class="text-xs font-semibold leading-tight text-slate-900">
+                <a
+                  href="{% url 'inventory-edit' item.pk %}"
+                  class="inline-flex text-xs font-semibold leading-tight text-slate-900 transition hover:text-brand-700 hover:underline"
+                  title="Edit {{ item.item_type }}"
+                >
                   {% firstof item.item_type "-" %}
-                </div>
+                </a>
               </td>
               <td class="px-2 py-2 align-middle text-xs text-slate-600" title="{{ item.item_description }}">
                 {% firstof item.item_description "-" %}
@@ -341,6 +345,7 @@
         if (table && window.simpleDatatables) {
           new simpleDatatables.DataTable(table, {
             searchable: false,
+            sortable: false,
             fixedHeight: true,
             perPage: 50,
             perPageSelect: false,

@@ -2,9 +2,8 @@ import csv
 import openpyxl
 import warnings
 from datetime import datetime
-from django.shortcuts import redirect, render
+from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib import messages
-
 from .forms import InventoryForm
 from .models import Inventory
 
@@ -36,7 +35,6 @@ def add_inventory(request):
             return redirect('inventory-list')
     else:
         form = InventoryForm()
-
     return render(
         request,
         'add_inventory.html',
@@ -45,6 +43,25 @@ def add_inventory(request):
         },
     )
 
+
+def edit_inventory(request, pk):
+    inventory_item = get_object_or_404(Inventory, pk=pk)
+
+    if request.method == 'POST':
+        form = InventoryForm(request.POST, instance=inventory_item)
+        if form.is_valid():
+            form.save()
+            return redirect('inventory-list')
+    else:
+        form = InventoryForm(instance=inventory_item)
+    return render(
+        request,
+        'add_inventory.html',
+        {
+            'form': form,
+            'inventory_item': inventory_item,
+        },
+    )
 
 def parse_date(date_val):
     if not date_val:

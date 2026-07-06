@@ -3,7 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Add Inventory Record</title>
+    <title>
+      {% if form.instance.pk %}Edit Inventory Record{% else %}Add Inventory
+      Record{% endif %}
+    </title>
     <script>
       tailwind.config = {
         theme: {
@@ -101,11 +104,13 @@
             <h1
               class="text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl"
             >
-              Add Inventory Record
+              {% if form.instance.pk %}Edit Inventory Record{% else %}Add
+              Inventory Record{% endif %}
             </h1>
             <p class="max-w-2xl text-base leading-7 text-slate-600">
-              Create a new inventory entry with the same field set used in the
-              table.
+              {% if form.instance.pk %}Update the selected inventory entry and
+              keep the table in sync.{% else %}Create a new inventory entry
+              with the same field set used in the table.{% endif %}
             </p>
           </div>
           <a
@@ -201,7 +206,7 @@
               type="submit"
               class="inline-flex items-center rounded-full bg-emerald-600 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-emerald-700"
             >
-              Save record
+              {% if form.instance.pk %}Update record{% else %}Save record{% endif %}
             </button>
           </div>
         </form>
