@@ -70,8 +70,8 @@
       }
 
       #inventory-table {
-        table-layout: auto;
-        min-width: 1700px;
+        table-layout: fixed;
+        min-width: 100%;
       }
 
       #inventory-table th,
@@ -79,16 +79,13 @@
         white-space: nowrap;
         word-break: normal;
         vertical-align: top;
-      }
-
-      #inventory-table th,
-      #inventory-table td {
         overflow: hidden;
         text-overflow: ellipsis;
+        text-align: center;
       }
 
       #inventory-table td {
-        line-height: 1.2;
+        line-height: 1.1;
       }
       .datatable-bottom {
         padding: 1.25rem 1.5rem;
@@ -192,85 +189,85 @@
       >
         <table
           id="inventory-table"
-          class="w-full text-left text-sm text-slate-700 whitespace-nowrap"
+          class="w-full text-sm text-slate-700 whitespace-nowrap"
         >
           <thead
             class="bg-slate-50 text-xs uppercase tracking-[0.18em] text-slate-500"
           >
             <tr>
-              <th scope="col" class="px-2 py-3 font-semibold">No.</th>
-              <th scope="col" class="px-2 py-3 font-semibold">Item</th>
-              <th scope="col" class="px-2 py-3 font-semibold min-w-[18rem]">Description</th>
-              <th scope="col" class="px-2 py-3 font-semibold">Brand</th>
-              <th scope="col" class="px-2 py-3 font-semibold">Model</th>
-              <th scope="col" class="px-2 py-3 font-semibold min-w-[14rem]">Serial Number</th>
-              <th scope="col" class="px-2 py-3 font-semibold">Qty</th>
-              <th scope="col" class="px-2 py-3 font-semibold">Inv Date</th>
-              <th scope="col" class="px-2 py-3 font-semibold">Disp Date</th>
-              <th scope="col" class="px-2 py-3 font-semibold min-w-[12rem]">Location</th>
-              <th scope="col" class="px-2 py-3 font-semibold">Status</th>
-              <th scope="col" class="px-2 py-3 font-semibold min-w-[18rem]">Defect</th>
+              <th scope="col" class="px-2 py-2 font-semibold w-12">No.</th>
+              <th scope="col" class="px-2 py-2 font-semibold w-20">Item</th>
+              <th scope="col" class="px-2 py-2 font-semibold w-[18rem]">Description</th>
+              <th scope="col" class="px-2 py-2 font-semibold w-24">Brand</th>
+              <th scope="col" class="px-2 py-2 font-semibold w-28">Model</th>
+              <th scope="col" class="px-2 py-2 font-semibold w-[14rem]">Serial Number</th>
+              <th scope="col" class="px-2 py-2 font-semibold w-14">Qty</th>
+              <th scope="col" class="px-2 py-2 font-semibold w-24">Inv Date</th>
+              <th scope="col" class="px-2 py-2 font-semibold w-24">Disp Date</th>
+              <th scope="col" class="px-2 py-2 font-semibold w-[12rem]">Location</th>
+              <th scope="col" class="px-2 py-2 font-semibold w-28">Status</th>
+              <th scope="col" class="px-2 py-2 font-semibold w-[16rem]">Defect</th>
             </tr>
           </thead>
           <tbody class="divide-y divide-slate-200 bg-white">
             {% for item in inventory_items %}
             <tr class="transition-colors hover:bg-slate-50/80">
-              <td class="px-2 py-2 align-middle font-semibold text-slate-900">
+              <td class="px-2 py-2 align-middle font-semibold text-slate-900 text-xs">
                 {{ forloop.counter }}
               </td>
               <td class="px-2 py-2 align-middle">
-                <div class="text-sm font-semibold leading-tight text-slate-900">
+                <div class="text-xs font-semibold leading-tight text-slate-900">
                   {% firstof item.item_type "-" %}
                 </div>
               </td>
-              <td class="px-2 py-2 align-middle text-slate-600" title="{{ item.item_description }}">
+              <td class="px-2 py-2 align-middle text-xs text-slate-600" title="{{ item.item_description }}">
                 {% firstof item.item_description "-" %}
               </td>
-              <td class="px-2 py-2 align-middle font-medium text-slate-800">
+              <td class="px-2 py-2 align-middle text-xs font-medium text-slate-800">
                 {% firstof item.brand "-" %}
               </td>
-              <td class="px-2 py-2 align-middle font-medium text-slate-800">
+              <td class="px-2 py-2 align-middle text-xs font-medium text-slate-800">
                 {% firstof item.model "-" %}
               </td>
-              <td class="px-2 py-2 align-middle font-mono text-xs text-slate-700" title="{{ item.serial_number }}">
+              <td class="px-2 py-2 align-middle font-mono text-[11px] text-slate-700" title="{{ item.serial_number }}">
                 {% firstof item.serial_number "-" %}
               </td>
-              <td class="px-2 py-2 align-middle font-semibold text-slate-900">
+              <td class="px-2 py-2 align-middle text-xs font-semibold text-slate-900">
                 {% firstof item.quantity "-" %}
               </td>
-              <td class="px-2 py-2 align-middle text-slate-700">
+              <td class="px-2 py-2 align-middle text-xs text-slate-700">
                 {{ item.date_inventory|date:"M d, Y" }}
               </td>
-              <td class="px-2 py-2 align-middle text-slate-700">
+              <td class="px-2 py-2 align-middle text-xs text-slate-700">
                 {{ item.date_disposal|date:"M d, Y"|default:"-" }}
               </td>
-              <td class="px-2 py-2 align-middle text-slate-700">
+              <td class="px-2 py-2 align-middle text-xs text-slate-700" title="{{ item.location }}">
                 {% firstof item.location "-" %}
               </td>
               <td class="px-2 py-2 align-middle">
                 {% if item.status == 'available' %}
                 <span
-                  class="inline-flex items-center rounded-full bg-emerald-100 px-2 py-0.5 text-[10px] uppercase tracking-wider font-semibold text-emerald-800 ring-1 ring-emerald-200"
+                  class="inline-flex items-center rounded-full bg-emerald-100 px-2 py-0.5 text-[9px] uppercase tracking-wider font-semibold text-emerald-800 ring-1 ring-emerald-200"
                   >{{ item.get_status_display }}</span
                 >
                 {% elif item.status == 'in_use' %}
                 <span
-                  class="inline-flex items-center rounded-full bg-sky-100 px-2 py-0.5 text-[10px] uppercase tracking-wider font-semibold text-sky-800 ring-1 ring-sky-200"
+                  class="inline-flex items-center rounded-full bg-sky-100 px-2 py-0.5 text-[9px] uppercase tracking-wider font-semibold text-sky-800 ring-1 ring-sky-200"
                   >{{ item.get_status_display }}</span
                 >
                 {% elif item.status == 'repair' %}
                 <span
-                  class="inline-flex items-center rounded-full bg-amber-100 px-2 py-0.5 text-[10px] uppercase tracking-wider font-semibold text-amber-800 ring-1 ring-amber-200"
+                  class="inline-flex items-center rounded-full bg-amber-100 px-2 py-0.5 text-[9px] uppercase tracking-wider font-semibold text-amber-800 ring-1 ring-amber-200"
                   >{{ item.get_status_display }}</span
                 >
                 {% else %}
                 <span
-                  class="inline-flex items-center rounded-full bg-rose-100 px-2 py-0.5 text-[10px] uppercase tracking-wider font-semibold text-rose-800 ring-1 ring-rose-200"
+                  class="inline-flex items-center rounded-full bg-rose-100 px-2 py-0.5 text-[9px] uppercase tracking-wider font-semibold text-rose-800 ring-1 ring-rose-200"
                   >{{ item.get_status_display }}</span
                 >
                 {% endif %}
               </td>
-              <td class="px-2 py-2 align-middle text-slate-600" title="{{ item.defect_description }}">
+              <td class="px-2 py-2 align-middle text-xs text-slate-600" title="{{ item.defect_description }}">
                 {% if item.defect_description %} {{ item.defect_description }}
                 {% else %}
                 <span class="text-slate-400">-</span>
