@@ -21,7 +21,9 @@ class Inventory(models.Model):
 
     serial_number = models.CharField(
         max_length=100,
-        unique=True
+        unique=True,
+        blank=True,
+        null=True,
     )
 
     quantity = models.PositiveIntegerField(default=1)
@@ -48,3 +50,8 @@ class Inventory(models.Model):
 
     def __str__(self):
         return f"{self.item_type} - {self.serial_number}"
+
+    def save(self, *args, **kwargs):
+        if self.serial_number == "":
+            self.serial_number = None
+        super().save(*args, **kwargs)
