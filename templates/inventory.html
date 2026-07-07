@@ -582,7 +582,7 @@
           <div class="p-4 lg:p-5">
             <form method="GET" id="filter-form" class="grid gap-3 lg:grid-cols-[1fr_auto_auto_auto_auto] items-end">
               <div class="space-y-2">
-                <label for="filter-search" class="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">
+                <label for="filter-search" class="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500 text-center block">
                   Search
                 </label>
                 <div class="relative">
@@ -594,15 +594,15 @@
                     </svg>
                   </span>
                   <input id="filter-search" type="text" name="q" value="{{ search_query }}" placeholder="Search items…"
-                    class="datatable-selector w-full pl-9" />
+                    class="datatable-selector w-full pl-9 text-center" />
                 </div>
               </div>
 
               <div class="space-y-2">
-                <label for="filter-status" class="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">
+                <label for="filter-status" class="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500 text-center block">
                   Status
                 </label>
-                <select id="filter-status" name="status" class="datatable-selector w-full"
+                <select id="filter-status" name="status" class="datatable-selector w-full text-center"
                   onchange="this.form.submit()">
                   <option value="">All Status</option>
                   {% for option in status_options %}
@@ -611,10 +611,10 @@
                 </select>
               </div>
               <div class="space-y-2">
-                <label for="filter-location" class="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">
+                <label for="filter-location" class="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500 text-center block">
                   Location
                 </label>
-                <select id="filter-location" name="location" class="datatable-selector w-full"
+                <select id="filter-location" name="location" class="datatable-selector w-full text-center"
                   onchange="this.form.submit()">
                   <option value="">All Locations</option>
                   {% for location in distinct_locations %}
@@ -623,10 +623,10 @@
                 </select>
               </div>
               <div class="space-y-2">
-                <label for="filter-item-type" class="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">
+                <label for="filter-item-type" class="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500 text-center block">
                   Item Type
                 </label>
-                <select id="filter-item-type" name="item_type" class="datatable-selector w-full"
+                <select id="filter-item-type" name="item_type" class="datatable-selector w-full text-center"
                   onchange="this.form.submit()">
                   <option value="">All Item Types</option>
                   {% for item_type in distinct_item_types %}
