@@ -1,0 +1,461 @@
+body {
+    font-family: "Inter", "Segoe UI", system-ui, sans-serif;
+    background:
+        radial-gradient(circle at top left,
+            rgba(33, 154, 131, 0.2),
+            transparent 26%),
+        radial-gradient(circle at top right,
+            rgba(59, 130, 246, 0.16),
+            transparent 22%),
+        linear-gradient(180deg, #f8fafc 0%, #eff6f8 100%);
+}
+
+body,
+button,
+input,
+select,
+textarea,
+table {
+    font-family: "Inter", "Segoe UI", system-ui, sans-serif;
+}
+
+.backdrop-card {
+    background: rgba(255, 255, 255, 0.82);
+    backdrop-filter: blur(18px);
+}
+
+.stats-card {
+    position: relative;
+    overflow: hidden;
+    border-radius: 1rem;
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    box-shadow: 0 18px 40px rgba(15, 23, 42, 0.08);
+    min-height: 100%;
+}
+
+.stats-card::before {
+    content: "";
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: 0.375rem;
+    background: var(--card-accent);
+}
+
+.stats-card__icon {
+    color: var(--card-accent);
+    background: var(--card-icon-bg);
+}
+
+.stats-card--total {
+    --card-accent: #2563eb;
+    --card-bg: linear-gradient(135deg, rgba(239, 246, 255, 0.96), rgba(219, 234, 254, 0.92));
+    --card-border: rgba(191, 219, 254, 0.95);
+    --card-icon-bg: rgba(219, 234, 254, 0.95);
+}
+
+.stats-card--available {
+    --card-accent: #059669;
+    --card-bg: linear-gradient(135deg, rgba(236, 253, 245, 0.96), rgba(209, 250, 229, 0.92));
+    --card-border: rgba(167, 243, 208, 0.95);
+    --card-icon-bg: rgba(209, 250, 229, 0.95);
+}
+
+.stats-card--repair {
+    --card-accent: #d97706;
+    --card-bg: linear-gradient(135deg, rgba(255, 251, 235, 0.96), rgba(254, 243, 199, 0.92));
+    --card-border: rgba(253, 230, 138, 0.95);
+    --card-icon-bg: rgba(254, 243, 199, 0.95);
+}
+
+.stats-card--working {
+    --card-accent: #0284c7;
+    --card-bg: linear-gradient(135deg, rgba(240, 249, 255, 0.96), rgba(224, 242, 254, 0.92));
+    --card-border: rgba(186, 230, 253, 0.95);
+    --card-icon-bg: rgba(224, 242, 254, 0.95);
+}
+
+.stats-card--not-working {
+    --card-accent: #e11d48;
+    --card-bg: linear-gradient(135deg, rgba(255, 241, 242, 0.96), rgba(254, 226, 226, 0.92));
+    --card-border: rgba(254, 202, 202, 0.95);
+    --card-icon-bg: rgba(254, 226, 226, 0.95);
+}
+
+.app-shell {
+    display: flex;
+    min-height: 100vh;
+}
+
+.sidebar {
+    width: 100%;
+    margin: 1rem;
+    border-radius: 1.5rem;
+    background: linear-gradient(180deg, #1d4ed8 0%, #2563eb 45%, #1d4ed8 100%);
+    color: #eff6ff;
+    box-shadow: 0 24px 60px rgba(29, 78, 216, 0.28);
+}
+
+.sidebar__inner {
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1rem;
+}
+
+.sidebar__brand {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.85rem 0.9rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.sidebar__brand-mark {
+    display: inline-flex;
+    height: 2.5rem;
+    width: 2.5rem;
+    align-items: center;
+    justify-content: center;
+    border-radius: 9999px;
+    background: rgba(255, 255, 255, 0.18);
+    font-weight: 800;
+}
+
+.sidebar__brand-text {
+    font-size: 1rem;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+.sidebar__section-title {
+    padding: 0 0.9rem;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(239, 246, 255, 0.72);
+}
+
+.sidebar__nav {
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+}
+
+.sidebar__link {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    border-radius: 0.95rem;
+    padding: 0.82rem 0.95rem;
+    color: rgba(239, 246, 255, 0.92);
+    font-size: 0.94rem;
+    font-weight: 600;
+    transition: background-color 160ms ease, color 160ms ease, transform 160ms ease;
+}
+
+.sidebar__link:hover {
+    background: rgba(255, 255, 255, 0.14);
+    color: #fff;
+    transform: translateX(0.15rem);
+}
+
+.sidebar__link--active {
+    background: rgba(255, 255, 255, 0.96);
+    color: #1d4ed8;
+    box-shadow: 0 14px 30px rgba(15, 23, 42, 0.14);
+}
+
+.sidebar__icon {
+    display: inline-flex;
+    width: 1.55rem;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+}
+
+.sidebar__footer {
+    margin-top: auto;
+    display: grid;
+    gap: 0.45rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.content-shell {
+    flex: 1 1 auto;
+    min-width: 0;
+}
+
+.content-shell__inner {
+    width: 100%;
+    padding: 1rem;
+}
+
+@media (min-width: 1024px) {
+    .app-shell {
+        align-items: flex-start;
+    }
+
+    .sidebar {
+        width: 18rem;
+        min-height: 100vh;
+        margin: 0;
+        position: fixed;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        border-radius: 0 1.5rem 1.5rem 0;
+        overflow-y: auto;
+    }
+
+    .content-shell {
+        margin-left: 18rem;
+    }
+
+    .content-shell__inner {
+        padding: 1rem;
+    }
+}
+
+@media (max-width: 1023px) {
+    .app-shell {
+        flex-direction: column;
+    }
+}
+
+/* DataTables Custom Overrides */
+.datatable-wrapper .datatable-container {
+    overflow-x: auto;
+}
+
+/* Hide raw table until simple-datatables initializes (prevents layout flash) */
+#inventory-table:not(.datatable-table) {
+    visibility: hidden;
+}
+
+#inventory-table {
+    table-layout: auto;
+    min-width: 1100px;
+    width: 100%;
+}
+
+#inventory-table th,
+#inventory-table td {
+    white-space: nowrap;
+    vertical-align: top;
+    text-align: center;
+    padding: 0.5rem;
+}
+
+/* Item col — allow wrapping */
+#inventory-table th:nth-child(2),
+#inventory-table td:nth-child(2) {
+    white-space: normal;
+    word-break: break-word;
+    min-width: 7rem;
+    max-width: 10rem;
+}
+
+/* Description col — allow wrapping */
+#inventory-table th:nth-child(3),
+#inventory-table td:nth-child(3) {
+    white-space: normal;
+    word-break: break-word;
+    min-width: 10rem;
+    max-width: 16rem;
+}
+
+/* Brand, Model */
+#inventory-table th:nth-child(4),
+#inventory-table td:nth-child(4),
+#inventory-table th:nth-child(5),
+#inventory-table td:nth-child(5) {
+    min-width: 5.5rem;
+    max-width: 9rem;
+    white-space: normal;
+    word-break: break-word;
+}
+
+/* No. col */
+#inventory-table th:nth-child(1),
+#inventory-table td:nth-child(1) {
+    min-width: 2.8rem;
+    width: 3rem;
+}
+
+/* Qty */
+#inventory-table th:nth-child(7),
+#inventory-table td:nth-child(7) {
+    min-width: 2.8rem;
+    width: 3rem;
+}
+
+/* Inv Date, Disp Date */
+#inventory-table th:nth-child(8),
+#inventory-table td:nth-child(8),
+#inventory-table th:nth-child(9),
+#inventory-table td:nth-child(9) {
+    min-width: 6.5rem;
+}
+
+/* Location */
+#inventory-table th:nth-child(10),
+#inventory-table td:nth-child(10) {
+    min-width: 8rem;
+    max-width: 11rem;
+    white-space: normal;
+    word-break: break-word;
+}
+
+/* Status */
+#inventory-table th:nth-child(11),
+#inventory-table td:nth-child(11) {
+    min-width: 6.5rem;
+}
+
+/* Defect */
+#inventory-table th:nth-child(12),
+#inventory-table td:nth-child(12) {
+    min-width: 7rem;
+    max-width: 12rem;
+    white-space: normal;
+    word-break: break-word;
+}
+
+#inventory-table td {
+    line-height: 1.1;
+}
+
+.datatable-bottom {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    flex-direction: row-reverse !important;
+    background: white !important;
+    border-radius: 9999px !important;
+    padding: 0.75rem 1.75rem !important;
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05), 0 2px 4px -2px rgb(0 0 0 / 0.05) !important;
+    border: 1px solid rgb(226 232 240) !important;
+    margin-top: 1.5rem !important;
+}
+
+.datatable-info {
+    margin: 0 !important;
+    color: rgb(71 85 105) !important;
+    font-size: 0.875rem !important;
+    font-weight: 500 !important;
+}
+
+.datatable-pagination {
+    margin: 0 !important;
+    display: flex !important;
+    justify-content: flex-start !important;
+    flex-grow: 1 !important;
+}
+
+.datatable-pagination ul {
+    margin: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 0.35rem !important;
+    list-style: none !important;
+    padding: 0 !important;
+}
+
+.datatable-pagination li {
+    margin: 0 !important;
+}
+
+.datatable-pagination li a,
+.datatable-pagination li button {
+    border-radius: 9999px !important;
+    min-width: 2.25rem;
+    height: 2.25rem;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-size: 0.875rem !important;
+    font-weight: 600 !important;
+    color: rgb(71 85 105) !important;
+    background: transparent !important;
+    transition: all 0.2s ease-in-out !important;
+    border: none !important;
+    padding: 0 0.75rem !important;
+    text-decoration: none !important;
+    cursor: pointer;
+}
+
+.datatable-pagination li a:hover,
+.datatable-pagination li button:hover {
+    background: rgb(241 245 249) !important;
+    color: rgb(15 23 42) !important;
+}
+
+.datatable-pagination .datatable-active a,
+.datatable-pagination .datatable-active a:hover,
+.datatable-pagination .datatable-active button,
+.datatable-pagination .datatable-active button:hover {
+    background: #6366f1 !important;
+    color: white !important;
+    box-shadow: 0 0 0 4px #e0e7ff !important;
+}
+
+.datatable-pagination .datatable-hidden {
+    display: none !important;
+}
+
+.datatable-pagination .datatable-disabled a,
+.datatable-pagination .datatable-disabled button {
+    opacity: 0.5 !important;
+    cursor: not-allowed !important;
+    background: transparent !important;
+}
+
+.datatable-pagination li:first-child a,
+.datatable-pagination li:first-child button {
+    font-size: 0 !important;
+}
+
+.datatable-pagination li:first-child a::after,
+.datatable-pagination li:first-child button::after {
+    content: "< Previous";
+    font-size: 0.875rem !important;
+}
+
+.datatable-pagination li:last-child a,
+.datatable-pagination li:last-child button {
+    font-size: 0 !important;
+}
+
+.datatable-pagination li:last-child a::after,
+.datatable-pagination li:last-child button::after {
+    content: "Next >";
+    font-size: 0.875rem !important;
+}
+
+.datatable-input,
+.datatable-selector {
+    border-radius: 0.875rem !important;
+    border: 1px solid rgb(226 232 240) !important;
+    background-color: rgb(255 255 255 / 0.95) !important;
+    color: rgb(15 23 42) !important;
+    padding: 0.75rem 0.9rem !important;
+    box-shadow: 0 10px 24px rgba(15, 23, 42, 0.06);
+}
+
+.datatable-input {
+    min-width: min(24rem, 100%);
+}
+
+.datatable-top {
+    padding: 1.25rem 1.5rem !important;
+}
+
+/* Hide the SimpleDataTables built-in search */
+.datatable-top .datatable-search {
+    display: none !important;
+}
