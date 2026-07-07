@@ -371,17 +371,114 @@
       line-height: 1.1;
     }
 
-    .datatable-bottom {
-      padding: 1.25rem 1.5rem;
-      border-top: 1px solid rgb(226 232 240);
+        .datatable-bottom {
+      display: flex !important;
+      align-items: center !important;
+      justify-content: space-between !important;
+      flex-direction: row-reverse !important;
+      background: white !important;
+      border-radius: 9999px !important;
+      padding: 0.75rem 1.75rem !important;
+      box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05), 0 2px 4px -2px rgb(0 0 0 / 0.05) !important;
+      border: 1px solid rgb(226 232 240) !important;
+      margin-top: 1.5rem !important;
     }
 
     .datatable-info {
-      color: rgb(71 85 105);
-      /* slate-600 */
+      margin: 0 !important;
+      color: rgb(71 85 105) !important;
+      font-size: 0.875rem !important;
+      font-weight: 500 !important;
     }
 
-    .datatable-input,
+        .datatable-pagination {
+      margin: 0 !important;
+      display: flex !important;
+      justify-content: flex-start !important;
+      flex-grow: 1 !important;
+    }
+
+    .datatable-pagination ul {
+      margin: 0 !important;
+      display: flex !important;
+      align-items: center !important;
+      gap: 0.35rem !important;
+      list-style: none !important;
+      padding: 0 !important;
+    }
+
+    .datatable-pagination li {
+      margin: 0 !important;
+    }
+
+    .datatable-pagination li a,
+    .datatable-pagination li button {
+      border-radius: 9999px !important;
+      min-width: 2.25rem;
+      height: 2.25rem;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      font-size: 0.875rem !important;
+      font-weight: 600 !important;
+      color: rgb(71 85 105) !important;
+      background: transparent !important;
+      transition: all 0.2s ease-in-out !important;
+      border: none !important;
+      padding: 0 0.75rem !important;
+      text-decoration: none !important;
+      cursor: pointer;
+    }
+
+    .datatable-pagination li a:hover,
+    .datatable-pagination li button:hover {
+      background: rgb(241 245 249) !important;
+      color: rgb(15 23 42) !important;
+    }
+
+    .datatable-pagination .datatable-active a,
+    .datatable-pagination .datatable-active a:hover,
+    .datatable-pagination .datatable-active button,
+    .datatable-pagination .datatable-active button:hover {
+      background: #6366f1 !important;
+      color: white !important;
+      box-shadow: 0 0 0 4px #e0e7ff !important;
+    }
+
+    .datatable-pagination .datatable-hidden {
+      display: none !important;
+    }
+
+    .datatable-pagination .datatable-disabled a,
+    .datatable-pagination .datatable-disabled button {
+      opacity: 0.5 !important;
+      cursor: not-allowed !important;
+      background: transparent !important;
+    }
+
+    .datatable-pagination li:first-child a,
+    .datatable-pagination li:first-child button {
+      font-size: 0 !important;
+    }
+    
+    .datatable-pagination li:first-child a::after,
+    .datatable-pagination li:first-child button::after {
+      content: "< Previous";
+      font-size: 0.875rem !important;
+    }
+
+    .datatable-pagination li:last-child a,
+    .datatable-pagination li:last-child button {
+      font-size: 0 !important;
+    }
+    
+    .datatable-pagination li:last-child a::after,
+    .datatable-pagination li:last-child button::after {
+      content: "Next >";
+      font-size: 0.875rem !important;
+    }
+
+      .datatable-input,
     .datatable-selector {
       border-radius: 0.875rem !important;
       border: 1px solid rgb(226 232 240) !important;
@@ -399,18 +496,9 @@
       padding: 1.25rem 1.5rem !important;
     }
 
-    /* Hide the SimpleDataTables built-in search — we use our own inline search */
+    /* Hide the SimpleDataTables built-in search */
     .datatable-top .datatable-search {
       display: none !important;
-    }
-
-    .datatable-pagination a {
-      border-radius: 0.75rem;
-    }
-
-    .datatable-pagination .active a {
-      background: rgb(33 154 131) !important;
-      color: #fff !important;
     }
   </style>
 </head>
@@ -610,7 +698,8 @@
                   onchange="this.form.submit()">
                   <option value="">All Item Types</option>
                   {% for item_type in distinct_item_types %}
-                  <option value="{{ item_type }}" {% if selected_item_type == item_type %}selected{% endif %}>{{ item_type }}</option>
+                  <option value="{{ item_type }}" {% if selected_item_type == item_type %}selected{% endif %}>{{ item_type
+                    }}</option>
                   {% endfor %}
                 </select>
               </div>
