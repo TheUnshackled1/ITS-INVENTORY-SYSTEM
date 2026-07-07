@@ -122,6 +122,150 @@
         --card-icon-bg: rgba(254, 226, 226, 0.95);
       }
 
+      .app-shell {
+        display: flex;
+        min-height: 100vh;
+      }
+
+      .sidebar {
+        width: 100%;
+        margin: 1rem;
+        border-radius: 1.5rem;
+        background: linear-gradient(180deg, #1d4ed8 0%, #2563eb 45%, #1d4ed8 100%);
+        color: #eff6ff;
+        box-shadow: 0 24px 60px rgba(29, 78, 216, 0.28);
+      }
+
+      .sidebar__inner {
+        display: flex;
+        height: 100%;
+        flex-direction: column;
+        gap: 1rem;
+        padding: 1rem;
+      }
+
+      .sidebar__brand {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 0.85rem 0.9rem;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+      }
+
+      .sidebar__brand-mark {
+        display: inline-flex;
+        height: 2.5rem;
+        width: 2.5rem;
+        align-items: center;
+        justify-content: center;
+        border-radius: 9999px;
+        background: rgba(255, 255, 255, 0.18);
+        font-weight: 800;
+      }
+
+      .sidebar__brand-text {
+        font-size: 1rem;
+        font-weight: 800;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+      }
+
+      .sidebar__section-title {
+        padding: 0 0.9rem;
+        font-size: 0.72rem;
+        font-weight: 700;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: rgba(239, 246, 255, 0.72);
+      }
+
+      .sidebar__nav {
+        display: flex;
+        flex-direction: column;
+        gap: 0.45rem;
+      }
+
+      .sidebar__link {
+        display: flex;
+        align-items: center;
+        gap: 0.9rem;
+        border-radius: 0.95rem;
+        padding: 0.82rem 0.95rem;
+        color: rgba(239, 246, 255, 0.92);
+        font-size: 0.94rem;
+        font-weight: 600;
+        transition: background-color 160ms ease, color 160ms ease, transform 160ms ease;
+      }
+
+      .sidebar__link:hover {
+        background: rgba(255, 255, 255, 0.14);
+        color: #fff;
+        transform: translateX(0.15rem);
+      }
+
+      .sidebar__link--active {
+        background: rgba(255, 255, 255, 0.96);
+        color: #1d4ed8;
+        box-shadow: 0 14px 30px rgba(15, 23, 42, 0.14);
+      }
+
+      .sidebar__icon {
+        display: inline-flex;
+        width: 1.55rem;
+        align-items: center;
+        justify-content: center;
+        font-size: 1rem;
+      }
+
+      .sidebar__footer {
+        margin-top: auto;
+        display: grid;
+        gap: 0.45rem;
+        padding-top: 1rem;
+        border-top: 1px solid rgba(255, 255, 255, 0.12);
+      }
+
+      .content-shell {
+        flex: 1 1 auto;
+        min-width: 0;
+      }
+
+      .content-shell__inner {
+        width: 100%;
+        padding: 1rem;
+      }
+
+      @media (min-width: 1024px) {
+        .app-shell {
+          align-items: flex-start;
+        }
+
+        .sidebar {
+          width: 18rem;
+          min-height: calc(100vh - 2rem);
+          margin: 0;
+          position: fixed;
+          left: 1rem;
+          top: 1rem;
+          bottom: 1rem;
+          overflow-y: auto;
+        }
+
+        .content-shell {
+          margin-left: 19rem;
+        }
+
+        .content-shell__inner {
+          padding: 1rem 1rem 1rem 0.75rem;
+        }
+      }
+
+      @media (max-width: 1023px) {
+        .app-shell {
+          flex-direction: column;
+        }
+      }
+
       /* DataTables Custom Overrides */
       .datatable-wrapper .datatable-container {
         overflow-x: hidden;
@@ -278,15 +422,52 @@
     </style>
   </head>
   <body class="min-h-screen font-sans text-slate-900 antialiased">
-    <main
-      class="mx-auto flex w-full max-w-[110rem] flex-col gap-6 px-4 py-6 sm:px-6 lg:px-8 lg:py-8"
-    >
-      <section
-        class="backdrop-card overflow-hidden rounded-3xl border border-white/70 shadow-soft ring-1 ring-slate-200/60"
-      >
-        <div
-          class="flex flex-col gap-6 p-6 lg:p-8"
-        >
+    <div class="app-shell">
+      <aside class="sidebar">
+        <div class="sidebar__inner">
+          <div class="sidebar__brand">
+            <span class="sidebar__brand-mark">I</span>
+            <div class="sidebar__brand-text">ITS Inventory</div>
+          </div>
+
+          <div class="sidebar__section-title">Navigation</div>
+
+          <nav class="sidebar__nav" aria-label="Inventory navigation">
+            <a class="sidebar__link sidebar__link--active" href="#top">
+              <span class="sidebar__icon">⌂</span>
+              <span>Dashboard</span>
+            </a>
+            <a class="sidebar__link" href="{% url 'inventory-create' %}">
+              <span class="sidebar__icon">＋</span>
+              <span>Add Record</span>
+            </a>
+            <form action="{% url 'inventory-upload' %}" method="POST" enctype="multipart/form-data" class="m-0">
+              {% csrf_token %}
+              <input type="file" name="excel_file" id="excel-upload-sidebar" accept=".xlsx, .csv" class="hidden" onchange="this.form.submit()" />
+              <label for="excel-upload-sidebar" class="sidebar__link cursor-pointer">
+                <span class="sidebar__icon">⇪</span>
+                <span>Upload Excel</span>
+              </label>
+            </form>
+          </nav>
+
+          <div class="sidebar__footer">
+            <a class="sidebar__link" href="/admin/">
+              <span class="sidebar__icon">⚙</span>
+              <span>Settings</span>
+            </a>
+            <a class="sidebar__link" href="/admin/logout/">
+              <span class="sidebar__icon">↩</span>
+              <span>Logout</span>
+            </a>
+          </div>
+        </div>
+      </aside>
+
+      <div class="content-shell">
+        <main id="top" class="content-shell__inner">
+          <section class="backdrop-card overflow-hidden rounded-3xl border border-white/70 shadow-soft ring-1 ring-slate-200/60">
+            <div class="flex flex-col gap-6 p-6 lg:p-8">
           <!-- Header Row -->
           <div
             class="flex flex-col gap-5 lg:flex-row lg:items-center lg:justify-between"
@@ -562,7 +743,9 @@
         </div>
       </section>
       {% endif %}
-    </main>
+        </main>
+      </div>
+    </div>
 
 <script src="https://cdn.jsdelivr.net/npm/simple-datatables@9.0.3"></script>
 <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"></script>

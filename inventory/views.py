@@ -83,7 +83,7 @@ def inventory_list(request):
         'working': in_use_count,
         'not_working': not_working_count,
     }
-    return render(
+    response = render(
         request,
         'inventory.html',
         {
@@ -91,6 +91,10 @@ def inventory_list(request):
             'stats': stats,
         },
     )
+    response['Cache-Control'] = 'no-store, no-cache, must-revalidate, max-age=0'
+    response['Pragma'] = 'no-cache'
+    response['Expires'] = '0'
+    return response
 
 def add_inventory(request):
     if request.method == 'POST':
