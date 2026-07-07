@@ -2,6 +2,7 @@ import csv
 import openpyxl
 import warnings
 from datetime import datetime
+from django.db.models.functions import Trim, Upper
 from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib import messages
 from .forms import InventoryForm
@@ -16,13 +17,14 @@ def get_row_value(row, index, default=""):
     
 def inventory_list(request):
     inventory_items = Inventory.objects.all().order_by('item_type', 'serial_number')
+    normalized_items = inventory_items.annotate(normalized_defect=Upper(Trim('defect_description')))
     
-    # Calculate statistics
+    # Count inventory rows so each record contributes 1 to the dashboard cards.
     total_items = inventory_items.count()
     available_count = inventory_items.filter(status='available').count()
     repair_count = inventory_items.filter(status='repair').count()
-    in_use_count = inventory_items.filter(status='in_use').count()
-    not_working_count = inventory_items.exclude(status__in=['available', 'repair', 'in_use']).count()
+    in_use_count = normalized_items.filter(normalized_defect='WORKING').count()
+    not_working_count = normalized_items.filter(normalized_defect='NOT WORKING').count()
     
     stats = {
         'total': total_items,
