@@ -227,46 +227,111 @@
         class="backdrop-card overflow-hidden rounded-3xl border border-white/70 shadow-soft ring-1 ring-slate-200/60"
       >
         <div
-          class="flex flex-col gap-5 p-6 lg:flex-row lg:items-center lg:justify-between lg:p-8"
+          class="flex flex-col gap-6 p-6 lg:p-8"
         >
-          <div class="space-y-5">
-            <div
-              class="inline-flex items-center gap-2 rounded-full border border-brand-100 bg-brand-50 px-4 py-2 text-xs font-semibold uppercase tracking-[0.22em] text-brand-700"
-            >
-              <span class="h-2 w-2 rounded-full bg-brand-500"></span>
-              ITS INVENTORY EQUIPMENT LIST
+          <!-- Header Row -->
+          <div
+            class="flex flex-col gap-5 lg:flex-row lg:items-center lg:justify-between"
+          >
+            <div class="space-y-5">
+              <div
+                class="inline-flex items-center gap-2 rounded-full border border-brand-100 bg-brand-50 px-4 py-2 text-xs font-semibold uppercase tracking-[0.22em] text-brand-700"
+              >
+                <span class="h-2 w-2 rounded-full bg-brand-500"></span>
+                ITS INVENTORY EQUIPMENT LIST
+              </div>
+            </div>
+            <div class="flex flex-wrap items-center gap-3 lg:justify-end">
+              <form
+                action="{% url 'inventory-upload' %}"
+                method="POST"
+                enctype="multipart/form-data"
+                class="m-0"
+              >
+                {% csrf_token %}
+                <input
+                  type="file"
+                  name="excel_file"
+                  id="excel-upload-header"
+                  accept=".xlsx, .csv"
+                  class="hidden"
+                  onchange="this.form.submit()"
+                />
+                <label
+                  for="excel-upload-header"
+                  class="inline-flex cursor-pointer items-center rounded-full bg-yellow-500 px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-yellow-200"
+                >
+                  Upload Excel
+                </label>
+              </form>
+
+              <a
+                href="{% url 'inventory-create' %}"
+                class="inline-flex items-center rounded-full bg-emerald-600 px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-emerald-700"
+                >Add record</a
+              >
             </div>
           </div>
-          <div class="flex flex-wrap items-center gap-3 lg:justify-end">
-            <form
-              action="{% url 'inventory-upload' %}"
-              method="POST"
-              enctype="multipart/form-data"
-              class="m-0"
-            >
-              {% csrf_token %}
-              <input
-                type="file"
-                name="excel_file"
-                id="excel-upload-header"
-                accept=".xlsx, .csv"
-                class="hidden"
-                onchange="this.form.submit()"
-              />
-              <label
-                for="excel-upload-header"
-                class="inline-flex cursor-pointer items-center rounded-full bg-yellow-500 px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-yellow-200"
-              >
-                Upload Excel
-              </label>
-            </form>
 
-            <a
-              href="{% url 'inventory-create' %}"
-              class="inline-flex items-center rounded-full bg-emerald-600 px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-emerald-700"
-              >Add record</a
-            >
+          <!-- Statistics Cards -->
+          {% if inventory_items %}
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-3">
+            <!-- Total Items Card -->
+            <div class="backdrop-card rounded-xl border border-white/70 p-4 shadow-soft ring-1 ring-slate-200/60">
+              <div class="flex items-center justify-between">
+                <div>
+                  <p class="text-xs font-medium text-slate-600">Total Items</p>
+                  <p class="text-2xl font-bold text-slate-900 mt-1">{{ stats.total }}</p>
+                </div>
+                <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-blue-100 text-lg text-blue-600">📦</div>
+              </div>
+            </div>
+
+            <!-- Available Card -->
+            <div class="backdrop-card rounded-xl border border-white/70 p-4 shadow-soft ring-1 ring-slate-200/60">
+              <div class="flex items-center justify-between">
+                <div>
+                  <p class="text-xs font-medium text-slate-600">Available</p>
+                  <p class="text-2xl font-bold text-emerald-600 mt-1">{{ stats.available }}</p>
+                </div>
+                <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-emerald-100 text-lg text-emerald-600">✓</div>
+              </div>
+            </div>
+
+            <!-- Under Repair Card -->
+            <div class="backdrop-card rounded-xl border border-white/70 p-4 shadow-soft ring-1 ring-slate-200/60">
+              <div class="flex items-center justify-between">
+                <div>
+                  <p class="text-xs font-medium text-slate-600">Under Repair</p>
+                  <p class="text-2xl font-bold text-amber-600 mt-1">{{ stats.repair }}</p>
+                </div>
+                <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-amber-100 text-lg text-amber-600">🔧</div>
+              </div>
+            </div>
+
+            <!-- Working Card -->
+            <div class="backdrop-card rounded-xl border border-white/70 p-4 shadow-soft ring-1 ring-slate-200/60">
+              <div class="flex items-center justify-between">
+                <div>
+                  <p class="text-xs font-medium text-slate-600">Working</p>
+                  <p class="text-2xl font-bold text-sky-600 mt-1">{{ stats.working }}</p>
+                </div>
+                <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-sky-100 text-lg text-sky-600">▶</div>
+              </div>
+            </div>
+
+            <!-- Not Working Card -->
+            <div class="backdrop-card rounded-xl border border-white/70 p-4 shadow-soft ring-1 ring-slate-200/60">
+              <div class="flex items-center justify-between">
+                <div>
+                  <p class="text-xs font-medium text-slate-600">Not Working</p>
+                  <p class="text-2xl font-bold text-rose-600 mt-1">{{ stats.not_working }}</p>
+                </div>
+                <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-rose-100 text-lg text-rose-600">✕</div>
+              </div>
+            </div>
           </div>
+          {% endif %}
         </div>
       </section>
 
@@ -282,91 +347,10 @@
       </section>
       {% endif %}
 
-      <!-- Statistics Cards -->
-      {% if inventory_items %}
-      <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
-        <!-- Total Items Card -->
-        <div class="backdrop-card rounded-2xl border border-white/70 p-5 shadow-soft ring-1 ring-slate-200/60">
-          <div class="flex items-center justify-between">
-            <div>
-              <p class="text-sm font-medium text-slate-600">Total Items</p>
-              <p class="text-3xl font-bold text-slate-900 mt-2">{{ stats.total }}</p>
-            </div>
-            <div class="flex h-12 w-12 items-center justify-center rounded-lg bg-blue-100 text-xl text-blue-600">📦</div>
-          </div>
-        </div>
-
-        <!-- Available Card -->
-        <div class="backdrop-card rounded-2xl border border-white/70 p-5 shadow-soft ring-1 ring-slate-200/60">
-          <div class="flex items-center justify-between">
-            <div>
-              <p class="text-sm font-medium text-slate-600">Available</p>
-              <p class="text-3xl font-bold text-emerald-600 mt-2">{{ stats.available }}</p>
-            </div>
-            <div class="flex h-12 w-12 items-center justify-center rounded-lg bg-emerald-100 text-xl text-emerald-600">✓</div>
-          </div>
-        </div>
-
-        <!-- Under Repair Card -->
-        <div class="backdrop-card rounded-2xl border border-white/70 p-5 shadow-soft ring-1 ring-slate-200/60">
-          <div class="flex items-center justify-between">
-            <div>
-              <p class="text-sm font-medium text-slate-600">Under Repair</p>
-              <p class="text-3xl font-bold text-amber-600 mt-2">{{ stats.repair }}</p>
-            </div>
-            <div class="flex h-12 w-12 items-center justify-center rounded-lg bg-amber-100 text-xl text-amber-600">🔧</div>
-          </div>
-        </div>
-
-        <!-- Working Card -->
-        <div class="backdrop-card rounded-2xl border border-white/70 p-5 shadow-soft ring-1 ring-slate-200/60">
-          <div class="flex items-center justify-between">
-            <div>
-              <p class="text-sm font-medium text-slate-600">Working</p>
-              <p class="text-3xl font-bold text-sky-600 mt-2">{{ stats.working }}</p>
-            </div>
-            <div class="flex h-12 w-12 items-center justify-center rounded-lg bg-sky-100 text-xl text-sky-600">▶</div>
-          </div>
-        </div>
-
-        <!-- Not Working Card -->
-        <div class="backdrop-card rounded-2xl border border-white/70 p-5 shadow-soft ring-1 ring-slate-200/60">
-          <div class="flex items-center justify-between">
-            <div>
-              <p class="text-sm font-medium text-slate-600">Not Working</p>
-              <p class="text-3xl font-bold text-rose-600 mt-2">{{ stats.not_working }}</p>
-            </div>
-            <div class="flex h-12 w-12 items-center justify-center rounded-lg bg-rose-100 text-xl text-rose-600">✕</div>
-          </div>
-        </div>
-      </section>
-      {% endif %}
-
       {% if inventory_items %}
       <section
         class="backdrop-card overflow-hidden rounded-3xl border border-white/70 shadow-soft ring-1 ring-slate-200/60"
       >
-        <!-- Search Bar -->
-        <div class="border-b border-slate-200 p-6">
-          <div class="flex flex-col sm:flex-row gap-3">
-            <div class="flex-1 relative">
-              <input
-                type="text"
-                id="global-search"
-                placeholder="Search items..."
-                class="w-full px-4 py-2.5 rounded-xl border border-slate-300 bg-white text-slate-900 placeholder-slate-500 shadow-sm transition focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-500/20"
-              />
-            </div>
-            <button
-              id="clear-search"
-              class="px-6 py-2.5 rounded-xl bg-slate-200 text-slate-700 font-medium hover:bg-slate-300 transition whitespace-nowrap"
-              style="display: none;"
-            >
-              Clear Search
-            </button>
-          </div>
-        </div>
-
         <table
           id="inventory-table"
           class="w-full text-sm text-slate-700 whitespace-nowrap"
@@ -512,7 +496,7 @@
 
             <a
               href="{% url 'inventory-create' %}"
-              class="inline-flex items-center rounded-full bg-emerald-600 px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-emerald-700"
+              class="inline-flex items-center rounded-full bg-emerald-600 px-4 py-2 text-sm font-semibold text-white shadow-m transition hover:bg-emerald-700"
             >
               Add record
             </a>
@@ -527,8 +511,6 @@
 <script>
   document.addEventListener("DOMContentLoaded", () => {
     const table = document.querySelector("#inventory-table");
-    const searchInput = document.querySelector("#global-search");
-    const clearButton = document.querySelector("#clear-search");
     let dataTable;
 
     if (table && window.simpleDatatables) {
@@ -538,29 +520,6 @@
         fixedHeight: true,
         perPage: 50,
         perPageSelect: false,
-      });
-    }
-
-    // Global search functionality
-    if (searchInput && dataTable) {
-      searchInput.addEventListener("input", (e) => {
-        const query = e.target.value.trim();
-        
-        if (query.length > 0) {
-          clearButton.style.display = "inline-block";
-          dataTable.search(query);
-        } else {
-          clearButton.style.display = "none";
-          dataTable.search("");
-        }
-      });
-
-      // Clear button functionality
-      clearButton.addEventListener("click", () => {
-        searchInput.value = "";
-        clearButton.style.display = "none";
-        dataTable.search("");
-        searchInput.focus();
       });
     }
   });
