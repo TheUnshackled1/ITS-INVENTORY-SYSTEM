@@ -282,10 +282,91 @@
       </section>
       {% endif %}
 
+      <!-- Statistics Cards -->
+      {% if inventory_items %}
+      <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
+        <!-- Total Items Card -->
+        <div class="backdrop-card rounded-2xl border border-white/70 p-5 shadow-soft ring-1 ring-slate-200/60">
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="text-sm font-medium text-slate-600">Total Items</p>
+              <p class="text-3xl font-bold text-slate-900 mt-2">{{ stats.total }}</p>
+            </div>
+            <div class="flex h-12 w-12 items-center justify-center rounded-lg bg-blue-100 text-xl text-blue-600">📦</div>
+          </div>
+        </div>
+
+        <!-- Available Card -->
+        <div class="backdrop-card rounded-2xl border border-white/70 p-5 shadow-soft ring-1 ring-slate-200/60">
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="text-sm font-medium text-slate-600">Available</p>
+              <p class="text-3xl font-bold text-emerald-600 mt-2">{{ stats.available }}</p>
+            </div>
+            <div class="flex h-12 w-12 items-center justify-center rounded-lg bg-emerald-100 text-xl text-emerald-600">✓</div>
+          </div>
+        </div>
+
+        <!-- Under Repair Card -->
+        <div class="backdrop-card rounded-2xl border border-white/70 p-5 shadow-soft ring-1 ring-slate-200/60">
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="text-sm font-medium text-slate-600">Under Repair</p>
+              <p class="text-3xl font-bold text-amber-600 mt-2">{{ stats.repair }}</p>
+            </div>
+            <div class="flex h-12 w-12 items-center justify-center rounded-lg bg-amber-100 text-xl text-amber-600">🔧</div>
+          </div>
+        </div>
+
+        <!-- Working Card -->
+        <div class="backdrop-card rounded-2xl border border-white/70 p-5 shadow-soft ring-1 ring-slate-200/60">
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="text-sm font-medium text-slate-600">Working</p>
+              <p class="text-3xl font-bold text-sky-600 mt-2">{{ stats.working }}</p>
+            </div>
+            <div class="flex h-12 w-12 items-center justify-center rounded-lg bg-sky-100 text-xl text-sky-600">▶</div>
+          </div>
+        </div>
+
+        <!-- Not Working Card -->
+        <div class="backdrop-card rounded-2xl border border-white/70 p-5 shadow-soft ring-1 ring-slate-200/60">
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="text-sm font-medium text-slate-600">Not Working</p>
+              <p class="text-3xl font-bold text-rose-600 mt-2">{{ stats.not_working }}</p>
+            </div>
+            <div class="flex h-12 w-12 items-center justify-center rounded-lg bg-rose-100 text-xl text-rose-600">✕</div>
+          </div>
+        </div>
+      </section>
+      {% endif %}
+
       {% if inventory_items %}
       <section
         class="backdrop-card overflow-hidden rounded-3xl border border-white/70 shadow-soft ring-1 ring-slate-200/60"
       >
+        <!-- Search Bar -->
+        <div class="border-b border-slate-200 p-6">
+          <div class="flex flex-col sm:flex-row gap-3">
+            <div class="flex-1 relative">
+              <input
+                type="text"
+                id="global-search"
+                placeholder="Search items..."
+                class="w-full px-4 py-2.5 rounded-xl border border-slate-300 bg-white text-slate-900 placeholder-slate-500 shadow-sm transition focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-500/20"
+              />
+            </div>
+            <button
+              id="clear-search"
+              class="px-6 py-2.5 rounded-xl bg-slate-200 text-slate-700 font-medium hover:bg-slate-300 transition whitespace-nowrap"
+              style="display: none;"
+            >
+              Clear Search
+            </button>
+          </div>
+        </div>
+
         <table
           id="inventory-table"
           class="w-full text-sm text-slate-700 whitespace-nowrap"
@@ -459,9 +540,11 @@
         perPageSelect: false,
       });
     }
+
+    // Global search functionality
     if (searchInput && dataTable) {
       searchInput.addEventListener("input", (e) => {
-        const query = e.target.value.toLowerCase();
+        const query = e.target.value.trim();
         
         if (query.length > 0) {
           clearButton.style.display = "inline-block";
@@ -471,10 +554,13 @@
           dataTable.search("");
         }
       });
+
+      // Clear button functionality
       clearButton.addEventListener("click", () => {
         searchInput.value = "";
         clearButton.style.display = "none";
         dataTable.search("");
+        searchInput.focus();
       });
     }
   });

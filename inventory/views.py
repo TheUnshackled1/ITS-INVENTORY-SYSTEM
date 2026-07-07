@@ -16,11 +16,14 @@ def get_row_value(row, index, default=""):
     
 def inventory_list(request):
     inventory_items = Inventory.objects.all().order_by('item_type', 'serial_number')
+    
+    # Calculate statistics
     total_items = inventory_items.count()
     available_count = inventory_items.filter(status='available').count()
     repair_count = inventory_items.filter(status='repair').count()
     in_use_count = inventory_items.filter(status='in_use').count()
     not_working_count = inventory_items.exclude(status__in=['available', 'repair', 'in_use']).count()
+    
     stats = {
         'total': total_items,
         'available': available_count,
