@@ -648,7 +648,6 @@
                 </a>
               </div>
               {% endif %}
-
               {% if current_sort %}
               <input type="hidden" name="sort" value="{{ current_sort }}" />
               {% endif %}
@@ -657,9 +656,7 @@
               {% endif %}
             </form>
           </div>
-
           <hr class="border-slate-200" />
-
           {% if inventory_items %}
           <div class="overflow-x-auto">
             <table id="inventory-table" class="w-full text-sm text-slate-700 whitespace-nowrap">
