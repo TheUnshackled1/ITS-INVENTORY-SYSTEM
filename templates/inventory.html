@@ -45,6 +45,7 @@
     />
     <style>
       body {
+        font-family: "Inter", "Segoe UI", system-ui, sans-serif;
         background:
           radial-gradient(
             circle at top left,
@@ -57,6 +58,15 @@
             transparent 22%
           ),
           linear-gradient(180deg, #f8fafc 0%, #eff6f8 100%);
+      }
+
+      body,
+      button,
+      input,
+      select,
+      textarea,
+      table {
+        font-family: "Inter", "Segoe UI", system-ui, sans-serif;
       }
 
       .backdrop-card {
@@ -242,21 +252,22 @@
 
         .sidebar {
           width: 18rem;
-          min-height: calc(100vh - 2rem);
+          min-height: 100vh;
           margin: 0;
           position: fixed;
-          left: 1rem;
-          top: 1rem;
-          bottom: 1rem;
+          left: 0;
+          top: 0;
+          bottom: 0;
+          border-radius: 0 1.5rem 1.5rem 0;
           overflow-y: auto;
         }
 
         .content-shell {
-          margin-left: 19rem;
+          margin-left: 18rem;
         }
 
         .content-shell__inner {
-          padding: 1rem 1rem 1rem 0.75rem;
+          padding: 1rem;
         }
       }
 
@@ -429,26 +440,11 @@
             <span class="sidebar__brand-mark">I</span>
             <div class="sidebar__brand-text">ITS Inventory</div>
           </div>
-
-          <div class="sidebar__section-title">Navigation</div>
-
           <nav class="sidebar__nav" aria-label="Inventory navigation">
             <a class="sidebar__link sidebar__link--active" href="#top">
               <span class="sidebar__icon">⌂</span>
               <span>Dashboard</span>
             </a>
-            <a class="sidebar__link" href="{% url 'inventory-create' %}">
-              <span class="sidebar__icon">＋</span>
-              <span>Add Record</span>
-            </a>
-            <form action="{% url 'inventory-upload' %}" method="POST" enctype="multipart/form-data" class="m-0">
-              {% csrf_token %}
-              <input type="file" name="excel_file" id="excel-upload-sidebar" accept=".xlsx, .csv" class="hidden" onchange="this.form.submit()" />
-              <label for="excel-upload-sidebar" class="sidebar__link cursor-pointer">
-                <span class="sidebar__icon">⇪</span>
-                <span>Upload Excel</span>
-              </label>
-            </form>
           </nav>
 
           <div class="sidebar__footer">
@@ -466,8 +462,8 @@
 
       <div class="content-shell">
         <main id="top" class="content-shell__inner">
-          <section class="backdrop-card overflow-hidden rounded-3xl border border-white/70 shadow-soft ring-1 ring-slate-200/60">
-            <div class="flex flex-col gap-6 p-6 lg:p-8">
+          <section class="backdrop-card mt-4 overflow-hidden rounded-3xl border border-white/70 shadow-soft ring-1 ring-slate-200/60">
+            <div class="flex flex-col gap-5 p-5 lg:p-6">
           <!-- Header Row -->
           <div
             class="flex flex-col gap-5 lg:flex-row lg:items-center lg:justify-between"
@@ -514,9 +510,9 @@
 
           <!-- Statistics Cards -->
           {% if inventory_items %}
-          <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-5">
+          <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-5">
             <!-- Total Items Card -->
-            <div class="stats-card stats-card--total p-4 sm:p-5">
+            <div class="stats-card stats-card--total p-4">
               <div class="relative flex h-full items-center justify-between gap-4">
                 <div>
                   <p class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-600">Total Items</p>
@@ -527,7 +523,7 @@
             </div>
 
             <!-- Available Card -->
-            <div class="stats-card stats-card--available p-4 sm:p-5">
+            <div class="stats-card stats-card--available p-4">
               <div class="relative flex h-full items-center justify-between gap-4">
                 <div>
                   <p class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-600">Available</p>
@@ -538,7 +534,7 @@
             </div>
 
             <!-- Under Repair Card -->
-            <div class="stats-card stats-card--repair p-4 sm:p-5">
+            <div class="stats-card stats-card--repair p-4">
               <div class="relative flex h-full items-center justify-between gap-4">
                 <div>
                   <p class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-600">Under Repair</p>
@@ -549,7 +545,7 @@
             </div>
 
             <!-- Working Card -->
-            <div class="stats-card stats-card--working p-4 sm:p-5">
+            <div class="stats-card stats-card--working p-4">
               <div class="relative flex h-full items-center justify-between gap-4">
                 <div>
                   <p class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-600">Working</p>
@@ -560,7 +556,7 @@
             </div>
 
             <!-- Not Working Card -->
-            <div class="stats-card stats-card--not-working p-4 sm:p-5">
+            <div class="stats-card stats-card--not-working p-4">
               <div class="relative flex h-full items-center justify-between gap-4">
                 <div>
                   <p class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-600">Not Working</p>
