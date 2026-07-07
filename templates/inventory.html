@@ -618,8 +618,7 @@
                   onchange="this.form.submit()">
                   <option value="">All Locations</option>
                   {% for location in distinct_locations %}
-                  <option value="{{ location }}" {% if selected_location == location %}selected{% endif %}>{{ location }}
-                  </option>
+                  <option value="{{ location }}" {% if selected_location == location %}selected{% endif %}>{{ location }}</option>
                   {% endfor %}
                 </select>
               </div>
@@ -631,8 +630,7 @@
                   onchange="this.form.submit()">
                   <option value="">All Item Types</option>
                   {% for item_type in distinct_item_types %}
-                  <option value="{{ item_type }}" {% if selected_item_type == item_type %}selected{% endif %}>{{ item_type
-                    }}</option>
+                  <option value="{{ item_type }}" {% if selected_item_type == item_type %}selected{% endif %}>{{ item_type }}</option>
                   {% endfor %}
                 </select>
               </div>
