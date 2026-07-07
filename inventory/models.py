@@ -2,7 +2,6 @@ from django.db import models
 from django.db import models
 
 class Inventory(models.Model):
-
     STATUS_CHOICES = [
         ("available", "Available"),
         ("in_use", "In Use"),
@@ -14,7 +13,6 @@ class Inventory(models.Model):
     item_description = models.TextField()
     brand = models.CharField(max_length=100)
     model = models.CharField(max_length=100)
-
     serial_number = models.CharField(
         max_length=100,
         unique=True,

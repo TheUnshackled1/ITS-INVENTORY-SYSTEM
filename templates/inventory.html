@@ -611,7 +611,6 @@
                   {% endfor %}
                 </select>
               </div>
-
               <div class="space-y-2">
                 <label for="filter-location" class="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">
                   Location
@@ -625,7 +624,6 @@
                   {% endfor %}
                 </select>
               </div>
-
               <div class="space-y-2">
                 <label for="filter-item-type" class="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">
                   Item Type
@@ -639,7 +637,6 @@
                   {% endfor %}
                 </select>
               </div>
-
               {% if selected_status or selected_location or selected_item_type or search_query %}
               <div class="flex items-end pb-0.5">
                 <a href="{% url 'inventory-list' %}"
