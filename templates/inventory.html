@@ -441,22 +441,43 @@
       {% endif %}
     </main>
 
-    <script src="https://cdn.jsdelivr.net/npm/simple-datatables@9.0.3"></script>
-    <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"></script>
-    <script>
-      document.addEventListener("DOMContentLoaded", () => {
-        const table = document.querySelector("#inventory-table");
+<script src="https://cdn.jsdelivr.net/npm/simple-datatables@9.0.3"></script>
+<script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const table = document.querySelector("#inventory-table");
+    const searchInput = document.querySelector("#global-search");
+    const clearButton = document.querySelector("#clear-search");
+    let dataTable;
 
-        if (table && window.simpleDatatables) {
-          new simpleDatatables.DataTable(table, {
-            searchable: false,
-            sortable: false,
-            fixedHeight: true,
-            perPage: 50,
-            perPageSelect: false,
-          });
+    if (table && window.simpleDatatables) {
+      dataTable = new simpleDatatables.DataTable(table, {
+        searchable: true,
+        sortable: false,
+        fixedHeight: true,
+        perPage: 50,
+        perPageSelect: false,
+      });
+    }
+    if (searchInput && dataTable) {
+      searchInput.addEventListener("input", (e) => {
+        const query = e.target.value.toLowerCase();
+        
+        if (query.length > 0) {
+          clearButton.style.display = "inline-block";
+          dataTable.search(query);
+        } else {
+          clearButton.style.display = "none";
+          dataTable.search("");
         }
       });
-    </script>
+      clearButton.addEventListener("click", () => {
+        searchInput.value = "";
+        clearButton.style.display = "none";
+        dataTable.search("");
+      });
+    }
+  });
+</script>
   </body>
 </html>
