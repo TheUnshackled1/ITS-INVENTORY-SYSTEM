@@ -3,7 +3,7 @@ import openpyxl
 import warnings
 from datetime import datetime
 from django.db.models import Q
-from django.db.models.functions import Trim, Upper
+from django.db.models.functions import Lower, Trim, Upper
 from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib import messages
 from .forms import InventoryForm
@@ -21,6 +21,38 @@ def normalize_text(value):
     if value is None:
         return ""
     return str(value).strip()
+
+
+def build_query_url(request, **updates):
+    query = request.GET.copy()
+    for key, value in updates.items():
+        if value in (None, ""):
+            query.pop(key, None)
+        else:
+            query[key] = str(value)
+    if query:
+        return f"{request.path}?{query.urlencode()}"
+    return request.path
+
+
+def get_distinct_text_values(queryset, field_name, annotation_name):
+    values = queryset.annotate(
+        **{annotation_name: Trim(field_name)}
+    ).values_list(annotation_name, flat=True).order_by(annotation_name)
+
+    distinct_values = []
+    seen = set()
+    for value in values:
+        cleaned_value = normalize_text(value)
+        if not cleaned_value:
+            continue
+        key = cleaned_value.casefold()
+        if key in seen:
+            continue
+        seen.add(key)
+        distinct_values.append(cleaned_value)
+
+    return distinct_values
 
 
 def update_inventory_fields(item, data):
@@ -68,14 +100,95 @@ def find_inventory_match(data):
     return queryset.first()
     
 def inventory_list(request):
-    inventory_items = Inventory.objects.all().order_by('item_type', 'serial_number')
-    normalized_items = inventory_items.annotate(normalized_defect=Upper(Trim('defect_description')))  
-    total_items = inventory_items.count()
-    available_count = inventory_items.filter(status='available').count()
-    repair_count = inventory_items.filter(status='repair').count()
-    in_use_count = normalized_items.filter(normalized_defect='WORKING').count()
-    not_working_count = normalized_items.filter(normalized_defect='NOT WORKING').count()
-    
+    base_queryset = Inventory.objects.all().annotate(
+        trimmed_item_type=Trim('item_type'),
+        trimmed_location=Trim('location'),
+        sort_item_type=Lower(Trim('item_type')),
+        sort_item_description=Lower(Trim('item_description')),
+        sort_brand=Lower(Trim('brand')),
+        sort_model=Lower(Trim('model')),
+        sort_serial_number=Lower(Trim('serial_number')),
+        sort_location=Lower(Trim('location')),
+        sort_status=Lower(Trim('status')),
+        sort_defect_description=Lower(Trim('defect_description')),
+    )
+
+    status_filter = normalize_text(request.GET.get('status'))
+    location_filter = normalize_text(request.GET.get('location'))
+    item_type_filter = normalize_text(request.GET.get('item_type'))
+    search_query = normalize_text(request.GET.get('q'))
+    sort_field = normalize_text(request.GET.get('sort'))
+    sort_direction = normalize_text(request.GET.get('dir')).lower()
+
+    inventory_items = base_queryset
+    if status_filter:
+        inventory_items = inventory_items.filter(status=status_filter)
+    if location_filter:
+        inventory_items = inventory_items.filter(trimmed_location=location_filter)
+    if item_type_filter:
+        inventory_items = inventory_items.filter(trimmed_item_type=item_type_filter)
+    if search_query:
+        inventory_items = inventory_items.filter(
+            Q(item_type__icontains=search_query) |
+            Q(item_description__icontains=search_query) |
+            Q(brand__icontains=search_query) |
+            Q(model__icontains=search_query) |
+            Q(serial_number__icontains=search_query) |
+            Q(location__icontains=search_query)
+        )
+
+    sort_field_map = {
+        'no': 'pk',
+        'item_type': 'sort_item_type',
+        'item_description': 'sort_item_description',
+        'brand': 'sort_brand',
+        'model': 'sort_model',
+        'serial_number': 'sort_serial_number',
+        'quantity': 'quantity',
+        'date_inventory': 'date_inventory',
+        'date_disposal': 'date_disposal',
+        'location': 'sort_location',
+        'status': 'sort_status',
+        'defect_description': 'sort_defect_description',
+    }
+    current_sort = sort_field if sort_field in sort_field_map else ''
+    current_direction = 'desc' if sort_direction == 'desc' else 'asc'
+
+    if current_sort:
+        order_field = sort_field_map[current_sort]
+        prefix = '-' if current_direction == 'desc' else ''
+        inventory_items = inventory_items.order_by(f'{prefix}{order_field}', 'pk')
+    else:
+        inventory_items = inventory_items.order_by('sort_item_type', 'serial_number', 'pk')
+
+    distinct_item_types = get_distinct_text_values(Inventory.objects.all(), 'item_type', 'trimmed_item_type')
+    distinct_locations = get_distinct_text_values(Inventory.objects.all(), 'location', 'trimmed_location')
+    distinct_status_values = [
+        status_value
+        for status_value, _ in Inventory.STATUS_CHOICES
+        if Inventory.objects.filter(status=status_value).exists()
+    ]
+
+    status_label_map = dict(Inventory.STATUS_CHOICES)
+    status_options = [
+        {
+            'value': status_value,
+            'label': status_label_map.get(status_value, normalize_text(status_value).replace('_', ' ').title()),
+        }
+        for status_value in distinct_status_values
+    ]
+
+    sort_urls = {}
+    for column_name in sort_field_map:
+        next_direction = 'desc' if current_sort == column_name and current_direction == 'asc' else 'asc'
+        sort_urls[column_name] = build_query_url(request, sort=column_name, dir=next_direction)
+
+    total_items = Inventory.objects.count()
+    available_count = Inventory.objects.filter(status='available').count()
+    repair_count = Inventory.objects.filter(status='repair').count()
+    in_use_count = Inventory.objects.annotate(normalized_defect=Upper(Trim('defect_description'))).filter(normalized_defect='WORKING').count()
+    not_working_count = Inventory.objects.annotate(normalized_defect=Upper(Trim('defect_description'))).filter(normalized_defect='NOT WORKING').count()
+
     stats = {
         'total': total_items,
         'available': available_count,
@@ -89,6 +202,17 @@ def inventory_list(request):
         {
             'inventory_items': inventory_items,
             'stats': stats,
+            'distinct_item_types': distinct_item_types,
+            'distinct_locations': distinct_locations,
+            'status_options': status_options,
+            'selected_status': status_filter,
+            'selected_location': location_filter,
+            'selected_item_type': item_type_filter,
+            'search_query': search_query,
+            'current_sort': current_sort,
+            'current_direction': current_direction,
+            'sort_urls': sort_urls,
+            'has_inventory_records': Inventory.objects.exists(),
         },
     )
     response['Cache-Control'] = 'no-store, no-cache, must-revalidate, max-age=0'

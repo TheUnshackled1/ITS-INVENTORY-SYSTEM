@@ -1,765 +1,871 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>ITS INVENTORY EQUIPMENT LIST</title>
-    <script>
-      tailwind.config = {
-        theme: {
-          extend: {
-            colors: {
-              brand: {
-                50: "#eefaf8",
-                100: "#d7f3ed",
-                200: "#b0e6da",
-                300: "#7fd4c1",
-                400: "#47bfa5",
-                500: "#219a83",
-                600: "#177865",
-                700: "#155f53",
-                800: "#154d45",
-                900: "#123f3a",
-              },
-            },
-            boxShadow: {
-              soft: "0 20px 50px rgba(15, 23, 42, 0.12)",
-            },
-            fontFamily: {
-              sans: ["Inter", "Segoe UI", "system-ui", "sans-serif"],
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ITS INVENTORY EQUIPMENT LIST</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: "#eefaf8",
+              100: "#d7f3ed",
+              200: "#b0e6da",
+              300: "#7fd4c1",
+              400: "#47bfa5",
+              500: "#219a83",
+              600: "#177865",
+              700: "#155f53",
+              800: "#154d45",
+              900: "#123f3a",
             },
           },
+          boxShadow: {
+            soft: "0 20px 50px rgba(15, 23, 42, 0.12)",
+          },
+          fontFamily: {
+            sans: ["Inter", "Segoe UI", "system-ui", "sans-serif"],
+          },
         },
-      };
-    </script>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/simple-datatables@9.0.3/dist/style.css"
-    />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
-      rel="stylesheet"
-    />
-    <style>
-      body {
-        font-family: "Inter", "Segoe UI", system-ui, sans-serif;
-        background:
-          radial-gradient(
-            circle at top left,
-            rgba(33, 154, 131, 0.2),
-            transparent 26%
-          ),
-          radial-gradient(
-            circle at top right,
-            rgba(59, 130, 246, 0.16),
-            transparent 22%
-          ),
-          linear-gradient(180deg, #f8fafc 0%, #eff6f8 100%);
-      }
+      },
+    };
+  </script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/simple-datatables@9.0.3/dist/style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      font-family: "Inter", "Segoe UI", system-ui, sans-serif;
+      background:
+        radial-gradient(circle at top left,
+          rgba(33, 154, 131, 0.2),
+          transparent 26%),
+        radial-gradient(circle at top right,
+          rgba(59, 130, 246, 0.16),
+          transparent 22%),
+        linear-gradient(180deg, #f8fafc 0%, #eff6f8 100%);
+    }
 
-      body,
-      button,
-      input,
-      select,
-      textarea,
-      table {
-        font-family: "Inter", "Segoe UI", system-ui, sans-serif;
-      }
+    body,
+    button,
+    input,
+    select,
+    textarea,
+    table {
+      font-family: "Inter", "Segoe UI", system-ui, sans-serif;
+    }
 
-      .backdrop-card {
-        background: rgba(255, 255, 255, 0.82);
-        backdrop-filter: blur(18px);
-      }
+    .backdrop-card {
+      background: rgba(255, 255, 255, 0.82);
+      backdrop-filter: blur(18px);
+    }
 
-      .stats-card {
-        position: relative;
-        overflow: hidden;
-        border-radius: 1rem;
-        background: var(--card-bg);
-        border: 1px solid var(--card-border);
-        box-shadow: 0 18px 40px rgba(15, 23, 42, 0.08);
-        min-height: 100%;
-      }
+    .stats-card {
+      position: relative;
+      overflow: hidden;
+      border-radius: 1rem;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      box-shadow: 0 18px 40px rgba(15, 23, 42, 0.08);
+      min-height: 100%;
+    }
 
-      .stats-card::before {
-        content: "";
-        position: absolute;
-        inset: 0 auto 0 0;
-        width: 0.375rem;
-        background: var(--card-accent);
-      }
+    .stats-card::before {
+      content: "";
+      position: absolute;
+      inset: 0 auto 0 0;
+      width: 0.375rem;
+      background: var(--card-accent);
+    }
 
-      .stats-card__icon {
-        color: var(--card-accent);
-        background: var(--card-icon-bg);
-      }
+    .stats-card__icon {
+      color: var(--card-accent);
+      background: var(--card-icon-bg);
+    }
 
-      .stats-card--total {
-        --card-accent: #2563eb;
-        --card-bg: linear-gradient(135deg, rgba(239, 246, 255, 0.96), rgba(219, 234, 254, 0.92));
-        --card-border: rgba(191, 219, 254, 0.95);
-        --card-icon-bg: rgba(219, 234, 254, 0.95);
-      }
+    .stats-card--total {
+      --card-accent: #2563eb;
+      --card-bg: linear-gradient(135deg, rgba(239, 246, 255, 0.96), rgba(219, 234, 254, 0.92));
+      --card-border: rgba(191, 219, 254, 0.95);
+      --card-icon-bg: rgba(219, 234, 254, 0.95);
+    }
 
-      .stats-card--available {
-        --card-accent: #059669;
-        --card-bg: linear-gradient(135deg, rgba(236, 253, 245, 0.96), rgba(209, 250, 229, 0.92));
-        --card-border: rgba(167, 243, 208, 0.95);
-        --card-icon-bg: rgba(209, 250, 229, 0.95);
-      }
+    .stats-card--available {
+      --card-accent: #059669;
+      --card-bg: linear-gradient(135deg, rgba(236, 253, 245, 0.96), rgba(209, 250, 229, 0.92));
+      --card-border: rgba(167, 243, 208, 0.95);
+      --card-icon-bg: rgba(209, 250, 229, 0.95);
+    }
 
-      .stats-card--repair {
-        --card-accent: #d97706;
-        --card-bg: linear-gradient(135deg, rgba(255, 251, 235, 0.96), rgba(254, 243, 199, 0.92));
-        --card-border: rgba(253, 230, 138, 0.95);
-        --card-icon-bg: rgba(254, 243, 199, 0.95);
-      }
+    .stats-card--repair {
+      --card-accent: #d97706;
+      --card-bg: linear-gradient(135deg, rgba(255, 251, 235, 0.96), rgba(254, 243, 199, 0.92));
+      --card-border: rgba(253, 230, 138, 0.95);
+      --card-icon-bg: rgba(254, 243, 199, 0.95);
+    }
 
-      .stats-card--working {
-        --card-accent: #0284c7;
-        --card-bg: linear-gradient(135deg, rgba(240, 249, 255, 0.96), rgba(224, 242, 254, 0.92));
-        --card-border: rgba(186, 230, 253, 0.95);
-        --card-icon-bg: rgba(224, 242, 254, 0.95);
-      }
+    .stats-card--working {
+      --card-accent: #0284c7;
+      --card-bg: linear-gradient(135deg, rgba(240, 249, 255, 0.96), rgba(224, 242, 254, 0.92));
+      --card-border: rgba(186, 230, 253, 0.95);
+      --card-icon-bg: rgba(224, 242, 254, 0.95);
+    }
 
-      .stats-card--not-working {
-        --card-accent: #e11d48;
-        --card-bg: linear-gradient(135deg, rgba(255, 241, 242, 0.96), rgba(254, 226, 226, 0.92));
-        --card-border: rgba(254, 202, 202, 0.95);
-        --card-icon-bg: rgba(254, 226, 226, 0.95);
-      }
+    .stats-card--not-working {
+      --card-accent: #e11d48;
+      --card-bg: linear-gradient(135deg, rgba(255, 241, 242, 0.96), rgba(254, 226, 226, 0.92));
+      --card-border: rgba(254, 202, 202, 0.95);
+      --card-icon-bg: rgba(254, 226, 226, 0.95);
+    }
 
+    .app-shell {
+      display: flex;
+      min-height: 100vh;
+    }
+
+    .sidebar {
+      width: 100%;
+      margin: 1rem;
+      border-radius: 1.5rem;
+      background: linear-gradient(180deg, #1d4ed8 0%, #2563eb 45%, #1d4ed8 100%);
+      color: #eff6ff;
+      box-shadow: 0 24px 60px rgba(29, 78, 216, 0.28);
+    }
+
+    .sidebar__inner {
+      display: flex;
+      height: 100%;
+      flex-direction: column;
+      gap: 1rem;
+      padding: 1rem;
+    }
+
+    .sidebar__brand {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.85rem 0.9rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    .sidebar__brand-mark {
+      display: inline-flex;
+      height: 2.5rem;
+      width: 2.5rem;
+      align-items: center;
+      justify-content: center;
+      border-radius: 9999px;
+      background: rgba(255, 255, 255, 0.18);
+      font-weight: 800;
+    }
+
+    .sidebar__brand-text {
+      font-size: 1rem;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .sidebar__section-title {
+      padding: 0 0.9rem;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(239, 246, 255, 0.72);
+    }
+
+    .sidebar__nav {
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+    }
+
+    .sidebar__link {
+      display: flex;
+      align-items: center;
+      gap: 0.9rem;
+      border-radius: 0.95rem;
+      padding: 0.82rem 0.95rem;
+      color: rgba(239, 246, 255, 0.92);
+      font-size: 0.94rem;
+      font-weight: 600;
+      transition: background-color 160ms ease, color 160ms ease, transform 160ms ease;
+    }
+
+    .sidebar__link:hover {
+      background: rgba(255, 255, 255, 0.14);
+      color: #fff;
+      transform: translateX(0.15rem);
+    }
+
+    .sidebar__link--active {
+      background: rgba(255, 255, 255, 0.96);
+      color: #1d4ed8;
+      box-shadow: 0 14px 30px rgba(15, 23, 42, 0.14);
+    }
+
+    .sidebar__icon {
+      display: inline-flex;
+      width: 1.55rem;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+    }
+
+    .sidebar__footer {
+      margin-top: auto;
+      display: grid;
+      gap: 0.45rem;
+      padding-top: 1rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    .content-shell {
+      flex: 1 1 auto;
+      min-width: 0;
+    }
+
+    .content-shell__inner {
+      width: 100%;
+      padding: 1rem;
+    }
+
+    @media (min-width: 1024px) {
       .app-shell {
-        display: flex;
-        min-height: 100vh;
+        align-items: flex-start;
       }
 
       .sidebar {
-        width: 100%;
-        margin: 1rem;
-        border-radius: 1.5rem;
-        background: linear-gradient(180deg, #1d4ed8 0%, #2563eb 45%, #1d4ed8 100%);
-        color: #eff6ff;
-        box-shadow: 0 24px 60px rgba(29, 78, 216, 0.28);
-      }
-
-      .sidebar__inner {
-        display: flex;
-        height: 100%;
-        flex-direction: column;
-        gap: 1rem;
-        padding: 1rem;
-      }
-
-      .sidebar__brand {
-        display: flex;
-        align-items: center;
-        gap: 0.75rem;
-        padding: 0.85rem 0.9rem;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.12);
-      }
-
-      .sidebar__brand-mark {
-        display: inline-flex;
-        height: 2.5rem;
-        width: 2.5rem;
-        align-items: center;
-        justify-content: center;
-        border-radius: 9999px;
-        background: rgba(255, 255, 255, 0.18);
-        font-weight: 800;
-      }
-
-      .sidebar__brand-text {
-        font-size: 1rem;
-        font-weight: 800;
-        letter-spacing: 0.06em;
-        text-transform: uppercase;
-      }
-
-      .sidebar__section-title {
-        padding: 0 0.9rem;
-        font-size: 0.72rem;
-        font-weight: 700;
-        letter-spacing: 0.18em;
-        text-transform: uppercase;
-        color: rgba(239, 246, 255, 0.72);
-      }
-
-      .sidebar__nav {
-        display: flex;
-        flex-direction: column;
-        gap: 0.45rem;
-      }
-
-      .sidebar__link {
-        display: flex;
-        align-items: center;
-        gap: 0.9rem;
-        border-radius: 0.95rem;
-        padding: 0.82rem 0.95rem;
-        color: rgba(239, 246, 255, 0.92);
-        font-size: 0.94rem;
-        font-weight: 600;
-        transition: background-color 160ms ease, color 160ms ease, transform 160ms ease;
-      }
-
-      .sidebar__link:hover {
-        background: rgba(255, 255, 255, 0.14);
-        color: #fff;
-        transform: translateX(0.15rem);
-      }
-
-      .sidebar__link--active {
-        background: rgba(255, 255, 255, 0.96);
-        color: #1d4ed8;
-        box-shadow: 0 14px 30px rgba(15, 23, 42, 0.14);
-      }
-
-      .sidebar__icon {
-        display: inline-flex;
-        width: 1.55rem;
-        align-items: center;
-        justify-content: center;
-        font-size: 1rem;
-      }
-
-      .sidebar__footer {
-        margin-top: auto;
-        display: grid;
-        gap: 0.45rem;
-        padding-top: 1rem;
-        border-top: 1px solid rgba(255, 255, 255, 0.12);
+        width: 18rem;
+        min-height: 100vh;
+        margin: 0;
+        position: fixed;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        border-radius: 0 1.5rem 1.5rem 0;
+        overflow-y: auto;
       }
 
       .content-shell {
-        flex: 1 1 auto;
-        min-width: 0;
+        margin-left: 18rem;
       }
 
       .content-shell__inner {
-        width: 100%;
         padding: 1rem;
       }
+    }
 
-      @media (min-width: 1024px) {
-        .app-shell {
-          align-items: flex-start;
-        }
-
-        .sidebar {
-          width: 18rem;
-          min-height: 100vh;
-          margin: 0;
-          position: fixed;
-          left: 0;
-          top: 0;
-          bottom: 0;
-          border-radius: 0 1.5rem 1.5rem 0;
-          overflow-y: auto;
-        }
-
-        .content-shell {
-          margin-left: 18rem;
-        }
-
-        .content-shell__inner {
-          padding: 1rem;
-        }
+    @media (max-width: 1023px) {
+      .app-shell {
+        flex-direction: column;
       }
+    }
 
-      @media (max-width: 1023px) {
-        .app-shell {
-          flex-direction: column;
-        }
-      }
+    /* DataTables Custom Overrides */
+    .datatable-wrapper .datatable-container {
+      overflow-x: hidden;
+    }
 
-      /* DataTables Custom Overrides */
-      .datatable-wrapper .datatable-container {
-        overflow-x: hidden;
-      }
+    #inventory-table {
+      table-layout: fixed;
+      min-width: 100%;
+    }
 
-      #inventory-table {
-        table-layout: fixed;
-        min-width: 100%;
-      }
+    #inventory-table th,
+    #inventory-table td {
+      white-space: nowrap;
+      word-break: normal;
+      vertical-align: top;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      text-align: center;
+    }
 
-      #inventory-table th,
-      #inventory-table td {
-        white-space: nowrap;
-        word-break: normal;
-        vertical-align: top;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        text-align: center;
-      }
+    #inventory-table th:nth-child(2),
+    #inventory-table td:nth-child(2) {
+      white-space: normal;
+      word-break: break-word;
+      overflow: visible;
+      text-overflow: clip;
+    }
 
-      #inventory-table th:nth-child(2),
-      #inventory-table td:nth-child(2) {
-        white-space: normal;
-        word-break: break-word;
-        overflow: visible;
-        text-overflow: clip;
-      }
+    #inventory-table th:nth-child(3),
+    #inventory-table td:nth-child(3) {
+      white-space: normal;
+      word-break: break-word;
+      overflow: visible;
+      text-overflow: clip;
+      text-align: center;
+    }
 
-      #inventory-table th:nth-child(3),
-      #inventory-table td:nth-child(3) {
-        white-space: normal;
-        word-break: break-word;
-        overflow: visible;
-        text-overflow: clip;
-        text-align: center;
-      }
+    #inventory-table th:nth-child(4),
+    #inventory-table td:nth-child(4) {
+      white-space: normal;
+      word-break: break-word;
+      overflow: visible;
+      text-overflow: clip;
+      text-align: center;
+    }
 
-      #inventory-table th:nth-child(4),
-      #inventory-table td:nth-child(4) {
-        white-space: normal;
-        word-break: break-word;
-        overflow: visible;
-        text-overflow: clip;
-        text-align: center;
-      }
+    #inventory-table th:nth-child(5),
+    #inventory-table td:nth-child(5) {
+      white-space: normal;
+      word-break: break-word;
+      overflow: visible;
+      text-overflow: clip;
+      text-align: center;
+    }
 
-      #inventory-table th:nth-child(5),
-      #inventory-table td:nth-child(5) {
-        white-space: normal;
-        word-break: break-word;
-        overflow: visible;
-        text-overflow: clip;
-        text-align: center;
-      }
+    #inventory-table td:nth-child(2) {
+      line-height: 1.25;
+    }
 
-      #inventory-table td:nth-child(2) {
-        line-height: 1.25;
-      }
+    #inventory-table td:nth-child(3) {
+      line-height: 1.25;
+      text-align: center;
+    }
 
-      #inventory-table td:nth-child(3) {
-        line-height: 1.25;
-        text-align: center;
-      }
+    #inventory-table td:nth-child(4) {
+      line-height: 1.25;
+      text-align: center;
+    }
 
-      #inventory-table td:nth-child(4) {
-        line-height: 1.25;
-        text-align: center;
-      }
+    #inventory-table td:nth-child(5) {
+      line-height: 1.25;
+      text-align: center;
+    }
 
-      #inventory-table td:nth-child(5) {
-        line-height: 1.25;
-        text-align: center;
-      }
+    #inventory-table th:nth-child(1),
+    #inventory-table td:nth-child(1) {
+      width: 5rem;
+      text-align: center;
+    }
 
-      #inventory-table th:nth-child(1),
-      #inventory-table td:nth-child(1) {
-        width: 5rem;
-        text-align: center;
-      }
+    #inventory-table th:nth-child(7),
+    #inventory-table td:nth-child(7) {
+      width: 5rem;
+    }
 
-      #inventory-table th:nth-child(7),
-      #inventory-table td:nth-child(7) {
-        width: 5rem;
-      }
+    #inventory-table th:nth-child(8),
+    #inventory-table td:nth-child(8) {
+      width: 9rem;
+    }
 
-      #inventory-table th:nth-child(8),
-      #inventory-table td:nth-child(8) {
-        width: 9rem;
-      }
+    #inventory-table th:nth-child(9),
+    #inventory-table td:nth-child(9) {
+      width: 9rem;
+    }
 
-      #inventory-table th:nth-child(9),
-      #inventory-table td:nth-child(9) {
-        width: 9rem;
-      }
+    #inventory-table th:nth-child(10),
+    #inventory-table td:nth-child(10) {
+      width: 12rem;
+    }
 
-      #inventory-table th:nth-child(10),
-      #inventory-table td:nth-child(10) {
-        width: 12rem;
-      }
+    #inventory-table th:nth-child(11),
+    #inventory-table td:nth-child(11) {
+      width: 9rem;
+    }
 
-      #inventory-table th:nth-child(11),
-      #inventory-table td:nth-child(11) {
-        width: 9rem;
-      }
+    #inventory-table th:nth-child(12),
+    #inventory-table td:nth-child(12) {
+      width: 12rem;
+    }
 
-      #inventory-table th:nth-child(12),
-      #inventory-table td:nth-child(12) {
-        width: 12rem;
-      }
+    #inventory-table td:nth-child(7),
+    #inventory-table td:nth-child(8),
+    #inventory-table td:nth-child(9),
+    #inventory-table td:nth-child(10),
+    #inventory-table td:nth-child(11),
+    #inventory-table td:nth-child(12) {
+      white-space: nowrap;
+    }
 
-      #inventory-table td:nth-child(7),
-      #inventory-table td:nth-child(8),
-      #inventory-table td:nth-child(9),
-      #inventory-table td:nth-child(10),
-      #inventory-table td:nth-child(11),
-      #inventory-table td:nth-child(12) {
-        white-space: nowrap;
-      }
+    #inventory-table td {
+      line-height: 1.1;
+    }
 
-      #inventory-table td {
-        line-height: 1.1;
-      }
-      .datatable-bottom {
-        padding: 1.25rem 1.5rem;
-        border-top: 1px solid rgb(226 232 240);
-      }
+    .datatable-bottom {
+      padding: 1.25rem 1.5rem;
+      border-top: 1px solid rgb(226 232 240);
+    }
 
-      .datatable-info {
-        color: rgb(71 85 105); /* slate-600 */
-      }
+    .datatable-info {
+      color: rgb(71 85 105);
+      /* slate-600 */
+    }
 
-      .datatable-input,
-      .datatable-selector {
-        border-radius: 0.875rem !important;
-        border: 1px solid rgb(226 232 240) !important;
-        background-color: rgb(255 255 255 / 0.95) !important;
-        color: rgb(15 23 42) !important;
-        padding: 0.75rem 0.9rem !important;
-        box-shadow: 0 10px 24px rgba(15, 23, 42, 0.06);
-      }
+    .datatable-input,
+    .datatable-selector {
+      border-radius: 0.875rem !important;
+      border: 1px solid rgb(226 232 240) !important;
+      background-color: rgb(255 255 255 / 0.95) !important;
+      color: rgb(15 23 42) !important;
+      padding: 0.75rem 0.9rem !important;
+      box-shadow: 0 10px 24px rgba(15, 23, 42, 0.06);
+    }
 
-      .datatable-input {
-        min-width: min(24rem, 100%);
-      }
+    .datatable-input {
+      min-width: min(24rem, 100%);
+    }
 
-      .datatable-pagination a {
-        border-radius: 0.75rem;
-      }
+    .datatable-top {
+      padding: 1.25rem 1.5rem !important;
+    }
 
-      .datatable-pagination .active a {
-        background: rgb(33 154 131) !important;
-        color: #fff !important;
-      }
-    </style>
-  </head>
-  <body class="min-h-screen font-sans text-slate-900 antialiased">
-    <div class="app-shell">
-      <aside class="sidebar">
-        <div class="sidebar__inner">
-          <div class="sidebar__brand">
-            <span class="sidebar__brand-mark">I</span>
-            <div class="sidebar__brand-text">ITS Inventory</div>
-          </div>
-          <nav class="sidebar__nav" aria-label="Inventory navigation">
-            <a class="sidebar__link sidebar__link--active" href="#top">
-              <span class="sidebar__icon">⌂</span>
-              <span>Dashboard</span>
-            </a>
-          </nav>
+    /* Hide the SimpleDataTables built-in search — we use our own inline search */
+    .datatable-top .datatable-search {
+      display: none !important;
+    }
 
-          <div class="sidebar__footer">
-            <a class="sidebar__link" href="/admin/">
-              <span class="sidebar__icon">⚙</span>
-              <span>Settings</span>
-            </a>
-            <a class="sidebar__link" href="/admin/logout/">
-              <span class="sidebar__icon">↩</span>
-              <span>Logout</span>
-            </a>
-          </div>
+    .datatable-pagination a {
+      border-radius: 0.75rem;
+    }
+
+    .datatable-pagination .active a {
+      background: rgb(33 154 131) !important;
+      color: #fff !important;
+    }
+  </style>
+</head>
+
+<body class="min-h-screen font-sans text-slate-900 antialiased">
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="sidebar__inner">
+        <div class="sidebar__brand">
+          <span class="sidebar__brand-mark">I</span>
+          <div class="sidebar__brand-text">ITS Inventory</div>
         </div>
-      </aside>
+        <nav class="sidebar__nav" aria-label="Inventory navigation">
+          <a class="sidebar__link sidebar__link--active" href="#top">
+            <span class="sidebar__icon">⌂</span>
+            <span>Dashboard</span>
+          </a>
+        </nav>
 
-      <div class="content-shell">
-        <main id="top" class="content-shell__inner">
-          <section class="backdrop-card mt-4 overflow-hidden rounded-3xl border border-white/70 shadow-soft ring-1 ring-slate-200/60">
-            <div class="flex flex-col gap-5 p-5 lg:p-6">
-          <!-- Header Row -->
-          <div
-            class="flex flex-col gap-5 lg:flex-row lg:items-center lg:justify-between"
-          >
-            <div class="space-y-5">
-              <div
-                class="inline-flex items-center gap-2 rounded-full border border-brand-100 bg-brand-50 px-4 py-2 text-xs font-semibold uppercase tracking-[0.22em] text-brand-700"
-              >
-                <span class="h-2 w-2 rounded-full bg-brand-500"></span>
-                ITS INVENTORY EQUIPMENT LIST
+        <div class="sidebar__footer">
+          <a class="sidebar__link" href="/admin/">
+            <span class="sidebar__icon">⚙</span>
+            <span>Settings</span>
+          </a>
+          <a class="sidebar__link" href="/admin/logout/">
+            <span class="sidebar__icon">↩</span>
+            <span>Logout</span>
+          </a>
+        </div>
+      </div>
+    </aside>
+
+    <div class="content-shell">
+      <main id="top" class="content-shell__inner">
+        <section
+          class="backdrop-card mt-4 overflow-hidden rounded-3xl border border-white/70 shadow-soft ring-1 ring-slate-200/60">
+          <div class="flex flex-col gap-5 p-5 lg:p-6">
+            <!-- Header Row -->
+            <div class="flex flex-col gap-5 lg:flex-row lg:items-center lg:justify-between">
+              <div class="space-y-5">
+                <div
+                  class="inline-flex items-center gap-2 rounded-full border border-brand-100 bg-brand-50 px-4 py-2 text-xs font-semibold uppercase tracking-[0.22em] text-brand-700">
+                  <span class="h-2 w-2 rounded-full bg-brand-500"></span>
+                  ITS INVENTORY EQUIPMENT LIST
+                </div>
+              </div>
+              <div class="flex flex-wrap items-center gap-3 lg:justify-end">
+                <form action="{% url 'inventory-upload' %}" method="POST" enctype="multipart/form-data" class="m-0">
+                  {% csrf_token %}
+                  <input type="file" name="excel_file" id="excel-upload-header" accept=".xlsx, .csv" class="hidden"
+                    onchange="this.form.submit()" />
+                  <label for="excel-upload-header"
+                    class="inline-flex cursor-pointer items-center rounded-full bg-yellow-500 px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-yellow-200">
+                    Upload Excel
+                  </label>
+                </form>
+
+                <a href="{% url 'inventory-create' %}"
+                  class="inline-flex items-center rounded-full bg-emerald-600 px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-emerald-700">Add
+                  record</a>
               </div>
             </div>
-            <div class="flex flex-wrap items-center gap-3 lg:justify-end">
-              <form
-                action="{% url 'inventory-upload' %}"
-                method="POST"
-                enctype="multipart/form-data"
-                class="m-0"
-              >
+
+            <!-- Statistics Cards -->
+            {% if inventory_items %}
+            <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-5">
+              <!-- Total Items Card -->
+              <div class="stats-card stats-card--total p-4">
+                <div class="relative flex h-full items-center justify-between gap-4">
+                  <div>
+                    <p class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-600">Total Items</p>
+                    <p class="mt-1 text-3xl font-bold text-slate-900">{{ stats.total }}</p>
+                  </div>
+                  <div
+                    class="stats-card__icon flex h-12 w-12 items-center justify-center rounded-2xl text-xl shadow-sm">📦
+                  </div>
+                </div>
+              </div>
+
+              <!-- Available Card -->
+              <div class="stats-card stats-card--available p-4">
+                <div class="relative flex h-full items-center justify-between gap-4">
+                  <div>
+                    <p class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-600">Available</p>
+                    <p class="mt-1 text-3xl font-bold text-emerald-700">{{ stats.available }}</p>
+                  </div>
+                  <div
+                    class="stats-card__icon flex h-12 w-12 items-center justify-center rounded-2xl text-xl shadow-sm">✓
+                  </div>
+                </div>
+              </div>
+
+              <!-- Under Repair Card -->
+              <div class="stats-card stats-card--repair p-4">
+                <div class="relative flex h-full items-center justify-between gap-4">
+                  <div>
+                    <p class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-600">Under Repair</p>
+                    <p class="mt-1 text-3xl font-bold text-amber-700">{{ stats.repair }}</p>
+                  </div>
+                  <div
+                    class="stats-card__icon flex h-12 w-12 items-center justify-center rounded-2xl text-xl shadow-sm">🔧
+                  </div>
+                </div>
+              </div>
+
+              <!-- Working Card -->
+              <div class="stats-card stats-card--working p-4">
+                <div class="relative flex h-full items-center justify-between gap-4">
+                  <div>
+                    <p class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-600">Working</p>
+                    <p class="mt-1 text-3xl font-bold text-sky-700">{{ stats.working }}</p>
+                  </div>
+                  <div
+                    class="stats-card__icon flex h-12 w-12 items-center justify-center rounded-2xl text-xl shadow-sm">▶
+                  </div>
+                </div>
+              </div>
+
+              <!-- Not Working Card -->
+              <div class="stats-card stats-card--not-working p-4">
+                <div class="relative flex h-full items-center justify-between gap-4">
+                  <div>
+                    <p class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-600">Not Working</p>
+                    <p class="mt-1 text-3xl font-bold text-rose-700">{{ stats.not_working }}</p>
+                  </div>
+                  <div
+                    class="stats-card__icon flex h-12 w-12 items-center justify-center rounded-2xl text-xl shadow-sm">✕
+                  </div>
+                </div>
+              </div>
+            </div>
+            {% endif %}
+          </div>
+        </section>
+
+        {% if messages %}
+        <section class="space-y-3">
+          {% for message in messages %}
+          <div
+            class="rounded-2xl border px-4 py-3 text-sm shadow-sm {% if message.tags == 'success' %}border-emerald-200 bg-emerald-50 text-emerald-800{% elif message.tags == 'warning' %}border-amber-200 bg-amber-50 text-amber-800{% else %}border-rose-200 bg-rose-50 text-rose-800{% endif %}">
+            {{ message }}
+          </div>
+          {% endfor %}
+        </section>
+        {% endif %}
+
+        {% if has_inventory_records %}
+        <section class="backdrop-card mt-4 rounded-3xl border border-white/70 shadow-soft ring-1 ring-slate-200/60">
+          <div class="p-4 lg:p-5">
+            <form method="GET" id="filter-form" class="grid gap-3 lg:grid-cols-[1fr_auto_auto_auto_auto] items-end">
+              <div class="space-y-2">
+                <label for="filter-search" class="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">
+                  Search
+                </label>
+                <div class="relative">
+                  <span class="absolute inset-y-0 left-3 flex items-center text-slate-400 pointer-events-none">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
+                      stroke="currentColor" stroke-width="2">
+                      <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M21 21l-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0z" />
+                    </svg>
+                  </span>
+                  <input id="filter-search" type="text" name="q" value="{{ search_query }}" placeholder="Search items…"
+                    class="datatable-selector w-full pl-9" />
+                </div>
+              </div>
+
+              <div class="space-y-2">
+                <label for="filter-status" class="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">
+                  Status
+                </label>
+                <select id="filter-status" name="status" class="datatable-selector w-full"
+                  onchange="this.form.submit()">
+                  <option value="">All Status</option>
+                  {% for option in status_options %}
+                  <option value="{{ option.value }}" {% if selected_status == option.value %}selected{% endif %}>{{
+                    option.label }}</option>
+                  {% endfor %}
+                </select>
+              </div>
+
+              <div class="space-y-2">
+                <label for="filter-location" class="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">
+                  Location
+                </label>
+                <select id="filter-location" name="location" class="datatable-selector w-full"
+                  onchange="this.form.submit()">
+                  <option value="">All Locations</option>
+                  {% for location in distinct_locations %}
+                  <option value="{{ location }}" {% if selected_location == location %}selected{% endif %}>{{ location }}
+                  </option>
+                  {% endfor %}
+                </select>
+              </div>
+
+              <div class="space-y-2">
+                <label for="filter-item-type" class="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">
+                  Item Type
+                </label>
+                <select id="filter-item-type" name="item_type" class="datatable-selector w-full"
+                  onchange="this.form.submit()">
+                  <option value="">All Item Types</option>
+                  {% for item_type in distinct_item_types %}
+                  <option value="{{ item_type }}" {% if selected_item_type == item_type %}selected{% endif %}>{{ item_type
+                    }}</option>
+                  {% endfor %}
+                </select>
+              </div>
+
+              {% if selected_status or selected_location or selected_item_type or search_query %}
+              <div class="flex items-end pb-0.5">
+                <a href="{% url 'inventory-list' %}"
+                  class="inline-flex items-center gap-1 rounded-full border border-slate-200 bg-white px-3 py-2.5 text-xs font-semibold text-slate-600 shadow-sm transition hover:bg-slate-50 whitespace-nowrap">
+                  ✕ Clear
+                </a>
+              </div>
+              {% endif %}
+
+              {% if current_sort %}
+              <input type="hidden" name="sort" value="{{ current_sort }}" />
+              {% endif %}
+              {% if current_direction %}
+              <input type="hidden" name="dir" value="{{ current_direction }}" />
+              {% endif %}
+            </form>
+          </div>
+
+          <hr class="border-slate-200" />
+
+          {% if inventory_items %}
+          <div class="overflow-x-auto">
+            <table id="inventory-table" class="w-full text-sm text-slate-700 whitespace-nowrap">
+              <thead class="bg-slate-50 text-xs uppercase tracking-[0.18em] text-slate-500">
+                <tr>
+                  <th scope="col" class="px-2 py-2 font-semibold w-20">
+                    <a href="{{ sort_urls.no }}"
+                      class="inline-flex w-full items-center justify-center hover:text-brand-700">No.</a>
+                  </th>
+                  <th scope="col" class="px-2 py-2 font-semibold w-[18rem]">
+                    <a href="{{ sort_urls.item_type }}"
+                      class="inline-flex w-full items-center justify-center hover:text-brand-700">Item</a>
+                  </th>
+                  <th scope="col" class="px-2 py-2 font-semibold w-[24rem]">
+                    <a href="{{ sort_urls.item_description }}"
+                      class="inline-flex w-full items-center justify-center hover:text-brand-700">Description</a>
+                  </th>
+                  <th scope="col" class="px-2 py-2 font-semibold w-[14rem]">
+                    <a href="{{ sort_urls.brand }}"
+                      class="inline-flex w-full items-center justify-center hover:text-brand-700">Brand</a>
+                  </th>
+                  <th scope="col" class="px-2 py-2 font-semibold w-[14rem]">
+                    <a href="{{ sort_urls.model }}"
+                      class="inline-flex w-full items-center justify-center hover:text-brand-700">Model</a>
+                  </th>
+                  <th scope="col" class="px-2 py-2 font-semibold w-[14rem]">
+                    <a href="{{ sort_urls.serial_number }}"
+                      class="inline-flex w-full items-center justify-center hover:text-brand-700">Serial Number</a>
+                  </th>
+                  <th scope="col" class="px-2 py-2 font-semibold w-14">
+                    <a href="{{ sort_urls.quantity }}"
+                      class="inline-flex w-full items-center justify-center hover:text-brand-700">Qty</a>
+                  </th>
+                  <th scope="col" class="px-2 py-2 font-semibold w-24">
+                    <a href="{{ sort_urls.date_inventory }}"
+                      class="inline-flex w-full items-center justify-center hover:text-brand-700">Inv Date</a>
+                  </th>
+                  <th scope="col" class="px-2 py-2 font-semibold w-24">
+                    <a href="{{ sort_urls.date_disposal }}"
+                      class="inline-flex w-full items-center justify-center hover:text-brand-700">Disp Date</a>
+                  </th>
+                  <th scope="col" class="px-2 py-2 font-semibold w-[12rem]">
+                    <a href="{{ sort_urls.location }}"
+                      class="inline-flex w-full items-center justify-center hover:text-brand-700">Location</a>
+                  </th>
+                  <th scope="col" class="px-2 py-2 font-semibold w-28">
+                    <a href="{{ sort_urls.status }}"
+                      class="inline-flex w-full items-center justify-center hover:text-brand-700">Status</a>
+                  </th>
+                  <th scope="col" class="px-2 py-2 font-semibold w-[16rem]">
+                    <a href="{{ sort_urls.defect_description }}"
+                      class="inline-flex w-full items-center justify-center hover:text-brand-700">Defect</a>
+                  </th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-200 bg-white">
+                {% for item in inventory_items %}
+                <tr class="transition-colors hover:bg-slate-50/80">
+                  <td class="px-2 py-2 align-middle font-semibold text-slate-900 text-xs">
+                    {{ forloop.counter }}
+                  </td>
+                  <td class="px-2 py-2 align-middle">
+                    <a href="{% url 'inventory-edit' item.pk %}"
+                      class="block w-full text-xs font-semibold leading-tight text-slate-900 transition hover:text-brand-700 hover:underline"
+                      title="Edit {{ item.item_type }}">
+                      {% firstof item.item_type "-" %}
+                    </a>
+                  </td>
+                  <td class="px-2 py-2 align-middle text-xs text-slate-600" title="{{ item.item_description }}">
+                    <span class="block w-full text-center">
+                      {% firstof item.item_description "-" %}
+                    </span>
+                  </td>
+                  <td class="px-2 py-2 align-middle text-xs font-medium text-slate-800">
+                    <span class="block w-full text-center">
+                      {% firstof item.brand "-" %}
+                    </span>
+                  </td>
+                  <td class="px-2 py-2 align-middle text-xs font-medium text-slate-800">
+                    <span class="block w-full text-center">
+                      {% firstof item.model "-" %}
+                    </span>
+                  </td>
+                  <td class="px-2 py-2 align-middle font-mono text-[11px] text-slate-700"
+                    title="{{ item.serial_number }}">
+                    {% firstof item.serial_number "-" %}
+                  </td>
+                  <td class="px-2 py-2 align-middle text-xs font-semibold text-slate-900">
+                    {% firstof item.quantity "-" %}
+                  </td>
+                  <td class="px-2 py-2 align-middle text-xs text-slate-700">
+                    {{ item.date_inventory|date:"M d, Y" }}
+                  </td>
+                  <td class="px-2 py-2 align-middle text-xs text-slate-700">
+                    {{ item.date_disposal|date:"M d, Y"|default:"-" }}
+                  </td>
+                  <td class="px-2 py-2 align-middle text-xs text-slate-700" title="{{ item.location }}">
+                    {% firstof item.location "-" %}
+                  </td>
+                  <td class="px-2 py-2 align-middle">
+                    {% if item.status == 'available' %}
+                    <span
+                      class="inline-flex items-center rounded-full bg-emerald-100 px-2 py-0.5 text-[9px] uppercase tracking-wider font-semibold text-emerald-800 ring-1 ring-emerald-200">{{
+                      item.get_status_display }}</span>
+                    {% elif item.status == 'in_use' %}
+                    <span
+                      class="inline-flex items-center rounded-full bg-sky-100 px-2 py-0.5 text-[9px] uppercase tracking-wider font-semibold text-sky-800 ring-1 ring-sky-200">{{
+                      item.get_status_display }}</span>
+                    {% elif item.status == 'repair' %}
+                    <span
+                      class="inline-flex items-center rounded-full bg-amber-100 px-2 py-0.5 text-[9px] uppercase tracking-wider font-semibold text-amber-800 ring-1 ring-amber-200">{{
+                      item.get_status_display }}</span>
+                    {% else %}
+                    <span
+                      class="inline-flex items-center rounded-full bg-rose-100 px-2 py-0.5 text-[9px] uppercase tracking-wider font-semibold text-rose-800 ring-1 ring-rose-200">{{
+                      item.get_status_display }}</span>
+                    {% endif %}
+                  </td>
+                  <td class="px-2 py-2 align-middle text-xs text-slate-600" title="{{ item.defect_description }}">
+                    {% if item.defect_description %} {{ item.defect_description }}
+                    {% else %}
+                    <span class="text-slate-400">-</span>
+                    {% endif %}
+                  </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+          {% else %}
+          <div class="mx-auto flex max-w-md flex-col items-center gap-3 p-10 text-center">
+            <div
+              class="flex h-16 w-16 items-center justify-center rounded-2xl bg-brand-50 text-2xl text-brand-700 ring-1 ring-brand-100">
+              0
+            </div>
+            <h2 class="text-2xl font-bold tracking-tight text-slate-900">
+              No items match the selected filters.
+            </h2>
+            <p class="text-base leading-7 text-slate-600 mb-2">
+              Clear the filters to show all inventory records again.
+            </p>
+
+            <a href="{% url 'inventory-list' %}"
+              class="inline-flex items-center rounded-full bg-slate-800 px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-slate-700">
+              Clear Filters
+            </a>
+          </div>
+          {% endif %}
+        </section>
+        {% else %}
+        <section
+          class="backdrop-card rounded-3xl border border-white/70 p-10 text-center shadow-soft ring-1 ring-slate-200/60">
+          <div class="mx-auto flex max-w-md flex-col items-center gap-3">
+            <div
+              class="flex h-16 w-16 items-center justify-center rounded-2xl bg-brand-50 text-2xl text-brand-700 ring-1 ring-brand-100">
+              0
+            </div>
+            <h2 class="text-2xl font-bold tracking-tight text-slate-900">
+              No inventory records yet.
+            </h2>
+            <p class="text-base leading-7 text-slate-600 mb-2">
+              Add items to the Inventory model and they will appear here
+              automatically.
+            </p>
+
+            <div class="flex flex-wrap items-center justify-center gap-3 mt-2">
+              <form action="{% url 'inventory-upload' %}" method="POST" enctype="multipart/form-data" class="m-0">
                 {% csrf_token %}
-                <input
-                  type="file"
-                  name="excel_file"
-                  id="excel-upload-header"
-                  accept=".xlsx, .csv"
-                  class="hidden"
-                  onchange="this.form.submit()"
-                />
-                <label
-                  for="excel-upload-header"
-                  class="inline-flex cursor-pointer items-center rounded-full bg-yellow-500 px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-yellow-200"
-                >
+                <input type="file" name="excel_file" id="excel-upload-empty" accept=".xlsx, .csv" class="hidden"
+                  onchange="this.form.submit()" />
+                <label for="excel-upload-empty"
+                  class="inline-flex cursor-pointer items-center rounded-full bg-slate-800 px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-slate-700">
                   Upload Excel
                 </label>
               </form>
 
-              <a
-                href="{% url 'inventory-create' %}"
-                class="inline-flex items-center rounded-full bg-emerald-600 px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-emerald-700"
-                >Add record</a
-              >
+              <a href="{% url 'inventory-create' %}"
+                class="inline-flex items-center rounded-full bg-emerald-600 px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-emerald-700">
+                Add record
+              </a>
             </div>
           </div>
-
-          <!-- Statistics Cards -->
-          {% if inventory_items %}
-          <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-5">
-            <!-- Total Items Card -->
-            <div class="stats-card stats-card--total p-4">
-              <div class="relative flex h-full items-center justify-between gap-4">
-                <div>
-                  <p class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-600">Total Items</p>
-                  <p class="mt-1 text-3xl font-bold text-slate-900">{{ stats.total }}</p>
-                </div>
-                <div class="stats-card__icon flex h-12 w-12 items-center justify-center rounded-2xl text-xl shadow-sm">📦</div>
-              </div>
-            </div>
-
-            <!-- Available Card -->
-            <div class="stats-card stats-card--available p-4">
-              <div class="relative flex h-full items-center justify-between gap-4">
-                <div>
-                  <p class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-600">Available</p>
-                  <p class="mt-1 text-3xl font-bold text-emerald-700">{{ stats.available }}</p>
-                </div>
-                <div class="stats-card__icon flex h-12 w-12 items-center justify-center rounded-2xl text-xl shadow-sm">✓</div>
-              </div>
-            </div>
-
-            <!-- Under Repair Card -->
-            <div class="stats-card stats-card--repair p-4">
-              <div class="relative flex h-full items-center justify-between gap-4">
-                <div>
-                  <p class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-600">Under Repair</p>
-                  <p class="mt-1 text-3xl font-bold text-amber-700">{{ stats.repair }}</p>
-                </div>
-                <div class="stats-card__icon flex h-12 w-12 items-center justify-center rounded-2xl text-xl shadow-sm">🔧</div>
-              </div>
-            </div>
-
-            <!-- Working Card -->
-            <div class="stats-card stats-card--working p-4">
-              <div class="relative flex h-full items-center justify-between gap-4">
-                <div>
-                  <p class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-600">Working</p>
-                  <p class="mt-1 text-3xl font-bold text-sky-700">{{ stats.working }}</p>
-                </div>
-                <div class="stats-card__icon flex h-12 w-12 items-center justify-center rounded-2xl text-xl shadow-sm">▶</div>
-              </div>
-            </div>
-
-            <!-- Not Working Card -->
-            <div class="stats-card stats-card--not-working p-4">
-              <div class="relative flex h-full items-center justify-between gap-4">
-                <div>
-                  <p class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-600">Not Working</p>
-                  <p class="mt-1 text-3xl font-bold text-rose-700">{{ stats.not_working }}</p>
-                </div>
-                <div class="stats-card__icon flex h-12 w-12 items-center justify-center rounded-2xl text-xl shadow-sm">✕</div>
-              </div>
-            </div>
-          </div>
-          {% endif %}
-        </div>
-      </section>
-
-      {% if messages %}
-      <section class="space-y-3">
-        {% for message in messages %}
-        <div
-          class="rounded-2xl border px-4 py-3 text-sm shadow-sm {% if message.tags == 'success' %}border-emerald-200 bg-emerald-50 text-emerald-800{% elif message.tags == 'warning' %}border-amber-200 bg-amber-50 text-amber-800{% else %}border-rose-200 bg-rose-50 text-rose-800{% endif %}"
-        >
-          {{ message }}
-        </div>
-        {% endfor %}
-      </section>
-      {% endif %}
-
-      {% if inventory_items %}
-      <section
-        class="backdrop-card overflow-hidden rounded-3xl border border-white/70 shadow-soft ring-1 ring-slate-200/60"
-      >
-        <table
-          id="inventory-table"
-          class="w-full text-sm text-slate-700 whitespace-nowrap"
-        >
-          <thead
-            class="bg-slate-50 text-xs uppercase tracking-[0.18em] text-slate-500"
-          >
-            <tr>
-              <th scope="col" class="px-2 py-2 font-semibold w-20">No.</th>
-              <th scope="col" class="px-2 py-2 font-semibold w-[18rem]">Item</th>
-              <th scope="col" class="px-2 py-2 font-semibold w-[24rem]">Description</th>
-              <th scope="col" class="px-2 py-2 font-semibold w-[14rem]">Brand</th>
-              <th scope="col" class="px-2 py-2 font-semibold w-[14rem]">Model</th>
-              <th scope="col" class="px-2 py-2 font-semibold w-[14rem]">Serial Number</th>
-              <th scope="col" class="px-2 py-2 font-semibold w-14">Qty</th>
-              <th scope="col" class="px-2 py-2 font-semibold w-24">Inv Date</th>
-              <th scope="col" class="px-2 py-2 font-semibold w-24">Disp Date</th>
-              <th scope="col" class="px-2 py-2 font-semibold w-[12rem]">Location</th>
-              <th scope="col" class="px-2 py-2 font-semibold w-28">Status</th>
-              <th scope="col" class="px-2 py-2 font-semibold w-[16rem]">Defect</th>
-            </tr>
-          </thead>
-          <tbody class="divide-y divide-slate-200 bg-white">
-            {% for item in inventory_items %}
-            <tr class="transition-colors hover:bg-slate-50/80">
-              <td class="px-2 py-2 align-middle font-semibold text-slate-900 text-xs">
-                {{ forloop.counter }}
-              </td>
-              <td class="px-2 py-2 align-middle">
-                <a
-                  href="{% url 'inventory-edit' item.pk %}"
-                  class="block w-full text-xs font-semibold leading-tight text-slate-900 transition hover:text-brand-700 hover:underline"
-                  title="Edit {{ item.item_type }}"
-                >
-                  {% firstof item.item_type "-" %}
-                </a>
-              </td>
-              <td class="px-2 py-2 align-middle text-xs text-slate-600" title="{{ item.item_description }}">
-                <span class="block w-full text-center">
-                  {% firstof item.item_description "-" %}
-                </span>
-              </td>
-              <td class="px-2 py-2 align-middle text-xs font-medium text-slate-800">
-                <span class="block w-full text-center">
-                  {% firstof item.brand "-" %}
-                </span>
-              </td>
-              <td class="px-2 py-2 align-middle text-xs font-medium text-slate-800">
-                <span class="block w-full text-center">
-                  {% firstof item.model "-" %}
-                </span>
-              </td>
-              <td class="px-2 py-2 align-middle font-mono text-[11px] text-slate-700" title="{{ item.serial_number }}">
-                {% firstof item.serial_number "-" %}
-              </td>
-              <td class="px-2 py-2 align-middle text-xs font-semibold text-slate-900">
-                {% firstof item.quantity "-" %}
-              </td>
-              <td class="px-2 py-2 align-middle text-xs text-slate-700">
-                {{ item.date_inventory|date:"M d, Y" }}
-              </td>
-              <td class="px-2 py-2 align-middle text-xs text-slate-700">
-                {{ item.date_disposal|date:"M d, Y"|default:"-" }}
-              </td>
-              <td class="px-2 py-2 align-middle text-xs text-slate-700" title="{{ item.location }}">
-                {% firstof item.location "-" %}
-              </td>
-              <td class="px-2 py-2 align-middle">
-                {% if item.status == 'available' %}
-                <span
-                  class="inline-flex items-center rounded-full bg-emerald-100 px-2 py-0.5 text-[9px] uppercase tracking-wider font-semibold text-emerald-800 ring-1 ring-emerald-200"
-                  >{{ item.get_status_display }}</span
-                >
-                {% elif item.status == 'in_use' %}
-                <span
-                  class="inline-flex items-center rounded-full bg-sky-100 px-2 py-0.5 text-[9px] uppercase tracking-wider font-semibold text-sky-800 ring-1 ring-sky-200"
-                  >{{ item.get_status_display }}</span
-                >
-                {% elif item.status == 'repair' %}
-                <span
-                  class="inline-flex items-center rounded-full bg-amber-100 px-2 py-0.5 text-[9px] uppercase tracking-wider font-semibold text-amber-800 ring-1 ring-amber-200"
-                  >{{ item.get_status_display }}</span
-                >
-                {% else %}
-                <span
-                  class="inline-flex items-center rounded-full bg-rose-100 px-2 py-0.5 text-[9px] uppercase tracking-wider font-semibold text-rose-800 ring-1 ring-rose-200"
-                  >{{ item.get_status_display }}</span
-                >
-                {% endif %}
-              </td>
-              <td class="px-2 py-2 align-middle text-xs text-slate-600" title="{{ item.defect_description }}">
-                {% if item.defect_description %} {{ item.defect_description }}
-                {% else %}
-                <span class="text-slate-400">-</span>
-                {% endif %}
-              </td>
-            </tr>
-            {% endfor %}
-          </tbody>
-        </table>
-      </section>
-      {% else %}
-      <section
-        class="backdrop-card rounded-3xl border border-white/70 p-10 text-center shadow-soft ring-1 ring-slate-200/60"
-      >
-        <div class="mx-auto flex max-w-md flex-col items-center gap-3">
-          <div
-            class="flex h-16 w-16 items-center justify-center rounded-2xl bg-brand-50 text-2xl text-brand-700 ring-1 ring-brand-100"
-          >
-            0
-          </div>
-          <h2 class="text-2xl font-bold tracking-tight text-slate-900">
-            No inventory records yet.
-          </h2>
-          <p class="text-base leading-7 text-slate-600 mb-2">
-            Add items to the Inventory model and they will appear here
-            automatically.
-          </p>
-
-          <div class="flex flex-wrap items-center justify-center gap-3 mt-2">
-            <form
-              action="{% url 'inventory-upload' %}"
-              method="POST"
-              enctype="multipart/form-data"
-              class="m-0"
-            >
-              {% csrf_token %}
-              <input
-                type="file"
-                name="excel_file"
-                id="excel-upload-empty"
-                accept=".xlsx, .csv"
-                class="hidden"
-                onchange="this.form.submit()"
-              />
-              <label
-                for="excel-upload-empty"
-                class="inline-flex cursor-pointer items-center rounded-full bg-slate-800 px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-slate-700"
-              >
-                Upload Excel
-              </label>
-            </form>
-
-            <a
-              href="{% url 'inventory-create' %}"
-              class="inline-flex items-center rounded-full bg-emerald-600 px-4 py-2 text-sm font-semibold text-white shadow-m transition hover:bg-emerald-700"
-            >
-              Add record
-            </a>
-          </div>
-        </div>
-      </section>
-      {% endif %}
-        </main>
-      </div>
+        </section>
+        {% endif %}
+      </main>
     </div>
+  </div>
 
-<script src="https://cdn.jsdelivr.net/npm/simple-datatables@9.0.3"></script>
-<script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"></script>
-<script>
-  document.addEventListener("DOMContentLoaded", () => {
-    const table = document.querySelector("#inventory-table");
-    let dataTable;
+  <script src="https://cdn.jsdelivr.net/npm/simple-datatables@9.0.3"></script>
+  <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const table = document.querySelector("#inventory-table");
+      let dataTable;
 
-    if (table && window.simpleDatatables) {
-      dataTable = new simpleDatatables.DataTable(table, {
-        searchable: true,
-        sortable: false,
-        fixedHeight: true,
-        perPage: 50,
-        perPageSelect: false,
-      });
-    }
-  });
-</script>
-  </body>
+      if (table && window.simpleDatatables) {
+        dataTable = new simpleDatatables.DataTable(table, {
+          searchable: true,
+          sortable: false,
+          fixedHeight: true,
+          perPage: 50,
+          perPageSelect: false,
+        });
+      }
+    });
+  </script>
+</body>
+
 </html>
