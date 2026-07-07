@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="en">
 
 <head>
@@ -279,117 +279,92 @@
     }
 
     #inventory-table {
-      table-layout: fixed;
-      min-width: 1200px;
+      table-layout: auto;
+      min-width: 1100px;
+      width: 100%;
     }
 
     #inventory-table th,
     #inventory-table td {
       white-space: nowrap;
-      word-break: normal;
       vertical-align: top;
-      overflow: hidden;
-      text-overflow: ellipsis;
       text-align: center;
+      padding: 0.5rem;
     }
 
+    /* Item col — allow wrapping */
     #inventory-table th:nth-child(2),
     #inventory-table td:nth-child(2) {
       white-space: normal;
       word-break: break-word;
-      overflow: visible;
-      text-overflow: clip;
+      min-width: 7rem;
+      max-width: 10rem;
     }
 
+    /* Description col — allow wrapping */
     #inventory-table th:nth-child(3),
     #inventory-table td:nth-child(3) {
       white-space: normal;
       word-break: break-word;
-      overflow: visible;
-      text-overflow: clip;
-      text-align: center;
+      min-width: 10rem;
+      max-width: 16rem;
     }
 
+    /* Brand, Model */
     #inventory-table th:nth-child(4),
-    #inventory-table td:nth-child(4) {
-      white-space: normal;
-      word-break: break-word;
-      overflow: visible;
-      text-overflow: clip;
-      text-align: center;
-    }
-
+    #inventory-table td:nth-child(4),
     #inventory-table th:nth-child(5),
     #inventory-table td:nth-child(5) {
+      min-width: 5.5rem;
+      max-width: 9rem;
       white-space: normal;
       word-break: break-word;
-      overflow: visible;
-      text-overflow: clip;
-      text-align: center;
     }
 
-    #inventory-table td:nth-child(2) {
-      line-height: 1.25;
-    }
-
-    #inventory-table td:nth-child(3) {
-      line-height: 1.25;
-      text-align: center;
-    }
-
-    #inventory-table td:nth-child(4) {
-      line-height: 1.25;
-      text-align: center;
-    }
-
-    #inventory-table td:nth-child(5) {
-      line-height: 1.25;
-      text-align: center;
-    }
-
+    /* No. col */
     #inventory-table th:nth-child(1),
     #inventory-table td:nth-child(1) {
-      width: 5rem;
-      text-align: center;
+      min-width: 2.8rem;
+      width: 3rem;
     }
 
+    /* Qty */
     #inventory-table th:nth-child(7),
     #inventory-table td:nth-child(7) {
-      width: 5rem;
+      min-width: 2.8rem;
+      width: 3rem;
     }
 
+    /* Inv Date, Disp Date */
     #inventory-table th:nth-child(8),
-    #inventory-table td:nth-child(8) {
-      width: 9rem;
-    }
-
+    #inventory-table td:nth-child(8),
     #inventory-table th:nth-child(9),
     #inventory-table td:nth-child(9) {
-      width: 9rem;
+      min-width: 6.5rem;
     }
 
+    /* Location */
     #inventory-table th:nth-child(10),
     #inventory-table td:nth-child(10) {
-      width: 12rem;
+      min-width: 8rem;
+      max-width: 11rem;
+      white-space: normal;
+      word-break: break-word;
     }
 
+    /* Status */
     #inventory-table th:nth-child(11),
     #inventory-table td:nth-child(11) {
-      width: 9rem;
+      min-width: 6.5rem;
     }
 
+    /* Defect */
     #inventory-table th:nth-child(12),
     #inventory-table td:nth-child(12) {
-      width: 12rem;
-    }
-
-    #inventory-table td:nth-child(7),
-    #inventory-table td:nth-child(8),
-    #inventory-table td:nth-child(9),
-    #inventory-table td:nth-child(10),
-    #inventory-table td:nth-child(11),
-    #inventory-table td:nth-child(12) {
-      white-space: nowrap;
+      min-width: 7rem;
+      max-width: 12rem;
+      white-space: normal;
+      word-break: break-word;
     }
 
     #inventory-table td {
@@ -581,7 +556,6 @@
           {% endfor %}
         </section>
         {% endif %}
-
         {% if has_inventory_records %}
         <section class="backdrop-card mt-4 rounded-3xl border border-white/70 shadow-soft ring-1 ring-slate-200/60">
           <div class="p-4 lg:p-5">
@@ -623,19 +597,22 @@
                   onchange="this.form.submit()">
                   <option value="">All Locations</option>
                   {% for location in distinct_locations %}
-                  <option value="{{ location }}" {% if selected_location == location %}selected{% endif %}>{{ location }}</option>
+                  <option value="{{ location }}" {% if selected_location == location %}selected{% endif %}>{{ location }}
+                  </option>
                   {% endfor %}
                 </select>
               </div>
               <div class="space-y-2">
-                <label for="filter-item-type" class="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500 text-center block">
+                <label for="filter-item-type"
+                  class="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500 text-center block">
                   Item Type
                 </label>
                 <select id="filter-item-type" name="item_type" class="datatable-selector w-full text-center"
                   onchange="this.form.submit()">
                   <option value="">All Item Types</option>
                   {% for item_type in distinct_item_types %}
-                  <option value="{{ item_type }}" {% if selected_item_type == item_type %}selected{% endif %}>{{ item_type }}</option>
+                  <option value="{{ item_type }}" {% if selected_item_type == item_type %}selected{% endif %}>{{ item_type
+                    }}</option>
                   {% endfor %}
                 </select>
                 <select id="filter-item-type" name="item_type" class="datatable-selector w-full text-center"
@@ -665,23 +642,23 @@
           </div>
           <hr class="border-slate-200" />
           {% if inventory_items %}
-          <div class="overflow-x-auto">
+          <div class="overflow-hidden">
             <table id="inventory-table" class="w-full text-sm text-slate-700 whitespace-nowrap">
               <thead class="bg-slate-50 text-xs uppercase tracking-[0.18em] text-slate-500">
                 <tr>
-                  <th scope="col" class="px-2 py-2 font-semibold w-20">
+                  <th scope="col" class="px-2 py-2 font-semibold">
                     <a href="{{ sort_urls.no }}"
                       class="inline-flex w-full items-center justify-center hover:text-brand-700">No.</a>
                   </th>
-                  <th scope="col" class="px-2 py-2 font-semibold w-[18rem]">
+                  <th scope="col" class="px-2 py-2 font-semibold">
                     <a href="{{ sort_urls.item_type }}"
                       class="inline-flex w-full items-center justify-center hover:text-brand-700">Item</a>
                   </th>
-                  <th scope="col" class="px-2 py-2 font-semibold w-[24rem]">
+                  <th scope="col" class="px-2 py-2 font-semibold">
                     <a href="{{ sort_urls.item_description }}"
                       class="inline-flex w-full items-center justify-center hover:text-brand-700">Description</a>
                   </th>
-                  <th scope="col" class="px-2 py-2 font-semibold w-[14rem]">
+                  <th scope="col" class="px-2 py-2 font-semibold">
                     <a href="{{ sort_urls.brand }}"
                       class="inline-flex w-full items-center justify-center hover:text-brand-700">Brand</a>
                   </th>
@@ -693,7 +670,7 @@
                     <a href="{{ sort_urls.serial_number }}"
                       class="inline-flex w-full items-center justify-center hover:text-brand-700">Serial Number</a>
                   </th>
-                  <th scope="col" class="px-2 py-2 font-semibold w-14">
+                  <th scope="col" class="px-2 py-2 font-semibold">
                     <a href="{{ sort_urls.quantity }}"
                       class="inline-flex w-full items-center justify-center hover:text-brand-700">Qty</a>
                   </th>
@@ -705,15 +682,15 @@
                     <a href="{{ sort_urls.date_disposal }}"
                       class="inline-flex w-full items-center justify-center hover:text-brand-700">Disp Date</a>
                   </th>
-                  <th scope="col" class="px-2 py-2 font-semibold w-[12rem]">
+                  <th scope="col" class="px-2 py-2 font-semibold">
                     <a href="{{ sort_urls.location }}"
                       class="inline-flex w-full items-center justify-center hover:text-brand-700">Location</a>
                   </th>
-                  <th scope="col" class="px-2 py-2 font-semibold w-28">
+                  <th scope="col" class="px-2 py-2 font-semibold">
                     <a href="{{ sort_urls.status }}"
                       class="inline-flex w-full items-center justify-center hover:text-brand-700">Status</a>
                   </th>
-                  <th scope="col" class="px-2 py-2 font-semibold w-[16rem]">
+                  <th scope="col" class="px-2 py-2 font-semibold">
                     <a href="{{ sort_urls.defect_description }}"
                       class="inline-flex w-full items-center justify-center hover:text-brand-700">Defect</a>
                   </th>
