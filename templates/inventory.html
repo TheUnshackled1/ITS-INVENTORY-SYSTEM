@@ -270,12 +270,17 @@
 
     /* DataTables Custom Overrides */
     .datatable-wrapper .datatable-container {
-      overflow-x: hidden;
+      overflow-x: auto;
+    }
+
+    /* Hide raw table until simple-datatables initializes (prevents layout flash) */
+    #inventory-table:not(.datatable-table) {
+      visibility: hidden;
     }
 
     #inventory-table {
       table-layout: fixed;
-      min-width: 100%;
+      min-width: 1200px;
     }
 
     #inventory-table th,
@@ -582,7 +587,8 @@
           <div class="p-4 lg:p-5">
             <form method="GET" id="filter-form" class="grid gap-3 lg:grid-cols-[1fr_auto_auto_auto_auto] items-end">
               <div class="space-y-2">
-                <label for="filter-search" class="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500 text-center block">
+                <label for="filter-search"
+                  class="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500 text-center block">
                   Search
                 </label>
                 <div class="relative">
@@ -599,21 +605,20 @@
               </div>
 
               <div class="space-y-2">
-                <label for="filter-status" class="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500 text-center block">
+                <label for="filter-status"
+                  class="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500 text-center block">
                   Status
                 </label>
                 <select id="filter-status" name="status" class="datatable-selector w-full text-center"
                   onchange="this.form.submit()">
                   <option value="">All Status</option>
                   {% for option in status_options %}
-                  <option value="{{ option.value }}" {% if selected_status == option.value %}selected{% endif %}>{{ option.label }}</option>
+                  <option value="{{ option.value }}" {% if selected_status == option.value %}selected{% endif %}>{{
+                    option.label }}</option>
                   {% endfor %}
                 </select>
               </div>
               <div class="space-y-2">
-                <label for="filter-location" class="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500 text-center block">
-                  Location
-                </label>
                 <select id="filter-location" name="location" class="datatable-selector w-full text-center"
                   onchange="this.form.submit()">
                   <option value="">All Locations</option>
@@ -631,6 +636,14 @@
                   <option value="">All Item Types</option>
                   {% for item_type in distinct_item_types %}
                   <option value="{{ item_type }}" {% if selected_item_type == item_type %}selected{% endif %}>{{ item_type }}</option>
+                  {% endfor %}
+                </select>
+                <select id="filter-item-type" name="item_type" class="datatable-selector w-full text-center"
+                  onchange="this.form.submit()">
+                  <option value="">All Item Types</option>
+                  {% for item_type in distinct_item_types %}
+                  <option value="{{ item_type }}" {% if selected_item_type == item_type %}selected{% endif %}>{{ item_type
+                    }}</option>
                   {% endfor %}
                 </select>
               </div>
@@ -834,7 +847,6 @@
       </main>
     </div>
   </div>
-
   <script src="https://cdn.jsdelivr.net/npm/simple-datatables@9.0.3"></script>
   <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"></script>
   <script>
