@@ -606,8 +606,7 @@
                   onchange="this.form.submit()">
                   <option value="">All Status</option>
                   {% for option in status_options %}
-                  <option value="{{ option.value }}" {% if selected_status == option.value %}selected{% endif %}>{{
-                    option.label }}</option>
+                  <option value="{{ option.value }}" {% if selected_status == option.value %}selected{% endif %}>{{ option.label }}</option>
                   {% endfor %}
                 </select>
               </div>
