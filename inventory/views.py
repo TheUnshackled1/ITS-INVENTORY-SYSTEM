@@ -161,6 +161,17 @@ def inventory_list(request):
     else:
         inventory_items = inventory_items.order_by('sort_item_type', 'serial_number', 'pk')
 
+    # Assign original row numbers based on default overall order
+    overall_pks = Inventory.objects.annotate(
+        sort_item_type=Lower(Trim('item_type')),
+        sort_serial_number=Lower(Trim('serial_number'))
+    ).order_by('sort_item_type', 'sort_serial_number', 'pk').values_list('pk', flat=True)
+    pk_to_no = {pk: i + 1 for i, pk in enumerate(overall_pks)}
+    
+    inventory_items = list(inventory_items)
+    for item in inventory_items:
+        item.original_no = pk_to_no.get(item.pk, '')
+
     distinct_item_types = get_distinct_text_values(Inventory.objects.all(), 'item_type', 'trimmed_item_type')
     distinct_locations = get_distinct_text_values(Inventory.objects.all(), 'location', 'trimmed_location')
     distinct_status_values = [

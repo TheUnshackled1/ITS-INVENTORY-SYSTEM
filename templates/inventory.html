@@ -779,7 +779,7 @@
                 {% for item in inventory_items %}
                 <tr class="transition-colors hover:bg-slate-50/80">
                   <td class="px-2 py-2 align-middle font-semibold text-slate-900 text-xs">
-                    {{ forloop.counter }}
+                    {{ item.original_no }}
                   </td>
                   <td class="px-2 py-2 align-middle">
                     <a href="{% url 'inventory-edit' item.pk %}"
