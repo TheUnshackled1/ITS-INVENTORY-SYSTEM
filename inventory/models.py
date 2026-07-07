@@ -1,7 +1,5 @@
 from django.db import models
-
 from django.db import models
-
 
 class Inventory(models.Model):
 
@@ -12,10 +10,8 @@ class Inventory(models.Model):
         ("disposed", "Disposed"),
         ("lost", "Lost"),
     ]
-
     item_type = models.CharField(max_length=100)
     item_description = models.TextField()
-
     brand = models.CharField(max_length=100)
     model = models.CharField(max_length=100)
 
@@ -25,32 +21,24 @@ class Inventory(models.Model):
         blank=True,
         null=True,
     )
-
     quantity = models.PositiveIntegerField(default=1)
-
     date_inventory = models.DateField()
-
     date_disposal = models.DateField(
         blank=True,
         null=True
     )
-
     location = models.CharField(max_length=100)
-
     status = models.CharField(
         max_length=20,
         choices=STATUS_CHOICES,
         default="available"
     )
-
     defect_description = models.TextField(
         blank=True,
         null=True
     )
-
     def __str__(self):
         return f"{self.item_type} - {self.serial_number}"
-
     def save(self, *args, **kwargs):
         if self.serial_number == "":
             self.serial_number = None

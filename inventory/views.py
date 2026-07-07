@@ -11,10 +11,9 @@ from .models import Inventory
 def get_row_value(row, index, default=""):
     if row is None or index >= len(row):
         return default
-
     value = row[index]
     return default if value is None else value
-
+    
 def inventory_list(request):
     inventory_items = Inventory.objects.all().order_by('item_type', 'serial_number')
     return render(
@@ -113,55 +112,45 @@ def parse_date(date_val):
 def upload_excel(request):
     if request.method == 'POST':
         excel_file = request.FILES.get('excel_file')
-
         if excel_file:
             try:
                 filename = excel_file.name.lower()
                 parsed_rows = []
-
                 if filename.endswith('.xls'):
                     messages.error(
                         request,
                         'Legacy .xls files are not supported. Please save the file as .xlsx and upload it again.',
                     )
                     return redirect('inventory-list')
-
                 if not filename.endswith(('.xlsx', '.csv')):
                     messages.error(
                         request,
                         'Unsupported file type. Please upload an .xlsx or .csv file.',
                     )
                     return redirect('inventory-list')
-
                 if filename.endswith('.xlsx'):
                     with warnings.catch_warnings():
                         warnings.filterwarnings("ignore", category=UserWarning, module="openpyxl")
                         wb = openpyxl.load_workbook(excel_file, data_only=True)
-
                     sheet = wb.active
-
                     for row in sheet.iter_rows(min_row=4, values_only=True):
                         item_type = get_row_value(row, 0, "")
                         if not row or not item_type:
                             continue
-
                         try:
                             qty_value = get_row_value(row, 5, 1)
                             qty = int(qty_value) if qty_value not in ("", None) else 1
                         except (TypeError, ValueError):
                             qty = 1
-
                         status_raw = str(get_row_value(row, 9, 'available')).lower().strip()
                         status = 'available'
                         if 'working' in status_raw or 'use' in status_raw or 'available' in status_raw:
                             status = 'available'
                         elif 'defective' in status_raw or 'repair' in status_raw or 'defect' in status_raw:
                             status = 'repair'
-
                         serial = str(get_row_value(row, 4, '')).strip()
                         if serial.lower() in ('none', 'n/a', '-', ''):
                             serial = None
-
                         parsed_rows.append({
                             'item_type': item_type,
                             'item_description': get_row_value(row, 1, "") or "",
@@ -186,24 +175,20 @@ def upload_excel(request):
                         item_type = get_row_value(row, 0, "")
                         if not row or not item_type:
                             continue
-
                         try:
                             qty_value = get_row_value(row, 5, 1)
                             qty = int(qty_value) if qty_value not in ("", None) else 1
                         except (TypeError, ValueError):
                             qty = 1
-
                         status_raw = str(get_row_value(row, 9, 'available')).lower().strip()
                         status = 'available'
                         if 'working' in status_raw or 'use' in status_raw or 'available' in status_raw:
                             status = 'available'
                         elif 'defective' in status_raw or 'repair' in status_raw or 'defect' in status_raw:
                             status = 'repair'
-
                         serial = str(get_row_value(row, 4, '')).strip()
                         if serial.lower() in ('none', 'n/a', '-', ''):
                             serial = None
-
                         parsed_rows.append({
                             'item_type': item_type,
                             'item_description': get_row_value(row, 1, ""),
@@ -223,11 +208,9 @@ def upload_excel(request):
                         'Unsupported file type. Please upload an .xlsx or .csv file.',
                     )
                     return redirect('inventory-list')
-
                 if parsed_rows:
                     items_to_create = []
                     seen_serials = set()
-
                     for data in parsed_rows:
                         serial = data['serial_number']
                         
@@ -246,9 +229,7 @@ def upload_excel(request):
                                     defect_description=data['defect_description']
                                 )
                                 continue
-                            
                             seen_serials.add(serial)
-                            
                             updated = Inventory.objects.filter(serial_number=serial).update(
                                 item_type=data['item_type'],
                                 item_description=data['item_description'],
@@ -268,13 +249,10 @@ def upload_excel(request):
 
                     if items_to_create:
                         Inventory.objects.bulk_create(items_to_create)
-                    
                     messages.success(request, "Inventory updated successfully!")
                 else:
                     messages.warning(request, "No valid data rows found in file.")
-
             except Exception as e:
-                messages.error(request, f"Error processing file: {e}")
-                
+                messages.error(request, f"Error processing file: {e}")             
         return redirect('inventory-list')
     return redirect('inventory-list')
