@@ -2,6 +2,7 @@ import csv
 import openpyxl
 import warnings
 from datetime import datetime
+from django.db.models import Q
 from django.db.models.functions import Trim, Upper
 from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib import messages
@@ -14,12 +15,61 @@ def get_row_value(row, index, default=""):
         return default
     value = row[index]
     return default if value is None else value
+
+
+def normalize_text(value):
+    if value is None:
+        return ""
+    return str(value).strip()
+
+
+def update_inventory_fields(item, data):
+    for field_name, field_value in data.items():
+        setattr(item, field_name, field_value)
+    item.save()
+
+
+def find_inventory_match(data):
+    serial_number = data['serial_number']
+    if serial_number:
+        return Inventory.objects.filter(serial_number=serial_number).first()
+
+    queryset = Inventory.objects.annotate(
+        trimmed_item_type=Trim('item_type'),
+        trimmed_item_description=Trim('item_description'),
+        trimmed_brand=Trim('brand'),
+        trimmed_model=Trim('model'),
+        trimmed_location=Trim('location'),
+        trimmed_defect_description=Trim('defect_description'),
+    ).filter(
+        Q(serial_number__isnull=True) | Q(serial_number=''),
+        trimmed_item_type=normalize_text(data['item_type']),
+        trimmed_item_description=normalize_text(data['item_description']),
+        trimmed_brand=normalize_text(data['brand']),
+        trimmed_model=normalize_text(data['model']),
+        trimmed_location=normalize_text(data['location']),
+        date_inventory=data['date_inventory'],
+        status=data['status'],
+    )
+
+    if data['date_disposal'] is None:
+        queryset = queryset.filter(date_disposal__isnull=True)
+    else:
+        queryset = queryset.filter(date_disposal=data['date_disposal'])
+
+    defect_description = normalize_text(data['defect_description'])
+    if defect_description:
+        queryset = queryset.filter(trimmed_defect_description=defect_description)
+    else:
+        queryset = queryset.filter(
+            Q(trimmed_defect_description='') | Q(trimmed_defect_description__isnull=True)
+        )
+
+    return queryset.first()
     
 def inventory_list(request):
     inventory_items = Inventory.objects.all().order_by('item_type', 'serial_number')
-    normalized_items = inventory_items.annotate(normalized_defect=Upper(Trim('defect_description')))
-    
-    # Count inventory rows so each record contributes 1 to the dashboard cards.
+    normalized_items = inventory_items.annotate(normalized_defect=Upper(Trim('defect_description')))  
     total_items = inventory_items.count()
     available_count = inventory_items.filter(status='available').count()
     repair_count = inventory_items.filter(status='repair').count()
@@ -33,7 +83,6 @@ def inventory_list(request):
         'working': in_use_count,
         'not_working': not_working_count,
     }
-    
     return render(
         request,
         'inventory.html',
@@ -230,41 +279,45 @@ def upload_excel(request):
                 if parsed_rows:
                     items_to_create = []
                     seen_serials = set()
+                    seen_blank_keys = set()
                     for data in parsed_rows:
                         serial = data['serial_number']
+                        blank_key = (
+                            normalize_text(data['item_type']),
+                            normalize_text(data['item_description']),
+                            normalize_text(data['brand']),
+                            normalize_text(data['model']),
+                            data['date_inventory'],
+                            data['date_disposal'],
+                            normalize_text(data['location']),
+                            data['status'],
+                            normalize_text(data['defect_description']),
+                        )
                         
                         if serial:
                             if serial in seen_serials:
-                                Inventory.objects.filter(serial_number=serial).update(
-                                    item_type=data['item_type'],
-                                    item_description=data['item_description'],
-                                    brand=data['brand'],
-                                    model=data['model'],
-                                    quantity=data['quantity'],
-                                    date_disposal=data['date_disposal'],
-                                    date_inventory=data['date_inventory'],
-                                    location=data['location'],
-                                    status=data['status'],
-                                    defect_description=data['defect_description']
-                                )
+                                existing_item = Inventory.objects.filter(serial_number=serial).first()
+                                if existing_item:
+                                    update_inventory_fields(existing_item, data)
                                 continue
                             seen_serials.add(serial)
-                            updated = Inventory.objects.filter(serial_number=serial).update(
-                                item_type=data['item_type'],
-                                item_description=data['item_description'],
-                                brand=data['brand'],
-                                model=data['model'],
-                                quantity=data['quantity'],
-                                date_disposal=data['date_disposal'],
-                                date_inventory=data['date_inventory'],
-                                location=data['location'],
-                                status=data['status'],
-                                defect_description=data['defect_description']
-                            )
-                            if not updated:
+                            existing_item = find_inventory_match(data)
+                            if existing_item:
+                                update_inventory_fields(existing_item, data)
+                            else:
                                 items_to_create.append(Inventory(**data))
                         else:
-                            items_to_create.append(Inventory(**data))
+                            if blank_key in seen_blank_keys:
+                                existing_item = find_inventory_match(data)
+                                if existing_item:
+                                    update_inventory_fields(existing_item, data)
+                                continue
+                            seen_blank_keys.add(blank_key)
+                            existing_item = find_inventory_match(data)
+                            if existing_item:
+                                update_inventory_fields(existing_item, data)
+                            else:
+                                items_to_create.append(Inventory(**data))
 
                     if items_to_create:
                         Inventory.objects.bulk_create(items_to_create)
