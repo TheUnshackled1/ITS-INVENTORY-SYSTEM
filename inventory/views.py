@@ -318,7 +318,6 @@ def edit_inventory(request, pk):
             return redirect('inventory-list')
         elif is_ajax:
             return JsonResponse({'success': False, 'errors': form.errors}, status=400)
-    
     return redirect('inventory-list')
 def parse_date(date_val):
     if not date_val:
