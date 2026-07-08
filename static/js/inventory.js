@@ -70,19 +70,21 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
-  // Auto-uppercase transform for all textual inputs (Modal + Search)
-  const autoUpperInputs = document.querySelectorAll('input[type="text"], textarea, #filter-search');
-  autoUpperInputs.forEach(input => {
-    input.addEventListener("input", function () {
-      if (typeof this.selectionStart === "number") {
-        const start = this.selectionStart;
-        const end = this.selectionEnd;
-        this.value = this.value.toUpperCase();
-        this.setSelectionRange(start, end);
-      } else {
-        this.value = this.value.toUpperCase();
+  // Global auto-uppercase for all text inputs and textareas
+  document.addEventListener('input', function(e) {
+    if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') {
+      // Skip if it's a date, hidden, file, or number field
+      if (e.target.type !== 'date' && e.target.type !== 'hidden' && e.target.type !== 'file' && e.target.type !== 'number') {
+        const start = e.target.selectionStart;
+        const end = e.target.selectionEnd;
+        e.target.value = e.target.value.toUpperCase();
+        
+        // Restore cursor position if available
+        if (start !== null && end !== null) {
+          e.target.setSelectionRange(start, end);
+        }
       }
-    });
+    }
   });
 
   // --- Side Drawer Modal Controller ---
@@ -203,7 +205,11 @@ document.addEventListener("DOMContentLoaded", function () {
   if (saveRecordBtn && inventoryForm) {
     saveRecordBtn.addEventListener("click", () => {
       const formData = new FormData(inventoryForm);
-      const itemId = formData.get("id");
+      if (!formData.get("quantity") || formData.get("quantity") === "") {
+        formData.set("quantity", "1");
+      }
+      
+      let itemId = formData.get("id");
       const url = isEditing && itemId ? `/inventory/${itemId}/edit/` : `/inventory/add/`;
       
       const prevText = saveRecordBtn.textContent;
