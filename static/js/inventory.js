@@ -15,6 +15,37 @@ document.addEventListener("DOMContentLoaded", function () {
     }, 150);
   }
 
+  // --- Card Numbers Count-Up Animation ---
+  const statNumbers = document.querySelectorAll("#stats-cards-container p.text-3xl");
+  if (statNumbers.length > 0) {
+    statNumbers.forEach(el => {
+      const targetStr = el.textContent.trim();
+      const target = parseInt(targetStr, 10);
+      
+      if (!isNaN(target) && target > 0) {
+        el.textContent = "0";
+        const duration = 5000; // 5 seconds
+        const start = performance.now();
+        
+        const step = (now) => {
+          const progress = Math.min((now - start) / duration, 1);
+          // Ease-out cubic formula for smooth deceleration
+          const easeOut = 1 - Math.pow(1 - progress, 3);
+          
+          el.textContent = Math.floor(easeOut * target);
+          
+          if (progress < 1) {
+            window.requestAnimationFrame(step);
+          } else {
+            el.textContent = target; // Ensure exact final value
+          }
+        };
+        
+        window.requestAnimationFrame(step);
+      }
+    });
+  }
+
   // Sidebar Toggle Logic
   const sidebarToggle = document.getElementById("sidebarToggle");
   const appShell = document.querySelector(".app-shell");
@@ -180,6 +211,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function openDrawer(title = "Add Inventory Record") {
     modalTitle.textContent = title;
+    sideDrawerModal.style.display = "block"; // Remove inline display:none
     sideDrawerModal.classList.remove("hidden");
     // Trigger reflow for transitions
     void sideDrawerModal.offsetWidth;
@@ -198,6 +230,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // Wait for animation to finish
     setTimeout(() => {
       sideDrawerModal.classList.add("hidden");
+      sideDrawerModal.style.display = "none"; // Re-hide perfectly
       inventoryForm.reset();
       document.getElementById("form_id").value = "";
       isEditing = false;
@@ -218,6 +251,7 @@ document.addEventListener("DOMContentLoaded", function () {
   window.showSuccessModal = function(msg = "Congratulations your record has been successfully saved") {
     if (successModalMessage) successModalMessage.textContent = msg;
     if (successModalOverlay && successModalCard) {
+      successModalOverlay.style.display = "flex"; // Remove inline display:none
       successModalOverlay.classList.remove("hidden", "pointer-events-none");
       // Trigger reflow
       void successModalOverlay.offsetWidth;
@@ -236,6 +270,7 @@ document.addEventListener("DOMContentLoaded", function () {
       
       setTimeout(() => {
         successModalOverlay.classList.add("hidden", "pointer-events-none");
+        successModalOverlay.style.display = "none";
       }, 300);
     }
   };
@@ -251,6 +286,7 @@ document.addEventListener("DOMContentLoaded", function () {
   window.showErrorModal = function(msg = "Ooops.. something wrong, try one more time") {
     if (errorModalMessage) errorModalMessage.textContent = msg;
     if (errorModalOverlay && errorModalCard) {
+      errorModalOverlay.style.display = "flex"; // Remove inline display:none
       errorModalOverlay.classList.remove("hidden", "pointer-events-none");
       // Trigger reflow
       void errorModalOverlay.offsetWidth;
@@ -269,6 +305,7 @@ document.addEventListener("DOMContentLoaded", function () {
       
       setTimeout(() => {
         errorModalOverlay.classList.add("hidden", "pointer-events-none");
+        errorModalOverlay.style.display = "none";
       }, 300);
     }
   };
