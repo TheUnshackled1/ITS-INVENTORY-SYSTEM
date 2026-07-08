@@ -65,10 +65,25 @@ document.addEventListener("DOMContentLoaded", function () {
     const customSearch = document.getElementById("filter-search");
     if (customSearch) {
       customSearch.addEventListener("keyup", function (e) {
-        dataTable.search(e.target.value);
+        if (dataTable) dataTable.search(e.target.value);
       });
     }
   }
+
+  // Auto-uppercase transform for all textual inputs (Modal + Search)
+  const autoUpperInputs = document.querySelectorAll('input[type="text"], textarea, #filter-search');
+  autoUpperInputs.forEach(input => {
+    input.addEventListener("input", function () {
+      if (typeof this.selectionStart === "number") {
+        const start = this.selectionStart;
+        const end = this.selectionEnd;
+        this.value = this.value.toUpperCase();
+        this.setSelectionRange(start, end);
+      } else {
+        this.value = this.value.toUpperCase();
+      }
+    });
+  });
 
   // --- Side Drawer Modal Controller ---
   const sideDrawerModal = document.getElementById("sideDrawerModal");
