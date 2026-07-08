@@ -12,7 +12,7 @@ class Inventory(models.Model):
     item_type = models.CharField(max_length=100)
     item_description = models.TextField()
     brand = models.CharField(max_length=100)
-    model = models.CharField(max_length=100)
+    model = models.CharField(max_length=100, blank=True, null=True)
     serial_number = models.CharField(
         max_length=100,
         unique=True,
