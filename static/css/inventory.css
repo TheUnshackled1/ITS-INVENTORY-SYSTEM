@@ -493,9 +493,9 @@ table {
 .datatable-pagination .datatable-active a:hover,
 .datatable-pagination .datatable-active button,
 .datatable-pagination .datatable-active button:hover {
-    background: #6366f1 !important;
+    background: #2563eb !important;
     color: white !important;
-    box-shadow: 0 0 0 4px #e0e7ff !important;
+    box-shadow: 0 0 0 4px #dbeafe !important;
 }
 
 .datatable-pagination .datatable-hidden {
