@@ -129,6 +129,39 @@ document.addEventListener("DOMContentLoaded", function () {
   if (closeDrawerBtn) closeDrawerBtn.addEventListener("click", closeDrawer);
   if (sideDrawerOverlay) sideDrawerOverlay.addEventListener("click", closeDrawer);
 
+  // --- Success Modal Controller ---
+  const successModalOverlay = document.getElementById("successModalOverlay");
+  const successModalCard = document.getElementById("successModalCard");
+  const successModalMessage = document.getElementById("successModalMessage");
+  const successModalCloseBtn = document.getElementById("successModalCloseBtn");
+
+  window.showSuccessModal = function(msg = "Congratulations your record has been successfully saved") {
+    if (successModalMessage) successModalMessage.textContent = msg;
+    if (successModalOverlay && successModalCard) {
+      successModalOverlay.classList.remove("hidden", "pointer-events-none");
+      // Trigger reflow
+      void successModalOverlay.offsetWidth;
+      successModalOverlay.classList.remove("opacity-0");
+      
+      successModalCard.classList.remove("scale-95", "opacity-0");
+      successModalCard.classList.add("scale-100", "opacity-100");
+    }
+  };
+
+  const closeSuccessModal = function() {
+    if (successModalOverlay && successModalCard) {
+      successModalOverlay.classList.add("opacity-0");
+      successModalCard.classList.remove("scale-100", "opacity-100");
+      successModalCard.classList.add("scale-95", "opacity-0");
+      
+      setTimeout(() => {
+        successModalOverlay.classList.add("hidden", "pointer-events-none");
+      }, 300);
+    }
+  };
+
+  if (successModalCloseBtn) successModalCloseBtn.addEventListener("click", closeSuccessModal);
+
   // Add Action
   const addModalHandler = () => {
     isEditing = false;
@@ -235,6 +268,13 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
               }
             }
+            
+            // Show Success Modal after seamless reload completes (+ timeout for drawer close)
+            setTimeout(() => {
+              if (typeof window.showSuccessModal === "function") {
+                window.showSuccessModal();
+              }
+            }, 300);
           });
         } else {
           // Display validation errors!
