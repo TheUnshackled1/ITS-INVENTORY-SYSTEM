@@ -545,10 +545,15 @@ table {
 }
 
 .datatable-top {
-    padding: 1.25rem 1.5rem !important;
+    display: none !important;
 }
 
 /* Hide the SimpleDataTables built-in search */
 .datatable-top .datatable-search {
     display: none !important;
+}
+
+/* Force Table Headers to Uppercase */
+table thead th {
+    text-transform: uppercase !important;
 }
