@@ -108,12 +108,12 @@
               <!-- Total Items Card -->
               <div class="stats-card stats-card--total p-4 sm:col-span-1 col-span-2">
                 <div class="relative flex h-full flex-col gap-3">
-                  <div class="flex items-center text-slate-500 gap-2 font-medium">
+                  <div class="flex items-center text-blue-700 gap-2 font-medium">
                     <svg class="h-4 w-4 stroke-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
                     Total Items
                   </div>
                   <div>
-                    <p class="text-3xl font-extrabold text-slate-900 leading-none">{{ stats.total }}</p>
+                    <p class="text-3xl font-extrabold text-blue-950 leading-none">{{ stats.total }}</p>
                   </div>
                   <div class="h-1 w-full rounded-full bg-blue-100 overflow-hidden">
                     <div class="h-full w-full rounded-full bg-blue-400"></div>
@@ -124,12 +124,12 @@
               <!-- Available Card -->
               <div class="stats-card stats-card--available p-4">
                 <div class="relative flex h-full flex-col gap-3">
-                  <div class="flex items-center text-slate-500 gap-2 font-medium">
+                  <div class="flex items-center text-emerald-700 gap-2 font-medium">
                     <svg class="h-4 w-4 stroke-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                     Available
                   </div>
                   <div>
-                    <p class="text-3xl font-extrabold text-emerald-700 leading-none">{{ stats.available }}</p>
+                    <p class="text-3xl font-extrabold text-emerald-900 leading-none">{{ stats.available }}</p>
                   </div>
                   <div class="h-1 w-full rounded-full bg-emerald-100 overflow-hidden">
                     <div class="h-full rounded-full bg-emerald-400" style="width:{% if stats.total %}{{ stats.available|default:0 }}%{% else %}0%{% endif %}"></div>
@@ -140,12 +140,12 @@
               <!-- Under Repair Card -->
               <div class="stats-card stats-card--repair p-4">
                 <div class="relative flex h-full flex-col gap-3">
-                  <div class="flex items-center text-slate-500 gap-2 font-medium">
+                  <div class="flex items-center text-amber-700 gap-2 font-medium">
                     <svg class="h-4 w-4 stroke-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
                     Under Repair
                   </div>
                   <div>
-                    <p class="text-3xl font-extrabold text-amber-700 leading-none">{{ stats.repair }}</p>
+                    <p class="text-3xl font-extrabold text-amber-900 leading-none">{{ stats.repair }}</p>
                   </div>
                   <div class="h-1 w-full rounded-full bg-amber-100 overflow-hidden">
                     <div class="h-full rounded-full bg-amber-400" style="width:{% if stats.total %}{{ stats.repair|default:0 }}%{% else %}0%{% endif %}"></div>
@@ -156,12 +156,12 @@
               <!-- Working Card -->
               <div class="stats-card stats-card--working p-4">
                 <div class="relative flex h-full flex-col gap-3">
-                  <div class="flex items-center text-slate-500 gap-2 font-medium">
+                  <div class="flex items-center text-sky-700 gap-2 font-medium">
                     <svg class="h-4 w-4 stroke-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
                     Working
                   </div>
                   <div>
-                    <p class="text-3xl font-extrabold text-sky-700 leading-none">{{ stats.working }}</p>
+                    <p class="text-3xl font-extrabold text-sky-900 leading-none">{{ stats.working }}</p>
                   </div>
                   <div class="h-1 w-full rounded-full bg-sky-100 overflow-hidden">
                     <div class="h-full rounded-full bg-sky-400" style="width:{% if stats.total %}{{ stats.working|default:0 }}%{% else %}0%{% endif %}"></div>
@@ -172,12 +172,12 @@
               <!-- Not Working Card -->
               <div class="stats-card stats-card--not-working p-4">
                 <div class="relative flex h-full flex-col gap-3">
-                  <div class="flex items-center text-slate-500 gap-2 font-medium">
+                  <div class="flex items-center text-rose-700 gap-2 font-medium">
                     <svg class="h-4 w-4 stroke-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
                     Not Working
                   </div>
                   <div>
-                    <p class="text-3xl font-extrabold text-rose-700 leading-none">{{ stats.not_working }}</p>
+                    <p class="text-3xl font-extrabold text-rose-900 leading-none">{{ stats.not_working }}</p>
                   </div>
                   <div class="h-1 w-full rounded-full bg-rose-100 overflow-hidden">
                     <div class="h-full rounded-full bg-rose-400" style="width:{% if stats.total %}{{ stats.not_working|default:0 }}%{% else %}0%{% endif %}"></div>
