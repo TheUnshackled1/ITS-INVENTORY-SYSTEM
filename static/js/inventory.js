@@ -442,4 +442,109 @@ document.addEventListener("DOMContentLoaded", function () {
       });
     });
   }
+  // Delete Record AJAX Action
+  const deleteRecordBtn = document.getElementById("deleteRecordBtn");
+  const deleteConfirmModalOverlay = document.getElementById("deleteConfirmModalOverlay");
+  const deleteConfirmModalCard = document.getElementById("deleteConfirmModalCard");
+  const cancelDeleteActionBtn = document.getElementById("cancelDeleteActionBtn");
+  const confirmDeleteActionBtn = document.getElementById("confirmDeleteActionBtn");
+
+  let deleteTargetItemId = null;
+  let deleteTargetBtn = null;
+
+  function closeDeleteConfirmModal() {
+    if (deleteConfirmModalOverlay && deleteConfirmModalCard) {
+      deleteConfirmModalOverlay.classList.add("opacity-0");
+      deleteConfirmModalCard.classList.remove("scale-100", "opacity-100");
+      deleteConfirmModalCard.classList.add("scale-95", "opacity-0");
+      
+      setTimeout(() => {
+        deleteConfirmModalOverlay.classList.add("hidden", "pointer-events-none");
+        deleteConfirmModalOverlay.style.display = "none";
+      }, 300);
+    }
+  }
+
+  if (cancelDeleteActionBtn) cancelDeleteActionBtn.addEventListener("click", closeDeleteConfirmModal);
+
+  if (deleteRecordBtn && inventoryForm) {
+    deleteRecordBtn.addEventListener("click", () => {
+      const formData = new FormData(inventoryForm);
+      const itemId = formData.get("id");
+      
+      if (itemId && isEditing) {
+        deleteTargetItemId = itemId;
+        deleteTargetBtn = deleteRecordBtn;
+        
+        // Open the custom CSS modal instead of native confirm
+        if (deleteConfirmModalOverlay && deleteConfirmModalCard) {
+          deleteConfirmModalOverlay.style.display = "flex";
+          deleteConfirmModalOverlay.classList.remove("hidden", "pointer-events-none");
+          void deleteConfirmModalOverlay.offsetWidth;
+          deleteConfirmModalOverlay.classList.remove("opacity-0");
+          
+          deleteConfirmModalCard.classList.remove("scale-95", "opacity-0");
+          deleteConfirmModalCard.classList.add("scale-100", "opacity-100");
+        } else {
+          // Fallback if modal is missing
+          if (confirm("Are you sure you want to delete this record? This action cannot be undone.")) {
+             executeDeleteRequest(itemId, deleteRecordBtn);
+          }
+        }
+      }
+    });
+
+    if (confirmDeleteActionBtn) {
+      confirmDeleteActionBtn.addEventListener("click", () => {
+        closeDeleteConfirmModal();
+        if (deleteTargetItemId && deleteTargetBtn) {
+          executeDeleteRequest(deleteTargetItemId, deleteTargetBtn);
+        }
+      });
+    }
+
+    function executeDeleteRequest(itemId, btnRef) {
+      const url = `/inventory/${itemId}/delete/`;
+      const prevText = btnRef.textContent;
+      btnRef.textContent = "Deleting...";
+      btnRef.disabled = true;
+
+      fetch(url, {
+        method: "POST",
+        headers: {
+          "X-CSRFToken": document.querySelector("[name=csrfmiddlewaretoken]").value,
+          "X-Requested-With": "XMLHttpRequest",
+          "Accept": "application/json"
+        }
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.success) {
+          closeDrawer();
+          localStorage.setItem("showSuccessModalFlag", "deleted");
+          window.location.reload();
+        } else {
+          btnRef.textContent = prevText;
+          btnRef.disabled = false;
+          if (typeof window.showErrorModal === 'function') {
+            window.showErrorModal(data.message || "Could not delete the record.");
+          } else {
+            alert(data.message || "Could not delete the record.");
+          }
+        }
+      })
+      .catch(err => {
+        console.error("AJAX Error:", err);
+        btnRef.textContent = prevText;
+        btnRef.disabled = false;
+        
+        const networkError = "Network error while attempting to delete. Please try again.";
+        if (typeof window.showErrorModal === 'function') {
+          window.showErrorModal(networkError);
+        } else {
+          alert(networkError);
+        }
+      });
+    }
+  }
 });
