@@ -484,15 +484,15 @@
     <!-- Drawer Panel -->
     <div id="sideDrawerPanel" class="absolute inset-y-0 right-0 w-full max-w-lg bg-white shadow-[0_0_40px_rgba(0,0,0,0.1)] transform translate-x-full transition-transform duration-300 ease-[cubic-bezier(0.2,0.8,0.2,1)] flex flex-col sm:rounded-l-[2rem] overflow-hidden">
       <!-- Header -->
-      <div class="flex items-center justify-between px-8 pt-8 pb-4 shrink-0">
+      <div class="flex items-center gap-3 px-8 pt-8 pb-4 shrink-0">
         <button type="button" id="closeDrawerBtn" class="text-slate-400 hover:text-slate-800 transition-colors p-2 -ml-2 rounded-full hover:bg-slate-100 flex-shrink-0 focus:outline-none focus:ring-2 focus:ring-slate-900">
           <svg class="w-6 h-6 stroke-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path></svg>
         </button>
+        <h2 id="modalTitle" class="text-2xl font-black tracking-tight text-slate-900">Record</h2>
       </div>
 
       <!-- Scroller -->
-      <div class="flex-1 overflow-y-auto px-8 pb-12 custom-scrollbar">
-        <h2 id="modalTitle" class="text-[1.75rem] font-extrabold text-slate-900 mb-8 tracking-tight">Record</h2>
+      <div class="flex-1 overflow-y-auto px-8 py-2 custom-scrollbar">
 
         <form id="inventoryForm" class="space-y-7" onsubmit="event.preventDefault();">
           <input type="hidden" name="id" id="form_id" value="">
