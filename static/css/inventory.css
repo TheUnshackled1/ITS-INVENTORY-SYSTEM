@@ -313,7 +313,8 @@ table {
 }
 
 /* Hide raw table until simple-datatables initializes (prevents layout flash) */
-#inventory-table:not(.datatable-table) {
+#inventory-table:not(.datatable-table),
+#activity-log-table:not(.datatable-table) {
     visibility: hidden;
 }
 
