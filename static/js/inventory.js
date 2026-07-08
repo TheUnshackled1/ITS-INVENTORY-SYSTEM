@@ -130,7 +130,7 @@ document.addEventListener("DOMContentLoaded", function () {
   // Edit Action (Event Delegation for Table Rows)
   document.addEventListener("click", function (e) {
     const row = e.target.closest(".inventory-row");
-    if (row && tableEl.contains(row)) {
+    if (row && row.closest("#inventory-table")) {
       isEditing = true;
       editingRow = row;
       
