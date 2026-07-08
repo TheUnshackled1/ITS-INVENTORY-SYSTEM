@@ -6,6 +6,7 @@ from django.db.models import Q
 from django.db.models.functions import Lower, Trim, Upper
 from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib import messages
+from django.http import JsonResponse
 from .forms import InventoryForm
 from .models import Inventory
 
@@ -231,12 +232,34 @@ def inventory_list(request):
     response['Expires'] = '0'
     return response
 
+def serialize_inventory_item(item):
+    """Helper to serialize item for JSON responses."""
+    return {
+        'id': item.id,
+        'item_type': item.item_type or '',
+        'item_description': item.item_description or '',
+        'brand': item.brand or '',
+        'model': item.model or '',
+        'serial_number': item.serial_number or '',
+        'quantity': item.quantity or 1,
+        'date_inventory': str(item.date_inventory) if item.date_inventory else '',
+        'date_disposal': str(item.date_disposal) if item.date_disposal else '',
+        'location': item.location or '',
+        'status': item.status or 'available',
+        'defect_description': item.defect_description or '',
+    }
+
 def add_inventory(request):
     if request.method == 'POST':
         form = InventoryForm(request.POST)
+        is_ajax = request.headers.get('x-requested-with') == 'XMLHttpRequest' or request.headers.get('Accept') == 'application/json'
         if form.is_valid():
-            form.save()
+            item = form.save()
+            if is_ajax:
+                return JsonResponse({'success': True, 'item': serialize_inventory_item(item)})
             return redirect('inventory-list')
+        elif is_ajax:
+            return JsonResponse({'success': False, 'errors': form.errors}, status=400)
     else:
         form = InventoryForm()
     return render(
@@ -264,6 +287,7 @@ def edit_inventory(request, pk):
     }
     if request.method == 'POST':
         form = InventoryForm(request.POST, instance=inventory_item)
+        is_ajax = request.headers.get('x-requested-with') == 'XMLHttpRequest' or request.headers.get('Accept') == 'application/json'
         for field_name in optional_fields:
             form.fields[field_name].required = False
         if form.is_valid():
@@ -291,7 +315,11 @@ def edit_inventory(request, pk):
             if updated_item.defect_description in ('', None):
                 updated_item.defect_description = inventory_item.defect_description
             updated_item.save()
+            if is_ajax:
+                return JsonResponse({'success': True, 'item': serialize_inventory_item(updated_item)})
             return redirect('inventory-list')
+        elif is_ajax:
+            return JsonResponse({'success': False, 'errors': form.errors}, status=400)
     else:
         form = InventoryForm(instance=inventory_item)
         for field_name in optional_fields:
