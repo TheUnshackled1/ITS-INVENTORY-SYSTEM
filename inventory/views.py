@@ -263,15 +263,8 @@ def add_inventory(request):
             return redirect('inventory-list')
         elif is_ajax:
             return JsonResponse({'success': False, 'errors': form.errors}, status=400)
-    else:
-        form = InventoryForm()
-    return render(
-        request,
-        'add_inventory.html',
-        {
-            'form': form,
-        },
-    )
+    
+    return redirect('inventory-list')
 
 @login_required
 def edit_inventory(request, pk):
@@ -325,18 +318,8 @@ def edit_inventory(request, pk):
             return redirect('inventory-list')
         elif is_ajax:
             return JsonResponse({'success': False, 'errors': form.errors}, status=400)
-    else:
-        form = InventoryForm(instance=inventory_item)
-        for field_name in optional_fields:
-            form.fields[field_name].required = False
-    return render(
-        request,
-        'add_inventory.html',
-        {
-            'form': form,
-            'inventory_item': inventory_item,
-        },
-    )
+    
+    return redirect('inventory-list')
 def parse_date(date_val):
     if not date_val:
         return None
