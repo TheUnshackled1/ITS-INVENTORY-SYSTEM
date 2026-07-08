@@ -436,9 +436,9 @@ table {
 
 .datatable-info {
     margin: 0 !important;
-    color: rgb(71 85 105) !important;
+    color: #0f172a !important;
     font-size: 0.875rem !important;
-    font-weight: 500 !important;
+    font-weight: 600 !important;
 }
 
 .datatable-pagination {
@@ -473,8 +473,8 @@ table {
     align-items: center !important;
     justify-content: center !important;
     font-size: 0.875rem !important;
-    font-weight: 600 !important;
-    color: rgb(71 85 105) !important;
+    font-weight: 700 !important;
+    color: #0f172a !important;
     background: transparent !important;
     transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
     border: none !important;
