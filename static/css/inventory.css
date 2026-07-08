@@ -449,7 +449,6 @@ table {
     flex-wrap: wrap !important;
     gap: 0.25rem !important;
 }
-
 .datatable-pagination ul {
     margin: 0 !important;
     display: flex !important;
@@ -459,7 +458,6 @@ table {
     list-style: none !important;
     padding: 0 !important;
 }
-
 .datatable-pagination li {
     margin: 0 !important;
 }
