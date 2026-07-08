@@ -177,14 +177,19 @@ document.addEventListener("DOMContentLoaded", function () {
   const openAddModalBtnTop = document.getElementById("openAddModalBtnTop");
   if (openAddModalBtnTop) openAddModalBtnTop.addEventListener("click", addModalHandler);
 
-  // Edit Action (Event Delegation for Table Rows)
-  document.addEventListener("click", function (e) {
+  // Open modal when clicking a row (Event Delegation)
+  document.addEventListener("click", function(e) {
     const row = e.target.closest(".inventory-row");
-    if (row && row.closest("#inventory-table")) {
+    const activeTable = document.getElementById("inventory-table");
+    
+    if (row && activeTable && activeTable.contains(row)) {
       isEditing = true;
       editingRow = row;
-      
       document.getElementById("form_id").value = row.dataset.id || "";
+      
+      const submitBtn = document.getElementById("saveRecordBtn");
+      if (submitBtn) submitBtn.textContent = "Edit Record";
+      
       document.getElementById("form_item_type").value = row.dataset.type || "";
       document.getElementById("form_brand").value = row.dataset.brand || "";
       document.getElementById("form_model").value = row.dataset.model || "";
@@ -242,6 +247,13 @@ document.addEventListener("DOMContentLoaded", function () {
             const doc = parser.parseFromString(html, "text/html");
             const newTable = doc.querySelector("#inventory-table");
             const oldTable = document.getElementById("inventory-table");
+            
+            const newStats = doc.getElementById("stats-cards-container");
+            const oldStats = document.getElementById("stats-cards-container");
+            
+            if (oldStats && newStats) {
+              oldStats.parentNode.replaceChild(newStats, oldStats);
+            }
             
             if (oldTable && newTable) {
               if (dataTable) {
