@@ -3,7 +3,7 @@ from django.urls import path
 from django.contrib.auth import views as auth_views
 
 from inventory import views
-from inventory.views import add_inventory, edit_inventory, inventory_list, CustomLoginView
+from inventory.views import add_inventory, edit_inventory, inventory_list, CustomLoginView, activity_log
 
 urlpatterns = [
     path('', inventory_list, name='inventory-list'),
@@ -13,4 +13,5 @@ urlpatterns = [
     path('upload/', views.upload_excel, name='inventory-upload'),
     path('login/', CustomLoginView.as_view(template_name='login.html'), name='login'),
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),
+    path('activity-log/', activity_log, name='activity-log'),
 ]

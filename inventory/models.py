@@ -1,5 +1,5 @@
 from django.db import models
-from django.db import models
+from django.utils import timezone
 
 class Inventory(models.Model):
     STATUS_CHOICES = [
@@ -41,3 +41,23 @@ class Inventory(models.Model):
         if self.serial_number == "":
             self.serial_number = None
         super().save(*args, **kwargs)
+
+class AuditLog(models.Model):
+    ACTION_CHOICES = [
+        ("added",   "Added"),
+        ("edited",  "Edited"),
+        ("deleted", "Deleted"),
+        ("uploaded","Uploaded"),
+    ]
+    action      = models.CharField(max_length=20, choices=ACTION_CHOICES)
+    item_type   = models.CharField(max_length=100)
+    item_id     = models.IntegerField(null=True, blank=True)   # FK-less so deletes don't cascade
+    description = models.TextField()                            # human-readable summary
+    performed_by = models.CharField(max_length=150, default="System")
+    timestamp   = models.DateTimeField(default=timezone.now)
+    
+    class Meta:
+        ordering = ["-timestamp"]
+        
+    def __str__(self):
+        return f"[{self.action}] {self.item_type} by {self.performed_by}"

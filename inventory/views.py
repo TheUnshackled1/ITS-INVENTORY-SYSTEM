@@ -10,8 +10,18 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import LoginView
 from django.http import JsonResponse
 from .forms import InventoryForm
-from .models import Inventory
+from .models import Inventory, AuditLog
 
+def log_action(request, action, item, extra=""):
+    who = request.user.username if hasattr(request, 'user') and request.user.is_authenticated else "System"
+    pk_str = item.pk if item.pk else "New"
+    desc = f"{item.item_type} (#{pk_str}) — Serial: {item.serial_number or '-'}"
+    if extra:
+        desc += f" | {extra}"
+    AuditLog.objects.create(
+        action=action, item_type=item.item_type,
+        item_id=item.pk, description=desc, performed_by=who
+    )
 
 class CustomLoginView(LoginView):
     def form_valid(self, form):
@@ -64,10 +74,11 @@ def get_distinct_text_values(queryset, field_name, annotation_name):
     return distinct_values
 
 
-def update_inventory_fields(item, data):
+def update_inventory_fields(request, item, data):
     for field_name, field_value in data.items():
         setattr(item, field_name, field_value)
     item.save()
+    log_action(request, 'edited', item, extra="Via Excel Upload")
 
 
 def find_inventory_match(data):
@@ -265,6 +276,7 @@ def add_inventory(request):
         is_ajax = request.headers.get('x-requested-with') == 'XMLHttpRequest' or request.headers.get('Accept') == 'application/json'
         if form.is_valid():
             item = form.save()
+            log_action(request, "added", item)
             if is_ajax:
                 return JsonResponse({'success': True, 'item': serialize_inventory_item(item)})
             return redirect('inventory-list')
@@ -326,6 +338,7 @@ def edit_inventory(request, pk):
             if updated_item.defect_description in ('', None):
                 updated_item.defect_description = inventory_item.defect_description
             updated_item.save()
+            log_action(request, "edited", updated_item)
             if is_ajax:
                 return JsonResponse({'success': True, 'item': serialize_inventory_item(updated_item)})
             return redirect('inventory-list')
@@ -477,29 +490,31 @@ def upload_excel(request):
                             if serial in seen_serials:
                                 existing_item = Inventory.objects.filter(serial_number=serial).first()
                                 if existing_item:
-                                    update_inventory_fields(existing_item, data)
+                                    update_inventory_fields(request, existing_item, data)
                                 continue
                             seen_serials.add(serial)
                             existing_item = find_inventory_match(data)
                             if existing_item:
-                                update_inventory_fields(existing_item, data)
+                                update_inventory_fields(request, existing_item, data)
                             else:
                                 items_to_create.append(Inventory(**data))
                         else:
                             if blank_key in seen_blank_keys:
                                 existing_item = find_inventory_match(data)
                                 if existing_item:
-                                    update_inventory_fields(existing_item, data)
+                                    update_inventory_fields(request, existing_item, data)
                                 continue
                             seen_blank_keys.add(blank_key)
                             existing_item = find_inventory_match(data)
                             if existing_item:
-                                update_inventory_fields(existing_item, data)
+                                update_inventory_fields(request, existing_item, data)
                             else:
                                 items_to_create.append(Inventory(**data))
 
                     if items_to_create:
                         Inventory.objects.bulk_create(items_to_create)
+                        for item in items_to_create:
+                            log_action(request, 'uploaded', item, extra="Via Excel Upload")
                     messages.success(request, "Inventory updated successfully!")
                 else:
                     messages.warning(request, "No valid data rows found in file.")
@@ -507,3 +522,16 @@ def upload_excel(request):
                 messages.error(request, f"Error processing file: {e}")             
         return redirect('inventory-list')
     return redirect('inventory-list')
+
+@login_required
+def activity_log(request):
+    search_query = request.GET.get("q", "").strip()
+    logs = AuditLog.objects.all()
+    if search_query:
+        logs = logs.filter(
+            Q(item_type__icontains=search_query) |
+            Q(description__icontains=search_query) |
+            Q(performed_by__icontains=search_query) |
+            Q(action__icontains=search_query)
+        )
+    return render(request, "activity_log.html", {"logs": logs, "search_query": search_query})
