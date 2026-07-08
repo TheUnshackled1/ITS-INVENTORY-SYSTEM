@@ -178,7 +178,38 @@ document.addEventListener("DOMContentLoaded", function () {
 
   if (successModalCloseBtn) successModalCloseBtn.addEventListener("click", closeSuccessModal);
 
-  // Add Action
+  // --- Error Modal Controller ---
+  const errorModalOverlay = document.getElementById("errorModalOverlay");
+  const errorModalCard = document.getElementById("errorModalCard");
+  const errorModalMessage = document.getElementById("errorModalMessage");
+  const errorModalCloseBtn = document.getElementById("errorModalCloseBtn");
+
+  window.showErrorModal = function(msg = "Ooops.. something wrong, try one more time") {
+    if (errorModalMessage) errorModalMessage.textContent = msg;
+    if (errorModalOverlay && errorModalCard) {
+      errorModalOverlay.classList.remove("hidden", "pointer-events-none");
+      // Trigger reflow
+      void errorModalOverlay.offsetWidth;
+      errorModalOverlay.classList.remove("opacity-0");
+      
+      errorModalCard.classList.remove("scale-95", "opacity-0");
+      errorModalCard.classList.add("scale-100", "opacity-100");
+    }
+  };
+
+  const closeErrorModal = function() {
+    if (errorModalOverlay && errorModalCard) {
+      errorModalOverlay.classList.add("opacity-0");
+      errorModalCard.classList.remove("scale-100", "opacity-100");
+      errorModalCard.classList.add("scale-95", "opacity-0");
+      
+      setTimeout(() => {
+        errorModalOverlay.classList.add("hidden", "pointer-events-none");
+      }, 300);
+    }
+  };
+
+  if (errorModalCloseBtn) errorModalCloseBtn.addEventListener("click", closeErrorModal);  // Add Action
   const addModalHandler = () => {
     isEditing = false;
     inventoryForm.reset();
@@ -258,17 +289,22 @@ document.addEventListener("DOMContentLoaded", function () {
           window.location.reload();
         } else {
           // Display validation errors!
-          let errorMsg = "Could not save record.\n\n";
+          let errorMsg = "Could not save record. Please check your inputs.";
           if (data.errors) {
+            errorMsg = "Validation failed. Please correct the fields marked in the form.";
+            let detailedMsg = "Could not save record.\n\n";
             for (const [field, errors] of Object.entries(data.errors)) {
-              errorMsg += `${field.toUpperCase()}: ${errors.join(", ")}\n`;
+              detailedMsg += `${field.toUpperCase()}: ${errors.join(", ")}\n`;
+            }
+            const errorDiv = document.getElementById("formErrorMessage");
+            if (errorDiv) {
+              errorDiv.textContent = detailedMsg;
+              errorDiv.classList.remove("hidden");
             }
           }
           
-          const errorDiv = document.getElementById("formErrorMessage");
-          if (errorDiv) {
-            errorDiv.textContent = errorMsg;
-            errorDiv.classList.remove("hidden");
+          if (typeof window.showErrorModal === 'function') {
+            window.showErrorModal(errorMsg);
           } else {
             alert(errorMsg);
           }
@@ -279,12 +315,17 @@ document.addEventListener("DOMContentLoaded", function () {
         saveRecordBtn.textContent = prevText;
         saveRecordBtn.disabled = false;
         
+        const networkError = "Network error. Please check your connection and try again.";
         const errorDiv = document.getElementById("formErrorMessage");
         if (errorDiv) {
-          errorDiv.textContent = "An error occurred preserving the record. Please check your network connection.";
+          errorDiv.textContent = networkError;
           errorDiv.classList.remove("hidden");
+        }
+        
+        if (typeof window.showErrorModal === 'function') {
+          window.showErrorModal(networkError);
         } else {
-          alert("An error occurred preserving the record.");
+          alert(networkError);
         }
       });
     });
