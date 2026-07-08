@@ -50,8 +50,9 @@ document.addEventListener("DOMContentLoaded", function () {
   if (document.getElementById("inventory-table") && window.simpleDatatables) {
     const table = new window.simpleDatatables.DataTable("#inventory-table", {
       searchable: false,
+      sortable: false,
       fixedHeight: false,
-      perPageSelect: [10, 20, 50, 100],
+      perPageSelect: false,
       perPage: 50,
       labels: {
         placeholder: "Search items...",
