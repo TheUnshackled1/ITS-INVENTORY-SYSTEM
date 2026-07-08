@@ -315,6 +315,59 @@ document.addEventListener("DOMContentLoaded", function () {
 
   if (errorModalCloseBtn) errorModalCloseBtn.addEventListener("click", closeErrorModal);
 
+  // --- Log Detail Modal Controller ---
+  const logDetailModalOverlay = document.getElementById("logDetailModalOverlay");
+  const logDetailModalCard = document.getElementById("logDetailModalCard");
+  const logDetailItemType = document.getElementById("logDetailItemType");
+  const logDetailSummary = document.getElementById("logDetailSummary");
+  const logDetailModalCloseBtn = document.getElementById("logDetailModalCloseBtn");
+
+  const openLogDetailModal = function(itemType, summary) {
+    if (logDetailItemType) logDetailItemType.textContent = itemType || "-";
+    if (logDetailSummary) logDetailSummary.textContent = summary || "-";
+    if (logDetailModalOverlay && logDetailModalCard) {
+      logDetailModalOverlay.style.display = "flex";
+      logDetailModalOverlay.classList.remove("hidden", "pointer-events-none");
+      // Trigger reflow
+      void logDetailModalOverlay.offsetWidth;
+      logDetailModalOverlay.classList.remove("opacity-0");
+      
+      logDetailModalCard.classList.remove("scale-95", "opacity-0");
+      logDetailModalCard.classList.add("scale-100", "opacity-100");
+    }
+  };
+
+  const closeLogDetailModal = function() {
+    if (logDetailModalOverlay && logDetailModalCard) {
+      logDetailModalOverlay.classList.add("opacity-0");
+      logDetailModalCard.classList.remove("scale-100", "opacity-100");
+      logDetailModalCard.classList.add("scale-95", "opacity-0");
+      
+      setTimeout(() => {
+        logDetailModalOverlay.classList.add("hidden", "pointer-events-none");
+        logDetailModalOverlay.style.display = "none";
+      }, 300);
+    }
+  };
+
+  if (logDetailModalCloseBtn) logDetailModalCloseBtn.addEventListener("click", closeLogDetailModal);
+  if (logDetailModalOverlay) logDetailModalOverlay.addEventListener("click", function(e) {
+    if (e.target === logDetailModalOverlay) {
+      closeLogDetailModal();
+    }
+  });
+
+  // Attach click listener to log item links (using event delegation for simplicity or individual listeners)
+  document.addEventListener("click", function(e) {
+    const trigger = e.target.closest(".log-item-type");
+    if (trigger) {
+      e.preventDefault();
+      const itemType = trigger.getAttribute("data-item");
+      const summary = trigger.getAttribute("data-summary");
+      openLogDetailModal(itemType, summary);
+    }
+  });
+
   // Add Record Action
   const addModalHandler = () => {
     isEditing = false;
