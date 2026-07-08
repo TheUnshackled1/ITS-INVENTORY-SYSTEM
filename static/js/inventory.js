@@ -63,7 +63,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const tableEl = document.getElementById("inventory-table");
   if (tableEl && window.simpleDatatables) {
     dataTable = new window.simpleDatatables.DataTable("#inventory-table", {
-      searchable: false,
+      searchable: true,
       sortable: false,
       fixedHeight: false,
       perPageSelect: false,
