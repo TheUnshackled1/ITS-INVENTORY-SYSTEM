@@ -120,6 +120,7 @@ table {
     flex-direction: column;
     gap: 1rem;
     padding: 1rem;
+    overflow-y: auto;
 }
 
 .sidebar__brand {
@@ -228,7 +229,7 @@ table {
         top: 0;
         bottom: 0;
         border-radius: 0;
-        overflow-y: auto;
+        overflow: visible;
         transition: width 300ms cubic-bezier(0.4, 0, 0.2, 1);
     }
 

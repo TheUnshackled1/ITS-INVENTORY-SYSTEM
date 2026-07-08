@@ -45,16 +45,20 @@
 <body class="min-h-screen font-sans text-slate-900 antialiased">
   <div class="app-shell">
     <aside class="sidebar">
+      <!-- Floating Sidebar Toggle Button -->
+      <button id="sidebarToggle" class="absolute -right-3 top-1/2 -translate-y-1/2 z-50 hidden md:flex h-6 w-6 items-center justify-center rounded-full bg-blue-700 text-white shadow-lg ring-2 ring-white transition-all duration-300 hover:scale-110 hover:bg-blue-600 cursor-pointer" aria-label="Toggle Sidebar">
+        <svg class="h-3.5 w-3.5 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+        </svg>
+      </button>
+
       <div class="sidebar__inner relative">
-        <div class="sidebar__brand relative">
+        <div class="sidebar__brand relative w-full flex items-center">
           <span class="sidebar__brand-mark shrink-0 transition-all duration-300">I</span>
-          <div class="sidebar__brand-text shrink-0 whitespace-nowrap overflow-hidden transition-all duration-300">ITS Inventory</div>
           
-          <button id="sidebarToggle" class="ml-auto flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-white/10 text-white transition-all duration-300 hover:bg-white/20 opacity-0 md:opacity-100" aria-label="Toggle Sidebar">
-            <svg class="h-4 w-4 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M11 19l-7-7 7-7m8 14l-7-7 7-7" />
-            </svg>
-          </button>
+          <div class="sidebar__brand-text ml-3 whitespace-nowrap overflow-hidden transition-all duration-300">
+            ITS Inventory
+          </div>
         </div>
         <nav class="sidebar__nav mt-2" aria-label="Inventory navigation">
           <a class="sidebar__link sidebar__link--active" href="#top">
