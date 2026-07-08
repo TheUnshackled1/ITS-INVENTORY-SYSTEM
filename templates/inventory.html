@@ -250,7 +250,7 @@
                     </svg>
                   </span>
                   <input id="filter-search" type="text" name="q" value="{{ search_query }}"
-                    placeholder="Search itemsï¿½" class="datatable-selector w-full pl-9 text-center" />
+                    placeholder="Search items&#8230;" class="datatable-selector w-full pl-9 text-center" />
                 </div>
               </div>
 
@@ -314,52 +314,40 @@
               <thead class="bg-slate-50 text-xs uppercase tracking-[0.18em] text-slate-500">
                 <tr>
                   <th scope="col" class="px-2 py-2 font-semibold">
-                    <a href="{{ sort_urls.no }}"
-                      class="inline-flex w-full items-center justify-center hover:text-brand-700">No.</a>
+                    <span class="inline-flex w-full items-center justify-center">No.</span>
                   </th>
                   <th scope="col" class="px-2 py-2 font-semibold">
-                    <a href="{{ sort_urls.item_type }}"
-                      class="inline-flex w-full items-center justify-center hover:text-brand-700">Item</a>
+                    <span class="inline-flex w-full items-center justify-center">Item</span>
                   </th>
                   <th scope="col" class="px-2 py-2 font-semibold">
-                    <a href="{{ sort_urls.item_description }}"
-                      class="inline-flex w-full items-center justify-center hover:text-brand-700">Description</a>
+                    <span class="inline-flex w-full items-center justify-center">Description</span>
                   </th>
                   <th scope="col" class="px-2 py-2 font-semibold">
-                    <a href="{{ sort_urls.brand }}"
-                      class="inline-flex w-full items-center justify-center hover:text-brand-700">Brand</a>
+                    <span class="inline-flex w-full items-center justify-center">Brand</span>
                   </th>
                   <th scope="col" class="px-2 py-2 font-semibold w-[14rem]">
-                    <a href="{{ sort_urls.model }}"
-                      class="inline-flex w-full items-center justify-center hover:text-brand-700">Model</a>
+                    <span class="inline-flex w-full items-center justify-center">Model</span>
                   </th>
                   <th scope="col" class="px-2 py-2 font-semibold w-[14rem]">
-                    <a href="{{ sort_urls.serial_number }}"
-                      class="inline-flex w-full items-center justify-center hover:text-brand-700">Serial Number</a>
+                    <span class="inline-flex w-full items-center justify-center">Serial Number</span>
                   </th>
                   <th scope="col" class="px-2 py-2 font-semibold">
-                    <a href="{{ sort_urls.quantity }}"
-                      class="inline-flex w-full items-center justify-center hover:text-brand-700">Qty</a>
+                    <span class="inline-flex w-full items-center justify-center">Qty</span>
                   </th>
                   <th scope="col" class="px-2 py-2 font-semibold w-24">
-                    <a href="{{ sort_urls.date_inventory }}"
-                      class="inline-flex w-full items-center justify-center hover:text-brand-700">Inv Date</a>
+                    <span class="inline-flex w-full items-center justify-center">Inv Date</span>
                   </th>
                   <th scope="col" class="px-2 py-2 font-semibold w-24">
-                    <a href="{{ sort_urls.date_disposal }}"
-                      class="inline-flex w-full items-center justify-center hover:text-brand-700">Disp Date</a>
+                    <span class="inline-flex w-full items-center justify-center">Disp Date</span>
                   </th>
                   <th scope="col" class="px-2 py-2 font-semibold">
-                    <a href="{{ sort_urls.location }}"
-                      class="inline-flex w-full items-center justify-center hover:text-brand-700">Location</a>
+                    <span class="inline-flex w-full items-center justify-center">Location</span>
                   </th>
                   <th scope="col" class="px-2 py-2 font-semibold">
-                    <a href="{{ sort_urls.status }}"
-                      class="inline-flex w-full items-center justify-center hover:text-brand-700">Status</a>
+                    <span class="inline-flex w-full items-center justify-center">Status</span>
                   </th>
                   <th scope="col" class="px-2 py-2 font-semibold">
-                    <a href="{{ sort_urls.defect_description }}"
-                      class="inline-flex w-full items-center justify-center hover:text-brand-700">Defect</a>
+                    <span class="inline-flex w-full items-center justify-center">Defect</span>
                   </th>
                 </tr>
               </thead>
@@ -407,19 +395,23 @@
                   <td class="px-2 py-2 align-middle text-center text-xs text-slate-700" title="{{ item.location }}">
                     {% firstof item.location "-" %}
                   </td>
-                  <td class="px-2 py-2 align-middle">
+                  <td class="px-2 py-2 align-middle text-center">
                     {% if item.status == 'available' %}
-                    <span
-                      class="inline-flex items-center rounded-full bg-emerald-100 px-2 py-0.5 text-[9px] uppercase tracking-wider font-semibold text-emerald-800 ring-1 ring-emerald-200">{{ item.get_status_display }}</span>
+                    <span class="inline-flex items-center gap-1.5 rounded-full bg-emerald-50 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wider text-emerald-700 shadow-sm ring-1 ring-inset ring-emerald-600/20">
+                      <svg class="h-1.5 w-1.5 fill-emerald-500" viewBox="0 0 6 6" aria-hidden="true"><circle cx="3" cy="3" r="3" /></svg>{{ item.get_status_display }}
+                    </span>
                     {% elif item.status == 'in_use' %}
-                    <span
-                      class="inline-flex items-center rounded-full bg-sky-100 px-2 py-0.5 text-[9px] uppercase tracking-wider font-semibold text-sky-800 ring-1 ring-sky-200">{{ item.get_status_display }}</span>
+                    <span class="inline-flex items-center gap-1.5 rounded-full bg-sky-50 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wider text-sky-700 shadow-sm ring-1 ring-inset ring-sky-600/20">
+                      <svg class="h-1.5 w-1.5 fill-sky-500" viewBox="0 0 6 6" aria-hidden="true"><circle cx="3" cy="3" r="3" /></svg>{{ item.get_status_display }}
+                    </span>
                     {% elif item.status == 'repair' %}
-                    <span
-                      class="inline-flex items-center rounded-full bg-amber-100 px-2 py-0.5 text-[9px] uppercase tracking-wider font-semibold text-amber-800 ring-1 ring-amber-200">{{ item.get_status_display }}</span>
+                    <span class="inline-flex items-center gap-1.5 rounded-full bg-amber-50 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wider text-amber-700 shadow-sm ring-1 ring-inset ring-amber-600/20">
+                      <svg class="h-1.5 w-1.5 fill-amber-500" viewBox="0 0 6 6" aria-hidden="true"><circle cx="3" cy="3" r="3" /></svg>{{ item.get_status_display }}
+                    </span>
                     {% else %}
-                    <span
-                      class="inline-flex items-center rounded-full bg-rose-100 px-2 py-0.5 text-[9px] uppercase tracking-wider font-semibold text-rose-800 ring-1 ring-rose-200">{{ item.get_status_display }}</span>
+                    <span class="inline-flex items-center gap-1.5 rounded-full bg-rose-50 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wider text-rose-700 shadow-sm ring-1 ring-inset ring-rose-600/20">
+                      <svg class="h-1.5 w-1.5 fill-rose-500" viewBox="0 0 6 6" aria-hidden="true"><circle cx="3" cy="3" r="3" /></svg>{{ item.get_status_display }}
+                    </span>
                     {% endif %}
                   </td>
                   <td class="px-2 py-2 align-middle text-xs text-slate-600" title="{{ item.defect_description }}">
