@@ -7,9 +7,16 @@ from django.db.models.functions import Lower, Trim, Upper
 from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.views import LoginView
 from django.http import JsonResponse
 from .forms import InventoryForm
 from .models import Inventory
+
+
+class CustomLoginView(LoginView):
+    def form_valid(self, form):
+        messages.success(self.request, f"Welcome {form.get_user().username}", extra_tags="login_toast")
+        return super().form_valid(form)
 
 
 def get_row_value(row, index, default=""):
