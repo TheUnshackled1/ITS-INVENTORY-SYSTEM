@@ -11,8 +11,6 @@ from django.contrib.auth.views import LoginView
 from django.http import JsonResponse
 from .forms import InventoryForm
 from .models import Inventory, AuditLog
-from django.views.decorators.http import require_POST
-
 
 def log_action(request, action, item, extra=""):
     who = request.user.username if hasattr(request, 'user') and request.user.is_authenticated else "System"
@@ -27,7 +25,7 @@ def log_action(request, action, item, extra=""):
 
 class CustomLoginView(LoginView):
     def form_valid(self, form):
-        messages.success(self.request, f"Welcome {form.get_user().username.upper()}", extra_tags="login_toast")
+        messages.success(self.request, f"Welcome {form.get_user().username}", extra_tags="login_toast")
         return super().form_valid(form)
 
 def get_row_value(row, index, default=""):
@@ -263,8 +261,15 @@ def add_inventory(request):
             return redirect('inventory-list')
         elif is_ajax:
             return JsonResponse({'success': False, 'errors': form.errors}, status=400)
-    
-    return redirect('inventory-list')
+    else:
+        form = InventoryForm()
+    return render(
+        request,
+        'add_inventory.html',
+        {
+            'form': form,
+        },
+    )
 
 @login_required
 def edit_inventory(request, pk):
@@ -318,7 +323,18 @@ def edit_inventory(request, pk):
             return redirect('inventory-list')
         elif is_ajax:
             return JsonResponse({'success': False, 'errors': form.errors}, status=400)
-    return redirect('inventory-list')
+    else:
+        form = InventoryForm(instance=inventory_item)
+        for field_name in optional_fields:
+            form.fields[field_name].required = False
+    return render(
+        request,
+        'add_inventory.html',
+        {
+            'form': form,
+            'inventory_item': inventory_item,
+        },
+    )
 def parse_date(date_val):
     if not date_val:
         return None
@@ -496,6 +512,7 @@ def activity_log(request):
         )
     return render(request, "activity_log.html", {"logs": logs, "search_query": search_query})
 
+from django.views.decorators.http import require_POST
 @require_POST
 @login_required(login_url='login')
 def delete_inventory(request, pk):
