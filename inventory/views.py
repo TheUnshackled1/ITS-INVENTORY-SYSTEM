@@ -160,10 +160,13 @@ def inventory_list(request):
         prefix = '-' if current_direction == 'desc' else ''
         inventory_items = inventory_items.order_by(f'{prefix}{order_field}', 'pk')
     else:
-        inventory_items = inventory_items.order_by('-pk')
+        inventory_items = inventory_items.order_by('sort_item_type', 'serial_number', 'pk')
 
-    # Assign original row numbers based on default overall order (newest first)
-    overall_pks = Inventory.objects.order_by('-pk').values_list('pk', flat=True)
+    # Assign original row numbers based on default overall order (alphabetical)
+    overall_qs = Inventory.objects.annotate(
+        sort_item_type=Upper(Trim('item_type'))
+    )
+    overall_pks = overall_qs.order_by('sort_item_type', 'serial_number', 'pk').values_list('pk', flat=True)
     pk_to_no = {pk: i + 1 for i, pk in enumerate(overall_pks)}
     
     inventory_items = list(inventory_items)
