@@ -27,7 +27,7 @@ def log_action(request, action, item, extra=""):
 
 class CustomLoginView(LoginView):
     def form_valid(self, form):
-        messages.success(self.request, f"Welcome {form.get_user().username}", extra_tags="login_toast")
+        messages.success(self.request, f"Welcome {form.get_user().username.upper()}", extra_tags="login_toast")
         return super().form_valid(form)
 
 def get_row_value(row, index, default=""):
