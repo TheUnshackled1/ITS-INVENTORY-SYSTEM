@@ -6,6 +6,7 @@ from django.db.models import Q
 from django.db.models.functions import Lower, Trim, Upper
 from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from .forms import InventoryForm
 from .models import Inventory
@@ -100,6 +101,7 @@ def find_inventory_match(data):
 
     return queryset.first()
     
+@login_required
 def inventory_list(request):
     base_queryset = Inventory.objects.all().annotate(
         trimmed_item_type=Trim('item_type'),
@@ -249,6 +251,7 @@ def serialize_inventory_item(item):
         'defect_description': item.defect_description or '',
     }
 
+@login_required
 def add_inventory(request):
     if request.method == 'POST':
         form = InventoryForm(request.POST)
@@ -270,6 +273,7 @@ def add_inventory(request):
         },
     )
 
+@login_required
 def edit_inventory(request, pk):
     inventory_item = get_object_or_404(Inventory, pk=pk)
     optional_fields = {
@@ -344,6 +348,7 @@ def parse_date(date_val):
             continue
     return None
 
+@login_required
 def upload_excel(request):
     if request.method == 'POST':
         excel_file = request.FILES.get('excel_file')
