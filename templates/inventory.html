@@ -235,7 +235,7 @@
             {% elif message.tags == 'success' %}
               <!-- Intercept success messages to show the modal instead of an inline banner -->
               <script>
-                document.addEventListener('DOMContentLoaded', () => {
+                window.addEventListener('load', () => {
                   if (typeof window.showSuccessModal === 'function') {
                     window.showSuccessModal("{{ message|escapejs }}");
                   }
@@ -244,7 +244,7 @@
             {% elif message.tags == 'error' %}
               <!-- Intercept error messages to show the error modal -->
               <script>
-                document.addEventListener('DOMContentLoaded', () => {
+                window.addEventListener('load', () => {
                   if (typeof window.showErrorModal === 'function') {
                     window.showErrorModal("{{ message|escapejs }}");
                   }
