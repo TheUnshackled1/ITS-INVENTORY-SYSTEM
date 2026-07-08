@@ -522,7 +522,7 @@ document.addEventListener("DOMContentLoaded", function () {
         if (data.success) {
           closeDrawer();
           localStorage.setItem("showSuccessModalFlag", "deleted");
-          window.location.reload();
+          window.location.href = "/activity-log/";
         } else {
           btnRef.textContent = prevText;
           btnRef.disabled = false;
