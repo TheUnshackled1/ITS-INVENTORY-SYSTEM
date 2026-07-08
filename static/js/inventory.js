@@ -28,6 +28,20 @@ tailwind.config = {
 
 // UI and DataTables Initialization
 document.addEventListener("DOMContentLoaded", function () {
+  // Check for pending success popups from native navigation
+  const pendingSuccess = localStorage.getItem("showSuccessModalFlag");
+  if (pendingSuccess) {
+    localStorage.removeItem("showSuccessModalFlag");
+    setTimeout(() => {
+      if (typeof window.showSuccessModal === "function") {
+        const successMessage = pendingSuccess === "edited"
+          ? "Congratulations your record has been successfully edited"
+          : "Congratulations your record has been successfully added";
+        window.showSuccessModal(successMessage);
+      }
+    }, 150);
+  }
+
   // Sidebar Toggle Logic
   const sidebarToggle = document.getElementById("sidebarToggle");
   const appShell = document.querySelector(".app-shell");
@@ -237,66 +251,11 @@ document.addEventListener("DOMContentLoaded", function () {
         if (data.success && data.item) {
           closeDrawer();
           
-          // Seamless Background Sync: Fetch updated HTML and rebuild DataTable
-          fetch(window.location.href, {
-            headers: { "X-Requested-With": "XMLHttpRequest" }
-          })
-          .then(res => res.text())
-          .then(html => {
-            const parser = new DOMParser();
-            const doc = parser.parseFromString(html, "text/html");
-            const newTable = doc.querySelector("#inventory-table");
-            const oldTable = document.getElementById("inventory-table");
-            
-            const newStats = doc.getElementById("stats-cards-container");
-            const oldStats = document.getElementById("stats-cards-container");
-            
-            if (oldStats && newStats) {
-              oldStats.parentNode.replaceChild(newStats, oldStats);
-            }
-            
-            if (oldTable && newTable) {
-              if (dataTable) {
-                dataTable.destroy(); // Restores original DOM
-              }
-              
-              const restoredOldTable = document.getElementById("inventory-table");
-              if (restoredOldTable) {
-                restoredOldTable.parentNode.replaceChild(newTable, restoredOldTable);
-                
-                // Reinitialize DataTable
-                dataTable = new window.simpleDatatables.DataTable("#inventory-table", {
-                  searchable: false,
-                  sortable: false,
-                  fixedHeight: false,
-                  perPageSelect: false,
-                  perPage: 50,
-                  labels: {
-                    placeholder: "Search items...",
-                    perPage: "entries per page",
-                    noRows: "No entries to found",
-                    info: "Showing {start} to {end} of {rows} entries",
-                  },
-                });
-                
-                // Keep the search filter synced
-                const activeSearch = document.getElementById("filter-search");
-                if (activeSearch && activeSearch.value) {
-                  dataTable.search(activeSearch.value);
-                }
-              }
-            }
-            
-            // Show Success Modal after seamless reload completes (+ timeout for drawer close)
-            setTimeout(() => {
-              if (typeof window.showSuccessModal === "function") {
-                const successMessage = isEditing 
-                  ? "Congratulations your record has been successfully edited" 
-                  : "Congratulations your record has been successfully added";
-                window.showSuccessModal(successMessage);
-              }
-            }, 300);
-          });
+          // Queue the animated success modal for after the native page reload completes
+          localStorage.setItem("showSuccessModalFlag", isEditing ? "edited" : "added");
+          
+          // Refresh the page natively to guarantee perfect DataTable indexing
+          window.location.reload();
         } else {
           // Display validation errors!
           let errorMsg = "Could not save record.\n\n";
