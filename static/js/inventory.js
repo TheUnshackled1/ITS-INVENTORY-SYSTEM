@@ -7,9 +7,9 @@ document.addEventListener("DOMContentLoaded", function () {
     localStorage.removeItem("showSuccessModalFlag");
     setTimeout(() => {
       if (typeof window.showSuccessModal === "function") {
-        const successMessage = pendingSuccess === "edited"
-          ? "Congratulations your record has been successfully edited"
-          : "Congratulations your record has been successfully added";
+        let successMessage = "Congratulations your record has been successfully added";
+        if (pendingSuccess === "edited") successMessage = "Congratulations your record has been successfully edited";
+        if (pendingSuccess === "deleted") successMessage = "Congratulations your record has been successfully deleted";
         window.showSuccessModal(successMessage);
       }
     }, 150);
@@ -63,121 +63,124 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   // DataTable Logic
-  let dataTable = null;
-  const tableEl = document.getElementById("inventory-table");
+  const dataTablesElements = document.querySelectorAll("#inventory-table, #activity-log-table");
+  
+  dataTablesElements.forEach(tableEl => {
+    let dataTable = null;
+    
+    if (window.simpleDatatables) {
+      // Load ALL rows into DOM at once (no internal DT pagination)
+      dataTable = new window.simpleDatatables.DataTable(tableEl, {
+        searchable: false,
+        sortable: false,
+        fixedHeight: false,
+        perPageSelect: false,
+        perPage: 100000,
+      });
 
-  if (tableEl && window.simpleDatatables) {
-    // Load ALL rows into DOM at once (no internal DT pagination)
-    dataTable = new window.simpleDatatables.DataTable("#inventory-table", {
-      searchable: false,
-      sortable: false,
-      fixedHeight: false,
-      perPageSelect: false,
-      perPage: 100000,
-    });
+      // ----- Custom Search + Pagination Engine -----
+      const PAGE_SIZE = 50;
+      let currentPage = 1;
+      let activeRows = []; // currently matching rows
 
-    // ----- Custom Search + Pagination Engine -----
-    const PAGE_SIZE = 50;
-    let currentPage = 1;
-    let activeRows = []; // currently matching rows
-
-    function getAllRows() {
-      const tbody = tableEl.querySelector("tbody");
-      return tbody ? Array.from(tbody.querySelectorAll("tr:not(.no-results-row)")) : [];
-    }
-
-    function renderPage() {
-      const all = getAllRows();
-      // Hide every row first
-      all.forEach(r => r.style.display = "none");
-
-      if (activeRows.length === 0) {
-        // Show no-results
-        let noRow = tableEl.querySelector(".no-results-row");
-        if (!noRow) {
-          noRow = document.createElement("tr");
-          noRow.className = "no-results-row";
-          const colCount = tableEl.querySelectorAll("thead th").length;
-          noRow.innerHTML = `<td colspan="${colCount}" class="text-center py-8 text-slate-400 text-sm font-medium">No results match your search query</td>`;
-          const tbody = tableEl.querySelector("tbody");
-          if (tbody) tbody.appendChild(noRow);
-        }
-        noRow.style.display = "";
-      } else {
-        // Remove any stale no-results row
-        const noRow = tableEl.querySelector(".no-results-row");
-        if (noRow) noRow.remove();
-
-        // Show current page slice
-        const start = (currentPage - 1) * PAGE_SIZE;
-        activeRows.slice(start, start + PAGE_SIZE).forEach(r => r.style.display = "");
+      function getAllRows() {
+        const tbody = tableEl.querySelector("tbody");
+        return tbody ? Array.from(tbody.querySelectorAll("tr:not(.no-results-row)")) : [];
       }
 
-      renderPagination();
-    }
+      function renderPage() {
+        const all = getAllRows();
+        // Hide every row first
+        all.forEach(r => r.style.display = "none");
 
-    function renderPagination() {
-      const bottomBar = document.querySelector(".datatable-bottom");
-      if (!bottomBar) return;
+        if (activeRows.length === 0) {
+          // Show no-results
+          let noRow = tableEl.querySelector(".no-results-row");
+          if (!noRow) {
+            noRow = document.createElement("tr");
+            noRow.className = "no-results-row";
+            const colCount = tableEl.querySelectorAll("thead th").length;
+            noRow.innerHTML = `<td colspan="${colCount}" class="text-center py-8 text-slate-400 text-sm font-medium">No results match your search query</td>`;
+            const tbody = tableEl.querySelector("tbody");
+            if (tbody) tbody.appendChild(noRow);
+          }
+          noRow.style.display = "";
+        } else {
+          // Remove any stale no-results row
+          const noRow = tableEl.querySelector(".no-results-row");
+          if (noRow) noRow.remove();
 
-      const totalRows = activeRows.length;
-      const totalPages = Math.ceil(totalRows / PAGE_SIZE);
-      const start = totalRows === 0 ? 0 : (currentPage - 1) * PAGE_SIZE + 1;
-      const end = Math.min(currentPage * PAGE_SIZE, totalRows);
+          // Show current page slice
+          const start = (currentPage - 1) * PAGE_SIZE;
+          activeRows.slice(start, start + PAGE_SIZE).forEach(r => r.style.display = "");
+        }
 
-      bottomBar.innerHTML = `
-        <div class="datatable-info">Showing ${start} to ${end} of ${totalRows} entries</div>
-        <nav class="datatable-pagination">
-          <ul class="datatable-pagination-list">
-            <li class="datatable-pagination-list-item ${currentPage === 1 ? "datatable-disabled" : ""}">
-              <button data-page="${currentPage - 1}" class="datatable-pagination-list-item-link">&lsaquo; Previous</button>
-            </li>
-            ${Array.from({length: totalPages}, (_, i) => `
-              <li class="datatable-pagination-list-item ${i + 1 === currentPage ? "datatable-active" : ""}">
-                <button data-page="${i + 1}" class="datatable-pagination-list-item-link">${i + 1}</button>
+        renderPagination();
+      }
+
+      function renderPagination() {
+        const bottomBar = document.querySelector(".datatable-bottom");
+        if (!bottomBar) return;
+
+        const totalRows = activeRows.length;
+        const totalPages = Math.ceil(totalRows / PAGE_SIZE);
+        const start = totalRows === 0 ? 0 : (currentPage - 1) * PAGE_SIZE + 1;
+        const end = Math.min(currentPage * PAGE_SIZE, totalRows);
+
+        bottomBar.innerHTML = `
+          <div class="datatable-info">Showing ${start} to ${end} of ${totalRows} entries</div>
+          <nav class="datatable-pagination">
+            <ul class="datatable-pagination-list">
+              <li class="datatable-pagination-list-item ${currentPage === 1 ? "datatable-disabled" : ""}">
+                <button data-page="${currentPage - 1}" class="datatable-pagination-list-item-link">&lsaquo; Previous</button>
               </li>
-            `).join("")}
-            <li class="datatable-pagination-list-item ${currentPage === totalPages || totalPages === 0 ? "datatable-disabled" : ""}">
-              <button data-page="${currentPage + 1}" class="datatable-pagination-list-item-link">Next &rsaquo;</button>
-            </li>
-          </ul>
-        </nav>`;
+              ${Array.from({length: totalPages}, (_, i) => `
+                <li class="datatable-pagination-list-item ${i + 1 === currentPage ? "datatable-active" : ""}">
+                  <button data-page="${i + 1}" class="datatable-pagination-list-item-link">${i + 1}</button>
+                </li>
+              `).join("")}
+              <li class="datatable-pagination-list-item ${currentPage === totalPages || totalPages === 0 ? "datatable-disabled" : ""}">
+                <button data-page="${currentPage + 1}" class="datatable-pagination-list-item-link">Next &rsaquo;</button>
+              </li>
+            </ul>
+          </nav>`;
 
-      bottomBar.querySelectorAll("button[data-page]").forEach(btn => {
-        btn.addEventListener("click", function () {
-          const page = parseInt(this.dataset.page);
-          if (page < 1 || page > totalPages) return;
-          currentPage = page;
-          renderPage();
-          tableEl.closest("section")?.scrollIntoView({ behavior: "smooth", block: "start" });
+        bottomBar.querySelectorAll("button[data-page]").forEach(btn => {
+          btn.addEventListener("click", function () {
+            const page = parseInt(this.dataset.page);
+            if (page < 1 || page > totalPages) return;
+            currentPage = page;
+            renderPage();
+            tableEl.closest("section")?.scrollIntoView({ behavior: "smooth", block: "start" });
+          });
         });
-      });
-    }
+      }
 
-    function applySearch(query) {
-      const all = getAllRows();
-      currentPage = 1;
-      activeRows = query
-        ? all.filter(row => {
-            const text = Array.from(row.querySelectorAll("td")).map(td => td.textContent.trim().toUpperCase()).join(" ");
-            return text.includes(query.toUpperCase());
-          })
-        : all;
+      function applySearch(query) {
+        const all = getAllRows();
+        currentPage = 1;
+        activeRows = query
+          ? all.filter(row => {
+              const text = Array.from(row.querySelectorAll("td")).map(td => td.textContent.trim().toUpperCase()).join(" ");
+              return text.includes(query.toUpperCase());
+            })
+          : all;
+        renderPage();
+      }
+
+      // Initial render: show page 1 with all rows
+      activeRows = getAllRows();
       renderPage();
-    }
 
-    // Initial render: show page 1 with all rows
-    activeRows = getAllRows();
-    renderPage();
-
-    // Wire up the custom search input
-    const customSearch = document.getElementById("filter-search");
-    if (customSearch) {
-      customSearch.addEventListener("input", function () {
-        applySearch(this.value.trim());
-      });
+      // Wire up the custom search input
+      const customSearch = document.getElementById("filter-search");
+      if (customSearch) {
+        customSearch.addEventListener("input", function () {
+          applySearch(this.value.trim());
+        });
+      }
     }
-  }
+  });
 
   // Global auto-uppercase for all text inputs and textareas
   document.addEventListener('input', function(e) {
@@ -317,6 +320,10 @@ document.addEventListener("DOMContentLoaded", function () {
     isEditing = false;
     inventoryForm.reset();
     document.getElementById("form_id").value = "";
+    const submitBtn = document.getElementById("saveRecordBtn");
+    const deleteBtn = document.getElementById("deleteRecordBtn");
+    if (submitBtn) submitBtn.textContent = "Save Record";
+    if (deleteBtn) deleteBtn.classList.add("hidden");
     openDrawer("Add Inventory Record");
   };
 
@@ -336,7 +343,9 @@ document.addEventListener("DOMContentLoaded", function () {
       document.getElementById("form_id").value = row.dataset.id || "";
       
       const submitBtn = document.getElementById("saveRecordBtn");
+      const deleteBtn = document.getElementById("deleteRecordBtn");
       if (submitBtn) submitBtn.textContent = "Edit Record";
+      if (deleteBtn) deleteBtn.classList.remove("hidden");
       
       document.getElementById("form_item_type").value = row.dataset.type || "";
       document.getElementById("form_brand").value = row.dataset.brand || "";

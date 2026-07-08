@@ -9,6 +9,7 @@ urlpatterns = [
     path('', inventory_list, name='inventory-list'),
     path('inventory/add/', add_inventory, name='inventory-create'),
     path('inventory/<int:pk>/edit/', edit_inventory, name='inventory-edit'),
+    path('inventory/<int:pk>/delete/', views.delete_inventory, name='inventory-delete'),
     path('admin/', admin.site.urls),
     path('upload/', views.upload_excel, name='inventory-upload'),
     path('login/', CustomLoginView.as_view(template_name='login.html'), name='login'),

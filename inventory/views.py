@@ -535,3 +535,21 @@ def activity_log(request):
             Q(action__icontains=search_query)
         )
     return render(request, "activity_log.html", {"logs": logs, "search_query": search_query})
+
+from django.views.decorators.http import require_POST
+
+@require_POST
+@login_required(login_url='login')
+def delete_inventory(request, pk):
+    item = get_object_or_404(Inventory, pk=pk)
+    
+    # Log deletion before actual removal to capture context
+    log_action(
+        request=request,
+        action='deleted',
+        item=item,
+        extra="Deleted via dashboard UI"
+    )
+    
+    item.delete()
+    return JsonResponse({'success': True, 'message': 'Record deleted successfully'})

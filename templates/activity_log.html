@@ -65,26 +65,12 @@
             <!-- Header Row -->
             <div class="relative flex flex-col gap-5 lg:flex-row lg:items-center lg:justify-between min-h-[50px]">
 
-              <!-- Hidden placeholder on LG to balance flex justify-between -->
-              <div class="hidden lg:block lg:w-1/3"></div>
-
               <!-- Centered Title -->
-              <div class="flex justify-center text-center lg:absolute lg:left-1/2 lg:-translate-x-1/2 lg:w-1/3">
+              <div class="flex justify-center text-center w-full">
                 <h1
                   class="text-lg sm:text-xl md:text-2xl font-extrabold uppercase tracking-[0.15em] text-blue-700 drop-shadow-sm whitespace-nowrap">
                   ACTIVITY LOG
                 </h1>
-              </div>
-
-              <!-- Action Buttons -->
-              <div class="flex items-center justify-end lg:w-1/3">
-                <a href="{% url 'inventory-list' %}"
-                  class="inline-flex cursor-pointer items-center justify-center gap-2 rounded-xl bg-slate-100 px-6 py-2.5 text-sm font-bold text-slate-700 shadow-sm ring-1 ring-inset ring-slate-200 transition-all hover:bg-slate-200 hover:-translate-y-0.5">
-                  <svg class="h-4 w-4 stroke-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-                  </svg>
-                  Back to Dashboard
-                </a>
               </div>
             </div>
           </div>
@@ -102,11 +88,8 @@
                   </svg>
                 </span>
                 <input id="filter-search" type="text" name="q" value="{{ search_query|default:'' }}"
-                  placeholder="Search logs..." class="w-full bg-slate-50 border-slate-200 focus:border-blue-500 focus:ring-blue-500 rounded-xl shadow-sm text-sm py-2.5 pl-9 pr-3 transition-colors" />
+                  placeholder="SEARCH LOGS..." class="uppercase w-full bg-slate-50 border-slate-900 border-2 focus:border-slate-900 focus:ring-0 rounded-xl shadow-sm text-sm font-semibold text-slate-800 py-2.5 pl-9 pr-3 transition-colors placeholder:text-slate-400 placeholder:uppercase" />
               </div>
-              <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2.5 rounded-xl font-bold shadow-sm text-sm transition-colors focus:ring-2 ring-blue-500 ring-offset-1">
-                Search
-              </button>
             </form>
           </div>
           
@@ -117,42 +100,58 @@
             <table id="activity-log-table" class="w-full text-sm text-slate-700 whitespace-nowrap min-w-[800px]">
               <thead class="bg-slate-50 text-xs uppercase tracking-[0.18em] text-slate-500 select-none">
                 <tr>
-                  <th scope="col" class="px-4 py-3 font-semibold text-left">Action</th>
-                  <th scope="col" class="px-4 py-3 font-semibold text-left">Item Type</th>
-                  <th scope="col" class="px-4 py-3 font-semibold text-left min-w-[300px]">Summary</th>
-                  <th scope="col" class="px-4 py-3 font-semibold text-center">Performed By</th>
-                  <th scope="col" class="px-4 py-3 font-semibold text-right">Date & Time (PH)</th>
+                  <th scope="col" class="px-2 py-2 font-semibold">
+                    <span class="inline-flex w-full items-center justify-center">No.</span>
+                  </th>
+                  <th scope="col" class="px-2 py-2 font-semibold">
+                    <span class="inline-flex w-full items-center justify-center">Action</span>
+                  </th>
+                  <th scope="col" class="px-2 py-2 font-semibold">
+                    <span class="inline-flex w-full items-center justify-center">Item Type</span>
+                  </th>
+                  <th scope="col" class="px-2 py-2 font-semibold">
+                    <span class="inline-flex w-full items-center justify-center">Summary</span>
+                  </th>
+                  <th scope="col" class="px-2 py-2 font-semibold">
+                    <span class="inline-flex w-full items-center justify-center">Performed By</span>
+                  </th>
+                  <th scope="col" class="px-2 py-2 font-semibold">
+                    <span class="inline-flex w-full items-center justify-center">Date & Time (PH)</span>
+                  </th>
                 </tr>
               </thead>
               <tbody class="divide-y divide-slate-200 bg-white">
                 {% for log in logs %}
                 <tr class="transition-colors hover:bg-slate-50/80">
-                  <td class="px-4 py-3 align-middle font-medium">
+                  <td class="px-2 py-2 align-middle font-semibold text-slate-900 text-center text-xs w-16">
+                    {{ forloop.counter }}
+                  </td>
+                  <td class="px-2 py-2 align-middle text-center font-medium">
                     {% if log.action == 'added' %}
-                      <span class="inline-flex items-center rounded-md bg-green-50 px-2.5 py-1 text-xs font-bold uppercase tracking-wider text-green-700 ring-1 ring-inset ring-green-600/20">Added</span>
+                      <span class="inline-flex items-center rounded-md bg-green-50 px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider text-green-700 ring-1 ring-inset ring-green-600/20">Added</span>
                     {% elif log.action == 'edited' %}
-                      <span class="inline-flex items-center rounded-md bg-blue-50 px-2.5 py-1 text-xs font-bold uppercase tracking-wider text-blue-700 ring-1 ring-inset ring-blue-600/20">Edited</span>
+                      <span class="inline-flex items-center rounded-md bg-blue-50 px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider text-blue-700 ring-1 ring-inset ring-blue-600/20">Edited</span>
                     {% elif log.action == 'deleted' %}
-                      <span class="inline-flex items-center rounded-md bg-rose-50 px-2.5 py-1 text-xs font-bold uppercase tracking-wider text-rose-700 ring-1 ring-inset ring-rose-600/20">Deleted</span>
+                      <span class="inline-flex items-center rounded-md bg-rose-50 px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider text-rose-700 ring-1 ring-inset ring-rose-600/20">Deleted</span>
                     {% elif log.action == 'uploaded' %}
-                      <span class="inline-flex items-center rounded-md bg-teal-50 px-2.5 py-1 text-xs font-bold uppercase tracking-wider text-teal-700 ring-1 ring-inset ring-teal-600/20">Uploaded</span>
+                      <span class="inline-flex items-center rounded-md bg-teal-50 px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider text-teal-700 ring-1 ring-inset ring-teal-600/20">Uploaded</span>
                     {% else %}
-                      <span class="inline-flex items-center rounded-md bg-slate-50 px-2.5 py-1 text-xs font-bold uppercase tracking-wider text-slate-700 ring-1 ring-inset ring-slate-600/20">{{ log.action }}</span>
+                      <span class="inline-flex items-center rounded-md bg-slate-50 px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider text-slate-700 ring-1 ring-inset ring-slate-600/20">{{ log.action }}</span>
                     {% endif %}
                   </td>
-                  <td class="px-4 py-3 align-middle font-semibold text-slate-900">
+                  <td class="px-2 py-2 align-middle text-center text-xs font-semibold text-slate-900">
                     {{ log.item_type }}
                   </td>
-                  <td class="px-4 py-3 align-middle text-slate-600 whitespace-normal">
+                  <td class="px-2 py-2 align-middle text-center text-xs text-slate-600 whitespace-normal">
                     {{ log.description }}
                   </td>
-                  <td class="px-4 py-3 align-middle text-center text-slate-700 font-medium">
-                    <div class="inline-flex items-center gap-2">
-                       <div class="w-6 h-6 rounded-full bg-slate-200 flex items-center justify-center text-[10px] font-bold text-slate-600 uppercase">{{ log.performed_by|make_list|first }}</div>
+                  <td class="px-2 py-2 align-middle text-center text-xs font-medium text-slate-800">
+                    <div class="inline-flex items-center justify-center gap-2 w-full">
+                       <div class="w-5 h-5 rounded-full bg-slate-200 flex items-center justify-center text-[10px] font-bold text-slate-600 uppercase">{{ log.performed_by|make_list|first }}</div>
                        {{ log.performed_by }}
                     </div>
                   </td>
-                  <td class="px-4 py-3 align-middle text-right text-slate-500 tracking-tight font-mono text-[13px]">
+                  <td class="px-2 py-2 align-middle text-center text-xs text-slate-700 font-mono tracking-tight">
                     {{ log.timestamp|date:"M d, Y · h:i A" }}
                   </td>
                 </tr>
@@ -189,19 +188,6 @@
     </div>
   </div>
   <script src="https://cdn.jsdelivr.net/npm/simple-datatables@9.0.3"></script>
-  <!-- Initialize simple-datatables for the Activity Log table -->
-  <script>
-    document.addEventListener("DOMContentLoaded", function() {
-      const activityTable = document.getElementById("activity-log-table");
-      if (activityTable) {
-        new simpleDatatables.DataTable(activityTable, {
-          searchable: false, // We're using server-side search
-          perPageSelect: [10, 25, 50, 100],
-          perPage: 50,
-          sortable: true
-        });
-      }
-    });
-  </script>
+  <!-- All custom scripts have been moved to static/js/inventory.js -->
 </body>
 </html>
