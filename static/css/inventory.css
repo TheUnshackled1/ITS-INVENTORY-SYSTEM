@@ -353,6 +353,8 @@ table {
     display: flex !important;
     align-items: center !important;
     justify-content: space-between !important;
+    flex-wrap: wrap !important;
+    gap: 1rem !important;
     flex-direction: row-reverse !important;
     background: white !important;
     border-radius: 9999px !important;
@@ -360,6 +362,14 @@ table {
     box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05), 0 2px 4px -2px rgb(0 0 0 / 0.05) !important;
     border: 1px solid rgb(226 232 240) !important;
     margin-top: 1.5rem !important;
+}
+
+@media (max-width: 640px) {
+    .datatable-bottom {
+        flex-direction: column !important;
+        border-radius: 1.5rem !important;
+        padding: 1rem !important;
+    }
 }
 
 .datatable-info {
@@ -374,12 +384,15 @@ table {
     display: flex !important;
     justify-content: flex-start !important;
     flex-grow: 1 !important;
+    flex-wrap: wrap !important;
+    gap: 0.25rem !important;
 }
 
 .datatable-pagination ul {
     margin: 0 !important;
     display: flex !important;
     align-items: center !important;
+    flex-wrap: wrap !important;
     gap: 0.35rem !important;
     list-style: none !important;
     padding: 0 !important;
@@ -401,7 +414,7 @@ table {
     font-weight: 600 !important;
     color: rgb(71 85 105) !important;
     background: transparent !important;
-    transition: all 0.2s ease-in-out !important;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
     border: none !important;
     padding: 0 0.75rem !important;
     text-decoration: none !important;
@@ -411,7 +424,7 @@ table {
 .datatable-pagination li a:hover,
 .datatable-pagination li button:hover {
     background: rgb(241 245 249) !important;
-    color: rgb(15 23 42) !important;
+    color: #4f46e5 !important;
 }
 
 .datatable-pagination .datatable-active a,

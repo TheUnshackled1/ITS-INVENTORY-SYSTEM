@@ -129,7 +129,6 @@
                   </div>
                   <div>
                     <p class="text-3xl font-extrabold text-slate-900 leading-none">{{ stats.total }}</p>
-                    <p class="mt-1 text-[10px] text-slate-500 font-medium">equipment records</p>
                   </div>
                   <div class="h-1 w-full rounded-full bg-blue-100 overflow-hidden">
                     <div class="h-full w-full rounded-full bg-blue-400"></div>
@@ -148,7 +147,6 @@
                   </div>
                   <div>
                     <p class="text-3xl font-extrabold text-emerald-700 leading-none">{{ stats.available }}</p>
-                    <p class="mt-1 text-[10px] text-slate-500 font-medium">ready to use</p>
                   </div>
                   <div class="h-1 w-full rounded-full bg-emerald-100 overflow-hidden">
                     <div class="h-full rounded-full bg-emerald-400" style="width:{% if stats.total %}{{ stats.available|default:0 }}%{% else %}0%{% endif %}"></div>
@@ -167,7 +165,6 @@
                   </div>
                   <div>
                     <p class="text-3xl font-extrabold text-amber-700 leading-none">{{ stats.repair }}</p>
-                    <p class="mt-1 text-[10px] text-slate-500 font-medium">being serviced</p>
                   </div>
                   <div class="h-1 w-full rounded-full bg-amber-100 overflow-hidden">
                     <div class="h-full rounded-full bg-amber-400" style="width:{% if stats.total %}{{ stats.repair|default:0 }}%{% else %}0%{% endif %}"></div>
@@ -186,7 +183,6 @@
                   </div>
                   <div>
                     <p class="text-3xl font-extrabold text-sky-700 leading-none">{{ stats.working }}</p>
-                    <p class="mt-1 text-[10px] text-slate-500 font-medium">operational</p>
                   </div>
                   <div class="h-1 w-full rounded-full bg-sky-100 overflow-hidden">
                     <div class="h-full rounded-full bg-sky-400" style="width:{% if stats.total %}{{ stats.working|default:0 }}%{% else %}0%{% endif %}"></div>
@@ -205,7 +201,6 @@
                   </div>
                   <div>
                     <p class="text-3xl font-extrabold text-rose-700 leading-none">{{ stats.not_working }}</p>
-                    <p class="mt-1 text-[10px] text-slate-500 font-medium">need attention</p>
                   </div>
                   <div class="h-1 w-full rounded-full bg-rose-100 overflow-hidden">
                     <div class="h-full rounded-full bg-rose-400" style="width:{% if stats.total %}{{ stats.not_working|default:0 }}%{% else %}0%{% endif %}"></div>
