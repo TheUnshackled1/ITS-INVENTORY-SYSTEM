@@ -553,7 +553,9 @@ table {
     display: none !important;
 }
 
-/* Force Table Headers to Uppercase */
+/* Force Table Headers to Uppercase and Dark */
 table thead th {
     text-transform: uppercase !important;
+    color: #0f172a !important;
+    font-weight: 800 !important;
 }
