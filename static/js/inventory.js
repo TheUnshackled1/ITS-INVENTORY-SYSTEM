@@ -142,6 +142,7 @@ document.addEventListener("DOMContentLoaded", function () {
       document.getElementById("form_status").value = (row.dataset.status || "available").toLowerCase();
       document.getElementById("form_quantity").value = row.dataset.qty || "1";
       document.getElementById("form_date_inventory").value = row.dataset.invdate || "";
+      document.getElementById("form_date_disposal").value = row.dataset.dispdate || "";
       document.getElementById("form_location").value = row.dataset.location || "";
       document.getElementById("form_item_description").value = row.dataset.desc || "";
       document.getElementById("form_defect_description").value = row.dataset.defect || "";
