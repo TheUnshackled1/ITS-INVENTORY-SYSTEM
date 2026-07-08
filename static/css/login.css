@@ -17,3 +17,9 @@ body.login-page {
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
 }
+
+/* Hide default Microsoft Edge password reveal icon to prevent overlapping with our custom toggle */
+input[type="password"]::-ms-reveal,
+input[type="password"]::-ms-clear {
+  display: none;
+}
