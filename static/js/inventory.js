@@ -176,45 +176,66 @@ document.addEventListener("DOMContentLoaded", function () {
         saveRecordBtn.disabled = false;
         
         if (data.success && data.item) {
-          // If we edited an item, we update the row's inner logic and re-render OR just reload safely 
-          // because DataTables pagination breaks if we randomly insert DOM nodes behind its back.
-          // Since the prompt asks to "keep table in sync", doing a clean location.reload() is a robust shortcut,
-          // OR we can update the row DOM manually if the table isn't heavily ordered.
-          // Let's do DOM updates for edits (super seamless) and full reload for adds.
-          if (isEditing && editingRow) {
-            // Update Data attributes
-            editingRow.dataset.type = data.item.item_type;
-            editingRow.dataset.brand = data.item.brand;
-            editingRow.dataset.model = data.item.model;
-            editingRow.dataset.serial = data.item.serial_number;
-            editingRow.dataset.status = data.item.status;
-            editingRow.dataset.qty = data.item.quantity;
-            editingRow.dataset.location = data.item.location;
-            editingRow.dataset.desc = data.item.item_description;
-            editingRow.dataset.defect = data.item.defect_description;
+          closeDrawer();
+          
+          // Seamless Background Sync: Fetch updated HTML and rebuild DataTable
+          fetch(window.location.href, {
+            headers: { "X-Requested-With": "XMLHttpRequest" }
+          })
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(html, "text/html");
+            const newTable = doc.querySelector("#inventory-table");
+            const oldTable = document.getElementById("inventory-table");
             
-            // Rebuild the row cells visibly
-            const cells = editingRow.querySelectorAll("td");
-            if (cells.length >= 10) {
-              cells[1].innerHTML = data.item.item_type || "-";
-              cells[2].innerHTML = `<span class="block w-full text-center">${data.item.item_description || "-"}</span>`;
-              cells[3].innerHTML = `<span class="block w-full text-center">${data.item.brand || "-"}</span>`;
-              cells[4].innerHTML = `<span class="block w-full text-center">${data.item.model || "-"}</span>`;
-              cells[5].innerHTML = `<span class="block w-full text-center">${data.item.serial_number || "-"}</span>`;
-              cells[6].innerHTML = `<span class="block w-full text-center">${data.item.quantity || "1"}</span>`;
-              cells[9].innerHTML = `<span class="block w-full text-center">${data.item.location || "-"}</span>`;
+            if (oldTable && newTable) {
+              if (dataTable) {
+                dataTable.destroy(); // Restores original DOM
+              }
               
-              // Status Badge Update
-              const statusPill = cells[10].querySelector("span");
-              if (statusPill) {
-                statusPill.textContent = data.item.status.charAt(0).toUpperCase() + data.item.status.slice(1);
-                // Class updates would go here ideally based on status, but updating text is fine for quick sync
+              const restoredOldTable = document.getElementById("inventory-table");
+              if (restoredOldTable) {
+                restoredOldTable.parentNode.replaceChild(newTable, restoredOldTable);
+                
+                // Reinitialize DataTable
+                dataTable = new window.simpleDatatables.DataTable("#inventory-table", {
+                  searchable: false,
+                  sortable: false,
+                  fixedHeight: false,
+                  perPageSelect: false,
+                  perPage: 50,
+                  labels: {
+                    placeholder: "Search items...",
+                    perPage: "entries per page",
+                    noRows: "No entries to found",
+                    info: "Showing {start} to {end} of {rows} entries",
+                  },
+                });
+                
+                // Keep the search filter synced
+                const activeSearch = document.getElementById("filter-search");
+                if (activeSearch && activeSearch.value) {
+                  dataTable.search(activeSearch.value);
+                }
               }
             }
-            closeDrawer();
+          });
+        } else {
+          // Display validation errors!
+          let errorMsg = "Could not save record.\n\n";
+          if (data.errors) {
+            for (const [field, errors] of Object.entries(data.errors)) {
+              errorMsg += `${field.toUpperCase()}: ${errors.join(", ")}\n`;
+            }
+          }
+          
+          const errorDiv = document.getElementById("formErrorMessage");
+          if (errorDiv) {
+            errorDiv.textContent = errorMsg;
+            errorDiv.classList.remove("hidden");
           } else {
-            // If it's a new record, reload is easiest to inject it into the complex paginated set in the right order
-            window.location.reload(); 
+            alert(errorMsg);
           }
         }
       })
@@ -222,7 +243,14 @@ document.addEventListener("DOMContentLoaded", function () {
         console.error("AJAX Error:", err);
         saveRecordBtn.textContent = prevText;
         saveRecordBtn.disabled = false;
-        alert("An error occurred preserving the record.");
+        
+        const errorDiv = document.getElementById("formErrorMessage");
+        if (errorDiv) {
+          errorDiv.textContent = "An error occurred preserving the record. Please check your network connection.";
+          errorDiv.classList.remove("hidden");
+        } else {
+          alert("An error occurred preserving the record.");
+        }
       });
     });
   }
