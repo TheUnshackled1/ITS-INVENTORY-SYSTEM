@@ -561,7 +561,7 @@
 
           <div class="mt-4 bg-slate-50 rounded-2xl p-5 shadow-sm border border-slate-100 hover:border-slate-300 hover:shadow-md focus-within:bg-white focus-within:border-slate-900 focus-within:ring-1 focus-within:ring-slate-900 transition-all">
             <h3 class="font-bold text-slate-800 text-sm mb-2">Defect Information</h3>
-            <textarea name="defect_description" id="form_defect_description" rows="2" class="w-full bg-transparent border-0 focus:ring-0 p-0 text-[13px] leading-relaxed text-slate-700 placeholder-slate-400 resize-none" placeholder="Note any defects if applicable..."></textarea>
+            <textarea name="defect_description" id="form_defect_description" rows="2" class="w-full bg-transparent border-0 focus:ring-0 p-0 text-[13px] leading-relaxed text-slate-700 placeholder-slate-400 resize-none" placeholder="(Optional) Describe any current defects..."></textarea>
           </div>
           
           <div class="pt-6">
@@ -583,14 +583,14 @@
   <div id="successModalOverlay" class="fixed inset-0 z-[200] flex items-center justify-center bg-slate-900/60 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300">
     <div id="successModalCard" class="relative w-full max-w-[340px] bg-white rounded-3xl shadow-2xl overflow-hidden transform scale-95 opacity-0 transition-all duration-500 ease-out">
       <!-- Top Green Half -->
-      <div class="bg-[#8cc34a] px-6 py-10 flex flex-col items-center justify-center text-white">
+      <div class="bg-emerald-600 px-6 py-10 flex flex-col items-center justify-center text-white">
         <!-- Circular Check Icon -->
-        <div class="w-20 h-20 rounded-full border-[3px] border-white flex items-center justify-center mb-4">
+        <div class="w-20 h-20 rounded-full border-[3px] border-white flex items-center justify-center mb-4 shadow-sm">
           <svg class="w-10 h-10 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="4">
             <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
           </svg>
         </div>
-        <h3 class="text-[14px] font-extrabold tracking-[0.25em] uppercase mt-2">Success</h3>
+        <h3 class="text-[14px] font-extrabold tracking-[0.25em] uppercase mt-2 drop-shadow-sm">Success</h3>
       </div>
       
       <!-- Bottom White Half -->
@@ -599,7 +599,7 @@
           Congratulations your record has been successfully saved
         </p>
         
-        <button type="button" id="successModalCloseBtn" class="w-full sm:w-[85%] py-3 rounded-full bg-[#8cc34a] hover:bg-[#7db340] text-white font-bold text-sm shadow-[0_8px_20px_rgba(140,195,74,0.4)] hover:shadow-[0_12px_25px_rgba(140,195,74,0.5)] hover:-translate-y-0.5 transition-all outline-none focus:ring-4 focus:ring-[#8cc34a]/30">
+        <button type="button" id="successModalCloseBtn" class="w-full sm:w-[85%] py-3 rounded-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-sm shadow-[0_8px_20px_rgba(5,150,105,0.4)] hover:shadow-[0_12px_25px_rgba(5,150,105,0.5)] hover:-translate-y-0.5 transition-all outline-none focus:ring-4 focus:ring-emerald-600/30">
           Continue
         </button>
       </div>

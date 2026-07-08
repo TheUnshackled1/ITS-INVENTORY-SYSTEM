@@ -272,7 +272,10 @@ document.addEventListener("DOMContentLoaded", function () {
             // Show Success Modal after seamless reload completes (+ timeout for drawer close)
             setTimeout(() => {
               if (typeof window.showSuccessModal === "function") {
-                window.showSuccessModal();
+                const successMessage = isEditing 
+                  ? "Congratulations your record has been successfully edited" 
+                  : "Congratulations your record has been successfully added";
+                window.showSuccessModal(successMessage);
               }
             }, 300);
           });
