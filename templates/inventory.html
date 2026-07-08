@@ -524,7 +524,7 @@
           {% csrf_token %}
           
           <!-- Key-Value Grid -->
-          <div class="grid grid-cols-[130px_1fr] items-center gap-y-4 max-w-sm text-sm">
+          <div class="grid grid-cols-[130px_1fr] items-center gap-y-4 text-sm w-full">
             
             <div class="flex items-center text-slate-500 gap-2 font-medium"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"></path></svg> Item Type</div>
             <div>
@@ -594,13 +594,12 @@
           </div>
         </form>
       </div>
-
       <!-- Footer Action -->
-      <div class="p-8 pt-0 shrink-0 flex items-center gap-3">
-        <button type="submit" id="saveRecordBtn" form="inventoryForm" class="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-4 rounded-xl shadow-[0_8px_20px_rgba(5,150,105,0.3)] hover:shadow-[0_12px_24px_rgba(5,150,105,0.4)] hover:-translate-y-0.5 transition-all outline-none focus:ring-4 focus:ring-emerald-600/30">
+      <div class="p-8 pt-0 shrink-0 flex items-center justify-center gap-3 w-full">
+        <button type="submit" id="saveRecordBtn" form="inventoryForm" class="flex-1 max-w-[50%] bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-4 rounded-xl shadow-[0_8px_20px_rgba(5,150,105,0.3)] hover:shadow-[0_12px_24px_rgba(5,150,105,0.4)] hover:-translate-y-0.5 transition-all outline-none focus:ring-4 focus:ring-emerald-600/30">
           Save Record
         </button>
-        <button type="button" id="deleteRecordBtn" class="hidden shrink-0 font-bold py-4 px-6 rounded-xl text-white bg-rose-600 hover:bg-rose-700 shadow-[0_8px_20px_rgba(225,29,72,0.3)] hover:shadow-[0_12px_24px_rgba(225,29,72,0.4)] hover:-translate-y-0.5 transition-all outline-none focus:ring-4 focus:ring-rose-600/30 cursor-pointer">
+        <button type="button" id="deleteRecordBtn" class="hidden flex-1 max-w-[50%] font-bold py-4 rounded-xl text-white bg-rose-600 hover:bg-rose-700 shadow-[0_8px_20px_rgba(225,29,72,0.3)] hover:shadow-[0_12px_24px_rgba(225,29,72,0.4)] hover:-translate-y-0.5 transition-all outline-none focus:ring-4 focus:ring-rose-600/30 cursor-pointer">
           Delete
         </button>
       </div>

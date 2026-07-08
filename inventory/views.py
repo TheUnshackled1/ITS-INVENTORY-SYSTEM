@@ -11,6 +11,8 @@ from django.contrib.auth.views import LoginView
 from django.http import JsonResponse
 from .forms import InventoryForm
 from .models import Inventory, AuditLog
+from django.views.decorators.http import require_POST
+
 
 def log_action(request, action, item, extra=""):
     who = request.user.username if hasattr(request, 'user') and request.user.is_authenticated else "System"
@@ -28,7 +30,6 @@ class CustomLoginView(LoginView):
         messages.success(self.request, f"Welcome {form.get_user().username}", extra_tags="login_toast")
         return super().form_valid(form)
 
-
 def get_row_value(row, index, default=""):
     if row is None or index >= len(row):
         return default
@@ -41,7 +42,6 @@ def normalize_text(value):
         return ""
     return str(value).strip()
 
-
 def build_query_url(request, **updates):
     query = request.GET.copy()
     for key, value in updates.items():
@@ -53,12 +53,10 @@ def build_query_url(request, **updates):
         return f"{request.path}?{query.urlencode()}"
     return request.path
 
-
 def get_distinct_text_values(queryset, field_name, annotation_name):
     values = queryset.annotate(
         **{annotation_name: Trim(field_name)}
     ).values_list(annotation_name, flat=True).order_by(annotation_name)
-
     distinct_values = []
     seen = set()
     for value in values:
@@ -70,7 +68,6 @@ def get_distinct_text_values(queryset, field_name, annotation_name):
             continue
         seen.add(key)
         distinct_values.append(cleaned_value)
-
     return distinct_values
 
 
@@ -103,12 +100,10 @@ def find_inventory_match(data):
         date_inventory=data['date_inventory'],
         status=data['status'],
     )
-
     if data['date_disposal'] is None:
         queryset = queryset.filter(date_disposal__isnull=True)
     else:
         queryset = queryset.filter(date_disposal=data['date_disposal'])
-
     defect_description = normalize_text(data['defect_description'])
     if defect_description:
         queryset = queryset.filter(trimmed_defect_description=defect_description)
@@ -116,7 +111,6 @@ def find_inventory_match(data):
         queryset = queryset.filter(
             Q(trimmed_defect_description='') | Q(trimmed_defect_description__isnull=True)
         )
-
     return queryset.first()
     
 @login_required
@@ -133,14 +127,12 @@ def inventory_list(request):
         sort_status=Lower(Trim('status')),
         sort_defect_description=Lower(Trim('defect_description')),
     )
-
     status_filter = normalize_text(request.GET.get('status'))
     location_filter = normalize_text(request.GET.get('location'))
     item_type_filter = normalize_text(request.GET.get('item_type'))
     search_query = normalize_text(request.GET.get('q'))
     sort_field = normalize_text(request.GET.get('sort'))
     sort_direction = normalize_text(request.GET.get('dir')).lower()
-
     inventory_items = base_queryset
     if status_filter:
         inventory_items = inventory_items.filter(status=status_filter)
@@ -157,7 +149,6 @@ def inventory_list(request):
             Q(serial_number__icontains=search_query) |
             Q(location__icontains=search_query)
         )
-
     sort_field_map = {
         'no': 'pk',
         'item_type': 'sort_item_type',
@@ -174,25 +165,20 @@ def inventory_list(request):
     }
     current_sort = sort_field if sort_field in sort_field_map else ''
     current_direction = 'desc' if sort_direction == 'desc' else 'asc'
-
     if current_sort:
         order_field = sort_field_map[current_sort]
         prefix = '-' if current_direction == 'desc' else ''
         inventory_items = inventory_items.order_by(f'{prefix}{order_field}', 'pk')
     else:
         inventory_items = inventory_items.order_by('sort_item_type', 'serial_number', 'pk')
-
-    # Assign original row numbers based on default overall order (alphabetical)
     overall_qs = Inventory.objects.annotate(
         sort_item_type=Upper(Trim('item_type'))
     )
     overall_pks = overall_qs.order_by('sort_item_type', 'serial_number', 'pk').values_list('pk', flat=True)
     pk_to_no = {pk: i + 1 for i, pk in enumerate(overall_pks)}
-    
     inventory_items = list(inventory_items)
     for item in inventory_items:
         item.original_no = pk_to_no.get(item.pk, '')
-
     distinct_item_types = get_distinct_text_values(Inventory.objects.all(), 'item_type', 'trimmed_item_type')
     distinct_locations = get_distinct_text_values(Inventory.objects.all(), 'location', 'trimmed_location')
     distinct_status_values = [
@@ -200,7 +186,6 @@ def inventory_list(request):
         for status_value, _ in Inventory.STATUS_CHOICES
         if Inventory.objects.filter(status=status_value).exists()
     ]
-
     status_label_map = dict(Inventory.STATUS_CHOICES)
     status_options = [
         {
@@ -209,18 +194,15 @@ def inventory_list(request):
         }
         for status_value in distinct_status_values
     ]
-
     sort_urls = {}
     for column_name in sort_field_map:
         next_direction = 'desc' if current_sort == column_name and current_direction == 'asc' else 'asc'
         sort_urls[column_name] = build_query_url(request, sort=column_name, dir=next_direction)
-
     total_items = Inventory.objects.count()
     available_count = Inventory.objects.filter(status='available').count()
     repair_count = Inventory.objects.filter(status='repair').count()
     in_use_count = Inventory.objects.annotate(normalized_defect=Upper(Trim('defect_description'))).filter(normalized_defect='WORKING').count()
     not_working_count = Inventory.objects.annotate(normalized_defect=Upper(Trim('defect_description'))).filter(normalized_defect='NOT WORKING').count()
-
     stats = {
         'total': total_items,
         'available': available_count,
@@ -253,7 +235,6 @@ def inventory_list(request):
     return response
 
 def serialize_inventory_item(item):
-    """Helper to serialize item for JSON responses."""
     return {
         'id': item.id,
         'item_type': item.item_type or '',
@@ -427,7 +408,6 @@ def upload_excel(request):
                 elif filename.endswith('.csv'):
                     data = excel_file.read().decode('utf-8').splitlines()
                     reader = csv.reader(data)
-
                     for _ in range(3):
                         next(reader, None)
 
@@ -484,8 +464,7 @@ def upload_excel(request):
                             normalize_text(data['location']),
                             data['status'],
                             normalize_text(data['defect_description']),
-                        )
-                        
+                        )  
                         if serial:
                             if serial in seen_serials:
                                 existing_item = Inventory.objects.filter(serial_number=serial).first()
@@ -510,7 +489,6 @@ def upload_excel(request):
                                 update_inventory_fields(request, existing_item, data)
                             else:
                                 items_to_create.append(Inventory(**data))
-
                     if items_to_create:
                         Inventory.objects.bulk_create(items_to_create)
                         for item in items_to_create:
@@ -536,20 +514,15 @@ def activity_log(request):
         )
     return render(request, "activity_log.html", {"logs": logs, "search_query": search_query})
 
-from django.views.decorators.http import require_POST
-
 @require_POST
 @login_required(login_url='login')
 def delete_inventory(request, pk):
     item = get_object_or_404(Inventory, pk=pk)
-    
-    # Log deletion before actual removal to capture context
     log_action(
         request=request,
         action='deleted',
         item=item,
         extra="Deleted via dashboard UI"
     )
-    
     item.delete()
     return JsonResponse({'success': True, 'message': 'Record deleted successfully'})
