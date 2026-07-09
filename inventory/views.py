@@ -14,27 +14,42 @@ from .models import Inventory, AuditLog, IssuanceLog
 
 import json
 
-def log_action(request, action, item, extra=""):
+def log_action(request, action, item, extra="", old_item=None):
     who = request.user.username if hasattr(request, 'user') and request.user.is_authenticated else "System"
     pk_str = item.pk if item.pk else "New"
     
+    def extract_details(obj):
+        if not obj:
+            return {}
+        return {
+            "Item Type": obj.item_type or "-",
+            "Brand": obj.brand or "-",
+            "Model": obj.model or "-",
+            "Serial Number": obj.serial_number or "-",
+            "Qty": obj.quantity or 1,
+            "Inv Date": str(obj.date_inventory) if obj.date_inventory else "-",
+            "Disp Date": str(obj.date_disposal) if obj.date_disposal else "-",
+            "Location": obj.location or "-",
+            "Status": str(obj.status).replace("_", " ").title() if obj.status else "-",
+            "Defect": obj.defect_description or "-"
+        }
+
     # Store full history so deleted/edited items preserve their exact state at that moment
-    details = {
-        "Item Type": item.item_type or "-",
-        "Brand": item.brand or "-",
-        "Model": item.model or "-",
-        "Serial Number": item.serial_number or "-",
-        "Qty": item.quantity or 1,
-        "Inv Date": str(item.date_inventory) if item.date_inventory else "-",
-        "Disp Date": str(item.date_disposal) if item.date_disposal else "-",
-        "Location": item.location or "-",
-        "Status": str(item.status).replace("_", " ").title() if item.status else "-",
-        "Defect": item.defect_description or "-"
-    }
+    details = extract_details(item)
+    
+    if old_item and action == "edited":
+        details = {
+            "before": extract_details(old_item),
+            "after": details
+        }
     
     # Make a friendly plain-text summary based on action
     if action == 'added':
-        desc = f"Added {details['Qty']}x {item.item_type} (#{pk_str})"
+        if "before" in details:
+            qty = details["after"].get("Qty", 1)
+        else:
+            qty = details.get("Qty", 1)
+        desc = f"Added {qty}x {item.item_type} (#{pk_str})"
     elif action == 'edited':
         desc = f"Edited {item.item_type} (#{pk_str})"
     elif action == 'deleted':
@@ -314,6 +329,9 @@ def edit_inventory(request, pk):
         'defect_description',
     }
     if request.method == 'POST':
+        # Create a fresh copy from db to represent old_item
+        old_item = Inventory.objects.get(pk=pk)
+        
         form = InventoryForm(request.POST, instance=inventory_item)
         is_ajax = request.headers.get('x-requested-with') == 'XMLHttpRequest' or request.headers.get('Accept') == 'application/json'
         for field_name in optional_fields:
@@ -343,7 +361,7 @@ def edit_inventory(request, pk):
             if updated_item.defect_description in ('', None):
                 updated_item.defect_description = inventory_item.defect_description
             updated_item.save()
-            log_action(request, "edited", updated_item)
+            log_action(request, "edited", updated_item, old_item=old_item)
             if is_ajax:
                 return JsonResponse({'success': True, 'item': serialize_inventory_item(updated_item)})
             return redirect('inventory-list')

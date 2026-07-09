@@ -370,17 +370,91 @@ document.addEventListener("DOMContentLoaded", function () {
       }
 
       if (detailObj) {
-        html += '<div class="grid grid-cols-3 gap-x-4 gap-y-5 text-left w-full mt-2 border-b border-slate-100 pb-4 mb-4">';
-        for (const [k, v] of Object.entries(detailObj)) {
-          if (k.startsWith('_')) continue;
+        if (detailObj.before && detailObj.after) {
+          if (logDetailModalCard) {
+            logDetailModalCard.classList.remove("max-w-md");
+            logDetailModalCard.classList.add("max-w-3xl");
+          }
+          
+          let beforeHtml = '<div class="grid grid-cols-2 gap-x-3 gap-y-5 text-left w-full">';
+          for (const [k, v] of Object.entries(detailObj.before)) {
+            if (k.startsWith('_')) continue;
+            beforeHtml += `
+              <div class="col-span-1 flex flex-col">
+                <span class="text-[9px] font-extrabold text-slate-400 uppercase tracking-widest mb-0.5">${k}</span>
+                <span class="text-xs font-semibold text-slate-800 break-words">${v}</span>
+              </div>
+            `;
+          }
+          beforeHtml += '</div>';
+
+          let afterHtml = '<div class="grid grid-cols-2 gap-x-3 gap-y-5 text-left w-full">';
+          for (const [k, v] of Object.entries(detailObj.after)) {
+            if (k.startsWith('_')) continue;
+            let changed = (v !== detailObj.before[k]);
+            let valColor = changed ? "text-white bg-blue-600 px-2 py-0.5 rounded shadow-sm border border-blue-700 w-fit" : "text-slate-800";
+            afterHtml += `
+              <div class="col-span-1 flex flex-col">
+                <span class="text-[9px] font-extrabold text-slate-400 uppercase tracking-widest mb-0.5">${k}</span>
+                <span class="text-xs font-semibold ${valColor} break-words">${v}</span>
+              </div>
+            `;
+          }
+          afterHtml += '</div>';
+
           html += `
-            <div class="col-span-1 flex flex-col">
-              <span class="text-[9px] font-extrabold text-slate-400 uppercase tracking-widest mb-0.5">${k}</span>
-              <span class="text-xs font-semibold text-slate-800 break-words">${v}</span>
+            <div class="flex flex-col md:flex-row items-stretch justify-between gap-5 w-full mt-2 border-b border-slate-100 pb-5 mb-4 relative">
+              <!-- Original State -->
+              <div class="flex-1 bg-slate-50 p-5 rounded-2xl border border-slate-200 shadow-sm relative overflow-hidden text-left">
+                <div class="absolute top-0 right-0 bg-slate-200 text-slate-500 text-[9px] font-bold px-3 py-1 rounded-bl-xl uppercase tracking-wider">Original</div>
+                <h4 class="text-xs font-bold text-slate-700 mb-5 flex items-center gap-2">
+                  <svg class="w-4 h-4 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                  Previous Record
+                </h4>
+                ${beforeHtml}
+              </div>
+
+              <!-- Arrow Separator -->
+              <div class="flex items-center justify-center shrink-0 md:self-center py-2 md:py-0 relative z-10 w-8 md:w-16">
+                <!-- Desktop Right Arrow -->
+                <div class="hidden md:flex w-10 h-10 rounded-full bg-blue-50 items-center justify-center text-blue-500 shadow-sm border border-blue-200 ring-4 ring-white relative left-4">
+                  <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+                </div>
+                <!-- Mobile Down Arrow -->
+                <div class="flex md:hidden w-10 h-10 rounded-full bg-blue-50 items-center justify-center text-blue-500 shadow-sm border border-blue-200 ring-4 ring-white absolute -mt-4">
+                  <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M19 14l-7 7m0 0l-7-7m7 7V3"/></svg>
+                </div>
+              </div>
+
+              <!-- Changed State -->
+              <div class="flex-1 bg-white p-5 rounded-2xl border border-blue-200 shadow-sm relative overflow-hidden ring-2 ring-blue-500/10 text-left">
+                <div class="absolute top-0 right-0 bg-blue-500 text-white text-[9px] font-bold px-3 py-1 rounded-bl-xl uppercase tracking-wider shadow-sm">Updated</div>
+                <h4 class="text-xs font-bold text-blue-700 mb-5 flex items-center gap-2">
+                  <svg class="w-4 h-4 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" /></svg>
+                  New Record
+                </h4>
+                ${afterHtml}
+              </div>
             </div>
           `;
+        } else {
+          if (logDetailModalCard) {
+            logDetailModalCard.classList.remove("max-w-4xl");
+            logDetailModalCard.classList.add("max-w-md");
+          }
+          
+          html += '<div class="grid grid-cols-2 md:grid-cols-3 gap-x-4 gap-y-5 text-left w-full mt-2 border-b border-slate-100 pb-4 mb-4">';
+          for (const [k, v] of Object.entries(detailObj)) {
+            if (k.startsWith('_')) continue;
+            html += `
+              <div class="col-span-1 flex flex-col">
+                <span class="text-[9px] font-extrabold text-slate-400 uppercase tracking-widest mb-0.5">${k}</span>
+                <span class="text-xs font-semibold text-slate-800 break-words">${v}</span>
+              </div>
+            `;
+          }
+          html += '</div>';
         }
-        html += '</div>';
       }
       
       if (summaryText && !detailObj) {
