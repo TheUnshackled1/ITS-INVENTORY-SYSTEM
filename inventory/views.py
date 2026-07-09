@@ -29,8 +29,7 @@ def log_action(request, action, item, extra=""):
         "Disp Date": str(item.date_disposal) if item.date_disposal else "-",
         "Location": item.location or "-",
         "Status": str(item.status).replace("_", " ").title() if item.status else "-",
-        "Defect": item.defect_description or "-",
-        "_meta_legacy": f"{item.item_type} (#{pk_str}) — Serial: {item.serial_number or '-'}" + (f" | {extra}" if extra else "")
+        "Defect": item.defect_description or "-"
     }
     
     desc = json.dumps(details)

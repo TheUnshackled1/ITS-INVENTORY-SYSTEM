@@ -355,13 +355,9 @@ document.addEventListener("DOMContentLoaded", function () {
     if (logDetailSummary) {
       try {
         const details = JSON.parse(summary);
-        let html = '<div class="grid grid-cols-5 gap-x-2 gap-y-4 text-left w-full">';
-        let metaHtml = '';
+        let html = '<div class="grid grid-cols-3 gap-x-4 gap-y-5 text-left w-full mt-2">';
         for (const [k, v] of Object.entries(details)) {
-          if (k === '_meta_legacy') {
-            metaHtml = `<div class="col-span-5 mt-2 pt-3 border-t border-slate-200 text-[11px] text-slate-400 font-mono tracking-tight break-words">${v}</div>`;
-            continue;
-          }
+          if (k.startsWith('_')) continue;
           html += `
             <div class="col-span-1 flex flex-col">
               <span class="text-[9px] font-extrabold text-slate-400 uppercase tracking-widest mb-0.5">${k}</span>
@@ -369,7 +365,7 @@ document.addEventListener("DOMContentLoaded", function () {
             </div>
           `;
         }
-        html += metaHtml + '</div>';
+        html += '</div>';
         logDetailSummary.innerHTML = html;
         logDetailSummary.className = "text-sm font-medium text-slate-600 leading-relaxed w-full";
       } catch(e) {
