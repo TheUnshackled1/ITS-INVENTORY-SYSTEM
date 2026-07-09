@@ -360,6 +360,21 @@ def edit_inventory(request, pk):
                 updated_item.status = inventory_item.status or 'available'
             if updated_item.defect_description in ('', None):
                 updated_item.defect_description = inventory_item.defect_description
+            
+            # Check for dummy edits
+            has_changes = False
+            for field in optional_fields:
+                old_val = getattr(old_item, field)
+                new_val = getattr(updated_item, field)
+                if str(old_val).strip() != str(new_val).strip() and old_val != new_val:
+                    has_changes = True
+                    break
+                    
+            if not has_changes:
+                if is_ajax:
+                    return JsonResponse({'success': True, 'no_changes': True})
+                return redirect('inventory-list')
+                
             updated_item.save()
             log_action(request, "edited", updated_item, old_item=old_item)
             if is_ajax:

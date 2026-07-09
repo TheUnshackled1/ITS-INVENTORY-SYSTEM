@@ -11,7 +11,13 @@ document.addEventListener("DOMContentLoaded", function () {
         if (pendingSuccess === "edited") successMessage = "Congratulations your record has been successfully edited";
         if (pendingSuccess === "deleted") successMessage = "Congratulations your record has been successfully deleted";
         if (pendingSuccess === "borrowed") successMessage = "Item has been successfully borrowed";
-        window.showSuccessModal(successMessage);
+        if (pendingSuccess === "no_changes") {
+            if (typeof window.showInfoModal === "function") {
+                window.showInfoModal("No changes were made to this record.");
+            }
+        } else {
+            window.showSuccessModal(successMessage);
+        }
       }
     }, 150);
   }
@@ -344,6 +350,41 @@ document.addEventListener("DOMContentLoaded", function () {
 
   if (errorModalCloseBtn) errorModalCloseBtn.addEventListener("click", closeErrorModal);
 
+  // --- Info Modal Controller ---
+  const infoModalOverlay = document.getElementById("infoModalOverlay");
+  const infoModalCard = document.getElementById("infoModalCard");
+  const infoModalMessage = document.getElementById("infoModalMessage");
+  const infoModalCloseBtn = document.getElementById("infoModalCloseBtn");
+
+  window.showInfoModal = function(msg = "Info") {
+    if (infoModalMessage) infoModalMessage.textContent = msg;
+    if (infoModalOverlay && infoModalCard) {
+      infoModalOverlay.style.display = "flex"; // Remove inline display:none
+      infoModalOverlay.classList.remove("hidden", "pointer-events-none");
+      // Trigger reflow
+      void infoModalOverlay.offsetWidth;
+      infoModalOverlay.classList.remove("opacity-0");
+      
+      infoModalCard.classList.remove("scale-95", "opacity-0");
+      infoModalCard.classList.add("scale-100", "opacity-100");
+    }
+  };
+
+  const closeInfoModal = function() {
+    if (infoModalOverlay && infoModalCard) {
+      infoModalOverlay.classList.add("opacity-0");
+      infoModalCard.classList.remove("scale-100", "opacity-100");
+      infoModalCard.classList.add("scale-95", "opacity-0");
+      
+      setTimeout(() => {
+        infoModalOverlay.classList.add("hidden", "pointer-events-none");
+        infoModalOverlay.style.display = "none";
+      }, 300);
+    }
+  };
+
+  if (infoModalCloseBtn) infoModalCloseBtn.addEventListener("click", closeInfoModal);
+
   // --- Log Detail Modal Controller ---
   const logDetailModalOverlay = document.getElementById("logDetailModalOverlay");
   const logDetailModalCard = document.getElementById("logDetailModalCard");
@@ -613,11 +654,14 @@ document.addEventListener("DOMContentLoaded", function () {
         saveRecordBtn.textContent = prevText;
         saveRecordBtn.disabled = false;
         
-        if (data.success && data.item) {
+        if (data.success) {
           closeDrawer();
           
-          // Queue the animated success modal for after the native page reload completes
-          localStorage.setItem("showSuccessModalFlag", isEditing ? "edited" : "added");
+          if (data.no_changes) {
+              localStorage.setItem("showSuccessModalFlag", "no_changes");
+          } else {
+              localStorage.setItem("showSuccessModalFlag", isEditing ? "edited" : "added");
+          }
           
           // Refresh the page natively to guarantee perfect DataTable indexing
           window.location.reload();
