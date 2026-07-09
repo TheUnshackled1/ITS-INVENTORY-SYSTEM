@@ -741,11 +741,13 @@ def borrowing_list(request):
 
     total_issuances = IssuanceLog.objects.count()
     currently_borrowed = IssuanceLog.objects.filter(status='borrowed').count()
+    returned_count = IssuanceLog.objects.filter(status='returned').count()
     overdue_count = IssuanceLog.objects.filter(status='overdue').count()
 
     stats = {
         'total': total_issuances,
         'borrowed': currently_borrowed,
+        'returned': returned_count,
         'overdue': overdue_count,
     }
 

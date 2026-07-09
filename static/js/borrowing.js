@@ -32,16 +32,17 @@ document.addEventListener('DOMContentLoaded', function() {
       if (e.target === returnOverlay) closeReturnModal();
     });
 
-    // Attach return buttons
-    document.querySelectorAll('.return-btn').forEach(btn => {
-      btn.addEventListener('click', function() {
+    // Attach return buttons using event delegation to survive datatable DOM reconstruction
+    document.body.addEventListener('click', function(e) {
+      const btn = e.target.closest('.return-btn');
+      if (btn) {
         openReturnModal(
-          this.dataset.id,
-          this.dataset.borrower,
-          this.dataset.item,
-          this.dataset.qty
+          btn.dataset.id,
+          btn.dataset.borrower,
+          btn.dataset.item,
+          btn.dataset.qty
         );
-      });
+      }
     });
 
     // Confirm return
