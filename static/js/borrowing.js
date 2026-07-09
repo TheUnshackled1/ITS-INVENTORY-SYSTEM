@@ -86,4 +86,15 @@ document.addEventListener('DOMContentLoaded', function() {
         });
       });
     }
+
+    // Initialize SimpleDatatables
+    const tableEl = document.getElementById('borrowing-table');
+    if (tableEl && window.simpleDatatables) {
+      new window.simpleDatatables.DataTable(tableEl, {
+        searchable: false,
+        perPage: 15,
+        perPageSelect: [10, 15, 20, 50, 100],
+        sortable: true
+      });
+    }
   });

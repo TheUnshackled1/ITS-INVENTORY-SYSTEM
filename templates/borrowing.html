@@ -79,7 +79,6 @@
             </div>
 
             <!-- Statistics Cards -->
-            {% if logs %}
             <div class="stats-scene">
             <div id="stats-cards-container" class="grid grid-cols-2 gap-3 sm:grid-cols-3 xl:grid-cols-3">
 
@@ -133,7 +132,6 @@
 
             </div>
             </div> <!-- /stats-scene -->
-            {% endif %}
           </div>
         </section>
 
@@ -180,10 +178,9 @@
 
           <hr class="border-slate-200" />
 
-          {% if logs %}
           <div class="overflow-x-auto">
             <table id="borrowing-table" class="w-full text-sm text-slate-700 whitespace-nowrap min-w-[1000px]">
-              <thead class="bg-slate-50 text-xs uppercase tracking-[0.18em] text-slate-500 select-none">
+              <thead class="bg-slate-50 text-xs uppercase tracking-[0.18em] text-slate-500">
                 <tr>
                   <th scope="col" class="px-2 py-2 font-semibold">
                     <span class="inline-flex w-full items-center justify-center">No.</span>
@@ -300,30 +297,6 @@
               </tbody>
             </table>
           </div>
-          {% else %}
-          <div class="mx-auto flex w-full max-w-md flex-col items-center justify-center gap-4 py-20 text-center">
-            <div class="flex h-16 w-16 items-center justify-center rounded-2xl bg-slate-50 text-slate-400 ring-1 ring-slate-200/60 shadow-sm">
-              <svg class="w-8 h-8 stroke-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" /></svg>
-            </div>
-            <div>
-               <h2 class="text-xl font-bold tracking-tight text-slate-900 mb-1">
-                 No borrowing records found.
-               </h2>
-               <p class="text-sm leading-6 text-slate-500">
-                 {% if search_query or current_tab != 'all' %}
-                   Try adjusting your search or filter.
-                 {% else %}
-                   No items have been issued yet. Borrow an item from the Dashboard to get started.
-                 {% endif %}
-               </p>
-            </div>
-            {% if search_query or current_tab != 'all' %}
-            <a href="{% url 'borrowing-list' %}" class="inline-flex items-center rounded-full bg-slate-800 px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-slate-700">
-              Clear Filters
-            </a>
-            {% endif %}
-          </div>
-          {% endif %}
         </section>
       </main>
     </div>
