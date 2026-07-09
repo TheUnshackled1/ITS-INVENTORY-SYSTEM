@@ -55,6 +55,7 @@ class AuditLog(models.Model):
     item_type   = models.CharField(max_length=100)
     item_id     = models.IntegerField(null=True, blank=True)
     description = models.TextField()
+    details     = models.TextField(blank=True, null=True)
     performed_by = models.CharField(max_length=150, default="System")
     timestamp   = models.DateTimeField(default=timezone.now)
 

@@ -318,28 +318,26 @@
   <div id="returnConfirmModalOverlay" style="display: none;" class="fixed inset-0 z-[300] flex items-center justify-center bg-slate-900/60 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300">
     <div id="returnConfirmModalCard" class="relative w-full max-w-[340px] bg-white rounded-3xl shadow-2xl overflow-hidden transform scale-95 opacity-0 transition-all duration-300 ease-out">
       <!-- Top Emerald Half -->
-      <div class="bg-emerald-600 px-6 py-10 flex flex-col items-center justify-center text-white">
+      <div class="bg-emerald-600 px-6 py-6 flex flex-col items-center justify-center text-white">
         <!-- Check Icon -->
-        <div class="w-20 h-20 rounded-full border-[3px] border-white flex items-center justify-center mb-4 shadow-sm bg-emerald-500">
-          <svg class="w-10 h-10 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+        <div class="w-16 h-16 rounded-full border-[3px] border-white flex items-center justify-center mb-3 shadow-sm">
+          <svg class="w-8 h-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
             <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
           </svg>
         </div>
-        <h3 class="text-[14px] font-extrabold tracking-[0.25em] uppercase mt-2 drop-shadow-sm text-center">Confirm Return</h3>
+        <h3 class="text-[14px] font-extrabold tracking-[0.25em] uppercase mt-1 drop-shadow-sm text-center">Confirm Return</h3>
       </div>
       
       <!-- Bottom White Half -->
-      <div class="px-6 py-8 text-center bg-white flex flex-col items-center">
-        <p id="returnConfirmText" class="text-[13px] text-slate-500 font-medium mb-4 leading-relaxed">
-          Mark this item as returned?
-        </p>
-        <div class="w-full mb-4">
-          <label for="returnNotes" class="block text-left text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">Notes (optional)</label>
-          <textarea id="returnNotes" rows="2" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-sm text-slate-700 placeholder-slate-400 resize-none focus:outline-none focus:border-slate-900 focus:ring-1 focus:ring-slate-900 transition-all" placeholder="Any remarks on return..."></textarea>
+      <div class="px-6 py-6 text-center bg-white flex flex-col items-center">
+        <div class="w-full bg-slate-50 rounded-xl border border-slate-100 p-4 mb-4 shadow-sm">
+          <p id="returnConfirmText" class="text-[13px] text-slate-800 font-bold leading-relaxed">
+            Mark this item as returned?
+          </p>
         </div>
         <input type="hidden" id="returnIssuanceId" value="" />
         <div class="flex gap-3 w-full">
-          <button type="button" id="cancelReturnBtn" class="flex-1 rounded-xl bg-slate-200 py-3 text-sm font-bold text-slate-700 transition-all shadow-sm hover:shadow-md hover:bg-slate-300 hover:-translate-y-0.5 focus:outline-none focus:ring-4 focus:ring-slate-300/30">
+          <button type="button" id="cancelReturnBtn" class="flex-1 rounded-xl bg-red-600 py-3 text-sm font-bold text-white transition-all shadow-[0_8px_20px_rgba(220,38,38,0.4)] hover:shadow-[0_12px_25px_rgba(220,38,38,0.5)] hover:-translate-y-0.5 hover:bg-red-700 focus:outline-none focus:ring-4 focus:ring-red-600/30">
             Cancel
           </button>
           <button type="button" id="confirmReturnBtn" class="flex-1 rounded-xl bg-emerald-600 py-3 text-sm font-bold text-white transition-all shadow-sm hover:shadow-md hover:bg-emerald-700 hover:-translate-y-0.5 focus:outline-none focus:ring-4 focus:ring-emerald-600/30">
@@ -414,7 +412,6 @@
     const returnOverlay = document.getElementById('returnConfirmModalOverlay');
     const returnCard = document.getElementById('returnConfirmModalCard');
     const returnText = document.getElementById('returnConfirmText');
-    const returnNotes = document.getElementById('returnNotes');
     const returnIdInput = document.getElementById('returnIssuanceId');
     const cancelReturnBtn = document.getElementById('cancelReturnBtn');
     const confirmReturnBtn = document.getElementById('confirmReturnBtn');
@@ -422,7 +419,6 @@
     function openReturnModal(id, borrower, item, qty) {
       returnIdInput.value = id;
       returnText.textContent = `Return ${qty}x "${item}" from ${borrower}?`;
-      returnNotes.value = '';
       returnOverlay.style.display = 'flex';
       requestAnimationFrame(() => {
         returnOverlay.classList.remove('opacity-0', 'pointer-events-none');
@@ -459,7 +455,7 @@
     if (confirmReturnBtn) {
       confirmReturnBtn.addEventListener('click', function() {
         const id = returnIdInput.value;
-        const notes = returnNotes.value.trim();
+        const notes = '';
         confirmReturnBtn.disabled = true;
         confirmReturnBtn.textContent = 'Returning...';
 

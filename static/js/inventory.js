@@ -350,13 +350,28 @@ document.addEventListener("DOMContentLoaded", function () {
   const logDetailSummary = document.getElementById("logDetailSummary");
   const logDetailModalCloseBtn = document.getElementById("logDetailModalCloseBtn");
 
-  const openLogDetailModal = function(itemType, summary) {
+  const openLogDetailModal = function(itemType, summary, detailsJSON) {
     if (logDetailItemType) logDetailItemType.textContent = itemType || "-";
     if (logDetailSummary) {
-      try {
-        const details = JSON.parse(summary);
-        let html = '<div class="grid grid-cols-3 gap-x-4 gap-y-5 text-left w-full mt-2">';
-        for (const [k, v] of Object.entries(details)) {
+      let html = '';
+      let detailObj = null;
+      let summaryText = summary;
+
+      if (detailsJSON && detailsJSON !== "None") {
+        try { detailObj = JSON.parse(detailsJSON); } catch(e) { console.error("Could not parse detailsJSON", e); }
+      }
+      
+      // Fallback for old logs where summary IS the JSON
+      if (!detailObj && summaryText) {
+        try {
+          detailObj = JSON.parse(summaryText);
+          summaryText = null; // Don't render JSON as raw text
+        } catch(e) {}
+      }
+
+      if (detailObj) {
+        html += '<div class="grid grid-cols-3 gap-x-4 gap-y-5 text-left w-full mt-2 border-b border-slate-100 pb-4 mb-4">';
+        for (const [k, v] of Object.entries(detailObj)) {
           if (k.startsWith('_')) continue;
           html += `
             <div class="col-span-1 flex flex-col">
@@ -366,13 +381,20 @@ document.addEventListener("DOMContentLoaded", function () {
           `;
         }
         html += '</div>';
-        logDetailSummary.innerHTML = html;
-        logDetailSummary.className = "text-sm font-medium text-slate-600 leading-relaxed w-full";
-      } catch(e) {
-        // Fallback for older plaintext logs
-        logDetailSummary.textContent = summary || "-";
-        logDetailSummary.className = "text-sm font-medium text-slate-600 leading-relaxed bg-slate-50 p-3 rounded-xl border border-slate-100 max-h-40 overflow-y-auto custom-scrollbar w-full";
       }
+      
+      if (summaryText && !detailObj) {
+        // Only show plain text if there's no grid available
+        html += `
+          <div class="w-full text-left mt-2">
+             <span class="text-[9px] font-extrabold text-slate-400 uppercase tracking-widest mb-1 block">Details</span>
+             <div class="text-sm font-medium text-slate-600 leading-relaxed bg-slate-50 p-3 rounded-xl border border-slate-100 w-full">${summaryText}</div>
+          </div>
+        `;
+      }
+      
+      logDetailSummary.innerHTML = html;
+      logDetailSummary.className = "text-sm font-medium text-slate-600 leading-relaxed w-full max-h-[60vh] overflow-y-auto custom-scrollbar";
     }
     if (logDetailModalOverlay && logDetailModalCard) {
       logDetailModalOverlay.style.display = "flex";
@@ -413,7 +435,8 @@ document.addEventListener("DOMContentLoaded", function () {
       e.preventDefault();
       const itemType = trigger.getAttribute("data-item");
       const summary = trigger.getAttribute("data-summary");
-      openLogDetailModal(itemType, summary);
+      const details = trigger.getAttribute("data-details");
+      openLogDetailModal(itemType, summary, details);
     }
   });
 

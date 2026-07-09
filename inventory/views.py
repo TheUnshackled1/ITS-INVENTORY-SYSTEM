@@ -32,11 +32,21 @@ def log_action(request, action, item, extra=""):
         "Defect": item.defect_description or "-"
     }
     
-    desc = json.dumps(details)
-    
+    # Make a friendly plain-text summary based on action
+    if action == 'added':
+        desc = f"Added {details['Qty']}x {item.item_type} (#{pk_str})"
+    elif action == 'edited':
+        desc = f"Edited {item.item_type} (#{pk_str})"
+    elif action == 'deleted':
+        desc = f"Deleted {item.item_type} (#{pk_str})"
+    elif action == 'uploaded':
+        desc = f"Uploaded {item.item_type}"
+    else:
+        desc = extra if extra else f"{action.capitalize()} {item.item_type} (#{pk_str})"
+        
     AuditLog.objects.create(
         action=action, item_type=item.item_type,
-        item_id=item.pk, description=desc, performed_by=who
+        item_id=item.pk, description=desc, details=json.dumps(details), performed_by=who
     )
 
 class CustomLoginView(LoginView):
@@ -600,17 +610,12 @@ def borrow_item(request):
         status='borrowed',
     )
 
-    AuditLog.objects.create(
-        action='borrowed',
-        item_type=item.item_type,
-        item_id=item.pk,
-        description=(
-            f"Borrowed {qty}x {item.item_type} (#{item.pk}) "
-            f"by {borrower_name} ({department}) — "
-            f"to {office_location}, due {expected_return_date}"
-        ),
-        performed_by=who,
+    desc = (
+        f"Borrowed {qty}x {item.item_type} (#{item.pk}) "
+        f"by {borrower_name} — "
+        f"to {office_location}, due {expected_return_date}"
     )
+    log_action(request, 'borrowed', item, extra=desc)
 
     return JsonResponse({
         'success': True,
@@ -652,17 +657,21 @@ def return_item(request, pk):
 
     who = request.user.username if request.user.is_authenticated else 'System'
 
-    AuditLog.objects.create(
-        action='returned',
-        item_type=item.item_type if item else 'Unknown',
-        item_id=item.pk if item else None,
-        description=(
-            f"Returned {issuance.quantity_borrowed}x "
-            f"{item.item_type if item else 'Unknown'} (#{item.pk if item else '?'}) "
-            f"from {issuance.borrower_name} ({issuance.department})"
-        ),
-        performed_by=who,
+    desc = (
+        f"Returned {issuance.quantity_borrowed}x "
+        f"{item.item_type if item else 'Unknown'} (#{item.pk if item else '?'}) "
+        f"from {issuance.borrower_name}"
     )
+    if item:
+        log_action(request, 'returned', item, extra=desc)
+    else:
+        # Fallback if no item matched
+        AuditLog.objects.create(
+            action='returned',
+            item_type='Unknown',
+            description=desc,
+            performed_by=who
+        )
 
     return JsonResponse({'success': True, 'message': 'Item returned successfully.'})
 

@@ -128,7 +128,7 @@
                   <td class="px-2 py-2 align-middle font-semibold text-slate-900 text-center text-xs w-16">
                     {{ forloop.counter }}
                   </td>
-                  <td class="px-2 py-2 align-middle text-center text-[13px] uppercase font-black text-slate-900 hover:text-black cursor-pointer transition-colors log-item-type" data-summary="{{ log.description }}" data-item="{{ log.item_type }}">
+                  <td class="px-2 py-2 align-middle text-center text-[13px] uppercase font-black text-slate-900 hover:text-black cursor-pointer transition-colors log-item-type" data-summary="{{ log.description }}" data-details="{{ log.details|default:'' }}" data-item="{{ log.item_type }}">
                     {{ log.item_type }}
                   </td>
                   <td class="px-2 py-2 align-middle text-center text-[13px] font-semibold text-slate-800">
