@@ -696,9 +696,8 @@ document.addEventListener("DOMContentLoaded", function () {
     // Clear form fields
     if (borrowForm) {
       document.getElementById('borrow_borrower_name').value = '';
-      document.getElementById('borrow_department').value = '';
       document.getElementById('borrow_office_location').value = '';
-      document.getElementById('borrow_contact').value = '';
+      document.getElementById('borrow_tel_no').value = '';
       document.getElementById('borrow_purpose').value = '';
       document.getElementById('borrow_expected_return').value = '';
     }
@@ -738,15 +737,14 @@ document.addEventListener("DOMContentLoaded", function () {
       const payload = {
         inventory_id: document.getElementById('borrow_inventory_id').value,
         borrower_name: document.getElementById('borrow_borrower_name').value.trim(),
-        department: document.getElementById('borrow_department').value.trim(),
         office_location: document.getElementById('borrow_office_location').value.trim(),
-        contact_number: document.getElementById('borrow_contact').value.trim(),
+        tel_no: document.getElementById('borrow_tel_no').value.trim(),
         purpose: document.getElementById('borrow_purpose').value.trim(),
         expected_return: document.getElementById('borrow_expected_return').value,
         quantity_borrowed: parseInt(document.getElementById('borrow_quantity').value || '1', 10),
       };
 
-      if (!payload.borrower_name || !payload.department || !payload.office_location || !payload.expected_return) {
+      if (!payload.borrower_name || !payload.office_location || !payload.expected_return) {
         if (borrowFormError) {
           borrowFormError.textContent = 'Please fill in all required fields.';
           borrowFormError.classList.remove('hidden');

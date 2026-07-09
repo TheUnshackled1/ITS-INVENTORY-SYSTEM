@@ -669,18 +669,8 @@
           </div>
           <div class="grid grid-cols-2 gap-3">
             <div>
-              <label class="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">Department *</label>
-              <input type="text" id="borrow_department" class="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-sm text-slate-800 font-medium placeholder-slate-400 focus:outline-none focus:border-slate-900 focus:ring-1 focus:ring-slate-900 transition-all" placeholder="HR Office" required />
-            </div>
-            <div>
               <label class="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">Office / Location *</label>
               <input type="text" id="borrow_office_location" class="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-sm text-slate-800 font-medium placeholder-slate-400 focus:outline-none focus:border-slate-900 focus:ring-1 focus:ring-slate-900 transition-all" placeholder="Room 204" required />
-            </div>
-          </div>
-          <div class="grid grid-cols-2 gap-3">
-            <div>
-              <label class="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">Qty to Borrow *</label>
-              <input type="number" id="borrow_quantity" min="1" value="1" class="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-sm text-slate-800 font-medium focus:outline-none focus:border-slate-900 focus:ring-1 focus:ring-slate-900 transition-all" required />
             </div>
             <div>
               <label class="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">Expected Return *</label>
@@ -689,13 +679,17 @@
           </div>
           <div class="grid grid-cols-2 gap-3">
             <div>
-              <label class="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">Contact No.</label>
-              <input type="text" id="borrow_contact" class="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-sm text-slate-800 font-medium placeholder-slate-400 focus:outline-none focus:border-slate-900 focus:ring-1 focus:ring-slate-900 transition-all" placeholder="09XX-XXX-XXXX" />
+              <label class="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">Qty to Borrow *</label>
+              <input type="number" id="borrow_quantity" min="1" value="1" class="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-sm text-slate-800 font-medium focus:outline-none focus:border-slate-900 focus:ring-1 focus:ring-slate-900 transition-all" required />
             </div>
             <div>
-              <label class="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">Purpose</label>
-              <input type="text" id="borrow_purpose" class="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-sm text-slate-800 font-medium placeholder-slate-400 focus:outline-none focus:border-slate-900 focus:ring-1 focus:ring-slate-900 transition-all" placeholder="For presentation" />
+              <label class="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">Tel. No.</label>
+              <input type="text" id="borrow_tel_no" class="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-sm text-slate-800 font-medium placeholder-slate-400 focus:outline-none focus:border-slate-900 focus:ring-1 focus:ring-slate-900 transition-all" placeholder="09XX-XXX-XXXX" />
             </div>
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">Purpose</label>
+            <textarea id="borrow_purpose" rows="2" class="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-sm text-slate-800 font-medium placeholder-slate-400 resize-none focus:outline-none focus:border-slate-900 focus:ring-1 focus:ring-slate-900 transition-all" placeholder="For presentation..."></textarea>
           </div>
           <div id="borrowFormError" class="hidden rounded-lg bg-red-50 p-3 text-sm text-red-800 border border-red-200"></div>
           <div class="flex gap-3 pt-2">

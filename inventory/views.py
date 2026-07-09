@@ -554,9 +554,8 @@ def borrow_item(request):
 
     inventory_id = data.get('inventory_id')
     borrower_name = normalize_text(data.get('borrower_name', ''))
-    department = normalize_text(data.get('department', ''))
     office_location = normalize_text(data.get('office_location', ''))
-    contact_number = normalize_text(data.get('contact_number', ''))
+    tel_no = normalize_text(data.get('tel_no', ''))
     purpose = normalize_text(data.get('purpose', ''))
     expected_return = data.get('expected_return', '')
     try:
@@ -564,7 +563,7 @@ def borrow_item(request):
     except (TypeError, ValueError):
         qty = 1
 
-    if not borrower_name or not department or not office_location or not expected_return:
+    if not borrower_name or not office_location or not expected_return:
         return JsonResponse({'success': False, 'error': 'Please fill in all required fields.'}, status=400)
     if qty < 1:
         return JsonResponse({'success': False, 'error': 'Quantity must be at least 1.'}, status=400)
@@ -593,9 +592,8 @@ def borrow_item(request):
         inventory_item=item,
         quantity_borrowed=qty,
         borrower_name=borrower_name,
-        department=department,
         office_location=office_location,
-        contact_number=contact_number or None,
+        tel_no=tel_no or None,
         purpose=purpose,
         issued_by=who,
         expected_return=expected_return_date,
