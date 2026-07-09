@@ -48,6 +48,8 @@ class AuditLog(models.Model):
         ("edited",  "Edited"),
         ("deleted", "Deleted"),
         ("uploaded","Uploaded"),
+        ("borrowed","Borrowed"),
+        ("returned","Returned"),
     ]
     action      = models.CharField(max_length=20, choices=ACTION_CHOICES)
     item_type   = models.CharField(max_length=100)
@@ -62,3 +64,34 @@ class AuditLog(models.Model):
     def __str__(self):
         return f"[{self.action}] {self.item_type} by {self.performed_by}"
 
+
+class IssuanceLog(models.Model):
+    STATUS_CHOICES = [
+        ("borrowed", "Borrowed"),
+        ("returned", "Returned"),
+        ("overdue",  "Overdue"),
+    ]
+    inventory_item = models.ForeignKey(
+        Inventory, on_delete=models.SET_NULL,
+        null=True, related_name="issuances"
+    )
+    quantity_borrowed = models.PositiveIntegerField(default=1)
+    borrower_name = models.CharField(max_length=150)
+    department = models.CharField(max_length=150)
+    office_location = models.CharField(max_length=150)
+    contact_number = models.CharField(max_length=30, blank=True, null=True)
+    purpose = models.CharField(max_length=255, blank=True)
+    issued_by = models.CharField(max_length=150)
+    date_issued = models.DateField(default=timezone.now)
+    expected_return = models.DateField()
+    date_returned = models.DateField(null=True, blank=True)
+    status = models.CharField(
+        max_length=20, choices=STATUS_CHOICES, default="borrowed"
+    )
+    notes = models.TextField(blank=True, null=True)
+
+    class Meta:
+        ordering = ["-date_issued"]
+
+    def __str__(self):
+        return f"Issued {self.quantity_borrowed}x to {self.borrower_name}"

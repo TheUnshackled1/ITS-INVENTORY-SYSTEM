@@ -15,4 +15,7 @@ urlpatterns = [
     path('login/', CustomLoginView.as_view(template_name='login.html'), name='login'),
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),
     path('activity-log/', activity_log, name='activity-log'),
+    path('borrowing/', views.borrowing_list, name='borrowing-list'),
+    path('borrowing/issue/', views.borrow_item, name='borrowing-issue'),
+    path('borrowing/<int:pk>/return/', views.return_item, name='borrowing-return'),
 ]

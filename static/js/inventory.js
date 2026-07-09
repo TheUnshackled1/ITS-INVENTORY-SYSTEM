@@ -426,6 +426,8 @@ document.addEventListener("DOMContentLoaded", function () {
     const deleteBtn = document.getElementById("deleteRecordBtn");
     if (submitBtn) submitBtn.textContent = "Save Record";
     if (deleteBtn) deleteBtn.classList.add("hidden");
+    const borrowBtn = document.getElementById("borrowRecordBtn");
+    if (borrowBtn) borrowBtn.classList.add("hidden");
     openDrawer("Add Inventory Record");
   };
 
@@ -448,6 +450,18 @@ document.addEventListener("DOMContentLoaded", function () {
       const deleteBtn = document.getElementById("deleteRecordBtn");
       if (submitBtn) submitBtn.textContent = "Edit Record";
       if (deleteBtn) deleteBtn.classList.remove("hidden");
+      
+      // Show Borrow button only when available and qty > 0
+      const borrowBtn = document.getElementById("borrowRecordBtn");
+      if (borrowBtn) {
+        const rowStatus = (row.dataset.status || '').toLowerCase();
+        const rowQty = parseInt(row.dataset.qty || '0', 10);
+        if (rowStatus === 'available' && rowQty > 0) {
+          borrowBtn.classList.remove('hidden');
+        } else {
+          borrowBtn.classList.add('hidden');
+        }
+      }
       
       document.getElementById("form_item_type").value = row.dataset.type || "";
       document.getElementById("form_brand").value = row.dataset.brand || "";
@@ -656,5 +670,123 @@ document.addEventListener("DOMContentLoaded", function () {
         }
       });
     }
+  }
+
+  // --- Borrow Modal Controller ---
+  const borrowModalOverlay = document.getElementById('borrowModalOverlay');
+  const borrowModalCard = document.getElementById('borrowModalCard');
+  const borrowRecordBtn = document.getElementById('borrowRecordBtn');
+  const cancelBorrowBtn = document.getElementById('cancelBorrowBtn');
+  const borrowForm = document.getElementById('borrowForm');
+  const borrowFormError = document.getElementById('borrowFormError');
+  const borrowModalItemName = document.getElementById('borrowModalItemName');
+
+  function openBorrowModal() {
+    if (!borrowModalOverlay || !borrowModalCard) return;
+    // Pre-fill inventory id and item name from the open drawer
+    const formId = document.getElementById('form_id')?.value;
+    const itemType = document.getElementById('form_item_type')?.value || '';
+    const availQty = parseInt(document.getElementById('form_quantity')?.value || '1', 10);
+
+    document.getElementById('borrow_inventory_id').value = formId;
+    if (borrowModalItemName) borrowModalItemName.textContent = itemType;
+    const qtyInput = document.getElementById('borrow_quantity');
+    if (qtyInput) { qtyInput.max = availQty; qtyInput.value = 1; }
+
+    // Clear form fields
+    if (borrowForm) {
+      document.getElementById('borrow_borrower_name').value = '';
+      document.getElementById('borrow_department').value = '';
+      document.getElementById('borrow_office_location').value = '';
+      document.getElementById('borrow_contact').value = '';
+      document.getElementById('borrow_purpose').value = '';
+      document.getElementById('borrow_expected_return').value = '';
+    }
+    if (borrowFormError) { borrowFormError.classList.add('hidden'); borrowFormError.textContent = ''; }
+
+    borrowModalOverlay.style.display = 'flex';
+    borrowModalOverlay.classList.remove('hidden', 'pointer-events-none');
+    void borrowModalOverlay.offsetWidth;
+    borrowModalOverlay.classList.remove('opacity-0');
+    borrowModalCard.classList.remove('scale-95', 'opacity-0');
+    borrowModalCard.classList.add('scale-100', 'opacity-100');
+  }
+
+  function closeBorrowModal() {
+    if (!borrowModalOverlay || !borrowModalCard) return;
+    borrowModalOverlay.classList.add('opacity-0');
+    borrowModalCard.classList.remove('scale-100', 'opacity-100');
+    borrowModalCard.classList.add('scale-95', 'opacity-0');
+    setTimeout(() => {
+      borrowModalOverlay.classList.add('hidden', 'pointer-events-none');
+      borrowModalOverlay.style.display = 'none';
+    }, 300);
+  }
+
+  if (borrowRecordBtn) borrowRecordBtn.addEventListener('click', openBorrowModal);
+  if (cancelBorrowBtn) cancelBorrowBtn.addEventListener('click', closeBorrowModal);
+  if (borrowModalOverlay) borrowModalOverlay.addEventListener('click', function(e) {
+    if (e.target === borrowModalOverlay) closeBorrowModal();
+  });
+
+  if (borrowForm) {
+    borrowForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      const submitBtn = document.getElementById('submitBorrowBtn');
+      const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]')?.value;
+
+      const payload = {
+        inventory_id: document.getElementById('borrow_inventory_id').value,
+        borrower_name: document.getElementById('borrow_borrower_name').value.trim(),
+        department: document.getElementById('borrow_department').value.trim(),
+        office_location: document.getElementById('borrow_office_location').value.trim(),
+        contact_number: document.getElementById('borrow_contact').value.trim(),
+        purpose: document.getElementById('borrow_purpose').value.trim(),
+        expected_return: document.getElementById('borrow_expected_return').value,
+        quantity_borrowed: parseInt(document.getElementById('borrow_quantity').value || '1', 10),
+      };
+
+      if (!payload.borrower_name || !payload.department || !payload.office_location || !payload.expected_return) {
+        if (borrowFormError) {
+          borrowFormError.textContent = 'Please fill in all required fields.';
+          borrowFormError.classList.remove('hidden');
+        }
+        return;
+      }
+
+      if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = 'Issuing...'; }
+
+      fetch('/borrowing/issue/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRFToken': csrfToken,
+        },
+        body: JSON.stringify(payload),
+      })
+      .then(r => r.json())
+      .then(data => {
+        if (data.success) {
+          closeBorrowModal();
+          closeDrawer();
+          localStorage.setItem('showSuccessModalFlag', 'added');
+          window.location.reload();
+        } else {
+          if (borrowFormError) {
+            borrowFormError.textContent = data.error || 'Could not issue item.';
+            borrowFormError.classList.remove('hidden');
+          }
+        }
+      })
+      .catch(() => {
+        if (borrowFormError) {
+          borrowFormError.textContent = 'Network error. Please try again.';
+          borrowFormError.classList.remove('hidden');
+        }
+      })
+      .finally(() => {
+        if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = 'Issue'; }
+      });
+    });
   }
 });

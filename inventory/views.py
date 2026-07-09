@@ -10,7 +10,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import LoginView
 from django.http import JsonResponse
 from .forms import InventoryForm
-from .models import Inventory, AuditLog
+from .models import Inventory, AuditLog, IssuanceLog
 
 import json
 
@@ -541,3 +541,177 @@ def delete_inventory(request, pk):
     )
     item.delete()
     return JsonResponse({'success': True, 'message': 'Record deleted successfully'})
+
+
+@require_POST
+@login_required(login_url='login')
+def borrow_item(request):
+    import json
+    try:
+        data = json.loads(request.body)
+    except json.JSONDecodeError:
+        return JsonResponse({'success': False, 'error': 'Invalid request data.'}, status=400)
+
+    inventory_id = data.get('inventory_id')
+    borrower_name = normalize_text(data.get('borrower_name', ''))
+    department = normalize_text(data.get('department', ''))
+    office_location = normalize_text(data.get('office_location', ''))
+    contact_number = normalize_text(data.get('contact_number', ''))
+    purpose = normalize_text(data.get('purpose', ''))
+    expected_return = data.get('expected_return', '')
+    try:
+        qty = int(data.get('quantity_borrowed', 1))
+    except (TypeError, ValueError):
+        qty = 1
+
+    if not borrower_name or not department or not office_location or not expected_return:
+        return JsonResponse({'success': False, 'error': 'Please fill in all required fields.'}, status=400)
+    if qty < 1:
+        return JsonResponse({'success': False, 'error': 'Quantity must be at least 1.'}, status=400)
+
+    item = Inventory.objects.filter(pk=inventory_id).first()
+    if not item:
+        return JsonResponse({'success': False, 'error': 'Inventory item not found.'}, status=404)
+    if qty > item.quantity:
+        return JsonResponse({'success': False, 'error': f'Only {item.quantity} unit(s) available.'}, status=400)
+
+    # Decrement inventory quantity
+    item.quantity -= qty
+    if item.quantity == 0:
+        item.status = 'in_use'
+    item.save()
+
+    # Parse expected return date
+    try:
+        expected_return_date = datetime.strptime(expected_return, '%Y-%m-%d').date()
+    except ValueError:
+        return JsonResponse({'success': False, 'error': 'Invalid expected return date.'}, status=400)
+
+    who = request.user.username if request.user.is_authenticated else 'System'
+
+    issuance = IssuanceLog.objects.create(
+        inventory_item=item,
+        quantity_borrowed=qty,
+        borrower_name=borrower_name,
+        department=department,
+        office_location=office_location,
+        contact_number=contact_number or None,
+        purpose=purpose,
+        issued_by=who,
+        expected_return=expected_return_date,
+        status='borrowed',
+    )
+
+    AuditLog.objects.create(
+        action='borrowed',
+        item_type=item.item_type,
+        item_id=item.pk,
+        description=(
+            f"Borrowed {qty}x {item.item_type} (#{item.pk}) "
+            f"by {borrower_name} ({department}) — "
+            f"to {office_location}, due {expected_return_date}"
+        ),
+        performed_by=who,
+    )
+
+    return JsonResponse({
+        'success': True,
+        'new_qty': item.quantity,
+        'new_status': item.status,
+        'issuance_id': issuance.pk,
+    })
+
+
+@require_POST
+@login_required(login_url='login')
+def return_item(request, pk):
+    import json
+    issuance = get_object_or_404(IssuanceLog, pk=pk)
+
+    if issuance.status == 'returned':
+        return JsonResponse({'success': False, 'error': 'This item has already been returned.'}, status=400)
+
+    try:
+        data = json.loads(request.body) if request.body else {}
+    except json.JSONDecodeError:
+        data = {}
+
+    notes = normalize_text(data.get('notes', ''))
+    today = datetime.now().date()
+
+    issuance.date_returned = today
+    issuance.status = 'returned'
+    if notes:
+        issuance.notes = notes
+    issuance.save()
+
+    item = issuance.inventory_item
+    if item:
+        item.quantity += issuance.quantity_borrowed
+        if item.status == 'in_use':
+            item.status = 'available'
+        item.save()
+
+    who = request.user.username if request.user.is_authenticated else 'System'
+
+    AuditLog.objects.create(
+        action='returned',
+        item_type=item.item_type if item else 'Unknown',
+        item_id=item.pk if item else None,
+        description=(
+            f"Returned {issuance.quantity_borrowed}x "
+            f"{item.item_type if item else 'Unknown'} (#{item.pk if item else '?'}) "
+            f"from {issuance.borrower_name} ({issuance.department})"
+        ),
+        performed_by=who,
+    )
+
+    return JsonResponse({'success': True, 'message': 'Item returned successfully.'})
+
+
+@login_required
+def borrowing_list(request):
+    today = datetime.now().date()
+    tab = request.GET.get('tab', 'all').strip().lower()
+    search_query = request.GET.get('q', '').strip()
+
+    # Mark overdue records in the database
+    IssuanceLog.objects.filter(
+        status='borrowed',
+        expected_return__lt=today,
+    ).update(status='overdue')
+
+    logs = IssuanceLog.objects.select_related('inventory_item').all()
+
+    if tab == 'borrowed':
+        logs = logs.filter(status='borrowed')
+    elif tab == 'returned':
+        logs = logs.filter(status='returned')
+    elif tab == 'overdue':
+        logs = logs.filter(status='overdue')
+
+    if search_query:
+        logs = logs.filter(
+            Q(borrower_name__icontains=search_query) |
+            Q(department__icontains=search_query) |
+            Q(office_location__icontains=search_query) |
+            Q(issued_by__icontains=search_query)
+        )
+
+    total_issuances = IssuanceLog.objects.count()
+    currently_borrowed = IssuanceLog.objects.filter(status='borrowed').count()
+    overdue_count = IssuanceLog.objects.filter(status='overdue').count()
+
+    stats = {
+        'total': total_issuances,
+        'borrowed': currently_borrowed,
+        'overdue': overdue_count,
+    }
+
+    return render(request, 'borrowing.html', {
+        'logs': logs,
+        'stats': stats,
+        'current_tab': tab,
+        'search_query': search_query,
+        'today': today,
+    })
