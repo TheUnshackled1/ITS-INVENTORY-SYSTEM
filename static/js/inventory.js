@@ -352,7 +352,32 @@ document.addEventListener("DOMContentLoaded", function () {
 
   const openLogDetailModal = function(itemType, summary) {
     if (logDetailItemType) logDetailItemType.textContent = itemType || "-";
-    if (logDetailSummary) logDetailSummary.textContent = summary || "-";
+    if (logDetailSummary) {
+      try {
+        const details = JSON.parse(summary);
+        let html = '<div class="grid grid-cols-5 gap-x-2 gap-y-4 text-left w-full">';
+        let metaHtml = '';
+        for (const [k, v] of Object.entries(details)) {
+          if (k === '_meta_legacy') {
+            metaHtml = `<div class="col-span-5 mt-2 pt-3 border-t border-slate-200 text-[11px] text-slate-400 font-mono tracking-tight break-words">${v}</div>`;
+            continue;
+          }
+          html += `
+            <div class="col-span-1 flex flex-col">
+              <span class="text-[9px] font-extrabold text-slate-400 uppercase tracking-widest mb-0.5">${k}</span>
+              <span class="text-xs font-semibold text-slate-800 break-words">${v}</span>
+            </div>
+          `;
+        }
+        html += metaHtml + '</div>';
+        logDetailSummary.innerHTML = html;
+        logDetailSummary.className = "text-sm font-medium text-slate-600 leading-relaxed w-full";
+      } catch(e) {
+        // Fallback for older plaintext logs
+        logDetailSummary.textContent = summary || "-";
+        logDetailSummary.className = "text-sm font-medium text-slate-600 leading-relaxed bg-slate-50 p-3 rounded-xl border border-slate-100 max-h-40 overflow-y-auto custom-scrollbar w-full";
+      }
+    }
     if (logDetailModalOverlay && logDetailModalCard) {
       logDetailModalOverlay.style.display = "flex";
       logDetailModalOverlay.classList.remove("hidden", "pointer-events-none");

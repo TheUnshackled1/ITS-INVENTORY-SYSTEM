@@ -12,12 +12,29 @@ from django.http import JsonResponse
 from .forms import InventoryForm
 from .models import Inventory, AuditLog
 
+import json
+
 def log_action(request, action, item, extra=""):
     who = request.user.username if hasattr(request, 'user') and request.user.is_authenticated else "System"
     pk_str = item.pk if item.pk else "New"
-    desc = f"{item.item_type} (#{pk_str}) — Serial: {item.serial_number or '-'}"
-    if extra:
-        desc += f" | {extra}"
+    
+    # Store full history so deleted/edited items preserve their exact state at that moment
+    details = {
+        "Item Type": item.item_type or "-",
+        "Brand": item.brand or "-",
+        "Model": item.model or "-",
+        "Serial Number": item.serial_number or "-",
+        "Qty": item.quantity or 1,
+        "Inv Date": str(item.date_inventory) if item.date_inventory else "-",
+        "Disp Date": str(item.date_disposal) if item.date_disposal else "-",
+        "Location": item.location or "-",
+        "Status": str(item.status).replace("_", " ").title() if item.status else "-",
+        "Defect": item.defect_description or "-",
+        "_meta_legacy": f"{item.item_type} (#{pk_str}) — Serial: {item.serial_number or '-'}" + (f" | {extra}" if extra else "")
+    }
+    
+    desc = json.dumps(details)
+    
     AuditLog.objects.create(
         action=action, item_type=item.item_type,
         item_id=item.pk, description=desc, performed_by=who
