@@ -199,6 +199,32 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 
+  // --- Auto-expanding Textareas ---
+  function adjustTextareaHeight(el) {
+    // Reset height to evaluate raw scrollHeight
+    el.style.height = 'auto';
+    
+    // In border-box layouts (like Tailwind), scrollHeight doesn't include borders,
+    // so setting height to scrollHeight shrinks the content area slightly,
+    // causing scrolling or continuous jittery growth. We must add the border widths safely.
+    const style = window.getComputedStyle(el);
+    const borderTop = parseFloat(style.borderTopWidth) || 0;
+    const borderBottom = parseFloat(style.borderBottomWidth) || 0;
+    
+    el.style.height = (el.scrollHeight + borderTop + borderBottom) + 'px';
+  }
+
+  document.querySelectorAll('textarea').forEach(textarea => {
+    // Add overflow-hidden in JS just in case it's missed in HTML
+    textarea.style.overflow = 'hidden';
+    // Adjust initially
+    adjustTextareaHeight(textarea);
+    // Listen to input
+    textarea.addEventListener('input', function() {
+      adjustTextareaHeight(this);
+    });
+  });
+
   // --- Side Drawer Modal Controller ---
   const sideDrawerModal = document.getElementById("sideDrawerModal");
   const sideDrawerOverlay = document.getElementById("sideDrawerOverlay");
@@ -235,6 +261,8 @@ document.addEventListener("DOMContentLoaded", function () {
       sideDrawerModal.classList.add("hidden");
       sideDrawerModal.style.display = "none"; // Re-hide perfectly
       inventoryForm.reset();
+      // Reset textareas to default height
+      document.querySelectorAll('textarea').forEach(ta => ta.style.height = 'auto');
       document.getElementById("form_id").value = "";
       isEditing = false;
       editingRow = null;
@@ -411,6 +439,14 @@ document.addEventListener("DOMContentLoaded", function () {
       document.getElementById("form_location").value = row.dataset.location || "";
       document.getElementById("form_item_description").value = row.dataset.desc || "";
       document.getElementById("form_defect_description").value = row.dataset.defect || "";
+      
+      // Auto-expand dynamically injected content
+      setTimeout(() => {
+        document.querySelectorAll('textarea').forEach(ta => {
+          ta.style.height = 'auto';
+          ta.style.height = ta.scrollHeight + 'px';
+        });
+      }, 0);
       
       openDrawer("Edit Inventory Record");
     }
