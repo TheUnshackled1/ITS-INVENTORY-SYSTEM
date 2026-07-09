@@ -563,7 +563,7 @@ def borrow_item(request):
     except (TypeError, ValueError):
         qty = 1
 
-    if not borrower_name or not office_location or not expected_return:
+    if not borrower_name or not office_location or not expected_return or not tel_no or not purpose:
         return JsonResponse({'success': False, 'error': 'Please fill in all required fields.'}, status=400)
     if qty < 1:
         return JsonResponse({'success': False, 'error': 'Quantity must be at least 1.'}, status=400)

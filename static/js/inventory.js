@@ -744,7 +744,7 @@ document.addEventListener("DOMContentLoaded", function () {
         quantity_borrowed: parseInt(document.getElementById('borrow_quantity').value || '1', 10),
       };
 
-      if (!payload.borrower_name || !payload.office_location || !payload.expected_return) {
+      if (!payload.borrower_name || !payload.office_location || !payload.expected_return || !payload.tel_no || !payload.purpose) {
         if (borrowFormError) {
           borrowFormError.textContent = 'Please fill in all required fields.';
           borrowFormError.classList.remove('hidden');
