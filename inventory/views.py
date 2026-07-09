@@ -362,14 +362,15 @@ def edit_inventory(request, pk):
                 updated_item.defect_description = inventory_item.defect_description
             
             # Check for dummy edits
+            def norm(v):
+                return "" if v is None else str(v).strip()
+
             has_changes = False
             for field in optional_fields:
-                old_val = getattr(old_item, field)
-                new_val = getattr(updated_item, field)
-                if str(old_val).strip() != str(new_val).strip() and old_val != new_val:
+                if norm(getattr(old_item, field)) != norm(getattr(updated_item, field)):
                     has_changes = True
                     break
-                    
+            
             if not has_changes:
                 if is_ajax:
                     return JsonResponse({'success': True, 'no_changes': True})
