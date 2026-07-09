@@ -414,8 +414,8 @@ document.addEventListener("DOMContentLoaded", function () {
       if (detailObj) {
         if (detailObj.before && detailObj.after) {
           if (logDetailModalCard) {
-            logDetailModalCard.classList.remove("max-w-md");
-            logDetailModalCard.classList.add("max-w-xl");
+            logDetailModalCard.classList.remove("max-w-md", "max-w-xl", "max-w-lg", "max-w-4xl");
+            logDetailModalCard.classList.add("max-w-[520px]");
           }
           
           let beforeHtml = '<div class="grid grid-cols-2 gap-x-2 gap-y-4 text-left w-full">';
@@ -481,11 +481,11 @@ document.addEventListener("DOMContentLoaded", function () {
           `;
         } else {
           if (logDetailModalCard) {
-            logDetailModalCard.classList.remove("max-w-4xl");
-            logDetailModalCard.classList.add("max-w-md");
+            logDetailModalCard.classList.remove("max-w-4xl", "max-w-xl", "max-w-lg", "max-w-[520px]", "max-w-md");
+            logDetailModalCard.classList.add("max-w-[370px]");
           }
           
-          html += '<div class="grid grid-cols-2 md:grid-cols-3 gap-x-4 gap-y-5 text-left w-full mt-2 border-b border-slate-100 pb-4 mb-4">';
+          html += '<div class="grid grid-cols-2 gap-x-4 gap-y-5 text-left w-full mt-2 pb-2">';
           for (const [k, v] of Object.entries(detailObj)) {
             if (k.startsWith('_')) continue;
             html += `
