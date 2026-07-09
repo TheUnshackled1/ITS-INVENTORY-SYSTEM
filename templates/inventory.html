@@ -105,7 +105,7 @@
             </div>
 
             <!-- Statistics Cards -->
-            {% if inventory_items %}
+            {% if has_inventory_records %}
             <!-- Stats Scene: colorful glass background + grid -->
             <div class="stats-scene">
             <div id="stats-cards-container" class="grid grid-cols-2 gap-3 sm:grid-cols-3 xl:grid-cols-5">
@@ -264,62 +264,47 @@
           {% endfor %}
         </section>
         {% endif %}
-        {% if has_inventory_records %}
         <section class="backdrop-card mt-4 rounded-3xl border border-white/70 shadow-soft ring-1 ring-slate-200/60">
           <div class="p-4 lg:p-5">
-            <form method="GET" id="filter-form" class="grid gap-3 lg:grid-cols-[1fr_auto_auto_auto_auto] items-end">
-              <div class="space-y-2">
-                <label for="filter-search"
-                  class="text-xs font-bold uppercase tracking-[0.18em] text-slate-900 text-center block">
-                  Search
-                </label>
-                <div class="relative">
-                  <span class="absolute inset-y-0 left-3 flex items-center text-slate-400 pointer-events-none">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
-                      stroke="currentColor" stroke-width="2">
-                      <path stroke-linecap="round" stroke-linejoin="round"
-                        d="M21 21l-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0z" />
-                    </svg>
-                  </span>
-                  <input id="filter-search" type="text" name="q" value="{{ search_query }}"
-                    placeholder="Search items&#8230;" class="datatable-selector w-full pl-9 text-center" />
-                </div>
+            <form method="GET" id="filter-form" class="grid gap-3 lg:grid-cols-[1fr_auto_auto_auto_auto] items-center">
+              <div class="relative">
+                <span class="absolute inset-y-0 left-3 flex items-center text-slate-400 pointer-events-none">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                      d="M21 21l-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0z" />
+                  </svg>
+                </span>
+                <input id="filter-search" type="text" name="q" value="{{ search_query|default:'' }}"
+                  placeholder="SEARCH ITEMS..." class="uppercase w-full text-center bg-slate-50 border-slate-900 border-2 focus:border-slate-900 focus:ring-0 rounded-xl shadow-sm text-sm font-semibold text-slate-800 py-2.5 pl-9 pr-3 transition-colors placeholder:text-slate-400 placeholder:uppercase" />
               </div>
 
-              <div class="space-y-2">
-                <label for="filter-status"
-                  class="text-xs font-bold uppercase tracking-[0.18em] text-slate-900 text-center block">
-                  Status
-                </label>
-                <select id="filter-status" name="status" class="datatable-selector w-full text-center"
+              <div>
+                <select id="filter-status" name="status" class="uppercase w-full text-center bg-slate-50 border-slate-900 border-2 focus:border-slate-900 focus:ring-0 rounded-xl shadow-sm text-sm font-semibold text-slate-800 py-2.5 px-3 transition-colors"
                   onchange="this.form.submit()">
-                  <option value="">All Status</option>
+                  <option value="">ALL STATUS</option>
                   {% for option in status_options %}
-                  <option value="{{ option.value }}" {% if selected_status == option.value %}selected{% endif %}>{{ option.label }}</option>
+                  <option value="{{ option.value }}" {% if selected_status == option.value %}selected{% endif %}>{{ option.label|upper }}</option>
                   {% endfor %}
                 </select>
               </div>
-              <div class="space-y-2">
-                <label for="filter-location"
-                  class="block text-center text-[10px] font-bold uppercase tracking-[0.2em] text-slate-900">Location</label>
-                <select id="filter-location" name="location" class="datatable-selector w-full text-center"
+
+              <div>
+                <select id="filter-location" name="location" class="uppercase w-full text-center bg-slate-50 border-slate-900 border-2 focus:border-slate-900 focus:ring-0 rounded-xl shadow-sm text-sm font-semibold text-slate-800 py-2.5 px-3 transition-colors"
                   onchange="this.form.submit()">
-                  <option value="">All Locations</option>
+                  <option value="">ALL LOCATIONS</option>
                   {% for location in distinct_locations %}
-                  <option value="{{ location }}" {% if selected_location == location %}selected{% endif %}>{{ location }}</option>
+                  <option value="{{ location }}" {% if selected_location == location %}selected{% endif %}>{{ location|upper }}</option>
                   {% endfor %}
                 </select>
               </div>
-              <div class="space-y-2">
-                <label for="filter-item-type"
-                  class="text-xs font-bold uppercase tracking-[0.18em] text-slate-900 text-center block">
-                  Item Type
-                </label>
-                <select id="filter-item-type" name="item_type" class="datatable-selector w-full text-center"
+
+              <div>
+                <select id="filter-item-type" name="item_type" class="uppercase w-full text-center bg-slate-50 border-slate-900 border-2 focus:border-slate-900 focus:ring-0 rounded-xl shadow-sm text-sm font-semibold text-slate-800 py-2.5 px-3 transition-colors"
                   onchange="this.form.submit()">
-                  <option value="">All Item Types</option>
+                  <option value="">ALL ITEM TYPES</option>
                   {% for item_type in distinct_item_types %}
-                  <option value="{{ item_type }}" {% if selected_item_type == item_type %}selected{% endif %}>{{ item_type }}</option>
+                  <option value="{{ item_type }}" {% if selected_item_type == item_type %}selected{% endif %}>{{ item_type|upper }}</option>
                   {% endfor %}
                 </select>
               </div>
@@ -466,42 +451,36 @@
             </table>
           </div>
           {% else %}
-          <div class="mx-auto flex max-w-md flex-col items-center gap-3 p-10 text-center">
-            <div
-              class="flex h-16 w-16 items-center justify-center rounded-2xl bg-brand-50 text-2xl text-brand-700 ring-1 ring-brand-100">
+          <div class="mx-auto flex w-full max-w-md flex-col items-center justify-center gap-4 py-20 text-center flex-1">
+            <div class="flex h-16 w-16 items-center justify-center rounded-2xl bg-brand-50 text-2xl text-brand-700 ring-1 ring-brand-100 shadow-sm">
               0
             </div>
-            <h2 class="text-2xl font-bold tracking-tight text-slate-900">
-              No items match the selected filters.
-            </h2>
-            <p class="text-base leading-7 text-slate-600 mb-2">
-              Clear the filters to show all inventory records again.
-            </p>
-
+            <div>
+              {% if search_query or selected_status or selected_location or selected_item_type %}
+              <h2 class="text-xl font-bold tracking-tight text-slate-900 mb-1">
+                No items match the selected filters.
+              </h2>
+              <p class="text-sm leading-6 text-slate-500 mb-2">
+                Clear the filters to show all inventory records again.
+              </p>
+              {% else %}
+              <h2 class="text-xl font-bold tracking-tight text-slate-900 mb-1">
+                No inventory records yet.
+              </h2>
+              <p class="text-sm leading-6 text-slate-500 mb-2">
+                Your inventory dashboard is currently empty.
+              </p>
+              {% endif %}
+            </div>
+            {% if search_query or selected_status or selected_location or selected_item_type %}
             <a href="{% url 'inventory-list' %}"
               class="inline-flex items-center rounded-full bg-slate-800 px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-slate-700">
               Clear Filters
             </a>
+            {% endif %}
           </div>
           {% endif %}
         </section>
-        {% else %}
-        <section
-          class="backdrop-card mt-4 rounded-3xl border border-white/70 p-10 text-center shadow-soft ring-1 ring-slate-200/60">
-          <div class="mx-auto flex max-w-md flex-col items-center gap-3">
-            <div
-              class="flex h-16 w-16 items-center justify-center rounded-2xl bg-brand-50 text-2xl text-brand-700 ring-1 ring-brand-100">
-              0
-            </div>
-            <h2 class="text-2xl font-bold tracking-tight text-slate-900">
-              No inventory records yet.
-            </h2>
-              <p class="text-base leading-7 text-slate-600 mb-2">
-              Your inventory dashboard is currently empty.
-            </p>
-          </div>
-        </section>
-        {% endif %}
       </main>
     </div>
   </div>
