@@ -508,15 +508,19 @@
           <input type="hidden" name="id" id="form_id" value="">
           {% csrf_token %}
           
+          <!-- Form Error Banner -->
+          <div id="formErrorMessage" class="hidden rounded-lg bg-red-50 p-4 mb-4 text-sm font-semibold text-red-800 border border-red-200 w-full shadow-sm mt-0">
+          </div>
+          
           <!-- Key-Value Grid -->
           <div class="grid grid-cols-[130px_1fr] items-center gap-y-4 text-sm w-full">
             
-            <div class="flex items-center text-slate-500 gap-2 font-medium"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"></path></svg> Item Type</div>
+            <div class="flex items-center text-slate-500 gap-2 font-medium"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"></path></svg> Item Type *</div>
             <div>
               <input type="text" name="item_type" id="form_item_type" class="w-full bg-white border border-slate-300 shadow-sm focus:bg-white focus:border-slate-900 focus:ring-1 focus:ring-slate-900 px-2 py-1.5 font-semibold text-slate-800 placeholder-slate-400 sm:text-sm transition-all -ml-2 rounded-md" placeholder="e.g., Computer">
             </div>
 
-            <div class="flex items-center text-slate-500 gap-2 font-medium"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg> Brand</div>
+            <div class="flex items-center text-slate-500 gap-2 font-medium"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg> Brand *</div>
             <div>
               <input type="text" name="brand" id="form_brand" class="w-full bg-white border border-slate-300 shadow-sm focus:bg-white focus:border-slate-900 focus:ring-1 focus:ring-slate-900 px-2 py-1.5 font-semibold text-slate-800 placeholder-slate-400 sm:text-sm transition-all -ml-2 rounded-md" placeholder="Designate Brand">
             </div>
@@ -542,12 +546,12 @@
               </select>
             </div>
 
-            <div class="flex items-center text-slate-500 gap-2 font-medium"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"></path></svg> Quantity</div>
+            <div class="flex items-center text-slate-500 gap-2 font-medium"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"></path></svg> Quantity *</div>
             <div>
               <input type="number" name="quantity" id="form_quantity" min="1" class="w-full bg-white border border-slate-300 shadow-sm focus:bg-white focus:border-slate-900 focus:ring-1 focus:ring-slate-900 px-2 py-1.5 font-semibold text-slate-800 placeholder-slate-400 sm:text-sm transition-all -ml-2 rounded-md" placeholder="1">
             </div>
 
-            <div class="flex items-center text-slate-500 gap-2 font-medium"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg> Inv Date</div>
+            <div class="flex items-center text-slate-500 gap-2 font-medium"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2-2v12a2 2 0 002 2z"></path></svg> Inv Date *</div>
             <div>
               <input type="date" name="date_inventory" id="form_date_inventory" class="w-full bg-white border border-slate-300 shadow-sm focus:bg-white focus:border-slate-900 focus:ring-1 focus:ring-slate-900 px-2 py-1.5 font-semibold text-slate-800 sm:text-sm transition-all -ml-2 rounded-md">
             </div>
@@ -557,25 +561,20 @@
               <input type="date" name="date_disposal" id="form_date_disposal" class="w-full bg-white border border-slate-300 shadow-sm focus:bg-white focus:border-slate-900 focus:ring-1 focus:ring-slate-900 px-2 py-1.5 font-semibold text-slate-800 sm:text-sm transition-all -ml-2 rounded-md">
             </div>
 
-            <div class="flex items-center text-slate-500 gap-2 font-medium"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg> Location</div>
+            <div class="flex items-center text-slate-500 gap-2 font-medium"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg> Location *</div>
             <div>
               <input type="text" name="location" id="form_location" class="w-full bg-white border border-slate-300 shadow-sm focus:bg-white focus:border-slate-900 focus:ring-1 focus:ring-slate-900 px-2 py-1.5 font-semibold text-slate-800 placeholder-slate-400 sm:text-sm transition-all -ml-2 rounded-md" placeholder="Storage area...">
             </div>
           </div>
 
           <div class="mt-8">
-            <label for="form_item_description" class="block font-bold text-slate-800 text-sm mb-2">Item Description</label>
+            <label for="form_item_description" class="block font-bold text-slate-800 text-sm mb-2">Item Description *</label>
             <textarea name="item_description" id="form_item_description" rows="3" class="w-full bg-white border border-slate-300 rounded-md shadow-sm p-3 text-[13px] leading-relaxed text-slate-700 placeholder-slate-400 resize-none focus:outline-none focus:border-slate-900 focus:ring-1 focus:ring-slate-900 transition-all" placeholder="Provide a detailed description here..."></textarea>
           </div>
 
           <div class="mt-5">
             <label for="form_defect_description" class="block font-bold text-slate-800 text-sm mb-2">Defect Information</label>
             <textarea name="defect_description" id="form_defect_description" rows="2" class="w-full bg-white border border-slate-300 rounded-md shadow-sm p-3 text-[13px] leading-relaxed text-slate-700 placeholder-slate-400 resize-none focus:outline-none focus:border-slate-900 focus:ring-1 focus:ring-slate-900 transition-all" placeholder="NOT WORKING"></textarea>
-          </div>
-          
-          <div class="pt-6">
-            <div id="formErrorMessage" class="hidden rounded-lg bg-red-50 p-4 mb-4 text-sm text-red-800 border border-red-200">
-            </div>
           </div>
         </form>
       </div>

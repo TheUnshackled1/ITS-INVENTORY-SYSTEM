@@ -421,10 +421,12 @@ document.addEventListener("DOMContentLoaded", function () {
           let beforeHtml = '<div class="grid grid-cols-2 gap-x-2 gap-y-4 text-left w-full">';
           for (const [k, v] of Object.entries(detailObj.before)) {
             if (k.startsWith('_')) continue;
+            let changed = (v !== detailObj.after[k]);
+            let valColor = changed ? "text-white bg-rose-700 px-1.5 py-0.5 rounded shadow-sm border border-rose-800 w-fit inline-block" : "text-slate-800";
             beforeHtml += `
               <div class="col-span-1 flex flex-col">
                 <span class="text-[9px] font-extrabold text-slate-400 uppercase tracking-widest mb-0.5">${k}</span>
-                <span class="text-xs font-semibold text-slate-800 break-words">${v}</span>
+                <span class="text-xs font-semibold ${valColor} break-words">${v}</span>
               </div>
             `;
           }
