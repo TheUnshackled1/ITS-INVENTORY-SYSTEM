@@ -291,15 +291,15 @@ The application will be available at:
 
 | Login Page |
 |:---:|
-| <img width="800" alt="Login Interface" src="https://github.com/user-attachments/assets/placeholder-login-image-url" /> |
+| <img width="800" alt="Login Interface" src="docs/assets/login_snapshot.png" /> |
 
 ---
 
 ### 📊 Inventory Management
 
-| Inventory Dashboard | Side Drawer (Add Item) |
-|:---:|:---:|
-| <img width="600" alt="Inventory Dashboard" src="https://github.com/user-attachments/assets/placeholder-dashboard-image-url" /> | <img width="600" alt="Inventory Drawer" src="https://github.com/user-attachments/assets/placeholder-drawer-image-url" /> |
+| Inventory Dashboard |
+|:---:|
+| <img width="800" alt="Inventory Dashboard" src="docs/assets/dashboard_snapshot.png" /> |
 
 ---
 
@@ -307,7 +307,7 @@ The application will be available at:
 
 | Borrowing Tracker | Activity Log Modal |
 |:---:|:---:|
-| <img width="600" alt="Borrowing Tracker" src="https://github.com/user-attachments/assets/placeholder-borrowing-image-url" /> | <img width="600" alt="Activity Details" src="https://github.com/user-attachments/assets/placeholder-activity-image-url" /> |
+| <img width="600" alt="Borrowing Tracker" src="docs/assets/borrowing_snapshot.png" /> | <img width="600" alt="Activity Details" src="docs/assets/activity_snapshot.png" /> |
 
 ---
 
