@@ -291,7 +291,7 @@ The application will be available at:
 
 | Login Page |
 |:---:|
-| [![Login Interface](./docs/assets/login_snapshot.png)](./docs/assets/login_snapshot.png) |
+| [![Login Interface](./docs/assets/login_snapshot.png?v=1)](./docs/assets/login_snapshot.png?v=1) |
 
 ---
 
@@ -299,7 +299,7 @@ The application will be available at:
 
 | Inventory Dashboard |
 |:---:|
-| [![Inventory Dashboard](./docs/assets/dashboard_snapshot.png)](./docs/assets/dashboard_snapshot.png) |
+| [![Inventory Dashboard](./docs/assets/dashboard_snapshot.png?v=1)](./docs/assets/dashboard_snapshot.png?v=1) |
 
 ---
 
@@ -307,7 +307,7 @@ The application will be available at:
 
 | Borrowing Tracker | Activity Log Modal |
 |:---:|:---:|
-| [![Borrowing Tracker](./docs/assets/borrowing_snapshot.png)](./docs/assets/borrowing_snapshot.png) | [![Activity Details](./docs/assets/activity_snapshot.png)](./docs/assets/activity_snapshot.png) |
+| [![Borrowing Tracker](./docs/assets/borrowing_snapshot.png?v=1)](./docs/assets/borrowing_snapshot.png?v=1) | [![Activity Details](./docs/assets/activity_snapshot.png?v=1)](./docs/assets/activity_snapshot.png?v=1) |
 
 ---
 
