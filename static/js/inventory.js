@@ -10,6 +10,7 @@ document.addEventListener("DOMContentLoaded", function () {
         let successMessage = "Congratulations your record has been successfully added";
         if (pendingSuccess === "edited") successMessage = "Congratulations your record has been successfully edited";
         if (pendingSuccess === "deleted") successMessage = "Congratulations your record has been successfully deleted";
+        if (pendingSuccess === "borrowed") successMessage = "Item has been successfully borrowed";
         window.showSuccessModal(successMessage);
       }
     }, 150);
@@ -864,7 +865,7 @@ document.addEventListener("DOMContentLoaded", function () {
         if (data.success) {
           closeBorrowModal();
           closeDrawer();
-          localStorage.setItem('showSuccessModalFlag', 'added');
+          localStorage.setItem('showSuccessModalFlag', 'borrowed');
           window.location.reload();
         } else {
           if (borrowFormError) {
