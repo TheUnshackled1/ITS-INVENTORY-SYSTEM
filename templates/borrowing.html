@@ -161,15 +161,15 @@
                   All
                 </a>
                 <a href="{% url 'borrowing-list' %}?tab=borrowed{% if search_query %}&q={{ search_query }}{% endif %}"
-                  class="px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-wider transition-all {% if current_tab == 'borrowed' %}bg-sky-600 text-white shadow-md{% else %}bg-slate-100 text-slate-600 hover:bg-slate-200{% endif %}">
+                  class="px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-wider transition-all {% if current_tab == 'borrowed' %}bg-sky-600 text-white shadow-md{% else %}bg-sky-50 text-sky-700 hover:bg-sky-100{% endif %}">
                   Borrowed
                 </a>
                 <a href="{% url 'borrowing-list' %}?tab=returned{% if search_query %}&q={{ search_query }}{% endif %}"
-                  class="px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-wider transition-all {% if current_tab == 'returned' %}bg-emerald-600 text-white shadow-md{% else %}bg-slate-100 text-slate-600 hover:bg-slate-200{% endif %}">
+                  class="px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-wider transition-all {% if current_tab == 'returned' %}bg-emerald-600 text-white shadow-md{% else %}bg-emerald-50 text-emerald-700 hover:bg-emerald-100{% endif %}">
                   Returned
                 </a>
                 <a href="{% url 'borrowing-list' %}?tab=overdue{% if search_query %}&q={{ search_query }}{% endif %}"
-                  class="px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-wider transition-all {% if current_tab == 'overdue' %}bg-rose-600 text-white shadow-md{% else %}bg-slate-100 text-slate-600 hover:bg-slate-200{% endif %}">
+                  class="px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-wider transition-all {% if current_tab == 'overdue' %}bg-rose-600 text-white shadow-md{% else %}bg-rose-50 text-rose-700 hover:bg-rose-100{% endif %}">
                   Overdue
                 </a>
               </div>
@@ -274,8 +274,8 @@
                       Return
                     </button>
                     {% else %}
-                    <span class="inline-flex items-center gap-1 rounded-lg bg-slate-200 px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider text-slate-500">
-                      <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+                    <span class="inline-flex justify-center w-[85px] items-center gap-1.5 rounded-lg bg-emerald-50 px-3 py-1.5 text-[11px] font-bold uppercase tracking-wider text-emerald-700 ring-1 ring-inset ring-emerald-200 shadow-sm">
+                      <svg class="w-3.5 h-3.5 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
                       Done
                     </span>
                     {% endif %}
@@ -318,14 +318,14 @@
   <div id="returnConfirmModalOverlay" style="display: none;" class="fixed inset-0 z-[300] flex items-center justify-center bg-slate-900/60 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300">
     <div id="returnConfirmModalCard" class="relative w-full max-w-[340px] bg-white rounded-3xl shadow-2xl overflow-hidden transform scale-95 opacity-0 transition-all duration-300 ease-out">
       <!-- Top Emerald Half -->
-      <div class="bg-emerald-600 px-6 py-6 flex flex-col items-center justify-center text-white">
+      <div class="bg-emerald-600 px-6 py-2.5 flex flex-col items-center justify-center text-white">
         <!-- Check Icon -->
-        <div class="w-16 h-16 rounded-full border-[3px] border-white flex items-center justify-center mb-3 shadow-sm">
-          <svg class="w-8 h-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <div class="w-9 h-9 rounded-full border-2 border-white flex items-center justify-center mb-1.5 shadow-sm">
+          <svg class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
             <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
           </svg>
         </div>
-        <h3 class="text-[14px] font-extrabold tracking-[0.25em] uppercase mt-1 drop-shadow-sm text-center">Confirm Return</h3>
+        <h3 class="text-[13px] font-extrabold tracking-[0.25em] uppercase drop-shadow-sm text-center">Confirm Return</h3>
       </div>
       
       <!-- Bottom White Half -->
@@ -337,10 +337,10 @@
         </div>
         <input type="hidden" id="returnIssuanceId" value="" />
         <div class="flex gap-3 w-full">
-          <button type="button" id="cancelReturnBtn" class="flex-1 rounded-xl bg-red-600 py-3 text-sm font-bold text-white transition-all shadow-[0_8px_20px_rgba(220,38,38,0.4)] hover:shadow-[0_12px_25px_rgba(220,38,38,0.5)] hover:-translate-y-0.5 hover:bg-red-700 focus:outline-none focus:ring-4 focus:ring-red-600/30">
+          <button type="button" id="cancelReturnBtn" class="flex-1 rounded-xl bg-red-600 py-2.5 text-sm font-bold text-white transition-all shadow-[0_8px_20px_rgba(220,38,38,0.4)] hover:shadow-[0_12px_25px_rgba(220,38,38,0.5)] hover:-translate-y-0.5 hover:bg-red-700 focus:outline-none focus:ring-4 focus:ring-red-600/30">
             Cancel
           </button>
-          <button type="button" id="confirmReturnBtn" class="flex-1 rounded-xl bg-emerald-600 py-3 text-sm font-bold text-white transition-all shadow-sm hover:shadow-md hover:bg-emerald-700 hover:-translate-y-0.5 focus:outline-none focus:ring-4 focus:ring-emerald-600/30">
+          <button type="button" id="confirmReturnBtn" class="flex-1 rounded-xl bg-emerald-600 py-2.5 text-sm font-bold text-white transition-all shadow-sm hover:shadow-md hover:bg-emerald-700 hover:-translate-y-0.5 focus:outline-none focus:ring-4 focus:ring-emerald-600/30">
             Return
           </button>
         </div>
@@ -352,23 +352,23 @@
   <div id="successModalOverlay" style="display: none;" class="fixed inset-0 z-[200] flex items-center justify-center bg-slate-900/60 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300">
     <div id="successModalCard" class="relative w-full max-w-[340px] bg-white rounded-3xl shadow-2xl overflow-hidden transform scale-95 opacity-0 transition-all duration-500 ease-out">
       <!-- Top Green Half -->
-      <div class="bg-emerald-600 px-6 py-10 flex flex-col items-center justify-center text-white">
+      <div class="bg-emerald-600 px-6 py-2.5 flex flex-col items-center justify-center text-white">
         <!-- Circular Check Icon -->
-        <div class="w-20 h-20 rounded-full border-[3px] border-white flex items-center justify-center mb-4 shadow-sm">
-          <svg class="w-10 h-10 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="4">
+        <div class="w-9 h-9 rounded-full border-2 border-white flex items-center justify-center mb-1.5 shadow-sm">
+          <svg class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
             <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
           </svg>
         </div>
-        <h3 class="text-[14px] font-extrabold tracking-[0.25em] uppercase mt-2 drop-shadow-sm">Success</h3>
+        <h3 class="text-[14px] font-extrabold tracking-[0.25em] uppercase drop-shadow-sm">Success</h3>
       </div>
       
       <!-- Bottom White Half -->
-      <div class="bg-white px-8 py-10 flex flex-col items-center text-center">
-        <p id="successModalMessage" class="text-slate-500 text-[15px] leading-relaxed mb-8 font-medium">
+      <div class="bg-white px-8 py-6 flex flex-col items-center text-center">
+        <p id="successModalMessage" class="text-slate-500 text-[15px] leading-relaxed mb-6 font-medium">
           Item has been successfully returned
         </p>
         
-        <button type="button" id="successModalCloseBtn" class="w-full sm:w-[85%] py-3 rounded-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-sm shadow-[0_8px_20px_rgba(5,150,105,0.4)] hover:shadow-[0_12px_25px_rgba(5,150,105,0.5)] hover:-translate-y-0.5 transition-all outline-none focus:ring-4 focus:ring-emerald-600/30">
+        <button type="button" id="successModalCloseBtn" class="w-full sm:w-[85%] py-2 rounded-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-sm shadow-[0_8px_20px_rgba(5,150,105,0.4)] hover:shadow-[0_12px_25px_rgba(5,150,105,0.5)] hover:-translate-y-0.5 transition-all outline-none focus:ring-4 focus:ring-emerald-600/30">
           Continue
         </button>
       </div>
@@ -379,23 +379,23 @@
   <div id="errorModalOverlay" style="display: none;" class="fixed inset-0 z-[200] flex items-center justify-center bg-slate-900/60 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300">
     <div id="errorModalCard" class="relative w-full max-w-[340px] bg-white rounded-3xl shadow-2xl overflow-hidden transform scale-95 opacity-0 transition-all duration-500 ease-out">
       <!-- Top Red Half -->
-      <div class="bg-[#F03A5F] px-6 py-10 flex flex-col items-center justify-center text-white">
+      <div class="bg-[#F03A5F] px-6 py-2.5 flex flex-col items-center justify-center text-white">
         <!-- Circular X Icon -->
-        <div class="w-20 h-20 rounded-full border-[3px] border-white flex items-center justify-center mb-4 shadow-sm">
-          <svg class="w-10 h-10 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
+        <div class="w-9 h-9 rounded-full border-2 border-white flex items-center justify-center mb-1.5 shadow-sm">
+          <svg class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
             <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
           </svg>
         </div>
-        <h3 class="text-[14px] font-extrabold tracking-[0.25em] uppercase mt-2 drop-shadow-sm">Error</h3>
+        <h3 class="text-[14px] font-extrabold tracking-[0.25em] uppercase drop-shadow-sm">Error</h3>
       </div>
       
       <!-- Bottom White Half -->
-      <div class="bg-white px-8 py-10 flex flex-col items-center text-center">
-        <p id="errorModalMessage" class="text-slate-500 text-[15px] leading-relaxed mb-8 font-medium">
+      <div class="bg-white px-8 py-6 flex flex-col items-center text-center">
+        <p id="errorModalMessage" class="text-slate-500 text-[15px] leading-relaxed mb-6 font-medium">
           Ooops.. something wrong, try one more time
         </p>
         
-        <button type="button" id="errorModalCloseBtn" class="w-full sm:w-[85%] py-3 rounded-full bg-[#F03A5F] hover:bg-[#E03152] text-white font-bold text-sm shadow-[0_8px_20px_rgba(240,58,95,0.4)] hover:shadow-[0_12px_25px_rgba(240,58,95,0.5)] hover:-translate-y-0.5 transition-all outline-none focus:ring-4 focus:ring-[#F03A5F]/30">
+        <button type="button" id="errorModalCloseBtn" class="w-full sm:w-[85%] py-2 rounded-full bg-[#F03A5F] hover:bg-[#E03152] text-white font-bold text-sm shadow-[0_8px_20px_rgba(240,58,95,0.4)] hover:shadow-[0_12px_25px_rgba(240,58,95,0.5)] hover:-translate-y-0.5 transition-all outline-none focus:ring-4 focus:ring-[#F03A5F]/30">
           Okay
         </button>
       </div>
