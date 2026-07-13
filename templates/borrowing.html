@@ -306,15 +306,15 @@
   <div id="returnConditionModalOverlay" style="display: none;" class="fixed inset-0 z-[350] flex items-center justify-center bg-slate-900/60 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300">
     <div id="returnConditionModalCard" class="relative w-full max-w-[380px] bg-white rounded-3xl shadow-2xl overflow-hidden transform scale-95 opacity-0 transition-all duration-300 ease-out mx-4">
       <!-- Top Emerald Header -->
-      <div class="bg-emerald-600 px-6 py-2.5 flex flex-col items-center justify-center text-white">
-        <div class="w-8 h-8 rounded-full border-2 border-white flex items-center justify-center mb-1 shadow-sm">
-          <svg class="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+      <div class="bg-emerald-600 px-6 pt-7 pb-6 flex flex-col items-center justify-center text-white">
+        <div class="w-12 h-12 rounded-full border-[2.5px] border-white flex items-center justify-center mb-3 shadow-sm">
+          <svg class="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
             <path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
             <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6M9 16h6" />
           </svg>
         </div>
-        <h3 class="text-[13px] font-extrabold tracking-[0.25em] uppercase drop-shadow-sm text-center">Return Item</h3>
-        <p id="returnConditionSubtitle" class="text-white/90 text-[11px] mt-0.5 font-semibold text-center"></p>
+        <h3 class="text-[14px] font-extrabold tracking-[0.25em] uppercase drop-shadow-sm text-center">Return Item</h3>
+        <p id="returnConditionSubtitle" class="text-white text-[12px] mt-1 font-semibold text-center"></p>
       </div>
       <!-- Body -->
       <div class="px-6 py-7 bg-white flex flex-col gap-5">
@@ -351,22 +351,22 @@
   <div id="returnConfirmModalOverlay" style="display: none;" class="fixed inset-0 z-[300] flex items-center justify-center bg-slate-900/60 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300">
     <div id="returnConfirmModalCard" class="relative w-full max-w-[340px] bg-white rounded-3xl shadow-2xl overflow-hidden transform scale-95 opacity-0 transition-all duration-300 ease-out mx-4">
       <!-- Top Emerald Half -->
-      <div class="bg-emerald-600 px-6 py-2.5 flex flex-col items-center justify-center text-white">
+      <div class="bg-emerald-600 px-6 pt-7 pb-6 flex flex-col items-center justify-center text-white">
         <!-- Check Icon -->
-        <div class="w-8 h-8 rounded-full border-2 border-white flex items-center justify-center mb-1 shadow-sm">
-          <svg class="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
+        <div class="w-12 h-12 rounded-full border-[2.5px] border-white flex items-center justify-center mb-3 shadow-sm">
+          <svg class="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
             <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
           </svg>
         </div>
-        <h3 class="text-[13px] font-extrabold tracking-[0.25em] uppercase drop-shadow-sm text-center">Confirm Return</h3>
+        <h3 class="text-[14px] font-extrabold tracking-[0.25em] uppercase drop-shadow-sm text-center">Confirm Return</h3>
       </div>
       <!-- Bottom White Half -->
-      <div class="px-6 py-4 text-center bg-white flex flex-col items-center">
-        <div class="w-full bg-slate-50 rounded-xl border border-slate-100 py-2.5 px-4 mb-2 shadow-sm">
-          <p id="returnConfirmText" class="text-[13px] text-slate-800 font-bold leading-tight">
+      <div class="px-6 py-7 text-center bg-white flex flex-col items-center">
+        <div class="w-full bg-slate-50 rounded-xl border border-slate-100 p-5 mb-5 shadow-sm">
+          <p id="returnConfirmText" class="text-[13px] text-slate-800 font-bold leading-relaxed">
             Mark this item as returned?
           </p>
-          <p id="returnConfirmCondition" class="text-[11px] text-slate-500 font-semibold mt-0.5"></p>
+          <p id="returnConfirmCondition" class="text-[11px] text-slate-500 font-semibold mt-2"></p>
         </div>
         <input type="hidden" id="returnIssuanceId" value="" />
         <div class="flex gap-3 w-full mt-1">
