@@ -134,23 +134,59 @@ document.addEventListener("DOMContentLoaded", function () {
         const start = totalRows === 0 ? 0 : (currentPage - 1) * PAGE_SIZE + 1;
         const end = Math.min(currentPage * PAGE_SIZE, totalRows);
 
+        let pagesHtml = '';
+        let pageNumbers = [];
+        
+        if (totalPages <= 7) {
+            for (let i = 1; i <= totalPages; i++) pageNumbers.push(i);
+        } else {
+            if (currentPage <= 4) {
+                pageNumbers = [1, 2, 3, 4, 5, '...', totalPages];
+            } else if (currentPage >= totalPages - 3) {
+                pageNumbers = [1, '...', totalPages - 4, totalPages - 3, totalPages - 2, totalPages - 1, totalPages];
+            } else {
+                pageNumbers = [1, '...', currentPage - 1, currentPage, currentPage + 1, '...', totalPages];
+            }
+        }
+        
+        pageNumbers.forEach(p => {
+            if (p === '...') {
+                pagesHtml += `
+                  <li class="datatable-pagination-list-item pointer-events-none">
+                    <button class="datatable-pagination-list-item-link" style="background:transparent; border:none; box-shadow:none; color:#64748b; font-weight:bold;">&hellip;</button>
+                  </li>`;
+            } else {
+                let activeStyle = p === currentPage ? 'style="background-color: #0f172a !important; color: white !important; border-color: #0f172a !important;"' : '';
+                pagesHtml += `
+                  <li class="datatable-pagination-list-item ${p === currentPage ? "datatable-active" : ""}">
+                    <button data-page="${p}" class="datatable-pagination-list-item-link" ${activeStyle}>${p}</button>
+                  </li>`;
+            }
+        });
+
+        const formattedTotal = totalRows.toLocaleString();
+
         bottomBar.innerHTML = `
-          <div class="datatable-info">Showing ${start} to ${end} of ${totalRows} entries</div>
-          <nav class="datatable-pagination">
-            <ul class="datatable-pagination-list">
-              <li class="datatable-pagination-list-item ${currentPage === 1 ? "datatable-disabled" : ""}">
-                <button data-page="${currentPage - 1}" class="datatable-pagination-list-item-link">&lsaquo; Previous</button>
+          <div class="datatable-info shrink-0 text-slate-700 font-medium tracking-wide" style="font-size:0.875rem">${start}-${end} of ${formattedTotal}</div>
+          
+          <nav class="datatable-pagination flex-1 flex justify-center">
+            <ul class="datatable-pagination-list" style="display:flex; align-items:center; gap:0.25rem;">
+              <li class="datatable-pagination-list-item ${currentPage === 1 ? "datatable-disabled opacity-50 pointer-events-none" : ""}">
+                <button data-page="${currentPage - 1}" class="datatable-pagination-list-item-link" style="display:flex; align-items:center; gap:0.25rem;">&lsaquo; Back</button>
               </li>
-              ${Array.from({length: totalPages}, (_, i) => `
-                <li class="datatable-pagination-list-item ${i + 1 === currentPage ? "datatable-active" : ""}">
-                  <button data-page="${i + 1}" class="datatable-pagination-list-item-link">${i + 1}</button>
-                </li>
-              `).join("")}
-              <li class="datatable-pagination-list-item ${currentPage === totalPages || totalPages === 0 ? "datatable-disabled" : ""}">
-                <button data-page="${currentPage + 1}" class="datatable-pagination-list-item-link">Next &rsaquo;</button>
+              ${pagesHtml}
+              <li class="datatable-pagination-list-item ${currentPage === totalPages || totalPages === 0 ? "datatable-disabled opacity-50 pointer-events-none" : ""}">
+                <button data-page="${currentPage + 1}" class="datatable-pagination-list-item-link" style="display:flex; align-items:center; gap:0.25rem;">Next &rsaquo;</button>
               </li>
             </ul>
-          </nav>`;
+          </nav>
+
+          <div class="datatable-jump shrink-0 flex items-center gap-2">
+            <span class="text-sm font-medium text-slate-700">Page</span>
+            <input type="number" min="1" max="${totalPages}" value="${currentPage}" class="dt-jump-input w-16 text-center border-slate-300 rounded focus:border-blue-600 focus:ring-1 focus:ring-blue-600 h-[38px] text-sm font-bold text-slate-800 shadow-sm" style="padding-top:0; padding-bottom:0;" />
+            <button type="button" class="dt-jump-btn font-extrabold text-sm text-slate-900 bg-white hover:bg-slate-50 border border-slate-200 shadow-sm rounded px-3 h-[38px] transition-colors">Go</button>
+          </div>
+        `;
 
         bottomBar.querySelectorAll("button[data-page]").forEach(btn => {
           btn.addEventListener("click", function () {
@@ -161,6 +197,30 @@ document.addEventListener("DOMContentLoaded", function () {
             tableEl.closest("section")?.scrollIntoView({ behavior: "smooth", block: "start" });
           });
         });
+        
+        const jumpBtn = bottomBar.querySelector(".dt-jump-btn");
+        const jumpInput = bottomBar.querySelector(".dt-jump-input");
+        if (jumpBtn && jumpInput) {
+            const doJump = () => {
+                let page = parseInt(jumpInput.value);
+                if (!isNaN(page)) {
+                   if (page < 1) page = 1;
+                   if (page > totalPages) page = totalPages;
+                   if (page !== currentPage) {
+                      currentPage = page;
+                      renderPage();
+                      tableEl.closest("section")?.scrollIntoView({ behavior: "smooth", block: "start" });
+                   }
+                }
+            };
+            jumpBtn.addEventListener("click", doJump);
+            jumpInput.addEventListener("keydown", (e) => {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    doJump();
+                }
+            });
+        }
       }
 
       function applySearch(query) {

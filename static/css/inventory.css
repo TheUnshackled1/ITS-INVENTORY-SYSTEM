@@ -456,7 +456,7 @@ table {
     justify-content: space-between !important;
     flex-wrap: wrap !important;
     gap: 1rem !important;
-    flex-direction: row-reverse !important;
+    flex-direction: row !important;
     background: white !important;
     border-radius: 9999px !important;
     padding: 0.75rem 1.75rem !important;
@@ -503,7 +503,8 @@ table {
 
 .datatable-pagination li a,
 .datatable-pagination li button {
-    border-radius: 9999px !important;
+    border-radius: 4px !important;
+    border: 1px solid rgb(226 232 240) !important;
     min-width: 2.25rem;
     height: 2.25rem;
     display: flex !important;
@@ -511,28 +512,27 @@ table {
     justify-content: center !important;
     font-size: 0.875rem !important;
     font-weight: 700 !important;
-    color: #0f172a !important;
-    background: transparent !important;
-    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
-    border: none !important;
-    padding: 0 0.75rem !important;
-    text-decoration: none !important;
+    color: #475569 !important;
     cursor: pointer;
+    background: white !important;
+    transition: all 0.2s ease;
 }
 
 .datatable-pagination li a:hover,
 .datatable-pagination li button:hover {
     background: rgb(241 245 249) !important;
-    color: #4f46e5 !important;
+    color: #0f172a !important;
+    border-color: rgb(203 213 225) !important;
 }
 
 .datatable-pagination .datatable-active a,
 .datatable-pagination .datatable-active a:hover,
 .datatable-pagination .datatable-active button,
 .datatable-pagination .datatable-active button:hover {
-    background: #2563eb !important;
-    color: white !important;
-    box-shadow: 0 0 0 4px #dbeafe !important;
+    background: #000000 !important;
+    border-color: #000000 !important;
+    color: #ffffff !important;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.2) !important;
 }
 
 .datatable-pagination .datatable-hidden {
@@ -546,27 +546,7 @@ table {
     background: transparent !important;
 }
 
-.datatable-pagination li:first-child a,
-.datatable-pagination li:first-child button {
-    font-size: 0 !important;
-}
-
-.datatable-pagination li:first-child a::after,
-.datatable-pagination li:first-child button::after {
-    content: "< Previous";
-    font-size: 0.875rem !important;
-}
-
-.datatable-pagination li:last-child a,
-.datatable-pagination li:last-child button {
-    font-size: 0 !important;
-}
-
-.datatable-pagination li:last-child a::after,
-.datatable-pagination li:last-child button::after {
-    content: "Next >";
-    font-size: 0.875rem !important;
-}
+/* Removed legacy pseudo-element text replacers for simple-datatables pagination items. The JavaScript engine now handles full DOM structuring. */
 
 .datatable-input,
 .datatable-selector {

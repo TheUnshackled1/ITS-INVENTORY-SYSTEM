@@ -162,11 +162,151 @@ document.addEventListener('DOMContentLoaded', function() {
     // ─── Initialize SimpleDatatables ─────────────────────────────────────────
     const tableEl = document.getElementById('borrowing-table');
     if (tableEl && window.simpleDatatables) {
-        new window.simpleDatatables.DataTable(tableEl, {
+        // Load ALL rows into DOM at once for custom pagination engine
+        const dataTable = new window.simpleDatatables.DataTable(tableEl, {
             searchable: false,
-            perPage: 15,
-            perPageSelect: [10, 15, 20, 50, 100],
-            sortable: false
+            sortable: false,
+            fixedHeight: false,
+            perPageSelect: false,
+            perPage: 100000,
+        });
+
+        // ----- Custom Pagination Engine -----
+        const PAGE_SIZE = 15;
+        let currentPage = 1;
+
+        function getAllRows() {
+            const tbody = tableEl.querySelector("tbody");
+            return tbody ? Array.from(tbody.querySelectorAll("tr:not(.no-results-row)")) : [];
+        }
+
+        function renderPage() {
+            const all = getAllRows();
+            all.forEach(r => r.style.display = "none");
+
+            let activeRows = all;
+            if (activeRows.length === 0) {
+                let noRow = tableEl.querySelector(".no-results-row");
+                if (!noRow) {
+                    noRow = document.createElement("tr");
+                    noRow.className = "no-results-row";
+                    const colCount = tableEl.querySelectorAll("thead th").length;
+                    noRow.innerHTML = `<td colspan="${colCount}" class="text-center py-8 text-slate-400 text-sm font-medium">No results found</td>`;
+                    const tbody = tableEl.querySelector("tbody");
+                    if (tbody) tbody.appendChild(noRow);
+                }
+                noRow.style.display = "";
+            } else {
+                const noRow = tableEl.querySelector(".no-results-row");
+                if (noRow) noRow.remove();
+
+                const start = (currentPage - 1) * PAGE_SIZE;
+                activeRows.slice(start, start + PAGE_SIZE).forEach(r => r.style.display = "");
+            }
+            renderPagination(activeRows);
+        }
+
+        function renderPagination(activeRows) {
+            const bottomBar = tableEl.closest('.datatable-wrapper') ? tableEl.closest('.datatable-wrapper').querySelector('.datatable-bottom') : document.querySelector(".datatable-bottom");
+            if (!bottomBar) return;
+
+            const totalRows = activeRows.length;
+            const totalPages = Math.ceil(totalRows / PAGE_SIZE);
+            const start = totalRows === 0 ? 0 : (currentPage - 1) * PAGE_SIZE + 1;
+            const end = Math.min(currentPage * PAGE_SIZE, totalRows);
+
+            let pagesHtml = '';
+            let pageNumbers = [];
+            
+            if (totalPages <= 7) {
+                for (let i = 1; i <= totalPages; i++) pageNumbers.push(i);
+            } else {
+                if (currentPage <= 4) {
+                    pageNumbers = [1, 2, 3, 4, 5, '...', totalPages];
+                } else if (currentPage >= totalPages - 3) {
+                    pageNumbers = [1, '...', totalPages - 4, totalPages - 3, totalPages - 2, totalPages - 1, totalPages];
+                } else {
+                    pageNumbers = [1, '...', currentPage - 1, currentPage, currentPage + 1, '...', totalPages];
+                }
+            }
+            
+            pageNumbers.forEach(p => {
+                if (p === '...') {
+                    pagesHtml += `
+                      <li class="datatable-pagination-list-item pointer-events-none">
+                        <button class="datatable-pagination-list-item-link" style="background:transparent; border:none; box-shadow:none; color:#64748b; font-weight:bold;">&hellip;</button>
+                      </li>`;
+                } else {
+                    let activeStyle = p === currentPage ? 'style="background-color: #0f172a !important; color: white !important; border-color: #0f172a !important;"' : '';
+                    pagesHtml += `
+                      <li class="datatable-pagination-list-item ${p === currentPage ? "datatable-active" : ""}">
+                        <button data-page="${p}" class="datatable-pagination-list-item-link" ${activeStyle}>${p}</button>
+                      </li>`;
+                }
+            });
+
+            const formattedTotal = totalRows.toLocaleString();
+
+            bottomBar.innerHTML = `
+              <div class="datatable-info shrink-0 text-slate-700 font-medium tracking-wide" style="font-size:0.875rem">${start}-${end} of ${formattedTotal}</div>
+              
+              <nav class="datatable-pagination flex-1 flex justify-center">
+                <ul class="datatable-pagination-list" style="display:flex; align-items:center; gap:0.25rem;">
+                  <li class="datatable-pagination-list-item ${currentPage === 1 ? "datatable-disabled opacity-50 pointer-events-none" : ""}">
+                    <button data-page="${currentPage - 1}" class="datatable-pagination-list-item-link" style="display:flex; align-items:center; gap:0.25rem;">&lsaquo; Back</button>
+                  </li>
+                  ${pagesHtml}
+                  <li class="datatable-pagination-list-item ${currentPage === totalPages || totalPages === 0 ? "datatable-disabled opacity-50 pointer-events-none" : ""}">
+                    <button data-page="${currentPage + 1}" class="datatable-pagination-list-item-link" style="display:flex; align-items:center; gap:0.25rem;">Next &rsaquo;</button>
+                  </li>
+                </ul>
+              </nav>
+
+              <div class="datatable-jump shrink-0 flex items-center gap-2">
+                <span class="text-sm font-medium text-slate-700">Page</span>
+                <input type="number" min="1" max="${totalPages}" value="${currentPage}" class="dt-jump-input w-16 text-center border-slate-300 rounded focus:border-blue-600 focus:ring-1 focus:ring-blue-600 h-[38px] text-sm font-bold text-slate-800 shadow-sm" style="padding-top:0; padding-bottom:0;" />
+                <button type="button" class="dt-jump-btn font-extrabold text-sm text-slate-900 bg-white hover:bg-slate-50 border border-slate-200 shadow-sm rounded px-3 h-[38px] transition-colors">Go</button>
+              </div>
+            `;
+
+            bottomBar.querySelectorAll("button[data-page]").forEach(btn => {
+              btn.addEventListener("click", function () {
+                const page = parseInt(this.dataset.page);
+                if (page < 1 || page > totalPages) return;
+                currentPage = page;
+                renderPage();
+                tableEl.closest("section")?.scrollIntoView({ behavior: "smooth", block: "start" });
+              });
+            });
+            
+            const jumpBtn = bottomBar.querySelector(".dt-jump-btn");
+            const jumpInput = bottomBar.querySelector(".dt-jump-input");
+            if (jumpBtn && jumpInput) {
+                const doJump = () => {
+                    let page = parseInt(jumpInput.value);
+                    if (!isNaN(page)) {
+                       if (page < 1) page = 1;
+                       if (page > totalPages) page = totalPages;
+                       if (page !== currentPage) {
+                          currentPage = page;
+                          renderPage();
+                          tableEl.closest("section")?.scrollIntoView({ behavior: "smooth", block: "start" });
+                       }
+                    }
+                };
+                jumpBtn.addEventListener("click", doJump);
+                jumpInput.addEventListener("keydown", (e) => {
+                    if (e.key === 'Enter') {
+                        e.preventDefault();
+                        doJump();
+                    }
+                });
+            }
+        }
+        
+        // Let Simple Datatables build the DOM, then render our engine immediately
+        dataTable.on('datatable.init', () => {
+            renderPage();
         });
     }
 });
