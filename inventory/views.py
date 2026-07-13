@@ -215,9 +215,24 @@ def inventory_list(request):
     )
     overall_pks = overall_qs.order_by('sort_item_type', 'serial_number', 'pk').values_list('pk', flat=True)
     pk_to_no = {pk: i + 1 for i, pk in enumerate(overall_pks)}
-    inventory_items = list(inventory_items)
-    for item in inventory_items:
-        item.original_no = pk_to_no.get(item.pk, '')
+    inventory_data = list(inventory_items.values(
+        'pk', 'item_type', 'item_description', 'brand', 'model',
+        'serial_number', 'quantity', 'date_inventory', 'date_disposal',
+        'location', 'status', 'defect_description'
+    ))
+    for item in inventory_data:
+        item['original_no'] = pk_to_no.get(item['pk'], '')
+        
+        # Keep raw ISO strings strictly for sorting/data-attributes
+        item['date_inventory_raw'] = item['date_inventory'].strftime('%Y-%m-%d') if item['date_inventory'] else ''
+        item['date_disposal_raw'] = item['date_disposal'].strftime('%Y-%m-%d') if item['date_disposal'] else ''
+        
+        # Pre-format the UI display string safely circumventing local JS Date() clock drift
+        item['date_inventory_ui'] = item['date_inventory'].strftime('%b %d, %Y') if item['date_inventory'] else '-'
+        item['date_disposal_ui'] = item['date_disposal'].strftime('%b %d, %Y') if item['date_disposal'] else '-'
+        
+        # Serialize status display manually
+        item['get_status_display'] = dict(Inventory.STATUS_CHOICES).get(item['status'], item['status'].replace("_", " ").title())
     distinct_item_types = get_distinct_text_values(Inventory.objects.all(), 'item_type', 'trimmed_item_type')
     distinct_locations = get_distinct_text_values(Inventory.objects.all(), 'location', 'trimmed_location')
     distinct_status_values = [
@@ -253,7 +268,7 @@ def inventory_list(request):
         request,
         'inventory.html',
         {
-            'inventory_items': inventory_items,
+            'inventory_data': inventory_data,
             'stats': stats,
             'distinct_item_types': distinct_item_types,
             'distinct_locations': distinct_locations,
@@ -443,10 +458,18 @@ def upload_excel(request):
                             qty = 1
                         status_raw = str(get_row_value(row, 9, 'available')).lower().strip()
                         status = 'available'
-                        if 'working' in status_raw or 'use' in status_raw or 'available' in status_raw:
+                        if 'not working' in status_raw or 'not_working' in status_raw:
+                            status = 'not_working'
+                        elif 'working' in status_raw or 'available' in status_raw:
                             status = 'available'
+                        elif 'use' in status_raw:
+                            status = 'in_use'
                         elif 'defective' in status_raw or 'repair' in status_raw or 'defect' in status_raw:
                             status = 'repair'
+                        elif 'disposed' in status_raw:
+                            status = 'disposed'
+                        elif 'lost' in status_raw:
+                            status = 'lost'
                         serial = str(get_row_value(row, 4, '')).strip()
                         if serial.lower() in ('none', 'n/a', '-', ''):
                             serial = None
@@ -480,10 +503,18 @@ def upload_excel(request):
                             qty = 1
                         status_raw = str(get_row_value(row, 9, 'available')).lower().strip()
                         status = 'available'
-                        if 'working' in status_raw or 'use' in status_raw or 'available' in status_raw:
+                        if 'not working' in status_raw or 'not_working' in status_raw:
+                            status = 'not_working'
+                        elif 'working' in status_raw or 'available' in status_raw:
                             status = 'available'
+                        elif 'use' in status_raw:
+                            status = 'in_use'
                         elif 'defective' in status_raw or 'repair' in status_raw or 'defect' in status_raw:
                             status = 'repair'
+                        elif 'disposed' in status_raw:
+                            status = 'disposed'
+                        elif 'lost' in status_raw:
+                            status = 'lost'
                         serial = str(get_row_value(row, 4, '')).strip()
                         if serial.lower() in ('none', 'n/a', '-', ''):
                             serial = None
@@ -562,7 +593,7 @@ def upload_excel(request):
 @login_required
 def activity_log(request):
     search_query = request.GET.get("q", "").strip()
-    logs = AuditLog.objects.all()
+    logs = AuditLog.objects.order_by('-pk')
     if search_query:
         logs = logs.filter(
             Q(item_type__icontains=search_query) |

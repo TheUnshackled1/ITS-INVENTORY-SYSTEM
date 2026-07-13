@@ -18,6 +18,9 @@
 </head>
 
 <body class="min-h-screen font-sans text-slate-900 antialiased">
+  {% if inventory_data %}
+  {{ inventory_data|json_script:"inventory-data" }}
+  {% endif %}
   <div class="app-shell">
     <aside class="sidebar">
       <!-- Floating Sidebar Toggle Button -->
@@ -330,7 +333,7 @@
             </form>
           </div>
           <hr class="border-slate-200" />
-          {% if inventory_items %}
+          {% if inventory_data %}
           <div class="overflow-hidden">
             <table id="inventory-table" class="w-full text-sm text-slate-700 whitespace-nowrap">
               <thead class="bg-slate-50 text-xs uppercase tracking-[0.18em] text-slate-500">
@@ -373,85 +376,8 @@
                   </th>
                 </tr>
               </thead>
-              <tbody class="divide-y divide-slate-200 bg-white">
-                {% for item in inventory_items %}
-                <tr class="inventory-row transition-colors hover:bg-slate-50/80 cursor-pointer"
-                    data-id="{{ item.pk }}"
-                    data-type="{{ item.item_type|default_if_none:'' }}"
-                    data-desc="{{ item.item_description|default_if_none:'' }}"
-                    data-brand="{{ item.brand|default_if_none:'' }}"
-                    data-model="{{ item.model|default_if_none:'' }}"
-                    data-serial="{{ item.serial_number|default_if_none:'' }}"
-                    data-qty="{{ item.quantity }}"
-                    data-invdate="{{ item.date_inventory|date:'Y-m-d' }}"
-                    data-dispdate="{{ item.date_disposal|date:'Y-m-d' }}"
-                    data-location="{{ item.location|default_if_none:'' }}"
-                    data-status="{{ item.status }}"
-                    data-defect="{{ item.defect_description|default_if_none:'' }}">
-                  <td class="px-2 py-2 align-middle font-semibold text-slate-900 text-xs">
-                    {{ item.original_no }}
-                  </td>
-                  <td class="px-2 py-2 align-middle text-xs font-semibold leading-tight text-slate-900">
-                    {% firstof item.item_type "-" %}
-                  </td>
-                  <td class="px-2 py-2 align-middle text-xs text-slate-600" title="{{ item.item_description }}">
-                    <span class="block w-full text-center">
-                      {% firstof item.item_description "-" %}
-                    </span>
-                  </td>
-                  <td class="px-2 py-2 align-middle text-xs font-medium text-slate-800">
-                    <span class="block w-full text-center">
-                      {% firstof item.brand "-" %}
-                    </span>
-                  </td>
-                  <td class="px-2 py-2 align-middle text-xs font-medium text-slate-800">
-                    <span class="block w-full text-center">
-                      {% firstof item.model "-" %}
-                    </span>
-                  </td>
-                  <td class="px-2 py-2 align-middle font-mono text-[11px] text-slate-700"
-                    title="{{ item.serial_number }}">
-                    {% firstof item.serial_number "-" %}
-                  </td>
-                  <td class="px-2 py-2 align-middle text-xs font-semibold text-slate-900">
-                    {% firstof item.quantity "-" %}
-                  </td>
-                  <td class="px-2 py-2 align-middle text-xs text-slate-700">
-                    {{ item.date_inventory|date:"M d, Y" }}
-                  </td>
-                  <td class="px-2 py-2 align-middle text-xs text-slate-700">
-                    {{ item.date_disposal|date:"M d, Y"|default:"-" }}
-                  </td>
-                  <td class="px-2 py-2 align-middle text-center text-xs text-slate-700" title="{{ item.location }}">
-                    {% firstof item.location "-" %}
-                  </td>
-                  <td class="px-2 py-2 align-middle text-center">
-                    {% if item.status == 'available' %}
-                    <span class="inline-flex justify-center flex-shrink-0 items-center gap-1.5 w-28 px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider text-emerald-600">
-                      <svg class="h-1.5 w-1.5 fill-emerald-600" viewBox="0 0 6 6" aria-hidden="true"><circle cx="3" cy="3" r="3" /></svg>{{ item.get_status_display }}
-                    </span>
-                    {% elif item.status == 'in_use' %}
-                    <span class="inline-flex justify-center flex-shrink-0 items-center gap-1.5 w-max px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider text-sky-600">
-                      <svg class="h-1.5 w-1.5 flex-shrink-0 fill-current" viewBox="0 0 6 6" aria-hidden="true"><circle cx="3" cy="3" r="3" /></svg>{{ item.get_status_display }}
-                    </span>
-                    {% elif item.status == 'repair' %}
-                    <span class="inline-flex justify-center flex-shrink-0 items-center gap-1.5 w-max px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider text-amber-500">
-                      <svg class="h-1.5 w-1.5 flex-shrink-0 fill-current" viewBox="0 0 6 6" aria-hidden="true"><circle cx="3" cy="3" r="3" /></svg>{{ item.get_status_display }}
-                    </span>
-                    {% else %}
-                    <span class="inline-flex justify-center flex-shrink-0 items-center gap-1.5 w-max px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider text-rose-600">
-                      <svg class="h-1.5 w-1.5 flex-shrink-0 fill-current" viewBox="0 0 6 6" aria-hidden="true"><circle cx="3" cy="3" r="3" /></svg>{{ item.get_status_display }}
-                    </span>
-                    {% endif %}
-                  </td>
-                  <td class="px-2 py-2 align-middle text-xs text-slate-600" title="{{ item.defect_description }}">
-                    {% if item.defect_description %} {{ item.defect_description }}
-                    {% else %}
-                    <span class="text-slate-400">-</span>
-                    {% endif %}
-                  </td>
-                </tr>
-                {% endfor %}
+              <tbody id="inventory-tbody" class="divide-y divide-slate-200 bg-white">
+                <!-- Javascript will inject high-performance templated rows here asynchronously -->
               </tbody>
             </table>
           </div>

@@ -69,6 +69,87 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
+  // JSON-based Bulk Rendering Logic
+  const jsonDataElement = document.getElementById("inventory-data");
+  const tbodyElement = document.getElementById("inventory-tbody");
+
+  if (jsonDataElement && tbodyElement) {
+    try {
+      const inventoryData = JSON.parse(jsonDataElement.textContent);
+      let htmlRows = [];
+      const len = inventoryData.length;
+      
+      const escapeHtml = (unsafe) => {
+        if (unsafe === null || unsafe === undefined || unsafe === '') return '';
+        return String(unsafe)
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#039;");
+      };
+      
+      for (let i = 0; i < len; i++) {
+        const item = inventoryData[i];
+        
+        let statusBadge = "";
+        let statusValue = item.status || "available";
+        let displayStatus = item.get_status_display || statusValue.toUpperCase();
+        
+        if (statusValue === 'available') {
+            statusBadge = `<span class="inline-flex justify-center flex-shrink-0 items-center gap-1.5 w-28 px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider text-emerald-600">
+                <svg class="h-1.5 w-1.5 fill-emerald-600" viewBox="0 0 6 6" aria-hidden="true"><circle cx="3" cy="3" r="3" /></svg>${displayStatus}
+            </span>`;
+        } else if (statusValue === 'in_use') {
+            statusBadge = `<span class="inline-flex justify-center flex-shrink-0 items-center gap-1.5 w-max px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider text-sky-600">
+                <svg class="h-1.5 w-1.5 flex-shrink-0 fill-current" viewBox="0 0 6 6" aria-hidden="true"><circle cx="3" cy="3" r="3" /></svg>${displayStatus}
+            </span>`;
+        } else if (statusValue === 'repair') {
+            statusBadge = `<span class="inline-flex justify-center flex-shrink-0 items-center gap-1.5 w-max px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider text-amber-500">
+                <svg class="h-1.5 w-1.5 flex-shrink-0 fill-current" viewBox="0 0 6 6" aria-hidden="true"><circle cx="3" cy="3" r="3" /></svg>${displayStatus}
+            </span>`;
+        } else {
+            statusBadge = `<span class="inline-flex justify-center flex-shrink-0 items-center gap-1.5 w-max px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider text-rose-600">
+                <svg class="h-1.5 w-1.5 flex-shrink-0 fill-current" viewBox="0 0 6 6" aria-hidden="true"><circle cx="3" cy="3" r="3" /></svg>${displayStatus}
+            </span>`;
+        }
+
+        let defectBadge = item.defect_description ? item.defect_description : `<span class="text-slate-400">-</span>`;
+        htmlRows.push(`
+          <tr class="inventory-row transition-colors hover:bg-slate-50/80 cursor-pointer"
+              data-id="${item.pk}"
+              data-type="${escapeHtml(item.item_type)}"
+              data-desc="${escapeHtml(item.item_description)}"
+              data-brand="${escapeHtml(item.brand)}"
+              data-model="${escapeHtml(item.model)}"
+              data-serial="${escapeHtml(item.serial_number)}"
+              data-qty="${item.quantity !== null ? escapeHtml(item.quantity) : 1}"
+              data-invdate="${escapeHtml(item.date_inventory_raw)}"
+              data-dispdate="${escapeHtml(item.date_disposal_raw)}"
+              data-location="${escapeHtml(item.location)}"
+              data-status="${escapeHtml(statusValue)}"
+              data-defect="${escapeHtml(item.defect_description)}">
+            <td class="px-2 py-2 align-middle font-semibold text-slate-900 text-xs">${escapeHtml(item.original_no)}</td>
+            <td class="px-2 py-2 align-middle text-xs font-semibold leading-tight text-slate-900">${escapeHtml(item.item_type) || "-"}</td>
+            <td class="px-2 py-2 align-middle text-xs text-slate-600" title="${escapeHtml(item.item_description)}"><span class="block w-full text-center">${escapeHtml(item.item_description) || "-"}</span></td>
+            <td class="px-2 py-2 align-middle text-xs font-medium text-slate-800"><span class="block w-full text-center">${escapeHtml(item.brand) || "-"}</span></td>
+            <td class="px-2 py-2 align-middle text-xs font-medium text-slate-800"><span class="block w-full text-center">${escapeHtml(item.model) || "-"}</span></td>
+            <td class="px-2 py-2 align-middle font-mono text-[11px] text-slate-700" title="${escapeHtml(item.serial_number)}">${escapeHtml(item.serial_number) || "-"}</td>
+            <td class="px-2 py-2 align-middle text-xs font-semibold text-slate-900">${item.quantity !== null ? escapeHtml(item.quantity) : "-"}</td>
+            <td class="px-2 py-2 align-middle text-xs text-slate-700">${item.date_inventory_ui}</td>
+            <td class="px-2 py-2 align-middle text-xs text-slate-700">${item.date_disposal_ui}</td>
+            <td class="px-2 py-2 align-middle text-center text-xs text-slate-700" title="${escapeHtml(item.location)}">${escapeHtml(item.location) || "-"}</td>
+            <td class="px-2 py-2 align-middle text-center">${statusBadge}</td>
+            <td class="px-2 py-2 align-middle text-xs text-slate-600" title="${escapeHtml(item.defect_description)}">${defectBadge}</td>
+          </tr>
+        `);
+      }
+      tbodyElement.innerHTML = htmlRows.join("");
+    } catch (e) {
+      console.error("Failed to parse inventory JSON:", e);
+    }
+  }
+
   // DataTable Logic
   const dataTablesElements = document.querySelectorAll("#inventory-table, #activity-log-table");
   
