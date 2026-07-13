@@ -153,19 +153,33 @@
                   </td>
                   <td class="px-2 py-2 align-middle text-center font-medium">
                     {% if log.action == 'added' %}
-                      <span class="inline-flex justify-center items-center w-24 rounded-lg bg-emerald-600 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-white shadow-sm shadow-emerald-600/20">Added</span>
+                      <span class="inline-flex justify-center flex-shrink-0 items-center gap-1.5 w-max px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider text-emerald-600">
+                        <svg class="h-1.5 w-1.5 flex-shrink-0 fill-current" viewBox="0 0 6 6" aria-hidden="true"><circle cx="3" cy="3" r="3" /></svg>Added
+                      </span>
                     {% elif log.action == 'edited' %}
-                      <span class="inline-flex justify-center items-center w-24 rounded-lg bg-blue-600 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-white shadow-sm shadow-blue-600/20">Edited</span>
+                      <span class="inline-flex justify-center flex-shrink-0 items-center gap-1.5 w-max px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider text-blue-600">
+                        <svg class="h-1.5 w-1.5 flex-shrink-0 fill-current" viewBox="0 0 6 6" aria-hidden="true"><circle cx="3" cy="3" r="3" /></svg>Edited
+                      </span>
                     {% elif log.action == 'deleted' %}
-                      <span class="inline-flex justify-center items-center w-24 rounded-lg bg-rose-600 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-white shadow-sm shadow-rose-600/20">Deleted</span>
+                      <span class="inline-flex justify-center flex-shrink-0 items-center gap-1.5 w-max px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider text-rose-600">
+                        <svg class="h-1.5 w-1.5 flex-shrink-0 fill-current" viewBox="0 0 6 6" aria-hidden="true"><circle cx="3" cy="3" r="3" /></svg>Deleted
+                      </span>
                     {% elif log.action == 'uploaded' %}
-                      <span class="inline-flex justify-center items-center w-24 rounded-lg bg-teal-600 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-white shadow-sm shadow-teal-600/20">Uploaded</span>
+                      <span class="inline-flex justify-center flex-shrink-0 items-center gap-1.5 w-max px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider text-teal-600">
+                        <svg class="h-1.5 w-1.5 flex-shrink-0 fill-current" viewBox="0 0 6 6" aria-hidden="true"><circle cx="3" cy="3" r="3" /></svg>Uploaded
+                      </span>
                     {% elif log.action == 'borrowed' %}
-                      <span class="inline-flex justify-center items-center w-24 rounded-lg bg-sky-600 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-white shadow-sm shadow-sky-600/20">Borrowed</span>
+                      <span class="inline-flex justify-center flex-shrink-0 items-center gap-1.5 w-max px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider text-sky-600">
+                        <svg class="h-1.5 w-1.5 flex-shrink-0 fill-current" viewBox="0 0 6 6" aria-hidden="true"><circle cx="3" cy="3" r="3" /></svg>Borrowed
+                      </span>
                     {% elif log.action == 'returned' %}
-                      <span class="inline-flex justify-center items-center w-24 rounded-lg bg-slate-500 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-white shadow-sm shadow-slate-500/20">Returned</span>
+                      <span class="inline-flex justify-center flex-shrink-0 items-center gap-1.5 w-max px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider text-slate-500">
+                        <svg class="h-1.5 w-1.5 flex-shrink-0 fill-current" viewBox="0 0 6 6" aria-hidden="true"><circle cx="3" cy="3" r="3" /></svg>Returned
+                      </span>
                     {% else %}
-                      <span class="inline-flex justify-center items-center w-24 rounded-lg bg-slate-600 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-white shadow-sm shadow-slate-600/20">{{ log.action }}</span>
+                      <span class="inline-flex justify-center flex-shrink-0 items-center gap-1.5 w-max px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider text-slate-600">
+                        <svg class="h-1.5 w-1.5 flex-shrink-0 fill-current" viewBox="0 0 6 6" aria-hidden="true"><circle cx="3" cy="3" r="3" /></svg>{{ log.action }}
+                      </span>
                     {% endif %}
                   </td>
                   <td class="px-2 py-2 align-middle text-center text-xs text-slate-700 font-mono tracking-tight">

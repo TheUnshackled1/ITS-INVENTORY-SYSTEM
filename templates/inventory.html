@@ -422,8 +422,8 @@
                   </td>
                   <td class="px-2 py-2 align-middle text-center">
                     {% if item.status == 'available' %}
-                    <span class="inline-flex justify-center flex-shrink-0 items-center gap-1.5 w-max px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider text-emerald-600">
-                      <svg class="h-1.5 w-1.5 flex-shrink-0 fill-current" viewBox="0 0 6 6" aria-hidden="true"><circle cx="3" cy="3" r="3" /></svg>{{ item.get_status_display }}
+                    <span class="inline-flex justify-center flex-shrink-0 items-center gap-1.5 w-28 px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider text-emerald-600">
+                      <svg class="h-1.5 w-1.5 fill-emerald-600" viewBox="0 0 6 6" aria-hidden="true"><circle cx="3" cy="3" r="3" /></svg>{{ item.get_status_display }}
                     </span>
                     {% elif item.status == 'in_use' %}
                     <span class="inline-flex justify-center flex-shrink-0 items-center gap-1.5 w-max px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider text-sky-600">
