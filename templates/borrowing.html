@@ -306,21 +306,22 @@
   <div id="returnConditionModalOverlay" style="display: none;" class="fixed inset-0 z-[350] flex items-center justify-center bg-slate-900/60 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300">
     <div id="returnConditionModalCard" class="relative w-full max-w-[380px] bg-white rounded-3xl shadow-2xl overflow-hidden transform scale-95 opacity-0 transition-all duration-300 ease-out mx-4">
       <!-- Top Amber Header -->
-      <div class="bg-amber-500 px-6 py-3 flex flex-col items-center justify-center text-white">
-        <div class="w-9 h-9 rounded-full border-2 border-white flex items-center justify-center mb-1.5 shadow-sm">
-          <svg class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+      <div class="bg-amber-500 px-6 pt-7 pb-6 flex flex-col items-center justify-center text-white">
+        <div class="w-12 h-12 rounded-full border-[2.5px] border-white flex items-center justify-center mb-3 shadow-sm">
+          <svg class="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
             <path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6M9 16h6" />
           </svg>
         </div>
-        <h3 class="text-[13px] font-extrabold tracking-[0.25em] uppercase drop-shadow-sm text-center">Return Item</h3>
-        <p id="returnConditionSubtitle" class="text-white/80 text-[11px] mt-0.5 font-medium text-center"></p>
+        <h3 class="text-[14px] font-extrabold tracking-[0.25em] uppercase drop-shadow-sm text-center">Return Item</h3>
+        <p id="returnConditionSubtitle" class="text-white text-[12px] mt-1 font-semibold text-center"></p>
       </div>
       <!-- Body -->
-      <div class="px-6 py-5 bg-white flex flex-col gap-4">
+      <div class="px-6 py-7 bg-white flex flex-col gap-5">
         <!-- Status Dropdown -->
         <div>
-          <label class="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-1.5">Item Condition *</label>
-          <select id="returnConditionStatus" class="w-full bg-white border-2 border-slate-200 rounded-xl px-3 py-2.5 text-sm font-semibold text-slate-800 focus:outline-none focus:border-amber-400 focus:ring-2 focus:ring-amber-400/30 transition-all cursor-pointer">
+          <label class="block text-[11px] font-bold text-slate-400 uppercase tracking-widest mb-2">Item Condition *</label>
+          <select id="returnConditionStatus" class="w-full bg-white border border-slate-300 rounded-xl px-4 py-3 text-sm font-semibold text-slate-800 focus:outline-none focus:border-amber-400 focus:ring-4 focus:ring-amber-400/20 transition-all cursor-pointer shadow-sm">
             <option value="available">&#9989; Available — Good condition</option>
             <option value="repair">&#128295; Under Repair — Needs fixing</option>
             <option value="not_working">&#10060; Not Working — Defective</option>
@@ -330,15 +331,15 @@
         </div>
         <!-- Notes -->
         <div>
-          <label class="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-1.5">Notes <span class="normal-case font-normal text-slate-400">(optional)</span></label>
-          <textarea id="returnConditionNotes" rows="2" class="w-full bg-white border-2 border-slate-200 rounded-xl px-3 py-2 text-sm font-medium text-slate-800 placeholder-slate-400 resize-none focus:outline-none focus:border-amber-400 focus:ring-2 focus:ring-amber-400/30 transition-all" placeholder="e.g. Screen cracked, charger missing..."></textarea>
+          <label class="block text-[11px] font-bold text-slate-400 uppercase tracking-widest mb-2">Notes <span class="normal-case font-normal text-slate-400">(optional)</span></label>
+          <textarea id="returnConditionNotes" rows="2" class="w-full bg-white border border-slate-300 rounded-xl px-4 py-3 text-sm font-medium text-slate-800 placeholder-slate-400 resize-none focus:outline-none focus:border-amber-400 focus:ring-4 focus:ring-amber-400/20 transition-all shadow-sm" placeholder="e.g. Screen cracked, charger missing..."></textarea>
         </div>
         <!-- Buttons -->
-        <div class="flex gap-3 pt-1">
-          <button type="button" id="cancelConditionBtn" class="flex-1 rounded-xl bg-red-600 py-2.5 text-sm font-bold text-white transition-all shadow-sm hover:shadow-md hover:bg-red-700 hover:-translate-y-0.5 focus:outline-none focus:ring-4 focus:ring-red-600/30">
+        <div class="flex gap-3 mt-2">
+          <button type="button" id="cancelConditionBtn" class="flex-1 rounded-xl bg-[#dc2626] py-3 text-[13px] font-extrabold text-white transition-all shadow-sm hover:shadow-md hover:bg-red-700 hover:-translate-y-0.5 focus:outline-none focus:ring-4 focus:ring-red-600/30">
             Cancel
           </button>
-          <button type="button" id="nextConditionBtn" class="flex-1 rounded-xl bg-amber-500 py-2.5 text-sm font-bold text-white transition-all shadow-sm hover:shadow-md hover:bg-amber-600 hover:-translate-y-0.5 focus:outline-none focus:ring-4 focus:ring-amber-500/30">
+          <button type="button" id="nextConditionBtn" class="flex-1 rounded-xl bg-amber-500 py-3 text-[13px] font-extrabold text-white transition-all shadow-sm hover:shadow-md hover:bg-amber-600 hover:-translate-y-0.5 focus:outline-none focus:ring-4 focus:ring-amber-400/30">
             Next &#8594;
           </button>
         </div>
@@ -348,31 +349,31 @@
 
   <!-- Return Confirmation Modal (Step 2) -->
   <div id="returnConfirmModalOverlay" style="display: none;" class="fixed inset-0 z-[300] flex items-center justify-center bg-slate-900/60 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300">
-    <div id="returnConfirmModalCard" class="relative w-full max-w-[340px] bg-white rounded-3xl shadow-2xl overflow-hidden transform scale-95 opacity-0 transition-all duration-300 ease-out">
+    <div id="returnConfirmModalCard" class="relative w-full max-w-[340px] bg-white rounded-3xl shadow-2xl overflow-hidden transform scale-95 opacity-0 transition-all duration-300 ease-out mx-4">
       <!-- Top Emerald Half -->
-      <div class="bg-emerald-600 px-6 py-2.5 flex flex-col items-center justify-center text-white">
+      <div class="bg-emerald-600 px-6 pt-7 pb-6 flex flex-col items-center justify-center text-white">
         <!-- Check Icon -->
-        <div class="w-9 h-9 rounded-full border-2 border-white flex items-center justify-center mb-1.5 shadow-sm">
-          <svg class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+        <div class="w-12 h-12 rounded-full border-[2.5px] border-white flex items-center justify-center mb-3 shadow-sm">
+          <svg class="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
           </svg>
         </div>
-        <h3 class="text-[13px] font-extrabold tracking-[0.25em] uppercase drop-shadow-sm text-center">Confirm Return</h3>
+        <h3 class="text-[14px] font-extrabold tracking-[0.25em] uppercase drop-shadow-sm text-center">Confirm Return</h3>
       </div>
       <!-- Bottom White Half -->
-      <div class="px-6 py-6 text-center bg-white flex flex-col items-center">
-        <div class="w-full bg-slate-50 rounded-xl border border-slate-100 p-4 mb-4 shadow-sm">
+      <div class="px-6 py-7 text-center bg-white flex flex-col items-center">
+        <div class="w-full bg-slate-50 rounded-xl border border-slate-100 p-5 mb-5 shadow-sm">
           <p id="returnConfirmText" class="text-[13px] text-slate-800 font-bold leading-relaxed">
             Mark this item as returned?
           </p>
-          <p id="returnConfirmCondition" class="text-[11px] text-slate-500 font-medium mt-1.5"></p>
+          <p id="returnConfirmCondition" class="text-[11px] text-slate-500 font-semibold mt-2"></p>
         </div>
         <input type="hidden" id="returnIssuanceId" value="" />
-        <div class="flex gap-3 w-full">
-          <button type="button" id="cancelReturnBtn" class="flex-1 rounded-xl bg-red-600 py-2.5 text-sm font-bold text-white transition-all shadow-[0_8px_20px_rgba(220,38,38,0.4)] hover:shadow-[0_12px_25px_rgba(220,38,38,0.5)] hover:-translate-y-0.5 hover:bg-red-700 focus:outline-none focus:ring-4 focus:ring-red-600/30">
+        <div class="flex gap-3 w-full mt-1">
+          <button type="button" id="cancelReturnBtn" class="flex-1 rounded-xl bg-red-600 py-3 text-[13px] font-extrabold text-white transition-all shadow-sm hover:shadow-md hover:-translate-y-0.5 hover:bg-red-700 focus:outline-none focus:ring-4 focus:ring-red-600/30">
             Cancel
           </button>
-          <button type="button" id="confirmReturnBtn" class="flex-1 rounded-xl bg-emerald-600 py-2.5 text-sm font-bold text-white transition-all shadow-sm hover:shadow-md hover:bg-emerald-700 hover:-translate-y-0.5 focus:outline-none focus:ring-4 focus:ring-emerald-600/30">
+          <button type="button" id="confirmReturnBtn" class="flex-1 rounded-xl bg-emerald-600 py-3 text-[13px] font-extrabold text-white transition-all shadow-sm hover:shadow-md hover:bg-emerald-700 hover:-translate-y-0.5 focus:outline-none focus:ring-4 focus:ring-emerald-600/30">
             Return
           </button>
         </div>
