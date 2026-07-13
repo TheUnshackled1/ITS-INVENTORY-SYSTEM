@@ -322,11 +322,11 @@
         <div>
           <label class="block text-[11px] font-bold text-slate-400 uppercase tracking-wide mb-0.5">Item Condition *</label>
           <select id="returnConditionStatus" class="w-full bg-white border border-slate-300 rounded-xl px-4 py-3 text-sm font-semibold text-slate-800 focus:outline-none focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/20 transition-all cursor-pointer shadow-sm">
-            <option value="available">&#9989; Available — Good condition</option>
-            <option value="repair">&#128295; Under Repair — Needs fixing</option>
-            <option value="not_working">&#10060; Not Working — Defective</option>
-            <option value="lost">&#9888;&#65039; Lost — Cannot be returned</option>
-            <option value="disposed">&#128465;&#65039; Disposed — Discarded</option>
+            <option value="available">&#9989; Available</option>
+            <option value="repair">&#128295; Under Repair</option>
+            <option value="not_working">&#10060; Not Working</option>
+            <option value="lost">&#9888;&#65039; Lost</option>
+            <option value="disposed">&#128465;&#65039; Disposed</option>
           </select>
         </div>
         <!-- Notes -->
@@ -362,11 +362,11 @@
       </div>
       <!-- Bottom White Half -->
       <div class="px-6 py-7 text-center bg-white flex flex-col items-center">
-        <div class="w-full bg-slate-50 rounded-xl border border-slate-100 p-5 mb-5 shadow-sm">
+        <div class="w-full bg-slate-50 rounded-xl border border-slate-100 p-5 mb-1 shadow-sm">
           <p id="returnConfirmText" class="text-[13px] text-slate-800 font-bold leading-relaxed">
             Mark this item as returned?
           </p>
-          <p id="returnConfirmCondition" class="text-[11px] text-slate-500 font-semibold mt-2"></p>
+          <p id="returnConfirmCondition" class="text-[11px] text-slate-500 font-semibold mt-0.5"></p>
         </div>
         <input type="hidden" id="returnIssuanceId" value="" />
         <div class="flex gap-3 w-full mt-1">
