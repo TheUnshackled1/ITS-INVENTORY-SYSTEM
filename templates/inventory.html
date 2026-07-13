@@ -594,7 +594,7 @@
   </div>
 
   <!-- Delete Confirmation Modal -->
-  <div id="deleteConfirmModalOverlay" style="display: none;" class="fixed inset-0 z-[300] flex items-center justify-center bg-slate-900/60 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300">
+  <div id="deleteConfirmModalOverlay" style="display: none;" class="fixed inset-0 z-[300] flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300">
     <div id="deleteConfirmModalCard" class="relative w-full max-w-[370px] bg-white rounded-3xl shadow-2xl overflow-hidden transform scale-95 opacity-0 transition-all duration-300 ease-out">
       <!-- Top Red Half -->
       <div class="bg-rose-600 px-6 py-2.5 flex flex-col items-center justify-center text-white">
@@ -627,7 +627,7 @@
   </div>
 
   <!-- Borrow Item Modal -->
-  <div id="borrowModalOverlay" style="display: none;" class="fixed inset-0 z-[300] flex items-center justify-center bg-slate-900/60 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300">
+  <div id="borrowModalOverlay" style="display: none;" class="fixed inset-0 z-[300] flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300">
     <div id="borrowModalCard" class="relative w-full max-w-md bg-white rounded-3xl shadow-2xl overflow-hidden transform scale-95 opacity-0 transition-all duration-300 ease-out">
       <!-- Top Blue Half -->
       <div class="bg-blue-600 px-6 py-6 flex flex-col items-center justify-center text-white">
@@ -647,7 +647,7 @@
             <label class="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">Borrower Name *</label>
             <input type="text" id="borrow_borrower_name" class="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-sm text-slate-800 font-medium placeholder-slate-400 focus:outline-none focus:border-slate-900 focus:ring-1 focus:ring-slate-900 transition-all" placeholder="Juan Dela Cruz" required />
           </div>
-          <div class="grid grid-cols-2 gap-3">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div>
               <label class="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">Office / Location *</label>
               <input type="text" id="borrow_office_location" class="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-sm text-slate-800 font-medium placeholder-slate-400 focus:outline-none focus:border-slate-900 focus:ring-1 focus:ring-slate-900 transition-all" placeholder="Room 204" required />
@@ -657,7 +657,7 @@
               <input type="date" id="borrow_expected_return" class="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-sm text-slate-800 font-medium focus:outline-none focus:border-slate-900 focus:ring-1 focus:ring-slate-900 transition-all" required />
             </div>
           </div>
-          <div class="grid grid-cols-2 gap-3">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div>
               <label class="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">Qty to Borrow *</label>
               <input type="number" id="borrow_quantity" min="1" value="1" class="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-sm text-slate-800 font-medium focus:outline-none focus:border-slate-900 focus:ring-1 focus:ring-slate-900 transition-all" required />
@@ -682,7 +682,7 @@
   </div>
 
   <!-- Success Overlay Modal -->
-  <div id="successModalOverlay" style="display: none;" class="fixed inset-0 z-[200] flex items-center justify-center bg-slate-900/60 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300">
+  <div id="successModalOverlay" style="display: none;" class="fixed inset-0 z-[200] flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300">
     <div id="successModalCard" class="relative w-full max-w-[300px] bg-white rounded-3xl shadow-2xl overflow-hidden transform scale-95 opacity-0 transition-all duration-500 ease-out">
       <!-- Top Green Half -->
       <div class="bg-emerald-600 px-4 py-2 flex flex-col items-center justify-center text-white">
@@ -711,7 +711,7 @@
   </div>
 
   <!-- Error Overlay Modal -->
-  <div id="errorModalOverlay" style="display: none;" class="fixed inset-0 z-[200] flex items-center justify-center bg-slate-900/60 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300">
+  <div id="errorModalOverlay" style="display: none;" class="fixed inset-0 z-[200] flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300">
     <div id="errorModalCard" class="relative w-full max-w-[300px] bg-white rounded-3xl shadow-2xl overflow-hidden transform scale-95 opacity-0 transition-all duration-500 ease-out">
       <!-- Top Red Half -->
       <div class="bg-rose-600 px-4 py-2 flex flex-col items-center justify-center text-white">
@@ -744,7 +744,7 @@
   </div>
 
   <!-- Info Overlay Modal -->
-  <div id="infoModalOverlay" style="display: none;" class="fixed inset-0 z-[200] flex items-center justify-center bg-slate-900/60 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300">
+  <div id="infoModalOverlay" style="display: none;" class="fixed inset-0 z-[200] flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300">
     <div id="infoModalCard" class="relative w-full max-w-[300px] bg-white rounded-3xl shadow-2xl overflow-hidden transform scale-95 opacity-0 transition-all duration-500 ease-out">
       <!-- Top Blue Half -->
       <div class="bg-blue-600 px-4 py-2 flex flex-col items-center justify-center text-white">
