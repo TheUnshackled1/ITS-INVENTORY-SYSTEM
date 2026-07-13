@@ -87,9 +87,13 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // ─── Cancel confirm modal ─────────────────────────────────────────────────
+    // ─── Cancel confirm modal ("Back" button) ─────────────────────────────────
     if (cancelReturnBtn) {
-        cancelReturnBtn.addEventListener('click', () => closeModal(returnOverlay, returnCard));
+        cancelReturnBtn.addEventListener('click', () => {
+            closeModal(returnOverlay, returnCard, () => {
+                openModal(conditionOverlay, conditionCard);
+            });
+        });
     }
     if (returnOverlay) {
         returnOverlay.addEventListener('click', (e) => {
