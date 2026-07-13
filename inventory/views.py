@@ -456,9 +456,9 @@ def upload_excel(request):
                             qty = int(qty_value) if qty_value not in ("", None) else 1
                         except (TypeError, ValueError):
                             qty = 1
-                        status_raw = str(get_row_value(row, 9, 'available')).lower().strip()
+                        status_raw = str(get_row_value(row, 9, 'available')).lower().replace("-", " ").replace("_", " ").strip()
                         status = 'available'
-                        if 'not working' in status_raw or 'not_working' in status_raw:
+                        if 'not working' in status_raw:
                             status = 'not_working'
                         elif 'working' in status_raw or 'available' in status_raw:
                             status = 'available'
@@ -501,9 +501,9 @@ def upload_excel(request):
                             qty = int(qty_value) if qty_value not in ("", None) else 1
                         except (TypeError, ValueError):
                             qty = 1
-                        status_raw = str(get_row_value(row, 9, 'available')).lower().strip()
+                        status_raw = str(get_row_value(row, 9, 'available')).lower().replace("-", " ").replace("_", " ").strip()
                         status = 'available'
-                        if 'not working' in status_raw or 'not_working' in status_raw:
+                        if 'not working' in status_raw:
                             status = 'not_working'
                         elif 'working' in status_raw or 'available' in status_raw:
                             status = 'available'

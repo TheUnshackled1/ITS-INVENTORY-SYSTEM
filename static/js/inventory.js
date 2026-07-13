@@ -114,7 +114,7 @@ document.addEventListener("DOMContentLoaded", function () {
             </span>`;
         }
 
-        let defectBadge = item.defect_description ? item.defect_description : `<span class="text-slate-400">-</span>`;
+        let defectBadge = item.defect_description ? escapeHtml(item.defect_description) : `<span class="text-slate-400">-</span>`;
         htmlRows.push(`
           <tr class="inventory-row transition-colors hover:bg-slate-50/80 cursor-pointer"
               data-id="${item.pk}"
@@ -140,7 +140,7 @@ document.addEventListener("DOMContentLoaded", function () {
             <td class="px-2 py-2 align-middle text-xs text-slate-700">${item.date_disposal_ui}</td>
             <td class="px-2 py-2 align-middle text-center text-xs text-slate-700" title="${escapeHtml(item.location)}">${escapeHtml(item.location) || "-"}</td>
             <td class="px-2 py-2 align-middle text-center">${statusBadge}</td>
-            <td class="px-2 py-2 align-middle text-xs text-slate-600" title="${escapeHtml(item.defect_description)}">${defectBadge}</td>
+            <td class="px-2 py-2 align-middle text-xs text-slate-600 uppercase" title="${escapeHtml(item.defect_description)}">${defectBadge}</td>
           </tr>
         `);
       }
