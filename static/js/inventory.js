@@ -171,12 +171,12 @@ document.addEventListener("DOMContentLoaded", function () {
           
           <nav class="datatable-pagination flex-1 flex justify-center">
             <ul class="datatable-pagination-list" style="display:flex; align-items:center; gap:0.25rem;">
-              <li class="datatable-pagination-list-item ${currentPage === 1 ? "datatable-disabled opacity-50 pointer-events-none" : ""}">
-                <button data-page="${currentPage - 1}" class="datatable-pagination-list-item-link" style="display:flex; align-items:center; gap:0.25rem;">&lsaquo; Back</button>
+              <li class="datatable-pagination-list-item ${currentPage === 1 ? "datatable-disabled opacity-50 pointer-events-none" : ""}" style="background: transparent !important; border: none !important; box-shadow: none !important;">
+                <button data-page="${currentPage - 1}" class="datatable-pagination-list-item-link" style="background: transparent !important; border: none !important; box-shadow: none !important; color: #94a3b8 !important;" onmouseover="this.style.color='#0f172a'" onmouseout="this.style.color='#94a3b8'">&lsaquo; Back</button>
               </li>
               ${pagesHtml}
-              <li class="datatable-pagination-list-item ${currentPage === totalPages || totalPages === 0 ? "datatable-disabled opacity-50 pointer-events-none" : ""}">
-                <button data-page="${currentPage + 1}" class="datatable-pagination-list-item-link" style="display:flex; align-items:center; gap:0.25rem;">Next &rsaquo;</button>
+              <li class="datatable-pagination-list-item ${currentPage === totalPages || totalPages === 0 ? "datatable-disabled opacity-50 pointer-events-none" : ""}" style="background: transparent !important; border: none !important; box-shadow: none !important;">
+                <button data-page="${currentPage + 1}" class="datatable-pagination-list-item-link" style="background: transparent !important; border: none !important; box-shadow: none !important; color: #94a3b8 !important;" onmouseover="this.style.color='#0f172a'" onmouseout="this.style.color='#94a3b8'">Next &rsaquo;</button>
               </li>
             </ul>
           </nav>
