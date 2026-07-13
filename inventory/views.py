@@ -674,6 +674,11 @@ def return_item(request, pk):
         data = {}
 
     notes = normalize_text(data.get('notes', ''))
+    # Determine the status the item returns to (staff-selected in the condition modal)
+    valid_return_statuses = {'available', 'repair', 'not_working', 'disposed', 'lost'}
+    return_status = normalize_text(data.get('return_status', 'available')).lower()
+    if return_status not in valid_return_statuses:
+        return_status = 'available'
     today = datetime.now().date()
 
     issuance.date_returned = today
@@ -685,8 +690,7 @@ def return_item(request, pk):
     item = issuance.inventory_item
     if item:
         item.quantity += issuance.quantity_borrowed
-        if item.status == 'in_use':
-            item.status = 'available'
+        item.status = return_status
         item.save()
 
     who = request.user.username if request.user.is_authenticated else 'System'
