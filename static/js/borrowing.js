@@ -264,7 +264,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
               <div class="datatable-jump shrink-0 flex items-center gap-2">
                 <span class="text-sm font-medium text-slate-700">Page</span>
-                <input type="number" min="1" max="${totalPages}" value="${currentPage}" class="dt-jump-input w-16 text-center border-slate-300 rounded focus:border-blue-600 focus:ring-1 focus:ring-blue-600 h-[38px] text-sm font-bold text-slate-800 shadow-sm" style="padding-top:0; padding-bottom:0;" />
+                <input type="number" min="1" max="${totalPages}" value="${currentPage}" class="dt-jump-input w-16 text-center border border-slate-200 rounded focus:border-slate-900 focus:ring-1 focus:ring-slate-900 h-[38px] text-sm font-bold text-slate-800 shadow-sm" style="padding-top:0; padding-bottom:0;" />
                 <button type="button" class="dt-jump-btn font-extrabold text-sm text-slate-900 bg-white hover:bg-slate-50 border border-slate-200 shadow-sm rounded px-3 h-[38px] transition-colors">Go</button>
               </div>
             `;
