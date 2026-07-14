@@ -140,7 +140,7 @@
                     <p class="text-3xl font-extrabold text-emerald-900 leading-none">{{ stats.available }}</p>
                   </div>
                   <div class="h-1 w-full rounded-full bg-emerald-100 overflow-hidden">
-                    <div class="h-full rounded-full bg-emerald-400" style="width:{% if stats.total %}{{ stats.available|default:0 }}%{% else %}0%{% endif %}"></div>
+                    <div class="h-full rounded-full bg-emerald-400" style="width:{% if stats.total %}{% widthratio stats.available stats.total 100 %}%{% else %}0%{% endif %}"></div>
                   </div>
                 </div>
               </div>
@@ -156,7 +156,7 @@
                     <p class="text-3xl font-extrabold text-amber-900 leading-none">{{ stats.repair }}</p>
                   </div>
                   <div class="h-1 w-full rounded-full bg-amber-100 overflow-hidden">
-                    <div class="h-full rounded-full bg-amber-400" style="width:{% if stats.total %}{{ stats.repair|default:0 }}%{% else %}0%{% endif %}"></div>
+                    <div class="h-full rounded-full bg-amber-400" style="width:{% if stats.total %}{% widthratio stats.repair stats.total 100 %}%{% else %}0%{% endif %}"></div>
                   </div>
                 </div>
               </div>
@@ -172,7 +172,7 @@
                     <p class="text-3xl font-extrabold text-sky-900 leading-none">{{ stats.working }}</p>
                   </div>
                   <div class="h-1 w-full rounded-full bg-sky-100 overflow-hidden">
-                    <div class="h-full rounded-full bg-sky-400" style="width:{% if stats.total %}{{ stats.working|default:0 }}%{% else %}0%{% endif %}"></div>
+                    <div class="h-full rounded-full bg-sky-400" style="width:{% if stats.total %}{% widthratio stats.working stats.total 100 %}%{% else %}0%{% endif %}"></div>
                   </div>
                 </div>
               </div>
@@ -188,7 +188,7 @@
                     <p class="text-3xl font-extrabold text-rose-900 leading-none">{{ stats.not_working }}</p>
                   </div>
                   <div class="h-1 w-full rounded-full bg-rose-100 overflow-hidden">
-                    <div class="h-full rounded-full bg-rose-400" style="width:{% if stats.total %}{{ stats.not_working|default:0 }}%{% else %}0%{% endif %}"></div>
+                    <div class="h-full rounded-full bg-rose-400" style="width:{% if stats.total %}{% widthratio stats.not_working stats.total 100 %}%{% else %}0%{% endif %}"></div>
                   </div>
                 </div>
               </div>
