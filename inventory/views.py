@@ -885,31 +885,25 @@ def return_item(request, pk):
 
     if issuance.status == 'returned':
         return JsonResponse({'success': False, 'error': 'This item has already been returned.'}, status=400)
-
     try:
         data = json.loads(request.body) if request.body else {}
     except json.JSONDecodeError:
         data = {}
-
     notes = normalize_text(data.get('notes', ''))
     # Determine the status the item returns to (staff-selected in the condition modal)
     valid_return_statuses = {'available', 'repair', 'disposed', 'lost'}
     return_status = normalize_text(data.get('return_status', 'available')).lower()
-    
     today = datetime.now().date()
-
     issuance.date_returned = today
     issuance.status = 'returned'
     if notes:
         issuance.notes = notes
     issuance.save()
-
     item = issuance.inventory_item
     old_item = None
     if item:
         # Create a deep copy for Audit Logging comparison
         old_item = Inventory.objects.get(pk=item.pk)
-        
         # Determine if we can safely merge back into the main inventory record pile
         same_status = (str(item.status).lower().strip() == return_status)
         same_defect = (normalize_text(item.defect_description) == notes)
@@ -976,14 +970,11 @@ def return_item(request, pk):
                 new_item.location = return_location
                 new_item.serial_number = f"SPLIT-{uuid.uuid4().hex[:8].upper()}"
                 new_item.save()
-                
                 # Link this issuance to the newly spawned broken pile
                 issuance.inventory_item = new_item
                 issuance.save()
                 item = new_item
-
     who = request.user.username if request.user.is_authenticated else 'System'
-
     desc = (
         f"Returned {issuance.quantity_borrowed}x "
         f"{item.item_type if item else 'Unknown'} (#{item.pk if item else '?'}) "
@@ -999,7 +990,6 @@ def return_item(request, pk):
             description=desc,
             performed_by=who
         )
-
     return JsonResponse({'success': True, 'message': 'Item returned successfully.'})
 
 
