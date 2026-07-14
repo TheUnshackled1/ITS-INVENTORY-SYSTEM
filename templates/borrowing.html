@@ -238,7 +238,7 @@
                             data-brand="{{ log.inventory_item.brand }}"
                             data-model="{{ log.inventory_item.model|default:'-' }}"
                             data-serial="{{ log.inventory_item.serial_number|default:'-' }}"
-                            data-qty="{{ log.inventory_item.quantity }}"
+                            data-qty="{{ log.quantity_borrowed }}"
                             data-inv-date="{{ log.inventory_item.date_inventory|date:'Y-m-d' }}"
                             data-disp-date="{% if log.inventory_item.date_disposal %}{{ log.inventory_item.date_disposal|date:'Y-m-d' }}{% else %}-{% endif %}"
                             data-location="{{ log.inventory_item.location }}"

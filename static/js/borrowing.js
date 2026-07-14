@@ -126,7 +126,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 "Brand": trigger.getAttribute("data-brand") || "-",
                 "Model": trigger.getAttribute("data-model") || "-",
                 "Serial Number": trigger.getAttribute("data-serial") || "-",
-                "Qty": trigger.getAttribute("data-qty") || "-",
+                "Qty Borrowed": trigger.getAttribute("data-qty") || "-",
                 "Inv Date": trigger.getAttribute("data-inv-date") || "-",
                 "Disp Date": trigger.getAttribute("data-disp-date") || "-",
                 "Location": trigger.getAttribute("data-location") || "-",
