@@ -37,7 +37,7 @@ def log_action(request, action, item, extra="", old_item=None):
     # Store full history so deleted/edited items preserve their exact state at that moment
     details = extract_details(item)
     
-    if old_item and action == "edited":
+    if old_item and action in ["edited", "returned"]:
         details = {
             "before": extract_details(old_item),
             "after": details
@@ -753,7 +753,9 @@ def return_item(request, pk):
     issuance.save()
 
     item = issuance.inventory_item
+    old_item = None
     if item:
+        old_item = Inventory.objects.get(pk=item.pk)
         item.quantity += issuance.quantity_borrowed
         item.status = return_status
         item.save()
@@ -766,7 +768,7 @@ def return_item(request, pk):
         f"from {issuance.borrower_name}"
     )
     if item:
-        log_action(request, 'returned', item, extra=desc)
+        log_action(request, 'returned', item, extra=desc, old_item=old_item)
     else:
         # Fallback if no item matched
         AuditLog.objects.create(
