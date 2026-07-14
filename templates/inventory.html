@@ -507,6 +507,15 @@
             <label for="form_defect_description" class="block font-bold text-slate-800 text-sm mb-2">Defect Information</label>
             <textarea name="defect_description" id="form_defect_description" rows="2" class="w-full bg-white border border-slate-300 rounded-md shadow-sm px-3 py-2 text-sm font-medium text-slate-800 min-h-[80px] placeholder-slate-400 resize-none focus:outline-none focus:border-slate-900 focus:ring-1 focus:ring-slate-900 transition-all" placeholder="NOT WORKING"></textarea>
           </div>
+          
+          <div id="active_borrowings_container" class="mt-5 hidden flex-col gap-2 p-4 bg-blue-50 border border-blue-100 rounded-xl">
+            <h4 class="text-xs font-bold text-blue-800 uppercase tracking-widest mb-1 flex items-center gap-1.5">
+              <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg> Active Borrowing Logs
+            </h4>
+            <div id="active_borrowings_list" class="flex flex-col gap-2 mt-1">
+              <!-- Dynamically populated via JS -->
+            </div>
+          </div>
         </form>
       </div>
       <!-- Footer Action -->

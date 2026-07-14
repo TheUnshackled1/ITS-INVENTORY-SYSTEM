@@ -233,6 +233,28 @@ def inventory_list(request):
         
         # Serialize status display manually
         item['get_status_display'] = dict(Inventory.STATUS_CHOICES).get(item['status'], item['status'].replace("_", " ").title())
+    
+    # Build active borrowings map for Context
+    active_issuances = list(IssuanceLog.objects.filter(
+        status__in=['borrowed', 'overdue'],
+        inventory_item_id__in=[item['pk'] for item in inventory_data]
+    ).values('inventory_item_id', 'borrower_name', 'office_location', 'quantity_borrowed', 'status'))
+    
+    issuances_by_item = {}
+    for log in active_issuances:
+        pk = log['inventory_item_id']
+        if pk not in issuances_by_item:
+            issuances_by_item[pk] = []
+        issuances_by_item[pk].append({
+            'borrower_name': log['borrower_name'],
+            'office_location': log['office_location'],
+            'qty': log['quantity_borrowed'],
+            'status': log['status']
+        })
+        
+    for item in inventory_data:
+        item['active_borrowings'] = issuances_by_item.get(item['pk'], [])
+
     distinct_item_types = get_distinct_text_values(Inventory.objects.all(), 'item_type', 'trimmed_item_type')
     distinct_locations = get_distinct_text_values(Inventory.objects.all(), 'location', 'trimmed_location')
     distinct_status_values = [
@@ -292,7 +314,7 @@ def inventory_list(request):
     return response
 
 def serialize_inventory_item(item):
-    return {
+    data = {
         'id': item.id,
         'item_type': item.item_type or '',
         'item_description': item.item_description or '',
@@ -306,6 +328,15 @@ def serialize_inventory_item(item):
         'status': item.status or 'available',
         'defect_description': item.defect_description or '',
     }
+    
+    active_issuances = list(item.issuances.filter(status__in=['borrowed', 'overdue']).values(
+        'borrower_name', 'office_location', 'quantity_borrowed', 'status'
+    ))
+    for log in active_issuances:
+        log['qty'] = log.pop('quantity_borrowed')
+        
+    data['active_borrowings'] = active_issuances
+    return data
 
 @login_required
 def add_inventory(request):

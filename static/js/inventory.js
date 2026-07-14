@@ -22,6 +22,16 @@ document.addEventListener("DOMContentLoaded", function () {
     }, 150);
   }
 
+  const escapeHtml = (unsafe) => {
+    if (unsafe === null || unsafe === undefined || unsafe === '') return '';
+    return String(unsafe)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+  };
+
   // --- Card Numbers Count-Up Animation ---
   const statNumbers = document.querySelectorAll("#stats-cards-container p.text-3xl");
   if (statNumbers.length > 0) {
@@ -79,16 +89,6 @@ document.addEventListener("DOMContentLoaded", function () {
       let htmlRows = [];
       const len = inventoryData.length;
       
-      const escapeHtml = (unsafe) => {
-        if (unsafe === null || unsafe === undefined || unsafe === '') return '';
-        return String(unsafe)
-            .replace(/&/g, "&amp;")
-            .replace(/</g, "&lt;")
-            .replace(/>/g, "&gt;")
-            .replace(/"/g, "&quot;")
-            .replace(/'/g, "&#039;");
-      };
-      
       for (let i = 0; i < len; i++) {
         const item = inventoryData[i];
         
@@ -128,7 +128,8 @@ document.addEventListener("DOMContentLoaded", function () {
               data-dispdate="${escapeHtml(item.date_disposal_raw)}"
               data-location="${escapeHtml(item.location)}"
               data-status="${escapeHtml(statusValue)}"
-              data-defect="${escapeHtml(item.defect_description)}">
+              data-defect="${escapeHtml(item.defect_description)}"
+              data-borrowings='${escapeHtml(JSON.stringify(item.active_borrowings || []))}'>
             <td class="px-2 py-2 align-middle font-semibold text-slate-900 text-xs">${escapeHtml(item.original_no)}</td>
             <td class="px-2 py-2 align-middle text-xs font-semibold leading-tight text-slate-900"><span class="inline-flex items-center gap-1 text-blue-600 hover:text-blue-800 transition-colors cursor-pointer"><span>${escapeHtml(item.item_type) || "-"}</span><svg class="w-3 h-3 text-blue-400 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 16v-4M12 8h.01"/></svg></span></td>
             <td class="px-2 py-2 align-middle text-xs text-slate-600" title="${escapeHtml(item.item_description)}"><span class="block w-full text-center">${escapeHtml(item.item_description) || "-"}</span></td>
@@ -756,6 +757,31 @@ document.addEventListener("DOMContentLoaded", function () {
       document.getElementById("form_location").value = row.dataset.location || "";
       document.getElementById("form_item_description").value = row.dataset.desc || "";
       document.getElementById("form_defect_description").value = row.dataset.defect || "";
+      
+      // Populate active borrowings
+      const activeBorrowingsContainer = document.getElementById("active_borrowings_container");
+      const activeBorrowingsList = document.getElementById("active_borrowings_list");
+      if (activeBorrowingsContainer && activeBorrowingsList) {
+        let borrowings = [];
+        try {
+          borrowings = JSON.parse(row.dataset.borrowings || "[]");
+        } catch (e) {}
+        
+        if (borrowings && borrowings.length > 0) {
+          activeBorrowingsList.innerHTML = borrowings.map(b => 
+            `<div class="bg-white px-3 py-2.5 rounded-lg flex justify-between items-center text-sm border-l-4 border-l-blue-500 shadow-sm border border-slate-100">
+                <span class="font-bold text-slate-800">${escapeHtml(b.borrower_name)} <span class="text-slate-500 font-medium ml-1 bg-slate-100 px-1.5 py-0.5 rounded text-[11px]">${escapeHtml(b.office_location)}</span></span>
+                <span class="bg-blue-100 text-blue-700 text-xs font-black px-2 py-0.5 rounded-full shadow-sm">${escapeHtml(b.qty)}x</span>
+            </div>`
+          ).join('');
+          activeBorrowingsContainer.classList.remove("hidden");
+          activeBorrowingsContainer.classList.add("flex");
+        } else {
+          activeBorrowingsContainer.classList.add("hidden");
+          activeBorrowingsContainer.classList.remove("flex");
+          activeBorrowingsList.innerHTML = '';
+        }
+      }
       
       // Auto-expand dynamically injected content
       setTimeout(() => {
