@@ -967,12 +967,14 @@ def return_item(request, pk):
                 item = matching_pile
             else:
                 # No existing pile found. We must spawn a brand new independent record clone.
+                import uuid
                 new_item = Inventory.objects.get(pk=item.pk)
                 new_item.pk = None # Clones the row
                 new_item.quantity = issuance.quantity_borrowed
                 new_item.status = return_status
                 new_item.defect_description = notes
                 new_item.location = return_location
+                new_item.serial_number = f"SPLIT-{uuid.uuid4().hex[:8].upper()}"
                 new_item.save()
                 
                 # Link this issuance to the newly spawned broken pile

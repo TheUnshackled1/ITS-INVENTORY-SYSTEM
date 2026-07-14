@@ -194,10 +194,11 @@ document.addEventListener('DOMContentLoaded', function() {
                     }
                 }
             })
-            .catch(() => {
+            .catch((err) => {
+                console.error("Return Item Error:", err);
                 closeModal(returnOverlay, returnCard);
                 if (typeof window.showErrorModal === 'function') {
-                    window.showErrorModal('Network error. Please try again.');
+                    window.showErrorModal('JS Error: ' + (err.message || 'Unknown network error'));
                 }
             })
             .finally(() => {
