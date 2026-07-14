@@ -123,48 +123,7 @@ def get_distinct_text_values(queryset, field_name, annotation_name):
     return distinct_values
 
 
-def update_inventory_fields(request, item, data):
-    for field_name, field_value in data.items():
-        setattr(item, field_name, field_value)
-    item.save()
-    log_action(request, 'edited', item, extra="Via Excel Upload")
 
-
-def find_inventory_match(data):
-    serial_number = data['serial_number']
-    if serial_number:
-        return Inventory.objects.filter(serial_number=serial_number).first()
-
-    queryset = Inventory.objects.annotate(
-        trimmed_item_type=Trim('item_type'),
-        trimmed_item_description=Trim('item_description'),
-        trimmed_brand=Trim('brand'),
-        trimmed_model=Trim('model'),
-        trimmed_location=Trim('location'),
-        trimmed_defect_description=Trim('defect_description'),
-    ).filter(
-        Q(serial_number__isnull=True) | Q(serial_number=''),
-        trimmed_item_type=normalize_text(data['item_type']),
-        trimmed_item_description=normalize_text(data['item_description']),
-        trimmed_brand=normalize_text(data['brand']),
-        trimmed_model=normalize_text(data['model']),
-        trimmed_location=normalize_text(data['location']),
-        date_inventory=data['date_inventory'],
-        status=data['status'],
-    )
-    if data['date_disposal'] is None:
-        queryset = queryset.filter(date_disposal__isnull=True)
-    else:
-        queryset = queryset.filter(date_disposal=data['date_disposal'])
-    defect_description = normalize_text(data['defect_description'])
-    if defect_description:
-        queryset = queryset.filter(trimmed_defect_description=defect_description)
-    else:
-        queryset = queryset.filter(
-            Q(trimmed_defect_description='') | Q(trimmed_defect_description__isnull=True)
-        )
-    return queryset.first()
-    
 @login_required
 def inventory_list(request):
     base_queryset = Inventory.objects.all().annotate(
@@ -585,8 +544,65 @@ def upload_excel(request):
                     return redirect('inventory-list')
                 if parsed_rows:
                     items_to_create = []
+                    items_to_update = []
+                    audit_logs = []
+                    
+                    # Preemptively extract all existing instances into an in-memory dictionary
+                    # to prevent sequential N+1 .filter().first() DB calls
+                    serials_in_batch = [row['serial_number'] for row in parsed_rows if row['serial_number']]
+                    existing_items_by_serial = {
+                        item.serial_number: item 
+                        for item in Inventory.objects.filter(serial_number__in=serials_in_batch)
+                    }
+
+                    # We also need to map items uniquely lacking serial numbers via compound tuple keys
+                    blank_keys_in_batch = [
+                        (
+                            normalize_text(row['item_type']),
+                            normalize_text(row['item_description']),
+                            normalize_text(row['brand']),
+                            normalize_text(row['model']),
+                            row['date_inventory'],
+                            row['date_disposal'],
+                            normalize_text(row['location']),
+                            row['status'],
+                            normalize_text(row['defect_description']),
+                        ) for row in parsed_rows if not row['serial_number']
+                    ]
+                    
+                    # In order to bulk-query compound fields efficiently, we iterate over a combined QuerySet.
+                    # Since DB matching on 9 fields per element is complex to annotate, we fetch all non-serial items
+                    # matching the basic characteristics of our batch and build an index in Python.
+                    active_item_types = set(normalize_text(row['item_type']) for row in parsed_rows if not row['serial_number'])
+                    existing_non_serial_items = Inventory.objects.filter(
+                        Q(serial_number__isnull=True) | Q(serial_number=''),
+                        item_type__in=active_item_types
+                    )
+                    
+                    existing_items_by_blank_key = {}
+                    for item in existing_non_serial_items:
+                        key = (
+                            normalize_text(item.item_type),
+                            normalize_text(item.item_description),
+                            normalize_text(item.brand),
+                            normalize_text(item.model),
+                            item.date_inventory,
+                            item.date_disposal,
+                            normalize_text(item.location),
+                            item.status,
+                            normalize_text(item.defect_description),
+                        )
+                        existing_items_by_blank_key[key] = item
+
                     seen_serials = set()
                     seen_blank_keys = set()
+                    
+                    update_fields = [
+                        'item_type', 'item_description', 'brand', 'model', 
+                        'serial_number', 'quantity', 'date_inventory',
+                        'date_disposal', 'location', 'status', 'defect_description'
+                    ]
+                    
                     for data in parsed_rows:
                         serial = data['serial_number']
                         blank_key = (
@@ -600,34 +616,96 @@ def upload_excel(request):
                             data['status'],
                             normalize_text(data['defect_description']),
                         )  
+                        
                         if serial:
                             if serial in seen_serials:
-                                existing_item = Inventory.objects.filter(serial_number=serial).first()
+                                existing_item = existing_items_by_serial.get(serial)
                                 if existing_item:
-                                    update_inventory_fields(request, existing_item, data)
+                                    for field, value in data.items():
+                                        setattr(existing_item, field, value)
+                                    items_to_update.append(existing_item)
+                                    audit_logs.append(AuditLog(
+                                        action='edited',
+                                        item_type=existing_item.item_type,
+                                        item_id=existing_item.pk,
+                                        description=f"Item {existing_item.item_type} edited.",
+                                        details="Via Excel Upload",
+                                        performed_by=request.user.username if request.user.is_authenticated else "System"
+                                    ))
                                 continue
                             seen_serials.add(serial)
-                            existing_item = find_inventory_match(data)
+                            
+                            existing_item = existing_items_by_serial.get(serial)
                             if existing_item:
-                                update_inventory_fields(request, existing_item, data)
+                                for field, value in data.items():
+                                    setattr(existing_item, field, value)
+                                items_to_update.append(existing_item)
+                                audit_logs.append(AuditLog(
+                                    action='edited',
+                                    item_type=existing_item.item_type,
+                                    item_id=existing_item.pk,
+                                    description=f"Item {existing_item.item_type} edited.",
+                                    details="Via Excel Upload",
+                                    performed_by=request.user.username if request.user.is_authenticated else "System"
+                                ))
                             else:
-                                items_to_create.append(Inventory(**data))
+                                new_item = Inventory(**data)
+                                items_to_create.append(new_item)
                         else:
                             if blank_key in seen_blank_keys:
-                                existing_item = find_inventory_match(data)
+                                existing_item = existing_items_by_blank_key.get(blank_key)
                                 if existing_item:
-                                    update_inventory_fields(request, existing_item, data)
+                                    for field, value in data.items():
+                                        setattr(existing_item, field, value)
+                                    items_to_update.append(existing_item)
+                                    audit_logs.append(AuditLog(
+                                        action='edited',
+                                        item_type=existing_item.item_type,
+                                        item_id=existing_item.pk,
+                                        description=f"Item {existing_item.item_type} edited.",
+                                        details="Via Excel Upload",
+                                        performed_by=request.user.username if request.user.is_authenticated else "System"
+                                    ))
                                 continue
                             seen_blank_keys.add(blank_key)
-                            existing_item = find_inventory_match(data)
+                            
+                            existing_item = existing_items_by_blank_key.get(blank_key)
                             if existing_item:
-                                update_inventory_fields(request, existing_item, data)
+                                for field, value in data.items():
+                                    setattr(existing_item, field, value)
+                                items_to_update.append(existing_item)
+                                audit_logs.append(AuditLog(
+                                    action='edited',
+                                    item_type=existing_item.item_type,
+                                    item_id=existing_item.pk,
+                                    description=f"Item {existing_item.item_type} edited.",
+                                    details="Via Excel Upload",
+                                    performed_by=request.user.username if request.user.is_authenticated else "System"
+                                ))
                             else:
-                                items_to_create.append(Inventory(**data))
+                                new_item = Inventory(**data)
+                                items_to_create.append(new_item)
+                                
+                    if items_to_update:
+                        # De-duplicate elements safely using their python memory internal ID proxy, 
+                        # just in case sequential rows attempted to update the exact same PK multiple times.
+                        unique_updates = {id(item): item for item in items_to_update}.values()
+                        Inventory.objects.bulk_update(unique_updates, fields=update_fields)
+                        
                     if items_to_create:
-                        Inventory.objects.bulk_create(items_to_create)
-                        for item in items_to_create:
-                            log_action(request, 'uploaded', item, extra="Via Excel Upload")
+                        inserted_items = Inventory.objects.bulk_create(items_to_create)
+                        for item in inserted_items:
+                            audit_logs.append(AuditLog(
+                                action='uploaded',
+                                item_type=item.item_type,
+                                item_id=item.pk,
+                                description=f"Item {item.item_type} uploaded.",
+                                details="Via Excel Upload",
+                                performed_by=request.user.username if request.user.is_authenticated else "System"
+                            ))
+                            
+                    if audit_logs:
+                        AuditLog.objects.bulk_create(audit_logs)
                     messages.success(request, "Inventory updated successfully!")
                 else:
                     messages.warning(request, "No valid data rows found in file.")
