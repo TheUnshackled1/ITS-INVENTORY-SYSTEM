@@ -755,10 +755,72 @@ def return_item(request, pk):
     item = issuance.inventory_item
     old_item = None
     if item:
+        # Create a deep copy for Audit Logging comparison
         old_item = Inventory.objects.get(pk=item.pk)
-        item.quantity += issuance.quantity_borrowed
-        item.status = return_status
-        item.save()
+        
+        # Determine if we can safely merge back into the main inventory record pile
+        same_status = (str(item.status).lower().strip() == return_status)
+        same_defect = (normalize_text(item.defect_description) == notes)
+        active_other_borrowings_count = IssuanceLog.objects.filter(
+            inventory_item=item, 
+            status__in=['borrowed', 'overdue']
+        ).exclude(pk=issuance.pk).count()
+
+        # Merge if the condition is identical, OR if this returned unit is the absolute last unit
+        # tied to the parent row (meaning there are no outstanding units left to corrupt).
+        can_merge = (same_status and same_defect) or (item.quantity == 0 and active_other_borrowings_count == 0)
+
+        if can_merge:
+            item.quantity += issuance.quantity_borrowed
+            item.status = return_status
+            if not (same_status and same_defect):
+                # If merging due to being the final unit, we must adopt the new condition.
+                item.defect_description = notes
+            item.save()
+        else:
+            # We cannot merge because doing so would contaminate pristine units still in the stockroom!
+            # We must SPLIT the return into its own pile.
+            # First, check if a pile with this EXACT condition and model already exists to merge with instead.
+            matching_pile = Inventory.objects.annotate(
+                trimmed_item_type=Trim('item_type'),
+                trimmed_item_description=Trim('item_description'),
+                trimmed_brand=Trim('brand'),
+                trimmed_model=Trim('model'),
+                trimmed_location=Trim('location'),
+                trimmed_defect_description=Trim('defect_description'),
+            ).filter(
+                Q(serial_number__isnull=True) | Q(serial_number=''),
+                trimmed_item_type=normalize_text(item.item_type),
+                trimmed_item_description=normalize_text(item.item_description),
+                trimmed_brand=normalize_text(item.brand),
+                trimmed_model=normalize_text(item.model),
+                trimmed_location=normalize_text(item.location),
+                date_inventory=item.date_inventory,
+                status=return_status,
+                trimmed_defect_description=notes
+            ).first()
+
+            if matching_pile:
+                matching_pile.quantity += issuance.quantity_borrowed
+                matching_pile.save()
+                
+                # Link this issuance to the existing damaged pile
+                issuance.inventory_item = matching_pile
+                issuance.save()
+                item = matching_pile
+            else:
+                # No existing pile found. We must spawn a brand new broken/lost record clone.
+                new_item = Inventory.objects.get(pk=item.pk)
+                new_item.pk = None # Clones the row
+                new_item.quantity = issuance.quantity_borrowed
+                new_item.status = return_status
+                new_item.defect_description = notes
+                new_item.save()
+                
+                # Link this issuance to the newly spawned broken pile
+                issuance.inventory_item = new_item
+                issuance.save()
+                item = new_item
 
     who = request.user.username if request.user.is_authenticated else 'System'
 
