@@ -1037,6 +1037,18 @@ document.addEventListener("DOMContentLoaded", function () {
         return;
       }
 
+      const qtyInput = document.getElementById('borrow_quantity');
+      const maxQty = parseInt(qtyInput.getAttribute('max') || '0', 10);
+      if (payload.quantity_borrowed > maxQty) {
+        if (typeof window.showErrorModal === 'function') {
+          window.showErrorModal(`Only ${maxQty} unit(s) available.`);
+        } else if (borrowFormError) {
+          borrowFormError.textContent = `Only ${maxQty} unit(s) available.`;
+          borrowFormError.classList.remove('hidden');
+        }
+        return;
+      }
+
       if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = 'Issuing...'; }
 
       fetch('/borrowing/issue/', {
@@ -1055,7 +1067,9 @@ document.addEventListener("DOMContentLoaded", function () {
           localStorage.setItem('showSuccessModalFlag', 'borrowed');
           window.location.reload();
         } else {
-          if (borrowFormError) {
+          if (typeof window.showErrorModal === 'function') {
+            window.showErrorModal(data.error || 'Could not issue item.');
+          } else if (borrowFormError) {
             borrowFormError.textContent = data.error || 'Could not issue item.';
             borrowFormError.classList.remove('hidden');
           }
