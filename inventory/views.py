@@ -255,8 +255,11 @@ def inventory_list(request):
     total_items = Inventory.objects.count()
     available_count = Inventory.objects.filter(status='available').count()
     repair_count = Inventory.objects.filter(status='repair').count()
-    in_use_count = Inventory.objects.annotate(normalized_defect=Upper(Trim('defect_description'))).filter(normalized_defect='WORKING').count()
-    not_working_count = Inventory.objects.annotate(normalized_defect=Upper(Trim('defect_description'))).filter(normalized_defect='NOT WORKING').count()
+    in_use_count = Inventory.objects.filter(status='in_use').count()
+    not_working_count = Inventory.objects.filter(
+        Q(status='not_working') |
+        Q(defect_description__iregex=r'not working')
+    ).count()
     stats = {
         'total': total_items,
         'available': available_count,
