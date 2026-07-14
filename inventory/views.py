@@ -636,18 +636,39 @@ def upload_excel(request):
         return redirect('inventory-list')
     return redirect('inventory-list')
 
-@login_required
+@login_required(login_url='login')
 def activity_log(request):
-    search_query = request.GET.get("q", "").strip()
-    logs = AuditLog.objects.order_by('-pk')
+    import json
+    from django.utils.timezone import localtime
+    search_query = request.GET.get('q', '').strip()
+    logs = AuditLog.objects.all().order_by('-timestamp')
     if search_query:
         logs = logs.filter(
             Q(item_type__icontains=search_query) |
-            Q(description__icontains=search_query) |
             Q(performed_by__icontains=search_query) |
             Q(action__icontains=search_query)
         )
-    return render(request, "activity_log.html", {"logs": logs, "search_query": search_query})
+        
+    logs_data = []
+    for log in logs:
+        # Convert timestamp to local timezone for UI display
+        local_time = localtime(log.timestamp) if log.timestamp else None
+        
+        logs_data.append({
+            'pk': log.pk,
+            'description': log.description or '',
+            'details': log.details or '',
+            'item_type': log.item_type or '',
+            'performed_by': log.performed_by or '',
+            'action': log.action or '',
+            'timestamp_ui': local_time.strftime('%b. %d, %Y, %I:%M %p').replace("AM", "a.m.").replace("PM", "p.m.") if local_time else '-'
+        })
+        
+    return render(request, "activity_log.html", {
+        "logs": logs,
+        "logs_json": json.dumps(logs_data), 
+        "search_query": search_query
+    })
 
 from django.views.decorators.http import require_POST
 @require_POST

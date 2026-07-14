@@ -85,79 +85,156 @@ document.addEventListener("DOMContentLoaded", function () {
 
   if (jsonDataElement && tbodyElement) {
     try {
-      const inventoryData = JSON.parse(jsonDataElement.textContent);
-      let htmlRows = [];
-      const len = inventoryData.length;
-      
-      for (let i = 0; i < len; i++) {
-        const item = inventoryData[i];
+      window.inventoryData = JSON.parse(jsonDataElement.textContent);
+      window.generateHtmlRows = function(dataSlice) {
+        let htmlRows = [];
+        const len = dataSlice.length;
         
-        let statusBadge = "";
-        let statusValue = item.status || "available";
-        let displayStatus = item.get_status_display || statusValue.toUpperCase();
-        
-        if (statusValue === 'available') {
-            statusBadge = `<span class="inline-flex justify-center flex-shrink-0 items-center gap-1.5 w-28 px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider text-emerald-600">
-                <svg class="h-1.5 w-1.5 fill-emerald-600" viewBox="0 0 6 6" aria-hidden="true"><circle cx="3" cy="3" r="3" /></svg>${displayStatus}
-            </span>`;
-        } else if (statusValue === 'in_use') {
-            statusBadge = `<span class="inline-flex justify-center flex-shrink-0 items-center gap-1.5 w-max px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider text-sky-600">
-                <svg class="h-1.5 w-1.5 flex-shrink-0 fill-current" viewBox="0 0 6 6" aria-hidden="true"><circle cx="3" cy="3" r="3" /></svg>${displayStatus}
-            </span>`;
-        } else if (statusValue === 'repair') {
-            statusBadge = `<span class="inline-flex justify-center flex-shrink-0 items-center gap-1.5 w-max px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider text-amber-500">
-                <svg class="h-1.5 w-1.5 flex-shrink-0 fill-current" viewBox="0 0 6 6" aria-hidden="true"><circle cx="3" cy="3" r="3" /></svg>${displayStatus}
-            </span>`;
-        } else {
-            statusBadge = `<span class="inline-flex justify-center flex-shrink-0 items-center gap-1.5 w-max px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider text-rose-600">
-                <svg class="h-1.5 w-1.5 flex-shrink-0 fill-current" viewBox="0 0 6 6" aria-hidden="true"><circle cx="3" cy="3" r="3" /></svg>${displayStatus}
-            </span>`;
-        }
+        for (let i = 0; i < len; i++) {
+          const item = dataSlice[i];
+          
+          let statusBadge = "";
+          let statusValue = item.status || "available";
+          let displayStatus = item.get_status_display || statusValue.toUpperCase();
+          
+          if (statusValue === 'available') {
+              statusBadge = `<span class="inline-flex justify-center flex-shrink-0 items-center gap-1.5 w-28 px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider text-emerald-600">
+                  <svg class="h-1.5 w-1.5 fill-emerald-600" viewBox="0 0 6 6" aria-hidden="true"><circle cx="3" cy="3" r="3" /></svg>${displayStatus}
+              </span>`;
+          } else if (statusValue === 'in_use') {
+              statusBadge = `<span class="inline-flex justify-center flex-shrink-0 items-center gap-1.5 w-max px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider text-sky-600">
+                  <svg class="h-1.5 w-1.5 flex-shrink-0 fill-current" viewBox="0 0 6 6" aria-hidden="true"><circle cx="3" cy="3" r="3" /></svg>${displayStatus}
+              </span>`;
+          } else if (statusValue === 'repair') {
+              statusBadge = `<span class="inline-flex justify-center flex-shrink-0 items-center gap-1.5 w-max px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider text-amber-500">
+                  <svg class="h-1.5 w-1.5 flex-shrink-0 fill-current" viewBox="0 0 6 6" aria-hidden="true"><circle cx="3" cy="3" r="3" /></svg>${displayStatus}
+              </span>`;
+          } else {
+              statusBadge = `<span class="inline-flex justify-center flex-shrink-0 items-center gap-1.5 w-max px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider text-rose-600">
+                  <svg class="h-1.5 w-1.5 flex-shrink-0 fill-current" viewBox="0 0 6 6" aria-hidden="true"><circle cx="3" cy="3" r="3" /></svg>${displayStatus}
+              </span>`;
+          }
 
-        let defectBadge = item.defect_description ? escapeHtml(item.defect_description) : `<span class="text-slate-400">-</span>`;
-        
-        let displayLocation = item.location;
-        if (statusValue === 'in_use' && item.active_borrowings && item.active_borrowings.length > 0) {
-            if (item.active_borrowings.length === 1) {
-                displayLocation = item.active_borrowings[0].office_location;
-            } else {
-                displayLocation = "Multiple Locations (In Use)";
-            }
-        }
+          let defectBadge = item.defect_description ? escapeHtml(item.defect_description) : `<span class="text-slate-400">-</span>`;
+          
+          let displayLocation = item.location;
+          if (statusValue === 'in_use' && item.active_borrowings && item.active_borrowings.length > 0) {
+              if (item.active_borrowings.length === 1) {
+                  displayLocation = item.active_borrowings[0].office_location;
+              } else {
+                  displayLocation = "Multiple Locations (In Use)";
+              }
+          }
 
-        htmlRows.push(`
-          <tr class="inventory-row transition-colors hover:bg-slate-50/80 cursor-pointer"
-              data-id="${item.pk}"
-              data-type="${escapeHtml(item.item_type)}"
-              data-desc="${escapeHtml(item.item_description)}"
-              data-brand="${escapeHtml(item.brand)}"
-              data-model="${escapeHtml(item.model)}"
-              data-serial="${escapeHtml(item.serial_number)}"
-              data-qty="${item.quantity !== null ? escapeHtml(item.quantity) : 1}"
-              data-invdate="${escapeHtml(item.date_inventory_raw)}"
-              data-dispdate="${escapeHtml(item.date_disposal_raw)}"
-              data-location="${escapeHtml(displayLocation)}"
-              data-status="${escapeHtml(statusValue)}"
-              data-defect="${escapeHtml(item.defect_description)}"
-              data-borrowings='${escapeHtml(JSON.stringify(item.active_borrowings || []))}'>
-            <td class="px-2 py-2 align-middle font-semibold text-slate-900 text-xs">${escapeHtml(item.original_no)}</td>
-            <td class="px-2 py-2 align-middle text-xs font-semibold leading-tight text-slate-900"><span class="inline-flex items-center gap-1 text-blue-600 hover:text-blue-800 transition-colors cursor-pointer"><span>${escapeHtml(item.item_type) || "-"}</span><svg class="w-3 h-3 text-blue-400 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 16v-4M12 8h.01"/></svg></span></td>
-            <td class="px-2 py-2 align-middle text-xs text-slate-600" title="${escapeHtml(item.item_description)}"><span class="block w-full text-center">${escapeHtml(item.item_description) || "-"}</span></td>
-            <td class="px-2 py-2 align-middle text-xs font-medium text-slate-800"><span class="block w-full text-center">${escapeHtml(item.brand) || "-"}</span></td>
-            <td class="px-2 py-2 align-middle text-xs font-medium text-slate-800"><span class="block w-full text-center">${escapeHtml(item.model) || "-"}</span></td>
-            <td class="px-2 py-2 align-middle font-mono text-[11px] text-slate-700" title="${escapeHtml(item.serial_number)}">${escapeHtml(item.serial_number) || "-"}</td>
-            <td class="px-2 py-2 align-middle text-xs font-semibold text-slate-900">${item.quantity !== null ? escapeHtml(item.quantity) : "-"}</td>
-            <td class="px-2 py-2 align-middle text-xs text-slate-700">${item.date_inventory_ui}</td>
-            <td class="px-2 py-2 align-middle text-xs text-slate-700">${item.date_disposal_ui}</td>
-            <td class="px-2 py-2 align-middle text-center text-xs text-slate-700" title="${escapeHtml(displayLocation)}">${escapeHtml(displayLocation) || "-"}</td>
-            <td class="px-2 py-2 align-middle text-center">${statusBadge}</td>
-            <td class="px-2 py-2 align-middle text-xs text-slate-600 uppercase" title="${escapeHtml(item.defect_description)}">${defectBadge}</td>
-          </tr>
-        `);
-      }
-      tbodyElement.innerHTML = htmlRows.join("");
+          htmlRows.push(`
+            <tr class="inventory-row transition-colors hover:bg-slate-50/80 cursor-pointer"
+                data-id="${item.pk}"
+                data-type="${escapeHtml(item.item_type)}"
+                data-desc="${escapeHtml(item.item_description)}"
+                data-brand="${escapeHtml(item.brand)}"
+                data-model="${escapeHtml(item.model)}"
+                data-serial="${escapeHtml(item.serial_number)}"
+                data-qty="${item.quantity !== null ? escapeHtml(item.quantity) : 1}"
+                data-invdate="${escapeHtml(item.date_inventory_raw)}"
+                data-dispdate="${escapeHtml(item.date_disposal_raw)}"
+                data-location="${escapeHtml(displayLocation)}"
+                data-status="${escapeHtml(statusValue)}"
+                data-defect="${escapeHtml(item.defect_description)}"
+                data-borrowings='${escapeHtml(JSON.stringify(item.active_borrowings || []))}'>
+              <td class="px-2 py-2 align-middle font-semibold text-slate-900 text-xs">${escapeHtml(item.original_no)}</td>
+              <td class="px-2 py-2 align-middle text-xs font-semibold leading-tight text-slate-900"><span class="inline-flex items-center gap-1 text-blue-600 hover:text-blue-800 transition-colors cursor-pointer"><span>${escapeHtml(item.item_type) || "-"}</span><svg class="w-3 h-3 text-blue-400 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 16v-4M12 8h.01"/></svg></span></td>
+              <td class="px-2 py-2 align-middle text-xs text-slate-600" title="${escapeHtml(item.item_description)}"><span class="block w-full text-center">${escapeHtml(item.item_description) || "-"}</span></td>
+              <td class="px-2 py-2 align-middle text-xs font-medium text-slate-800"><span class="block w-full text-center">${escapeHtml(item.brand) || "-"}</span></td>
+              <td class="px-2 py-2 align-middle text-xs font-medium text-slate-800"><span class="block w-full text-center">${escapeHtml(item.model) || "-"}</span></td>
+              <td class="px-2 py-2 align-middle font-mono text-[11px] text-slate-700" title="${escapeHtml(item.serial_number)}">${escapeHtml(item.serial_number) || "-"}</td>
+              <td class="px-2 py-2 align-middle text-xs font-semibold text-slate-900">${item.quantity !== null ? escapeHtml(item.quantity) : "-"}</td>
+              <td class="px-2 py-2 align-middle text-xs text-slate-700">${item.date_inventory_ui}</td>
+              <td class="px-2 py-2 align-middle text-xs text-slate-700">${item.date_disposal_ui}</td>
+              <td class="px-2 py-2 align-middle text-center text-xs text-slate-700" title="${escapeHtml(displayLocation)}">${escapeHtml(displayLocation) || "-"}</td>
+              <td class="px-2 py-2 align-middle text-center">${statusBadge}</td>
+              <td class="px-2 py-2 align-middle text-xs text-slate-600 uppercase" title="${escapeHtml(item.defect_description)}">${defectBadge}</td>
+            </tr>
+          `);
+        }
+        return htmlRows.join("");
+      };
     } catch (e) {
       console.error("Failed to parse inventory JSON:", e);
+      window.inventoryData = [];
+    }
+  }
+
+  // JSON-based Bulk Rendering Logic for Logs
+  const logDataElement = document.getElementById("logs-data");
+  const logTbodyElement = document.getElementById("logs-tbody");
+
+  if (logDataElement && logTbodyElement) {
+    try {
+      window.logData = JSON.parse(logDataElement.textContent);
+      window.generateLogRows = function(dataSlice, pageStartIndex) {
+        let htmlRows = [];
+        const len = dataSlice.length;
+        
+        for (let i = 0; i < len; i++) {
+          const log = dataSlice[i];
+          const counter = pageStartIndex + i + 1;
+          
+          let performedByBadge = "";
+          if (log.performed_by.toLowerCase() === 'admin') {
+            performedByBadge = `<div class="w-6 h-6 rounded-full bg-blue-50 flex items-center justify-center border border-blue-100 shadow-[0_2px_8px_rgba(59,130,246,0.25)] flex-shrink-0">
+                          <svg class="w-3 h-3 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" /></svg>
+                        </div>`;
+          } else {
+            performedByBadge = `<div class="w-6 h-6 rounded-full bg-emerald-50 flex items-center justify-center border border-emerald-100 shadow-[0_2px_8px_rgba(16,185,129,0.25)] flex-shrink-0">
+                          <svg class="w-3 h-3 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" /></svg>
+                        </div>`;
+          }
+
+          let actionBadge = "";
+          if (log.action === 'added') {
+            actionBadge = `<span class="inline-flex justify-center flex-shrink-0 items-center gap-1.5 w-max px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider text-emerald-600"><svg class="h-1.5 w-1.5 flex-shrink-0 fill-current" viewBox="0 0 6 6" aria-hidden="true"><circle cx="3" cy="3" r="3" /></svg>Added</span>`;
+          } else if (log.action === 'edited') {
+            actionBadge = `<span class="inline-flex justify-center flex-shrink-0 items-center gap-1.5 w-max px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider text-blue-600"><svg class="h-1.5 w-1.5 flex-shrink-0 fill-current" viewBox="0 0 6 6" aria-hidden="true"><circle cx="3" cy="3" r="3" /></svg>Edited</span>`;
+          } else if (log.action === 'deleted') {
+            actionBadge = `<span class="inline-flex justify-center flex-shrink-0 items-center gap-1.5 w-max px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider text-rose-600"><svg class="h-1.5 w-1.5 flex-shrink-0 fill-current" viewBox="0 0 6 6" aria-hidden="true"><circle cx="3" cy="3" r="3" /></svg>Deleted</span>`;
+          } else if (log.action === 'uploaded') {
+            actionBadge = `<span class="inline-flex justify-center flex-shrink-0 items-center gap-1.5 w-max px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider text-teal-600"><svg class="h-1.5 w-1.5 flex-shrink-0 fill-current" viewBox="0 0 6 6" aria-hidden="true"><circle cx="3" cy="3" r="3" /></svg>Uploaded</span>`;
+          } else if (log.action === 'borrowed') {
+            actionBadge = `<span class="inline-flex justify-center flex-shrink-0 items-center gap-1.5 w-max px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider text-sky-600"><svg class="h-1.5 w-1.5 flex-shrink-0 fill-current" viewBox="0 0 6 6" aria-hidden="true"><circle cx="3" cy="3" r="3" /></svg>Borrowed</span>`;
+          } else if (log.action === 'returned') {
+            actionBadge = `<span class="inline-flex justify-center flex-shrink-0 items-center gap-1.5 w-max px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider text-slate-500"><svg class="h-1.5 w-1.5 flex-shrink-0 fill-current" viewBox="0 0 6 6" aria-hidden="true"><circle cx="3" cy="3" r="3" /></svg>Returned</span>`;
+          } else {
+            actionBadge = `<span class="inline-flex justify-center flex-shrink-0 items-center gap-1.5 w-max px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider text-slate-600"><svg class="h-1.5 w-1.5 flex-shrink-0 fill-current" viewBox="0 0 6 6" aria-hidden="true"><circle cx="3" cy="3" r="3" /></svg>${escapeHtml(log.action)}</span>`;
+          }
+          
+          // Case formatting 
+          const performedByFixed = log.performed_by ? escapeHtml(log.performed_by.charAt(0).toUpperCase() + log.performed_by.slice(1).toLowerCase()) : "";
+          
+          htmlRows.push(`
+            <tr class="transition-colors hover:bg-slate-50/80">
+              <td class="px-2 py-2 align-middle font-semibold text-slate-900 text-center text-xs w-16">${counter}</td>
+              <td class="px-2 py-2 align-middle text-center text-[13px] uppercase font-black text-slate-900 transition-colors">
+                <span class="log-item-type inline-flex items-center justify-center gap-1 text-blue-600 hover:text-blue-800 cursor-pointer transition-colors group" data-summary="${escapeHtml(log.description)}" data-details="${escapeHtml(log.details)}" data-item="${escapeHtml(log.item_type)}">
+                  ${escapeHtml(log.item_type)}
+                  <svg class="w-3 h-3 text-blue-400 group-hover:text-blue-600 transition-colors flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 16v-4M12 8h.01"/></svg>
+                </span>
+              </td>
+              <td class="px-2 py-2 align-middle text-center text-[13px] font-semibold text-slate-800">
+                <div class="inline-flex items-center justify-center gap-2 w-full">
+                   ${performedByBadge}
+                   ${performedByFixed}
+                </div>
+              </td>
+              <td class="px-2 py-2 align-middle text-center font-medium">${actionBadge}</td>
+              <td class="px-2 py-2 align-middle text-center text-xs text-slate-700 font-mono tracking-tight">${escapeHtml(log.timestamp_ui)}</td>
+            </tr>
+          `);
+        }
+        return htmlRows.join("");
+      };
+    } catch (e) {
+      console.error("Failed to parse logs JSON:", e);
+      window.logData = [];
     }
   }
 
@@ -183,14 +260,26 @@ document.addEventListener("DOMContentLoaded", function () {
       let activeRows = []; // currently matching rows
 
       function getAllRows() {
+        const isInvVirtual = tableEl.id === 'inventory-table' && window.inventoryData && window.generateHtmlRows;
+        const isLogVirtual = tableEl.id === 'activity-log-table' && window.logData && window.generateLogRows;
+        
+        if (isInvVirtual) return window.inventoryData;
+        if (isLogVirtual) return window.logData;
+        
         const tbody = tableEl.querySelector("tbody");
         return tbody ? Array.from(tbody.querySelectorAll("tr:not(.no-results-row)")) : [];
       }
 
       function renderPage() {
         const all = getAllRows();
-        // Hide every row first
-        all.forEach(r => r.style.display = "none");
+        const isInvVirtual = tableEl.id === 'inventory-table' && window.inventoryData && window.generateHtmlRows;
+        const isLogVirtual = tableEl.id === 'activity-log-table' && window.logData && window.generateLogRows;
+        const isVirtual = isInvVirtual || isLogVirtual;
+        
+        // Hide every row first if rendering physically
+        if (!isVirtual) {
+            all.forEach(r => r.style.display = "none");
+        }
 
         if (activeRows.length === 0) {
           // Show no-results
@@ -204,6 +293,14 @@ document.addEventListener("DOMContentLoaded", function () {
             if (tbody) tbody.appendChild(noRow);
           }
           noRow.style.display = "";
+          
+          if (isVirtual) {
+              const tbody = tableEl.querySelector("tbody");
+              if (tbody) {
+                  tbody.innerHTML = "";
+                  tbody.appendChild(noRow);
+              }
+          }
         } else {
           // Remove any stale no-results row
           const noRow = tableEl.querySelector(".no-results-row");
@@ -211,7 +308,20 @@ document.addEventListener("DOMContentLoaded", function () {
 
           // Show current page slice
           const start = (currentPage - 1) * PAGE_SIZE;
-          activeRows.slice(start, start + PAGE_SIZE).forEach(r => r.style.display = "");
+          const slice = activeRows.slice(start, start + PAGE_SIZE);
+          
+          if (isVirtual) {
+              const tbody = tableEl.querySelector("tbody");
+              if (tbody) {
+                  if (isInvVirtual) {
+                      tbody.innerHTML = window.generateHtmlRows(slice);
+                  } else if (isLogVirtual) {
+                      tbody.innerHTML = window.generateLogRows(slice, start);
+                  }
+              }
+          } else {
+              slice.forEach(r => r.style.display = "");
+          }
         }
 
         renderPagination();
@@ -317,13 +427,37 @@ document.addEventListener("DOMContentLoaded", function () {
 
       function applySearch(query) {
         const all = getAllRows();
+        const isInvVirtual = tableEl.id === 'inventory-table' && window.inventoryData && window.generateHtmlRows;
+        const isLogVirtual = tableEl.id === 'activity-log-table' && window.logData && window.generateLogRows;
+        const isVirtual = isInvVirtual || isLogVirtual;
         currentPage = 1;
-        activeRows = query
-          ? all.filter(row => {
-              const text = Array.from(row.querySelectorAll("td")).map(td => td.textContent.trim().toUpperCase()).join(" ");
-              return text.includes(query.toUpperCase());
-            })
-          : all;
+        
+        if (isVirtual) {
+            activeRows = query
+              ? all.filter(item => {
+                  let searchString = "";
+                  if (isInvVirtual) {
+                      searchString = [
+                          item.original_no, item.item_type, item.item_description, item.brand, item.model,
+                          item.serial_number, item.quantity, item.date_inventory_ui, item.date_disposal_ui,
+                          item.location, item.status, item.defect_description
+                      ].join(" ").toUpperCase();
+                  } else if (isLogVirtual) {
+                      searchString = [
+                          item.item_type, item.performed_by, item.action, item.description
+                      ].join(" ").toUpperCase();
+                  }
+                  return searchString.includes(query.toUpperCase());
+                })
+              : all;
+        } else {
+            activeRows = query
+              ? all.filter(row => {
+                  const text = Array.from(row.querySelectorAll("td")).map(td => td.textContent.trim().toUpperCase()).join(" ");
+                  return text.includes(query.toUpperCase());
+                })
+              : all;
+        }
         renderPage();
       }
 
