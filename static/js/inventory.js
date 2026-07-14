@@ -130,7 +130,7 @@ document.addEventListener("DOMContentLoaded", function () {
               data-status="${escapeHtml(statusValue)}"
               data-defect="${escapeHtml(item.defect_description)}">
             <td class="px-2 py-2 align-middle font-semibold text-slate-900 text-xs">${escapeHtml(item.original_no)}</td>
-            <td class="px-2 py-2 align-middle text-xs font-semibold leading-tight text-slate-900">${escapeHtml(item.item_type) || "-"}</td>
+            <td class="px-2 py-2 align-middle text-xs font-semibold leading-tight text-slate-900"><span class="inline-flex items-center gap-1 text-blue-600 hover:text-blue-800 transition-colors cursor-pointer"><span>${escapeHtml(item.item_type) || "-"}</span><svg class="w-3 h-3 text-blue-400 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 16v-4M12 8h.01"/></svg></span></td>
             <td class="px-2 py-2 align-middle text-xs text-slate-600" title="${escapeHtml(item.item_description)}"><span class="block w-full text-center">${escapeHtml(item.item_description) || "-"}</span></td>
             <td class="px-2 py-2 align-middle text-xs font-medium text-slate-800"><span class="block w-full text-center">${escapeHtml(item.brand) || "-"}</span></td>
             <td class="px-2 py-2 align-middle text-xs font-medium text-slate-800"><span class="block w-full text-center">${escapeHtml(item.model) || "-"}</span></td>
