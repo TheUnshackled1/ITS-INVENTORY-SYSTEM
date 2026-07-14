@@ -169,6 +169,10 @@ table {
 }
 
 
+/* Hide fallback Native Empty States inside simple-datatables */
+.dataTable-empty {
+    display: none !important;
+}
 
 .app-shell {
     display: flex;
