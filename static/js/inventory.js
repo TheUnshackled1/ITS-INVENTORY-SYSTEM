@@ -564,6 +564,39 @@ document.addEventListener("DOMContentLoaded", function () {
   if (closeDrawerBtn) closeDrawerBtn.addEventListener("click", closeDrawer);
   if (sideDrawerOverlay) sideDrawerOverlay.addEventListener("click", closeDrawer);
 
+  // --- Generalized Modal Animation Helpers (Left to Right Slide) ---
+  const animateModalOpen = (overlay, card) => {
+    overlay.style.display = "flex";
+    overlay.classList.remove("hidden", "pointer-events-none");
+    
+    // Instantly snap card to the far left invisibly
+    card.style.transition = "none";
+    card.classList.remove("translate-x-0", "translate-x-[100vw]", "opacity-100");
+    card.classList.add("-translate-x-[100vw]", "opacity-0");
+    
+    // Force DOM reflow to lock the position before animating
+    void overlay.offsetWidth;
+    void card.offsetWidth;
+    
+    // Release strict transition constraint and trigger slide into center
+    card.style.transition = ""; 
+    overlay.classList.remove("opacity-0");
+    card.classList.remove("-translate-x-[100vw]", "opacity-0");
+    card.classList.add("translate-x-0", "opacity-100");
+  };
+
+  const animateModalClose = (overlay, card) => {
+    overlay.classList.add("opacity-0");
+    card.classList.remove("translate-x-0", "opacity-100");
+    // Slide off completely to the right
+    card.classList.add("translate-x-[100vw]", "opacity-0");
+    
+    setTimeout(() => {
+      overlay.classList.add("hidden", "pointer-events-none");
+      overlay.style.display = "none";
+    }, 500);
+  };
+
   // --- Success Modal Controller ---
   const successModalOverlay = document.getElementById("successModalOverlay");
   const successModalCard = document.getElementById("successModalCard");
@@ -573,27 +606,13 @@ document.addEventListener("DOMContentLoaded", function () {
   window.showSuccessModal = function(msg = "Congratulations your record has been successfully saved") {
     if (successModalMessage) successModalMessage.textContent = msg;
     if (successModalOverlay && successModalCard) {
-      successModalOverlay.style.display = "flex"; // Remove inline display:none
-      successModalOverlay.classList.remove("hidden", "pointer-events-none");
-      // Trigger reflow
-      void successModalOverlay.offsetWidth;
-      successModalOverlay.classList.remove("opacity-0");
-      
-      successModalCard.classList.remove("scale-95", "opacity-0");
-      successModalCard.classList.add("scale-100", "opacity-100");
+      animateModalOpen(successModalOverlay, successModalCard);
     }
   };
 
   const closeSuccessModal = function() {
     if (successModalOverlay && successModalCard) {
-      successModalOverlay.classList.add("opacity-0");
-      successModalCard.classList.remove("scale-100", "opacity-100");
-      successModalCard.classList.add("scale-95", "opacity-0");
-      
-      setTimeout(() => {
-        successModalOverlay.classList.add("hidden", "pointer-events-none");
-        successModalOverlay.style.display = "none";
-      }, 300);
+      animateModalClose(successModalOverlay, successModalCard);
     }
   };
 
@@ -608,27 +627,13 @@ document.addEventListener("DOMContentLoaded", function () {
   window.showErrorModal = function(msg = "Ooops.. something wrong, try one more time") {
     if (errorModalMessage) errorModalMessage.textContent = msg;
     if (errorModalOverlay && errorModalCard) {
-      errorModalOverlay.style.display = "flex"; // Remove inline display:none
-      errorModalOverlay.classList.remove("hidden", "pointer-events-none");
-      // Trigger reflow
-      void errorModalOverlay.offsetWidth;
-      errorModalOverlay.classList.remove("opacity-0");
-      
-      errorModalCard.classList.remove("scale-95", "opacity-0");
-      errorModalCard.classList.add("scale-100", "opacity-100");
+      animateModalOpen(errorModalOverlay, errorModalCard);
     }
   };
 
   const closeErrorModal = function() {
     if (errorModalOverlay && errorModalCard) {
-      errorModalOverlay.classList.add("opacity-0");
-      errorModalCard.classList.remove("scale-100", "opacity-100");
-      errorModalCard.classList.add("scale-95", "opacity-0");
-      
-      setTimeout(() => {
-        errorModalOverlay.classList.add("hidden", "pointer-events-none");
-        errorModalOverlay.style.display = "none";
-      }, 300);
+      animateModalClose(errorModalOverlay, errorModalCard);
     }
   };
 
@@ -643,27 +648,13 @@ document.addEventListener("DOMContentLoaded", function () {
   window.showInfoModal = function(msg = "Info") {
     if (infoModalMessage) infoModalMessage.textContent = msg;
     if (infoModalOverlay && infoModalCard) {
-      infoModalOverlay.style.display = "flex"; // Remove inline display:none
-      infoModalOverlay.classList.remove("hidden", "pointer-events-none");
-      // Trigger reflow
-      void infoModalOverlay.offsetWidth;
-      infoModalOverlay.classList.remove("opacity-0");
-      
-      infoModalCard.classList.remove("scale-95", "opacity-0");
-      infoModalCard.classList.add("scale-100", "opacity-100");
+      animateModalOpen(infoModalOverlay, infoModalCard);
     }
   };
 
   const closeInfoModal = function() {
     if (infoModalOverlay && infoModalCard) {
-      infoModalOverlay.classList.add("opacity-0");
-      infoModalCard.classList.remove("scale-100", "opacity-100");
-      infoModalCard.classList.add("scale-95", "opacity-0");
-      
-      setTimeout(() => {
-        infoModalOverlay.classList.add("hidden", "pointer-events-none");
-        infoModalOverlay.style.display = "none";
-      }, 300);
+      animateModalClose(infoModalOverlay, infoModalCard);
     }
   };
 
@@ -799,27 +790,13 @@ document.addEventListener("DOMContentLoaded", function () {
       logDetailSummary.className = "text-sm font-medium text-slate-600 leading-relaxed w-full max-h-[60vh] overflow-y-auto custom-scrollbar";
     }
     if (logDetailModalOverlay && logDetailModalCard) {
-      logDetailModalOverlay.style.display = "flex";
-      logDetailModalOverlay.classList.remove("hidden", "pointer-events-none");
-      // Trigger reflow
-      void logDetailModalOverlay.offsetWidth;
-      logDetailModalOverlay.classList.remove("opacity-0");
-      
-      logDetailModalCard.classList.remove("scale-95", "opacity-0");
-      logDetailModalCard.classList.add("scale-100", "opacity-100");
+      animateModalOpen(logDetailModalOverlay, logDetailModalCard);
     }
   };
 
   const closeLogDetailModal = function() {
     if (logDetailModalOverlay && logDetailModalCard) {
-      logDetailModalOverlay.classList.add("opacity-0");
-      logDetailModalCard.classList.remove("scale-100", "opacity-100");
-      logDetailModalCard.classList.add("scale-95", "opacity-0");
-      
-      setTimeout(() => {
-        logDetailModalOverlay.classList.add("hidden", "pointer-events-none");
-        logDetailModalOverlay.style.display = "none";
-      }, 300);
+      animateModalClose(logDetailModalOverlay, logDetailModalCard);
     }
   };
 
@@ -1032,14 +1009,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function closeDeleteConfirmModal() {
     if (deleteConfirmModalOverlay && deleteConfirmModalCard) {
-      deleteConfirmModalOverlay.classList.add("opacity-0");
-      deleteConfirmModalCard.classList.remove("scale-100", "opacity-100");
-      deleteConfirmModalCard.classList.add("scale-95", "opacity-0");
-      
-      setTimeout(() => {
-        deleteConfirmModalOverlay.classList.add("hidden", "pointer-events-none");
-        deleteConfirmModalOverlay.style.display = "none";
-      }, 300);
+      animateModalClose(deleteConfirmModalOverlay, deleteConfirmModalCard);
     }
   }
 
@@ -1056,13 +1026,7 @@ document.addEventListener("DOMContentLoaded", function () {
         
         // Open the custom CSS modal instead of native confirm
         if (deleteConfirmModalOverlay && deleteConfirmModalCard) {
-          deleteConfirmModalOverlay.style.display = "flex";
-          deleteConfirmModalOverlay.classList.remove("hidden", "pointer-events-none");
-          void deleteConfirmModalOverlay.offsetWidth;
-          deleteConfirmModalOverlay.classList.remove("opacity-0");
-          
-          deleteConfirmModalCard.classList.remove("scale-95", "opacity-0");
-          deleteConfirmModalCard.classList.add("scale-100", "opacity-100");
+          animateModalOpen(deleteConfirmModalOverlay, deleteConfirmModalCard);
         } else {
           // Fallback if modal is missing
           if (confirm("Are you sure you want to delete this record? This action cannot be undone.")) {
@@ -1157,23 +1121,12 @@ document.addEventListener("DOMContentLoaded", function () {
     }
     if (borrowFormError) { borrowFormError.classList.add('hidden'); borrowFormError.textContent = ''; }
 
-    borrowModalOverlay.style.display = 'flex';
-    borrowModalOverlay.classList.remove('hidden', 'pointer-events-none');
-    void borrowModalOverlay.offsetWidth;
-    borrowModalOverlay.classList.remove('opacity-0');
-    borrowModalCard.classList.remove('scale-95', 'opacity-0');
-    borrowModalCard.classList.add('scale-100', 'opacity-100');
+    animateModalOpen(borrowModalOverlay, borrowModalCard);
   }
 
   function closeBorrowModal() {
     if (!borrowModalOverlay || !borrowModalCard) return;
-    borrowModalOverlay.classList.add('opacity-0');
-    borrowModalCard.classList.remove('scale-100', 'opacity-100');
-    borrowModalCard.classList.add('scale-95', 'opacity-0');
-    setTimeout(() => {
-      borrowModalOverlay.classList.add('hidden', 'pointer-events-none');
-      borrowModalOverlay.style.display = 'none';
-    }, 300);
+    animateModalClose(borrowModalOverlay, borrowModalCard);
   }
 
   if (borrowRecordBtn) borrowRecordBtn.addEventListener('click', openBorrowModal);

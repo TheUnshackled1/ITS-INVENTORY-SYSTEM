@@ -31,17 +31,29 @@ document.addEventListener('DOMContentLoaded', function() {
     // ─── Open / Close helpers ─────────────────────────────────────────────────
     function openModal(overlay, card) {
         overlay.style.display = 'flex';
-        requestAnimationFrame(() => {
-            overlay.classList.remove('opacity-0', 'pointer-events-none');
-            card.classList.remove('scale-95', 'opacity-0');
-            card.classList.add('scale-100', 'opacity-100');
-        });
+        overlay.classList.remove('hidden', 'pointer-events-none');
+
+        // Instantly snap card to far left
+        card.style.transition = 'none';
+        card.classList.remove('translate-x-0', 'translate-x-[100vw]', 'opacity-100');
+        card.classList.add('-translate-x-[100vw]', 'opacity-0');
+
+        void overlay.offsetWidth;
+        void card.offsetWidth;
+
+        // Slide into center
+        card.style.transition = '';
+        overlay.classList.remove('opacity-0');
+        card.classList.remove('-translate-x-[100vw]', 'opacity-0');
+        card.classList.add('translate-x-0', 'opacity-100');
     }
 
     function closeModal(overlay, card, cb) {
         overlay.classList.add('opacity-0', 'pointer-events-none');
-        card.classList.remove('scale-100', 'opacity-100');
-        card.classList.add('scale-95', 'opacity-0');
+        card.classList.remove('translate-x-0', 'opacity-100');
+        // Slide out to the right
+        card.classList.add('translate-x-[100vw]', 'opacity-0');
+        
         setTimeout(() => {
             overlay.style.display = 'none';
             if (cb) cb();
