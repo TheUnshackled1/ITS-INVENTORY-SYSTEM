@@ -1,4 +1,3 @@
-
 // UI and DataTables Initialization
 document.addEventListener("DOMContentLoaded", function () {
   // Check for pending success popups from native navigation
@@ -21,7 +20,6 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     }, 150);
   }
-
   const escapeHtml = (unsafe) => {
     if (unsafe === null || unsafe === undefined || unsafe === '') return '';
     return String(unsafe)
