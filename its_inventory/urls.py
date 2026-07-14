@@ -1,7 +1,6 @@
 from django.contrib import admin
 from django.urls import path
 from django.contrib.auth import views as auth_views
-
 from inventory import views
 from inventory.views import add_inventory, edit_inventory, inventory_list, CustomLoginView, activity_log
 
