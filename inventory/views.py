@@ -20,8 +20,7 @@ def log_action(request, action, item, extra="", old_item=None):
     
     def extract_details(obj):
         if not obj:
-            return {}
-            
+            return {}           
         display_location = obj.location or "-"
         if str(obj.status).lower().strip() == 'in_use':
             active_borrowings = IssuanceLog.objects.filter(
@@ -33,7 +32,6 @@ def log_action(request, action, item, extra="", old_item=None):
                 display_location = active_borrowings.first().office_location or display_location
             elif count > 1:
                 display_location = "Multiple Locations (In Use)"
-                
         return {
             "Item Type": obj.item_type or "-",
             "Brand": obj.brand or "-",
@@ -46,7 +44,6 @@ def log_action(request, action, item, extra="", old_item=None):
             "Status": str(obj.status).replace("_", " ").title() if obj.status else "-",
             "Defect": obj.defect_description or "-"
         }
-
     # Store full history so deleted/edited items preserve their exact state at that moment
     details = extract_details(item)
     
@@ -55,7 +52,6 @@ def log_action(request, action, item, extra="", old_item=None):
             "before": extract_details(old_item),
             "after": details
         }
-    
     # Make a friendly plain-text summary based on action
     if action == 'added':
         if "before" in details:
@@ -70,8 +66,7 @@ def log_action(request, action, item, extra="", old_item=None):
     elif action == 'uploaded':
         desc = f"Uploaded {item.item_type}"
     else:
-        desc = extra if extra else f"{action.capitalize()} {item.item_type} (#{pk_str})"
-        
+        desc = extra if extra else f"{action.capitalize()} {item.item_type} (#{pk_str})"        
     AuditLog.objects.create(
         action=action, item_type=item.item_type,
         item_id=item.pk, description=desc, details=json.dumps(details), performed_by=who
@@ -87,7 +82,6 @@ def get_row_value(row, index, default=""):
         return default
     value = row[index]
     return default if value is None else value
-
 
 def normalize_text(value):
     if value is None:
@@ -194,24 +188,19 @@ def inventory_list(request):
     ))
     for item in inventory_data:
         item['original_no'] = pk_to_no.get(item['pk'], '')
-        
         # Keep raw ISO strings strictly for sorting/data-attributes
         item['date_inventory_raw'] = item['date_inventory'].strftime('%Y-%m-%d') if item['date_inventory'] else ''
-        item['date_disposal_raw'] = item['date_disposal'].strftime('%Y-%m-%d') if item['date_disposal'] else ''
-        
+        item['date_disposal_raw'] = item['date_disposal'].strftime('%Y-%m-%d') if item['date_disposal'] else ''       
         # Pre-format the UI display string safely circumventing local JS Date() clock drift
         item['date_inventory_ui'] = item['date_inventory'].strftime('%b %d, %Y') if item['date_inventory'] else '-'
         item['date_disposal_ui'] = item['date_disposal'].strftime('%b %d, %Y') if item['date_disposal'] else '-'
-        
         # Serialize status display manually
-        item['get_status_display'] = dict(Inventory.STATUS_CHOICES).get(item['status'], item['status'].replace("_", " ").title())
-    
+        item['get_status_display'] = dict(Inventory.STATUS_CHOICES).get(item['status'], item['status'].replace("_", " ").title())   
     # Build active borrowings map for Context
     active_issuances = list(IssuanceLog.objects.filter(
         status__in=['borrowed', 'overdue'],
         inventory_item_id__in=[item['pk'] for item in inventory_data]
-    ).values('inventory_item_id', 'borrower_name', 'office_location', 'quantity_borrowed', 'status'))
-    
+    ).values('inventory_item_id', 'borrower_name', 'office_location', 'quantity_borrowed', 'status'))   
     issuances_by_item = {}
     for log in active_issuances:
         pk = log['inventory_item_id']
@@ -222,11 +211,9 @@ def inventory_list(request):
             'office_location': log['office_location'],
             'qty': log['quantity_borrowed'],
             'status': log['status']
-        })
-        
+        })       
     for item in inventory_data:
         item['active_borrowings'] = issuances_by_item.get(item['pk'], [])
-
     distinct_item_types = get_distinct_text_values(Inventory.objects.all(), 'item_type', 'trimmed_item_type')
     distinct_locations = get_distinct_text_values(Inventory.objects.all(), 'location', 'trimmed_location')
     distinct_status_values = [
@@ -298,8 +285,7 @@ def serialize_inventory_item(item):
         'location': item.location or '',
         'status': item.status or 'available',
         'defect_description': item.defect_description or '',
-    }
-    
+    }   
     active_issuances = list(item.issuances.filter(status__in=['borrowed', 'overdue']).values(
         'borrower_name', 'office_location', 'quantity_borrowed', 'status'
     ))
@@ -350,8 +336,7 @@ def edit_inventory(request, pk):
     }
     if request.method == 'POST':
         # Create a fresh copy from db to represent old_item
-        old_item = Inventory.objects.get(pk=pk)
-        
+        old_item = Inventory.objects.get(pk=pk)        
         form = InventoryForm(request.POST, instance=inventory_item)
         is_ajax = request.headers.get('x-requested-with') == 'XMLHttpRequest' or request.headers.get('Accept') == 'application/json'
         for field_name in optional_fields:
@@ -379,23 +364,19 @@ def edit_inventory(request, pk):
             if not updated_item.status:
                 updated_item.status = inventory_item.status or 'available'
             if updated_item.defect_description in ('', None):
-                updated_item.defect_description = inventory_item.defect_description
-            
+                updated_item.defect_description = inventory_item.defect_description            
             # Check for dummy edits
             def norm(v):
                 return "" if v is None else str(v).strip()
-
             has_changes = False
             for field in optional_fields:
                 if norm(getattr(old_item, field)) != norm(getattr(updated_item, field)):
                     has_changes = True
-                    break
-            
+                    break            
             if not has_changes:
                 if is_ajax:
                     return JsonResponse({'success': True, 'no_changes': True})
-                return redirect('inventory-list')
-                
+                return redirect('inventory-list')               
             updated_item.save()
             log_action(request, "edited", updated_item, old_item=old_item)
             if is_ajax:
@@ -545,8 +526,7 @@ def upload_excel(request):
                 if parsed_rows:
                     items_to_create = []
                     items_to_update = []
-                    audit_logs = []
-                    
+                    audit_logs = []                   
                     # Preemptively extract all existing instances into an in-memory dictionary
                     # to prevent sequential N+1 .filter().first() DB calls
                     serials_in_batch = [row['serial_number'] for row in parsed_rows if row['serial_number']]
@@ -554,7 +534,6 @@ def upload_excel(request):
                         item.serial_number: item 
                         for item in Inventory.objects.filter(serial_number__in=serials_in_batch)
                     }
-
                     # We also need to map items uniquely lacking serial numbers via compound tuple keys
                     blank_keys_in_batch = [
                         (
@@ -568,8 +547,7 @@ def upload_excel(request):
                             row['status'],
                             normalize_text(row['defect_description']),
                         ) for row in parsed_rows if not row['serial_number']
-                    ]
-                    
+                    ]                   
                     # In order to bulk-query compound fields efficiently, we iterate over a combined QuerySet.
                     # Since DB matching on 9 fields per element is complex to annotate, we fetch all non-serial items
                     # matching the basic characteristics of our batch and build an index in Python.
@@ -578,7 +556,6 @@ def upload_excel(request):
                         Q(serial_number__isnull=True) | Q(serial_number=''),
                         item_type__in=active_item_types
                     )
-                    
                     existing_items_by_blank_key = {}
                     for item in existing_non_serial_items:
                         key = (
@@ -593,16 +570,13 @@ def upload_excel(request):
                             normalize_text(item.defect_description),
                         )
                         existing_items_by_blank_key[key] = item
-
                     seen_serials = set()
-                    seen_blank_keys = set()
-                    
+                    seen_blank_keys = set()                    
                     update_fields = [
                         'item_type', 'item_description', 'brand', 'model', 
                         'serial_number', 'quantity', 'date_inventory',
                         'date_disposal', 'location', 'status', 'defect_description'
-                    ]
-                    
+                    ]                   
                     for data in parsed_rows:
                         serial = data['serial_number']
                         blank_key = (
@@ -615,8 +589,7 @@ def upload_excel(request):
                             normalize_text(data['location']),
                             data['status'],
                             normalize_text(data['defect_description']),
-                        )  
-                        
+                        )                       
                         if serial:
                             if serial in seen_serials:
                                 existing_item = existing_items_by_serial.get(serial)
@@ -633,8 +606,7 @@ def upload_excel(request):
                                         performed_by=request.user.username if request.user.is_authenticated else "System"
                                     ))
                                 continue
-                            seen_serials.add(serial)
-                            
+                            seen_serials.add(serial)                            
                             existing_item = existing_items_by_serial.get(serial)
                             if existing_item:
                                 for field, value in data.items():
@@ -667,8 +639,7 @@ def upload_excel(request):
                                         performed_by=request.user.username if request.user.is_authenticated else "System"
                                     ))
                                 continue
-                            seen_blank_keys.add(blank_key)
-                            
+                            seen_blank_keys.add(blank_key)                            
                             existing_item = existing_items_by_blank_key.get(blank_key)
                             if existing_item:
                                 for field, value in data.items():
@@ -684,14 +655,12 @@ def upload_excel(request):
                                 ))
                             else:
                                 new_item = Inventory(**data)
-                                items_to_create.append(new_item)
-                                
+                                items_to_create.append(new_item)                               
                     if items_to_update:
                         # De-duplicate elements safely using their python memory internal ID proxy, 
                         # just in case sequential rows attempted to update the exact same PK multiple times.
                         unique_updates = {id(item): item for item in items_to_update}.values()
-                        Inventory.objects.bulk_update(unique_updates, fields=update_fields)
-                        
+                        Inventory.objects.bulk_update(unique_updates, fields=update_fields)                       
                     if items_to_create:
                         inserted_items = Inventory.objects.bulk_create(items_to_create)
                         for item in inserted_items:
@@ -702,26 +671,21 @@ def upload_excel(request):
                                 description=f"Item {item.item_type} uploaded.",
                                 details="Via Excel Upload",
                                 performed_by=request.user.username if request.user.is_authenticated else "System"
-                            ))
-                            
+                            ))                      
                     if audit_logs:
-                        AuditLog.objects.bulk_create(audit_logs)
-                        
+                        AuditLog.objects.bulk_create(audit_logs)                        
                     # SYNCHRONIZE ISSUANCE LOGS FOR IN-USE ITEMS EXCEL UPLOADS
                     # Excel uploads lack Borrowing metadata but still insert `in_use` status constraints.
                     # Generate ghost metrics for any of the newly matched instances to correctly populate tracker
-                    from datetime import timedelta
-                    
+                    from datetime import timedelta                    
                     in_use_items = Inventory.objects.filter(status='in_use')
                     active_logs = IssuanceLog.objects.filter(status__in=['borrowed', 'overdue'])
                     items_with_logs = active_logs.values_list('inventory_item_id', flat=True)
-                    missing_log_items = in_use_items.exclude(id__in=items_with_logs)
-                    
+                    missing_log_items = in_use_items.exclude(id__in=items_with_logs)                   
                     if missing_log_items.exists():
                         ghost_issuances = []
                         today_date = datetime.now().date()
-                        whoami = request.user.username if request.user.is_authenticated else "System Migration"
-                        
+                        whoami = request.user.username if request.user.is_authenticated else "System Migration"                        
                         for item in missing_log_items:
                             ghost_issuances.append(IssuanceLog(
                                 inventory_item=item,
@@ -861,21 +825,18 @@ def borrow_item(request):
         expected_return=expected_return_date,
         status='borrowed',
     )
-
     desc = (
         f"Borrowed {qty}x {item.item_type} (#{item.pk}) "
         f"by {borrower_name} — "
         f"to {office_location}, due {expected_return_date}"
     )
     log_action(request, 'borrowed', item, extra=desc)
-
     return JsonResponse({
         'success': True,
         'new_qty': item.quantity,
         'new_status': item.status,
         'issuance_id': issuance.pk,
     })
-
 
 @require_POST
 @login_required(login_url='login')
