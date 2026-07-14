@@ -664,10 +664,21 @@ def activity_log(request):
             'timestamp_ui': local_time.strftime('%b. %d, %Y, %I:%M %p').replace("AM", "a.m.").replace("PM", "p.m.") if local_time else '-'
         })
         
+    stats = {
+        'total': len(logs_data),
+        'added': sum(1 for log in logs_data if log['action'] == 'added'),
+        'edited': sum(1 for log in logs_data if log['action'] == 'edited'),
+        'deleted': sum(1 for log in logs_data if log['action'] == 'deleted'),
+        'uploaded': sum(1 for log in logs_data if log['action'] == 'uploaded'),
+        'borrowed': sum(1 for log in logs_data if log['action'] == 'borrowed'),
+        'returned': sum(1 for log in logs_data if log['action'] == 'returned'),
+    }
+        
     return render(request, "activity_log.html", {
         "logs": logs,
         "logs_json": json.dumps(logs_data), 
-        "search_query": search_query
+        "search_query": search_query,
+        "stats": stats
     })
 
 from django.views.decorators.http import require_POST
