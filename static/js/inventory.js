@@ -564,7 +564,7 @@ document.addEventListener("DOMContentLoaded", function () {
           for (const [k, v] of Object.entries(detailObj.before)) {
             if (k.startsWith('_')) continue;
             let changed = (v !== detailObj.after[k]);
-            let valColor = changed ? "text-white bg-rose-700 px-1.5 py-0.5 rounded shadow-sm border border-rose-800 w-fit inline-block" : "text-slate-800";
+            let valColor = changed ? "text-white bg-blue-600 px-1.5 py-0.5 rounded shadow-sm border border-blue-700 w-fit inline-block" : "text-slate-800";
             beforeHtml += `
               <div class="col-span-1 flex flex-col">
                 <span class="text-[9px] font-extrabold text-slate-400 uppercase tracking-widest mb-0.5">${k}</span>
@@ -578,7 +578,7 @@ document.addEventListener("DOMContentLoaded", function () {
           for (const [k, v] of Object.entries(detailObj.after)) {
             if (k.startsWith('_')) continue;
             let changed = (v !== detailObj.before[k]);
-            let valColor = changed ? "text-white bg-blue-600 px-1.5 py-0.5 rounded shadow-sm border border-blue-700 w-fit inline-block" : "text-slate-800";
+            let valColor = changed ? "text-white bg-rose-700 px-1.5 py-0.5 rounded shadow-sm border border-rose-800 w-fit inline-block" : "text-slate-800";
             afterHtml += `
               <div class="col-span-1 flex flex-col">
                 <span class="text-[9px] font-extrabold text-slate-400 uppercase tracking-widest mb-0.5">${k}</span>
