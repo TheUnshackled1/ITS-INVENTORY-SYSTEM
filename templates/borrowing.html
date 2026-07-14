@@ -298,7 +298,7 @@
                     {% if log.status == 'borrowed' or log.status == 'overdue' %}
                     <button type="button"
                       class="return-btn inline-flex items-center gap-1 rounded-lg bg-emerald-600 px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider text-white shadow-sm hover:bg-emerald-500 hover:-translate-y-0.5 transition-all cursor-pointer"
-                      data-id="{{ log.pk }}" data-borrower="{{ log.borrower_name }}" data-item="{% if log.inventory_item %}{{ log.inventory_item.item_type }}{% else %}Unknown{% endif %}" data-qty="{{ log.quantity_borrowed }}">
+                      data-id="{{ log.pk }}" data-borrower="{{ log.borrower_name }}" data-location="{% if log.inventory_item %}{{ log.inventory_item.location }}{% endif %}" data-item="{% if log.inventory_item %}{{ log.inventory_item.item_type }}{% else %}Unknown{% endif %}" data-qty="{{ log.quantity_borrowed }}">
                       <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                       Return
                     </button>
@@ -344,6 +344,11 @@
             <option value="lost">Lost</option>
             <option value="disposed">Destroyed / Disposed</option>
           </select>
+        </div>
+        <!-- Return Location -->
+        <div>
+          <label class="block text-[11px] font-bold text-slate-400 uppercase tracking-wide mb-0.5">Return Location *</label>
+          <input type="text" id="returnConditionLocation" class="w-full bg-white border border-slate-300 rounded-xl px-4 py-3 text-sm font-semibold text-slate-800 focus:outline-none focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/20 transition-all shadow-sm" placeholder="e.g. ITS STOCK ROOM" autocomplete="off" />
         </div>
         <!-- Notes -->
         <div>

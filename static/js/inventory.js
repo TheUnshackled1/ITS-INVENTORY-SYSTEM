@@ -115,6 +115,16 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         let defectBadge = item.defect_description ? escapeHtml(item.defect_description) : `<span class="text-slate-400">-</span>`;
+        
+        let displayLocation = item.location;
+        if (statusValue === 'in_use' && item.active_borrowings && item.active_borrowings.length > 0) {
+            if (item.active_borrowings.length === 1) {
+                displayLocation = item.active_borrowings[0].office_location;
+            } else {
+                displayLocation = "Multiple Locations (In Use)";
+            }
+        }
+
         htmlRows.push(`
           <tr class="inventory-row transition-colors hover:bg-slate-50/80 cursor-pointer"
               data-id="${item.pk}"
@@ -126,7 +136,7 @@ document.addEventListener("DOMContentLoaded", function () {
               data-qty="${item.quantity !== null ? escapeHtml(item.quantity) : 1}"
               data-invdate="${escapeHtml(item.date_inventory_raw)}"
               data-dispdate="${escapeHtml(item.date_disposal_raw)}"
-              data-location="${escapeHtml(item.location)}"
+              data-location="${escapeHtml(displayLocation)}"
               data-status="${escapeHtml(statusValue)}"
               data-defect="${escapeHtml(item.defect_description)}"
               data-borrowings='${escapeHtml(JSON.stringify(item.active_borrowings || []))}'>
@@ -139,7 +149,7 @@ document.addEventListener("DOMContentLoaded", function () {
             <td class="px-2 py-2 align-middle text-xs font-semibold text-slate-900">${item.quantity !== null ? escapeHtml(item.quantity) : "-"}</td>
             <td class="px-2 py-2 align-middle text-xs text-slate-700">${item.date_inventory_ui}</td>
             <td class="px-2 py-2 align-middle text-xs text-slate-700">${item.date_disposal_ui}</td>
-            <td class="px-2 py-2 align-middle text-center text-xs text-slate-700" title="${escapeHtml(item.location)}">${escapeHtml(item.location) || "-"}</td>
+            <td class="px-2 py-2 align-middle text-center text-xs text-slate-700" title="${escapeHtml(displayLocation)}">${escapeHtml(displayLocation) || "-"}</td>
             <td class="px-2 py-2 align-middle text-center">${statusBadge}</td>
             <td class="px-2 py-2 align-middle text-xs text-slate-600 uppercase" title="${escapeHtml(item.defect_description)}">${defectBadge}</td>
           </tr>

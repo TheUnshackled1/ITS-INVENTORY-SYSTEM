@@ -49,13 +49,16 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // ─── Step 1: open condition modal ─────────────────────────────────────────
-    function openConditionModal(id, borrower, item, qty) {
+    function openConditionModal(id, borrower, item, qty, location) {
         returnIdInput.value = id;
         // Pre-populate subtitle
         conditionSubtitle.textContent = `Return ${qty}x "${item}" from ${borrower}`;
         // Reset to defaults
         conditionStatus.value = 'available';
         conditionNotes.value  = '';
+        const locationInput = document.getElementById('returnConditionLocation');
+        if (locationInput) locationInput.value = location || '';
+        
         openModal(conditionOverlay, conditionCard);
     }
 
@@ -109,7 +112,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 btn.dataset.id,
                 btn.dataset.borrower,
                 btn.dataset.item,
-                btn.dataset.qty
+                btn.dataset.qty,
+                btn.dataset.location
             );
         }
     });
@@ -146,6 +150,8 @@ document.addEventListener('DOMContentLoaded', function() {
             const id             = returnIdInput.value;
             const returnStatus   = conditionStatus.value;
             const notes          = conditionNotes.value.trim();
+            const locationInput  = document.getElementById('returnConditionLocation');
+            const returnLocation = locationInput ? locationInput.value.trim() : '';
 
             confirmReturnBtn.disabled     = true;
             confirmReturnBtn.textContent  = 'Returning...';
@@ -156,7 +162,11 @@ document.addEventListener('DOMContentLoaded', function() {
                     'Content-Type': 'application/json',
                     'X-CSRFToken': csrfToken,
                 },
-                body: JSON.stringify({ return_status: returnStatus, notes: notes }),
+                body: JSON.stringify({ 
+                    return_status: returnStatus, 
+                    notes: notes,
+                    location: returnLocation 
+                }),
             })
             .then(r => r.json())
             .then(data => {

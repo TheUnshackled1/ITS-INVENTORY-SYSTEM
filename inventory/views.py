@@ -21,6 +21,19 @@ def log_action(request, action, item, extra="", old_item=None):
     def extract_details(obj):
         if not obj:
             return {}
+            
+        display_location = obj.location or "-"
+        if str(obj.status).lower().strip() == 'in_use':
+            active_borrowings = IssuanceLog.objects.filter(
+                inventory_item=obj, 
+                status__in=['borrowed', 'overdue']
+            )
+            count = active_borrowings.count()
+            if count == 1:
+                display_location = active_borrowings.first().office_location or display_location
+            elif count > 1:
+                display_location = "Multiple Locations (In Use)"
+                
         return {
             "Item Type": obj.item_type or "-",
             "Brand": obj.brand or "-",
@@ -29,7 +42,7 @@ def log_action(request, action, item, extra="", old_item=None):
             "Qty": obj.quantity or 1,
             "Inv Date": str(obj.date_inventory) if obj.date_inventory else "-",
             "Disp Date": str(obj.date_disposal) if obj.date_disposal else "-",
-            "Location": obj.location or "-",
+            "Location": display_location,
             "Status": str(obj.status).replace("_", " ").title() if obj.status else "-",
             "Defect": obj.defect_description or "-"
         }
@@ -741,8 +754,7 @@ def return_item(request, pk):
     # Determine the status the item returns to (staff-selected in the condition modal)
     valid_return_statuses = {'available', 'repair', 'disposed', 'lost'}
     return_status = normalize_text(data.get('return_status', 'available')).lower()
-    if return_status not in valid_return_statuses:
-        return_status = 'available'
+    
     today = datetime.now().date()
 
     issuance.date_returned = today
@@ -760,21 +772,26 @@ def return_item(request, pk):
         # Determine if we can safely merge back into the main inventory record pile
         same_status = (str(item.status).lower().strip() == return_status)
         same_defect = (normalize_text(item.defect_description) == notes)
+        
+        return_location = normalize_text(data.get('location', item.location))
+        same_location = (normalize_text(item.location) == return_location)
+
         active_other_borrowings_count = IssuanceLog.objects.filter(
             inventory_item=item, 
             status__in=['borrowed', 'overdue']
         ).exclude(pk=issuance.pk).count()
 
-        # Merge if the condition is identical, OR if this returned unit is the absolute last unit
+        # Merge if the condition AND location are identical, OR if this returned unit is the absolute last unit
         # tied to the parent row (meaning there are no outstanding units left to corrupt).
-        can_merge = (same_status and same_defect) or (item.quantity == 0 and active_other_borrowings_count == 0)
+        can_merge = (same_status and same_defect and same_location) or (item.quantity == 0 and active_other_borrowings_count == 0)
 
         if can_merge:
             item.quantity += issuance.quantity_borrowed
             item.status = return_status
-            if not (same_status and same_defect):
-                # If merging due to being the final unit, we must adopt the new condition.
+            if not (same_status and same_defect and same_location):
+                # If merging due to being the final unit, we must adopt the new properties.
                 item.defect_description = notes
+                item.location = return_location
             item.save()
         else:
             # We cannot merge because doing so would contaminate pristine units still in the stockroom!
@@ -793,7 +810,7 @@ def return_item(request, pk):
                 trimmed_item_description=normalize_text(item.item_description),
                 trimmed_brand=normalize_text(item.brand),
                 trimmed_model=normalize_text(item.model),
-                trimmed_location=normalize_text(item.location),
+                trimmed_location=return_location,
                 date_inventory=item.date_inventory,
                 status=return_status,
                 trimmed_defect_description=notes
@@ -803,17 +820,18 @@ def return_item(request, pk):
                 matching_pile.quantity += issuance.quantity_borrowed
                 matching_pile.save()
                 
-                # Link this issuance to the existing damaged pile
+                # Link this issuance to the existing matching pile
                 issuance.inventory_item = matching_pile
                 issuance.save()
                 item = matching_pile
             else:
-                # No existing pile found. We must spawn a brand new broken/lost record clone.
+                # No existing pile found. We must spawn a brand new independent record clone.
                 new_item = Inventory.objects.get(pk=item.pk)
                 new_item.pk = None # Clones the row
                 new_item.quantity = issuance.quantity_borrowed
                 new_item.status = return_status
                 new_item.defect_description = notes
+                new_item.location = return_location
                 new_item.save()
                 
                 # Link this issuance to the newly spawned broken pile
