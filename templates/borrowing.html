@@ -232,7 +232,23 @@
                     {{ log.office_location }}
                   </td>
                   <td class="px-2 py-2 align-middle text-center text-xs font-semibold text-slate-900">
-                    {% if log.inventory_item %}{{ log.inventory_item.item_type }}{% else %}<span class="text-slate-400">Deleted</span>{% endif %}
+                    {% if log.inventory_item %}
+                      <span class="log-item-details-trigger text-blue-600 hover:text-blue-800 hover:underline cursor-pointer transition-colors"
+                            data-item-type="{{ log.inventory_item.item_type }}"
+                            data-brand="{{ log.inventory_item.brand }}"
+                            data-model="{{ log.inventory_item.model|default:'-' }}"
+                            data-serial="{{ log.inventory_item.serial_number|default:'-' }}"
+                            data-qty="{{ log.inventory_item.quantity }}"
+                            data-inv-date="{{ log.inventory_item.date_inventory|date:'Y-m-d' }}"
+                            data-disp-date="{% if log.inventory_item.date_disposal %}{{ log.inventory_item.date_disposal|date:'Y-m-d' }}{% else %}-{% endif %}"
+                            data-location="{{ log.inventory_item.location }}"
+                            data-status="{{ log.inventory_item.get_status_display }}"
+                            data-defect="{{ log.inventory_item.defect_description|default:'-' }}">
+                        {{ log.inventory_item.item_type }}
+                      </span>
+                    {% else %}
+                      <span class="text-slate-400">Deleted</span>
+                    {% endif %}
                   </td>
                   <td class="px-2 py-2 align-middle text-center text-xs font-semibold text-slate-900">
                     {{ log.quantity_borrowed }}
@@ -414,7 +430,7 @@
   </div>
 
   <!-- Error Overlay Modal -->
-  <div id="errorModalOverlay" style="display: none;" class="fixed inset-0 z-[200] flex items-center justify-center bg-slate-900/60 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300">
+  <div id="errorModalOverlay" style="display: none;" class="fixed inset-0 z-[400] flex items-center justify-center bg-slate-900/60 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300">
     <div id="errorModalCard" class="relative w-full max-w-[340px] bg-white rounded-3xl shadow-2xl overflow-hidden transform scale-95 opacity-0 transition-all duration-500 ease-out mx-4">
       <!-- Top Red Half -->
       <div class="bg-rose-600 px-6 pt-7 pb-6 flex flex-col items-center justify-center text-white">
@@ -438,6 +454,34 @@
         <button type="button" id="errorModalCloseBtn" class="px-10 rounded-xl bg-rose-600 py-3 text-[13px] font-extrabold text-white transition-all shadow-sm hover:shadow-md hover:bg-rose-700 hover:-translate-y-0.5 focus:outline-none focus:ring-4 focus:ring-rose-600/30">
           Okay
         </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Log Detail Overlay Modal -->
+  <div id="logDetailModalOverlay" style="display: none;" class="fixed inset-0 z-[400] flex items-center justify-center bg-slate-900/60 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300">
+    <div id="logDetailModalCard" class="relative w-full max-w-[340px] bg-white rounded-3xl shadow-2xl overflow-hidden transform scale-95 opacity-0 transition-all duration-300 ease-out mx-4">
+      <!-- Close Button (X) -->
+      <button type="button" id="logDetailModalCloseBtn" class="absolute top-3 right-3 w-7 h-7 flex items-center justify-center rounded-full bg-rose-600 text-white hover:bg-rose-700 transition-colors shadow-sm focus:outline-none focus:ring-4 focus:ring-rose-600/30 z-[100]">
+        <svg class="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
+      </button>
+
+      <!-- Top Blue Half -->
+      <div class="bg-blue-600 px-6 pt-7 pb-6 flex flex-col items-center justify-center text-white">
+        <!-- Info Icon -->
+        <div class="w-12 h-12 rounded-full border-[2.5px] border-white flex items-center justify-center mb-3 shadow-sm bg-blue-500">
+          <svg class="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+        </div>
+        <h3 class="text-[14px] font-extrabold tracking-[0.25em] uppercase drop-shadow-sm text-center">Details</h3>
+      </div>
+      
+      <!-- Bottom White Half -->
+      <div class="bg-white px-6 py-7 flex flex-col items-center text-center">
+        <div class="w-full bg-slate-50 rounded-xl border border-slate-100 p-5 shadow-sm">
+          <div id="logDetailSummary" class="text-[13px] font-bold text-slate-800 leading-relaxed w-full"></div>
+        </div>
       </div>
     </div>
   </div>

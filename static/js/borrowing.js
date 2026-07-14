@@ -114,6 +114,32 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
+    // ─── Attach .log-item-details-trigger clicks (item details modal popup) ───
+    document.body.addEventListener('click', function(e) {
+        const trigger = e.target.closest('.log-item-details-trigger');
+        if (trigger) {
+            e.preventDefault();
+            const itemType = trigger.getAttribute("data-item-type");
+            
+            const detailObj = {
+                "Item Type": trigger.getAttribute("data-item-type") || "-",
+                "Brand": trigger.getAttribute("data-brand") || "-",
+                "Model": trigger.getAttribute("data-model") || "-",
+                "Serial Number": trigger.getAttribute("data-serial") || "-",
+                "Qty": trigger.getAttribute("data-qty") || "-",
+                "Inv Date": trigger.getAttribute("data-inv-date") || "-",
+                "Disp Date": trigger.getAttribute("data-disp-date") || "-",
+                "Location": trigger.getAttribute("data-location") || "-",
+                "Status": trigger.getAttribute("data-status") || "-",
+                "Defect": trigger.getAttribute("data-defect") || "-"
+            };
+
+            if (typeof window.openLogDetailModal === 'function') {
+                window.openLogDetailModal(itemType, null, JSON.stringify(detailObj));
+            }
+        }
+    });
+
     // ─── Confirm Return: send to backend ─────────────────────────────────────
     if (confirmReturnBtn) {
         confirmReturnBtn.addEventListener('click', function() {

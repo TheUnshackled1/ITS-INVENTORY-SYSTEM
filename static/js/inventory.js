@@ -533,7 +533,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const logDetailSummary = document.getElementById("logDetailSummary");
   const logDetailModalCloseBtn = document.getElementById("logDetailModalCloseBtn");
 
-  const openLogDetailModal = function(itemType, summary, detailsJSON) {
+  window.openLogDetailModal = function(itemType, summary, detailsJSON) {
     if (logDetailItemType) logDetailItemType.textContent = itemType || "-";
     if (logDetailSummary) {
       let html = '';

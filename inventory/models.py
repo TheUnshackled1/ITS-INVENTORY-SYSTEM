@@ -6,6 +6,7 @@ class Inventory(models.Model):
         ("available", "Available"),
         ("in_use", "In Use"),
         ("repair", "Under Repair"),
+        ("not_working", "Not Working"),
         ("disposed", "Disposed"),
         ("lost", "Lost"),
     ]
