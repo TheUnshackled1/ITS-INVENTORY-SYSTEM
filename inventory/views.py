@@ -706,6 +706,37 @@ def upload_excel(request):
                             
                     if audit_logs:
                         AuditLog.objects.bulk_create(audit_logs)
+                        
+                    # SYNCHRONIZE ISSUANCE LOGS FOR IN-USE ITEMS EXCEL UPLOADS
+                    # Excel uploads lack Borrowing metadata but still insert `in_use` status constraints.
+                    # Generate ghost metrics for any of the newly matched instances to correctly populate tracker
+                    from datetime import timedelta
+                    
+                    in_use_items = Inventory.objects.filter(status='in_use')
+                    active_logs = IssuanceLog.objects.filter(status__in=['borrowed', 'overdue'])
+                    items_with_logs = active_logs.values_list('inventory_item_id', flat=True)
+                    missing_log_items = in_use_items.exclude(id__in=items_with_logs)
+                    
+                    if missing_log_items.exists():
+                        ghost_issuances = []
+                        today_date = datetime.now().date()
+                        whoami = request.user.username if request.user.is_authenticated else "System Migration"
+                        
+                        for item in missing_log_items:
+                            ghost_issuances.append(IssuanceLog(
+                                inventory_item=item,
+                                quantity_borrowed=item.quantity,
+                                borrower_name="Imported Data",
+                                office_location=item.location or "Unknown Office",
+                                issued_by=whoami,
+                                date_issued=item.date_inventory or today_date,
+                                expected_return=item.date_inventory + timedelta(days=365) if item.date_inventory else today_date + timedelta(days=365),
+                                status='borrowed',
+                                notes="Automatically generated tracking log for Imported Data."
+                            ))
+                        if ghost_issuances:
+                            IssuanceLog.objects.bulk_create(ghost_issuances)
+                            
                     messages.success(request, "Inventory updated successfully!")
                 else:
                     messages.warning(request, "No valid data rows found in file.")
