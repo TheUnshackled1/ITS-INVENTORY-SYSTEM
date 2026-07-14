@@ -769,8 +769,9 @@ document.addEventListener("DOMContentLoaded", function () {
         
         if (borrowings && borrowings.length > 0) {
           activeBorrowingsList.innerHTML = borrowings.map(b => 
-            `<div class="bg-white px-3 py-2.5 rounded-lg flex flex-col items-start gap-1.5 text-sm shadow-sm border border-slate-100">
-                <span class="font-bold text-slate-800">${escapeHtml(b.borrower_name)} <span class="text-slate-500 font-medium ml-1 bg-slate-100 px-1.5 py-0.5 rounded text-[11px]">${escapeHtml(b.office_location)}</span></span>
+            `<div class="bg-white px-3 py-2.5 rounded-lg flex items-center justify-start gap-2 text-sm shadow-sm border border-slate-100 flex-wrap">
+                <span class="font-bold text-slate-800">${escapeHtml(b.borrower_name)}</span>
+                <span class="text-slate-500 font-medium bg-slate-100 px-1.5 py-0.5 rounded text-[11px]">${escapeHtml(b.office_location)}</span>
                 <span class="bg-blue-100 text-blue-700 text-[10px] font-black px-2 py-0.5 rounded shadow-sm">QTY: ${escapeHtml(b.qty)}</span>
             </div>`
           ).join('');
