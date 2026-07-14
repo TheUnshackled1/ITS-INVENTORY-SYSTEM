@@ -279,8 +279,7 @@ def inventory_list(request):
     repair_count = Inventory.objects.filter(status='repair').count()
     in_use_count = Inventory.objects.filter(status='in_use').count()
     not_working_count = Inventory.objects.filter(
-        Q(status='not_working') |
-        Q(defect_description__iregex=r'not working')
+        defect_description__iregex=r'not working'
     ).count()
     stats = {
         'total': total_items,
@@ -740,7 +739,7 @@ def return_item(request, pk):
 
     notes = normalize_text(data.get('notes', ''))
     # Determine the status the item returns to (staff-selected in the condition modal)
-    valid_return_statuses = {'available', 'repair', 'not_working', 'disposed', 'lost'}
+    valid_return_statuses = {'available', 'repair', 'disposed', 'lost'}
     return_status = normalize_text(data.get('return_status', 'available')).lower()
     if return_status not in valid_return_statuses:
         return_status = 'available'
