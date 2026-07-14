@@ -699,8 +699,7 @@ def upload_excel(request):
                                 notes="Automatically generated tracking log for Imported Data."
                             ))
                         if ghost_issuances:
-                            IssuanceLog.objects.bulk_create(ghost_issuances)
-                            
+                            IssuanceLog.objects.bulk_create(ghost_issuances)                           
                     messages.success(request, "Inventory updated successfully!")
                 else:
                     messages.warning(request, "No valid data rows found in file.")
@@ -720,8 +719,7 @@ def activity_log(request):
             Q(item_type__icontains=search_query) |
             Q(performed_by__icontains=search_query) |
             Q(action__icontains=search_query)
-        )
-        
+        )    
     logs_data = []
     for log in logs:
         # Convert timestamp to local timezone for UI display
@@ -735,8 +733,7 @@ def activity_log(request):
             'performed_by': log.performed_by or '',
             'action': log.action or '',
             'timestamp_ui': local_time.strftime('%b. %d, %Y, %I:%M %p').replace("AM", "a.m.").replace("PM", "p.m.") if local_time else '-'
-        })
-        
+        })      
     stats = {
         'total': len(logs_data),
         'added': sum(1 for log in logs_data if log['action'] == 'added'),
@@ -768,7 +765,6 @@ def delete_inventory(request, pk):
     item.delete()
     return JsonResponse({'success': True, 'message': 'Record deleted successfully'})
 
-
 @require_POST
 @login_required(login_url='login')
 def borrow_item(request):
@@ -788,7 +784,6 @@ def borrow_item(request):
         qty = int(data.get('quantity_borrowed', 1))
     except (TypeError, ValueError):
         qty = 1
-
     if not borrower_name or not office_location or not expected_return or not tel_no or not purpose:
         return JsonResponse({'success': False, 'error': 'Please fill in all required fields.'}, status=400)
     if qty < 1:
@@ -799,21 +794,17 @@ def borrow_item(request):
         return JsonResponse({'success': False, 'error': 'Inventory item not found.'}, status=404)
     if qty > item.quantity:
         return JsonResponse({'success': False, 'error': f'Only {item.quantity} unit(s) available.'}, status=400)
-
     # Decrement inventory quantity
     item.quantity -= qty
     if item.quantity == 0:
         item.status = 'in_use'
     item.save()
-
     # Parse expected return date
     try:
         expected_return_date = datetime.strptime(expected_return, '%Y-%m-%d').date()
     except ValueError:
         return JsonResponse({'success': False, 'error': 'Invalid expected return date.'}, status=400)
-
     who = request.user.username if request.user.is_authenticated else 'System'
-
     issuance = IssuanceLog.objects.create(
         inventory_item=item,
         quantity_borrowed=qty,
@@ -953,28 +944,23 @@ def return_item(request, pk):
         )
     return JsonResponse({'success': True, 'message': 'Item returned successfully.'})
 
-
 @login_required
 def borrowing_list(request):
     today = datetime.now().date()
     tab = request.GET.get('tab', 'all').strip().lower()
     search_query = request.GET.get('q', '').strip()
-
     # Mark overdue records in the database
     IssuanceLog.objects.filter(
         status='borrowed',
         expected_return__lt=today,
     ).update(status='overdue')
-
     logs = IssuanceLog.objects.select_related('inventory_item').all()
-
     if tab == 'borrowed':
         logs = logs.filter(status='borrowed')
     elif tab == 'returned':
         logs = logs.filter(status='returned')
     elif tab == 'overdue':
         logs = logs.filter(status='overdue')
-
     if search_query:
         logs = logs.filter(
             Q(borrower_name__icontains=search_query) |
@@ -982,19 +968,16 @@ def borrowing_list(request):
             Q(office_location__icontains=search_query) |
             Q(issued_by__icontains=search_query)
         )
-
     total_issuances = IssuanceLog.objects.count()
     currently_borrowed = IssuanceLog.objects.filter(status='borrowed').count()
     returned_count = IssuanceLog.objects.filter(status='returned').count()
     overdue_count = IssuanceLog.objects.filter(status='overdue').count()
-
     stats = {
         'total': total_issuances,
         'borrowed': currently_borrowed,
         'returned': returned_count,
         'overdue': overdue_count,
     }
-
     return render(request, 'borrowing.html', {
         'logs': logs,
         'stats': stats,
