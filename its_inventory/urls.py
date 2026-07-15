@@ -9,8 +9,8 @@ admin.site.site_title = "MIS Inventory Portal"
 admin.site.index_title = "Welcome to the MIS Inventory Django Built-in Dashboard"
 
 urlpatterns = [
-    path('dashboard/', dashboard_view, name='dashboard'),
-    path('', inventory_list, name='inventory-list'),
+    path('', dashboard_view, name='dashboard'),
+    path('inventory/', inventory_list, name='inventory-list'),
     path('inventory/add/', add_inventory, name='inventory-create'),
     path('inventory/<int:pk>/edit/', edit_inventory, name='inventory-edit'),
     path('inventory/<int:pk>/delete/', views.delete_inventory, name='inventory-delete'),
