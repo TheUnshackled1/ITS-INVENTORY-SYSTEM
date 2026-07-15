@@ -34,12 +34,12 @@ document.addEventListener("DOMContentLoaded", function () {
   const statNumbers = document.querySelectorAll("#stats-cards-container p.text-3xl");
   if (statNumbers.length > 0) {
     statNumbers.forEach(el => {
-      const targetStr = el.textContent.trim();
+      const targetStr = el.textContent.trim().replace(/,/g, '');
       const target = parseInt(targetStr, 10);
       
       if (!isNaN(target) && target > 0) {
         el.textContent = "0";
-        const duration = 5000; // 5 seconds
+        const duration = 500; // 1 second
         const start = performance.now();
         
         const step = (now) => {
