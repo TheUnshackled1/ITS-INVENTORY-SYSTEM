@@ -98,7 +98,7 @@
 
 /* ─── Top 10 Masonry Grid ─────────────────────── */
 .dashboard-charts-grid {
-    min-height: calc(100vh - 260px); /* Forces the grid to stretch to bottom of screen */
+    /* Removed fixed min-height stretch - the grid now naturally hugs its content */
 }
 
 /* Increases the thickness of the green value bars */
