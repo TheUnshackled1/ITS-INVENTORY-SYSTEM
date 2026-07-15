@@ -120,7 +120,10 @@ def get_distinct_text_values(queryset, field_name, annotation_name):
 
 @login_required
 def dashboard_view(request):
-    return render(request, "dashboard.html")
+    recent_items = Inventory.objects.order_by('-id')[:10]
+    return render(request, "dashboard.html", {
+        "recent_items": recent_items
+    })
 
 @login_required
 def inventory_list(request):

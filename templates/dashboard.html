@@ -188,49 +188,41 @@
             <!-- Column -->
             <div class="lg:row-span-2 bg-white rounded-3xl border border-slate-200 shadow-sm p-4 lg:p-6 w-full flex flex-col relative justify-between">
                  <div class="flex flex-col flex-1 pb-2 min-h-0">
-                    <h2 class="text-lg font-bold text-slate-800 mb-6 shrink-0">Top 10 Items Based on Value</h2>
+                    <h2 class="text-lg font-bold text-slate-800 mb-6 shrink-0">10 Recent Items</h2>
                     
-                    <div class="flex flex-col justify-between flex-1 pr-6 relative w-full min-h-0">
-                         <!-- Horizontal Bars -->
-                         <div class="flex items-center text-xs font-semibold text-slate-500">
-                            <span class="w-[45%] shrink-0 text-right pr-3 truncate" title="C100006 - Cherry Finished Crystal">C100006 - Cherry Finished Crystal</span>
-                            <div class="flex-1 shrink flex items-center"><div class="top-10-bar bg-emerald-500 shadow-sm w-full relative"></div><span class="absolute right-0 text-[10px] text-slate-500">0.14M</span></div>
-                         </div>
-                         <div class="flex items-center text-xs font-semibold text-slate-500">
-                            <span class="w-[45%] shrink-0 text-right pr-3 truncate" title="C100011 - Winter Frost Vase">C100011 - Winter Frost Vase</span>
-                            <div class="flex-1 shrink flex items-center"><div class="top-10-bar bg-emerald-500 shadow-sm w-[90%] relative"></div><span class="absolute right-0 text-[10px] text-slate-500">0.13M</span></div>
-                         </div>
-                         <div class="flex items-center text-xs font-semibold text-slate-500">
-                            <span class="w-[45%] shrink-0 text-right pr-3 truncate" title="C100055 - Silver Plated Photo">C100055 - Silver Plated Photo</span>
-                            <div class="flex-1 shrink flex items-center"><div class="top-10-bar bg-emerald-500 shadow-sm w-[85%] relative"></div><span class="absolute right-0 text-[10px] text-slate-500">0.12M</span></div>
-                         </div>
-                         <div class="flex items-center text-xs font-semibold text-slate-500">
-                            <span class="w-[45%] shrink-0 text-right pr-3 truncate" title="C100009 - Normandy Vase">C100009 - Normandy Vase</span>
-                            <div class="flex-1 shrink flex items-center"><div class="top-10-bar bg-emerald-500 shadow-sm w-[80%] relative"></div><span class="absolute right-0 text-[10px] text-slate-500">0.12M</span></div>
-                         </div>
-                         <div class="flex items-center text-xs font-semibold text-slate-500">
-                            <span class="w-[45%] shrink-0 text-right pr-3 truncate" title="C100010 - Wisper-Cut Vase">C100010 - Wisper-Cut Vase</span>
-                            <div class="flex-1 shrink flex items-center"><div class="top-10-bar bg-emerald-500 shadow-sm w-[75%] relative"></div><span class="absolute right-0 text-[10px] text-slate-500">0.12M</span></div>
-                         </div>
-                         <div class="flex items-center text-xs font-semibold text-slate-500">
-                            <span class="w-[45%] shrink-0 text-right pr-3 truncate" title="C100040 - Channel Speaker Sys">C100040 - Channel Speaker Sys</span>
-                            <div class="flex-1 shrink flex items-center"><div class="top-10-bar bg-emerald-500 shadow-sm w-[65%] relative"></div><span class="absolute right-0 text-[10px] text-slate-500">0.09M</span></div>
-                         </div>
-                         <div class="flex items-center text-xs font-semibold text-slate-500">
-                            <span class="w-[45%] shrink-0 text-right pr-3 truncate" title="C100004 - Walnut Medallian">C100004 - Walnut Medallian</span>
-                            <div class="flex-1 shrink flex items-center"><div class="top-10-bar bg-emerald-500 shadow-sm w-[55%] relative"></div><span class="absolute right-0 text-[10px] text-slate-500">0.08M</span></div>
-                         </div>
-                         <div class="flex items-center text-xs font-semibold text-slate-500">
-                            <span class="w-[45%] shrink-0 text-right pr-3 truncate" title="C100005 - Cherry Finished Crystal">C100005 - Cherry Finished Crystal</span>
-                            <div class="flex-1 shrink flex items-center"><div class="top-10-bar bg-emerald-500 shadow-sm w-[53%] relative"></div><span class="absolute right-0 text-[10px] text-slate-500">0.08M</span></div>
-                         </div>
-                         <div class="flex items-center text-xs font-semibold text-slate-500">
-                            <span class="w-[45%] shrink-0 text-right pr-3 truncate" title="C100003 - Cherry Finish Frame">C100003 - Cherry Finish Frame</span>
-                            <div class="flex-1 shrink flex items-center"><div class="top-10-bar bg-emerald-500 shadow-sm w-[50%] relative"></div><span class="absolute right-0 text-[10px] text-slate-500">0.08M</span></div>
-                         </div>
-                         <div class="flex items-center text-xs font-semibold text-slate-500">
-                            <span class="w-[45%] shrink-0 text-right pr-3 truncate" title="C100051 - Bamboo Digital">C100051 - Bamboo Digital</span>
-                            <div class="flex-1 shrink flex items-center"><div class="top-10-bar bg-emerald-500 shadow-sm w-[50%] relative"></div><span class="absolute right-0 text-[10px] text-slate-500">0.08M</span></div>
+                    <div class="flex flex-col flex-1 relative w-full min-h-0">
+                         <!-- Authentic Table Layout -->
+                         <div class="w-full relative min-h-0">
+                             <table class="w-full text-left text-xs text-slate-600 table-fixed border-collapse">
+                                 <thead class="text-[10px] text-slate-400 uppercase tracking-widest border-b border-slate-100">
+                                     <tr>
+                                         <th class="pb-3 px-1 font-bold w-6 text-center">#</th>
+                                         <th class="pb-3 px-3 font-bold w-[45%]">Item</th>
+                                         <th class="pb-3 px-3 font-bold w-[30%]">Brand</th>
+                                         <th class="pb-3 px-1 font-bold text-right w-20">Date</th>
+                                     </tr>
+                                 </thead>
+                                 <tbody class="divide-y divide-slate-50">
+                                     {% for item in recent_items %}
+                                     <tr class="hover:bg-slate-50 transition duration-200">
+                                         <td class="py-2.5 px-1 text-center font-extrabold text-emerald-600 align-middle">{{ forloop.counter }}</td>
+                                         <td class="py-2.5 px-3 font-bold text-slate-800 align-middle break-words pr-4">
+                                             {{ item.model|default:item.item_description }}
+                                         </td>
+                                         <td class="py-2.5 px-3 font-semibold text-slate-600 align-middle break-words">
+                                             {{ item.brand|default:"-" }}
+                                         </td>
+                                         <td class="py-2.5 px-1 text-right text-slate-500 font-medium whitespace-nowrap align-middle">
+                                             {{ item.date_inventory|date:"M d, Y" }}
+                                         </td>
+                                     </tr>
+                                     {% empty %}
+                                     <tr>
+                                         <td colspan="4" class="py-6 text-center text-sm text-slate-400 font-medium">No recent items found.</td>
+                                     </tr>
+                                     {% endfor %}
+                                 </tbody>
+                             </table>
                          </div>
                     </div>
                  </div>
@@ -246,48 +238,68 @@
                  <div class="flex flex-col flex-1 pb-2 min-h-0">
                     <h2 class="text-lg font-bold text-slate-800 mb-6 shrink-0">Top 10 Items Based on Value</h2>
                     
-                    <div class="flex flex-col justify-between flex-1 pr-6 relative w-full min-h-0">
-                         <!-- Horizontal Bars -->
-                         <div class="flex items-center text-xs font-semibold text-slate-500">
-                            <span class="w-[45%] shrink-0 text-right pr-3 truncate" title="C100006 - Cherry Finished Crystal">C100006 - Cherry Finished Crystal</span>
-                            <div class="flex-1 shrink flex items-center"><div class="top-10-bar bg-emerald-500 shadow-sm w-full relative"></div><span class="absolute right-0 text-[10px] text-slate-500">0.14M</span></div>
-                         </div>
-                         <div class="flex items-center text-xs font-semibold text-slate-500">
-                            <span class="w-[45%] shrink-0 text-right pr-3 truncate" title="C100011 - Winter Frost Vase">C100011 - Winter Frost Vase</span>
-                            <div class="flex-1 shrink flex items-center"><div class="top-10-bar bg-emerald-500 shadow-sm w-[90%] relative"></div><span class="absolute right-0 text-[10px] text-slate-500">0.13M</span></div>
-                         </div>
-                         <div class="flex items-center text-xs font-semibold text-slate-500">
-                            <span class="w-[45%] shrink-0 text-right pr-3 truncate" title="C100055 - Silver Plated Photo">C100055 - Silver Plated Photo</span>
-                            <div class="flex-1 shrink flex items-center"><div class="top-10-bar bg-emerald-500 shadow-sm w-[85%] relative"></div><span class="absolute right-0 text-[10px] text-slate-500">0.12M</span></div>
-                         </div>
-                         <div class="flex items-center text-xs font-semibold text-slate-500">
-                            <span class="w-[45%] shrink-0 text-right pr-3 truncate" title="C100009 - Normandy Vase">C100009 - Normandy Vase</span>
-                            <div class="flex-1 shrink flex items-center"><div class="top-10-bar bg-emerald-500 shadow-sm w-[80%] relative"></div><span class="absolute right-0 text-[10px] text-slate-500">0.12M</span></div>
-                         </div>
-                         <div class="flex items-center text-xs font-semibold text-slate-500">
-                            <span class="w-[45%] shrink-0 text-right pr-3 truncate" title="C100010 - Wisper-Cut Vase">C100010 - Wisper-Cut Vase</span>
-                            <div class="flex-1 shrink flex items-center"><div class="top-10-bar bg-emerald-500 shadow-sm w-[75%] relative"></div><span class="absolute right-0 text-[10px] text-slate-500">0.12M</span></div>
-                         </div>
-                         <div class="flex items-center text-xs font-semibold text-slate-500">
-                            <span class="w-[45%] shrink-0 text-right pr-3 truncate" title="C100040 - Channel Speaker Sys">C100040 - Channel Speaker Sys</span>
-                            <div class="flex-1 shrink flex items-center"><div class="top-10-bar bg-emerald-500 shadow-sm w-[65%] relative"></div><span class="absolute right-0 text-[10px] text-slate-500">0.09M</span></div>
-                         </div>
-                         <div class="flex items-center text-xs font-semibold text-slate-500">
-                            <span class="w-[45%] shrink-0 text-right pr-3 truncate" title="C100004 - Walnut Medallian">C100004 - Walnut Medallian</span>
-                            <div class="flex-1 shrink flex items-center"><div class="top-10-bar bg-emerald-500 shadow-sm w-[55%] relative"></div><span class="absolute right-0 text-[10px] text-slate-500">0.08M</span></div>
-                         </div>
-                         <div class="flex items-center text-xs font-semibold text-slate-500">
-                            <span class="w-[45%] shrink-0 text-right pr-3 truncate" title="C100005 - Cherry Finished Crystal">C100005 - Cherry Finished Crystal</span>
-                            <div class="flex-1 shrink flex items-center"><div class="top-10-bar bg-emerald-500 shadow-sm w-[53%] relative"></div><span class="absolute right-0 text-[10px] text-slate-500">0.08M</span></div>
-                         </div>
-                         <div class="flex items-center text-xs font-semibold text-slate-500">
-                            <span class="w-[45%] shrink-0 text-right pr-3 truncate" title="C100003 - Cherry Finish Frame">C100003 - Cherry Finish Frame</span>
-                            <div class="flex-1 shrink flex items-center"><div class="top-10-bar bg-emerald-500 shadow-sm w-[50%] relative"></div><span class="absolute right-0 text-[10px] text-slate-500">0.08M</span></div>
-                         </div>
-                         <div class="flex items-center text-xs font-semibold text-slate-500">
-                            <span class="w-[45%] shrink-0 text-right pr-3 truncate" title="C100051 - Bamboo Digital">C100051 - Bamboo Digital</span>
-                            <div class="flex-1 shrink flex items-center"><div class="top-10-bar bg-emerald-500 shadow-sm w-[50%] relative"></div><span class="absolute right-0 text-[10px] text-slate-500">0.08M</span></div>
-                         </div>
+                    <div class="w-full relative min-h-0">
+                         <table class="w-full text-left text-xs font-semibold text-slate-500 table-fixed border-collapse">
+                             <thead class="text-[10px] text-slate-400 uppercase tracking-widest border-b border-slate-100">
+                                 <tr>
+                                     <th class="pb-3 px-1 font-bold w-6 text-center">#</th>
+                                     <th class="pb-3 px-3 font-bold w-[45%]">Item</th>
+                                     <th class="pb-3 px-1 font-bold text-right pr-2">Value (M)</th>
+                                 </tr>
+                             </thead>
+                             <tbody class="divide-y divide-slate-50">
+                                 <tr class="hover:bg-slate-50 transition duration-200">
+                                     <td class="py-2.5 px-1 text-center font-extrabold text-emerald-600 align-middle">1</td>
+                                     <td class="py-2.5 px-3 font-bold text-slate-800 align-middle break-words pr-2">C100006 - Cherry Finished Crystal</td>
+                                     <td class="py-2.5 px-3 text-right text-slate-500 font-bold whitespace-nowrap align-middle">0.14M</td>
+                                 </tr>
+                                 <tr class="hover:bg-slate-50 transition duration-200">
+                                     <td class="py-2.5 px-1 text-center font-extrabold text-emerald-600 align-middle">2</td>
+                                     <td class="py-2.5 px-3 font-bold text-slate-800 align-middle break-words pr-2">C100011 - Winter Frost Vase</td>
+                                     <td class="py-2.5 px-3 text-right text-slate-500 font-bold whitespace-nowrap align-middle">0.13M</td>
+                                 </tr>
+                                 <tr class="hover:bg-slate-50 transition duration-200">
+                                     <td class="py-2.5 px-1 text-center font-extrabold text-emerald-600 align-middle">3</td>
+                                     <td class="py-2.5 px-3 font-bold text-slate-800 align-middle break-words pr-2">C100055 - Silver Plated Photo</td>
+                                     <td class="py-2.5 px-3 text-right text-slate-500 font-bold whitespace-nowrap align-middle">0.12M</td>
+                                 </tr>
+                                 <tr class="hover:bg-slate-50 transition duration-200">
+                                     <td class="py-2.5 px-1 text-center font-extrabold text-emerald-600 align-middle">4</td>
+                                     <td class="py-2.5 px-3 font-bold text-slate-800 align-middle break-words pr-2">C100009 - Normandy Vase</td>
+                                     <td class="py-2.5 px-3 text-right text-slate-500 font-bold whitespace-nowrap align-middle">0.12M</td>
+                                 </tr>
+                                 <tr class="hover:bg-slate-50 transition duration-200">
+                                     <td class="py-2.5 px-1 text-center font-extrabold text-emerald-600 align-middle">5</td>
+                                     <td class="py-2.5 px-3 font-bold text-slate-800 align-middle break-words pr-2">C100010 - Wisper-Cut Vase</td>
+                                     <td class="py-2.5 px-3 text-right text-slate-500 font-bold whitespace-nowrap align-middle">0.12M</td>
+                                 </tr>
+                                 <tr class="hover:bg-slate-50 transition duration-200">
+                                     <td class="py-2.5 px-1 text-center font-extrabold text-emerald-600 align-middle">6</td>
+                                     <td class="py-2.5 px-3 font-bold text-slate-800 align-middle break-words pr-2">C100040 - Channel Speaker Sys</td>
+                                     <td class="py-2.5 px-3 text-right text-slate-500 font-bold whitespace-nowrap align-middle">0.09M</td>
+                                 </tr>
+                                 <tr class="hover:bg-slate-50 transition duration-200">
+                                     <td class="py-2.5 px-1 text-center font-extrabold text-emerald-600 align-middle">7</td>
+                                     <td class="py-2.5 px-3 font-bold text-slate-800 align-middle break-words pr-2">C100004 - Walnut Medallian</td>
+                                     <td class="py-2.5 px-3 text-right text-slate-500 font-bold whitespace-nowrap align-middle">0.08M</td>
+                                 </tr>
+                                 <tr class="hover:bg-slate-50 transition duration-200">
+                                     <td class="py-2.5 px-1 text-center font-extrabold text-emerald-600 align-middle">8</td>
+                                     <td class="py-2.5 px-3 font-bold text-slate-800 align-middle break-words pr-2">C100005 - Cherry Finished Crystal</td>
+                                     <td class="py-2.5 px-3 text-right text-slate-500 font-bold whitespace-nowrap align-middle">0.08M</td>
+                                 </tr>
+                                 <tr class="hover:bg-slate-50 transition duration-200">
+                                     <td class="py-2.5 px-1 text-center font-extrabold text-emerald-600 align-middle">9</td>
+                                     <td class="py-2.5 px-3 font-bold text-slate-800 align-middle break-words pr-2">C100003 - Cherry Finish Frame</td>
+                                     <td class="py-2.5 px-3 text-right text-slate-500 font-bold whitespace-nowrap align-middle">0.08M</td>
+                                 </tr>
+                                 <tr class="hover:bg-slate-50 transition duration-200">
+                                     <td class="py-2.5 px-1 text-center font-extrabold text-emerald-600 align-middle">10</td>
+                                     <td class="py-2.5 px-3 font-bold text-slate-800 align-middle break-words pr-2">C100051 - Bamboo Digital</td>
+                                     <td class="py-2.5 px-3 text-right text-slate-500 font-bold whitespace-nowrap align-middle">0.08M</td>
+                                 </tr>
+                             </tbody>
+                         </table>
                     </div>
                  </div>
 
@@ -302,48 +314,68 @@
                  <div>
                     <h2 class="text-lg font-bold text-slate-800 mb-6">Top 10 Items Based on Value</h2>
                     
-                    <div class="flex flex-col gap-4 pr-6 relative w-full">
-                         <!-- Horizontal Bars -->
-                         <div class="flex items-center text-xs font-semibold text-slate-500">
-                            <span class="w-[45%] shrink-0 text-right pr-3 truncate" title="C100006 - Cherry Finished Crystal">C100006 - Cherry Finished Crystal</span>
-                            <div class="flex-1 shrink flex items-center"><div class="top-10-bar bg-emerald-500 shadow-sm w-full relative"></div><span class="absolute right-0 text-[10px] text-slate-500">0.14M</span></div>
-                         </div>
-                         <div class="flex items-center text-xs font-semibold text-slate-500">
-                            <span class="w-[45%] shrink-0 text-right pr-3 truncate" title="C100011 - Winter Frost Vase">C100011 - Winter Frost Vase</span>
-                            <div class="flex-1 shrink flex items-center"><div class="top-10-bar bg-emerald-500 shadow-sm w-[90%] relative"></div><span class="absolute right-0 text-[10px] text-slate-500">0.13M</span></div>
-                         </div>
-                         <div class="flex items-center text-xs font-semibold text-slate-500">
-                            <span class="w-[45%] shrink-0 text-right pr-3 truncate" title="C100055 - Silver Plated Photo">C100055 - Silver Plated Photo</span>
-                            <div class="flex-1 shrink flex items-center"><div class="top-10-bar bg-emerald-500 shadow-sm w-[85%] relative"></div><span class="absolute right-0 text-[10px] text-slate-500">0.12M</span></div>
-                         </div>
-                         <div class="flex items-center text-xs font-semibold text-slate-500">
-                            <span class="w-[45%] shrink-0 text-right pr-3 truncate" title="C100009 - Normandy Vase">C100009 - Normandy Vase</span>
-                            <div class="flex-1 shrink flex items-center"><div class="top-10-bar bg-emerald-500 shadow-sm w-[80%] relative"></div><span class="absolute right-0 text-[10px] text-slate-500">0.12M</span></div>
-                         </div>
-                         <div class="flex items-center text-xs font-semibold text-slate-500">
-                            <span class="w-[45%] shrink-0 text-right pr-3 truncate" title="C100010 - Wisper-Cut Vase">C100010 - Wisper-Cut Vase</span>
-                            <div class="flex-1 shrink flex items-center"><div class="top-10-bar bg-emerald-500 shadow-sm w-[75%] relative"></div><span class="absolute right-0 text-[10px] text-slate-500">0.12M</span></div>
-                         </div>
-                         <div class="flex items-center text-xs font-semibold text-slate-500">
-                            <span class="w-[45%] shrink-0 text-right pr-3 truncate" title="C100040 - Channel Speaker Sys">C100040 - Channel Speaker Sys</span>
-                            <div class="flex-1 shrink flex items-center"><div class="top-10-bar bg-emerald-500 shadow-sm w-[65%] relative"></div><span class="absolute right-0 text-[10px] text-slate-500">0.09M</span></div>
-                         </div>
-                         <div class="flex items-center text-xs font-semibold text-slate-500">
-                            <span class="w-[45%] shrink-0 text-right pr-3 truncate" title="C100004 - Walnut Medallian">C100004 - Walnut Medallian</span>
-                            <div class="flex-1 shrink flex items-center"><div class="top-10-bar bg-emerald-500 shadow-sm w-[55%] relative"></div><span class="absolute right-0 text-[10px] text-slate-500">0.08M</span></div>
-                         </div>
-                         <div class="flex items-center text-xs font-semibold text-slate-500">
-                            <span class="w-[45%] shrink-0 text-right pr-3 truncate" title="C100005 - Cherry Finished Crystal">C100005 - Cherry Finished Crystal</span>
-                            <div class="flex-1 shrink flex items-center"><div class="top-10-bar bg-emerald-500 shadow-sm w-[53%] relative"></div><span class="absolute right-0 text-[10px] text-slate-500">0.08M</span></div>
-                         </div>
-                         <div class="flex items-center text-xs font-semibold text-slate-500">
-                            <span class="w-[45%] shrink-0 text-right pr-3 truncate" title="C100003 - Cherry Finish Frame">C100003 - Cherry Finish Frame</span>
-                            <div class="flex-1 shrink flex items-center"><div class="top-10-bar bg-emerald-500 shadow-sm w-[50%] relative"></div><span class="absolute right-0 text-[10px] text-slate-500">0.08M</span></div>
-                         </div>
-                         <div class="flex items-center text-xs font-semibold text-slate-500">
-                            <span class="w-[45%] shrink-0 text-right pr-3 truncate" title="C100051 - Bamboo Digital">C100051 - Bamboo Digital</span>
-                            <div class="flex-1 shrink flex items-center"><div class="top-10-bar bg-emerald-500 shadow-sm w-[50%] relative"></div><span class="absolute right-0 text-[10px] text-slate-500">0.08M</span></div>
-                         </div>
+                    <div class="w-full relative min-h-0">
+                         <table class="w-full text-left text-xs font-semibold text-slate-500 table-fixed border-collapse">
+                             <thead class="text-[10px] text-slate-400 uppercase tracking-widest border-b border-slate-100">
+                                 <tr>
+                                     <th class="pb-3 px-1 font-bold w-6 text-center">#</th>
+                                     <th class="pb-3 px-3 font-bold w-[45%]">Item</th>
+                                     <th class="pb-3 px-1 font-bold text-right pr-2">Value (M)</th>
+                                 </tr>
+                             </thead>
+                             <tbody class="divide-y divide-slate-50">
+                                 <tr class="hover:bg-slate-50 transition duration-200">
+                                     <td class="py-2.5 px-1 text-center font-extrabold text-emerald-600 align-middle">1</td>
+                                     <td class="py-2.5 px-3 font-bold text-slate-800 align-middle break-words pr-2">C100006 - Cherry Finished Crystal</td>
+                                     <td class="py-2.5 px-3 text-right text-slate-500 font-bold whitespace-nowrap align-middle">0.14M</td>
+                                 </tr>
+                                 <tr class="hover:bg-slate-50 transition duration-200">
+                                     <td class="py-2.5 px-1 text-center font-extrabold text-emerald-600 align-middle">2</td>
+                                     <td class="py-2.5 px-3 font-bold text-slate-800 align-middle break-words pr-2">C100011 - Winter Frost Vase</td>
+                                     <td class="py-2.5 px-3 text-right text-slate-500 font-bold whitespace-nowrap align-middle">0.13M</td>
+                                 </tr>
+                                 <tr class="hover:bg-slate-50 transition duration-200">
+                                     <td class="py-2.5 px-1 text-center font-extrabold text-emerald-600 align-middle">3</td>
+                                     <td class="py-2.5 px-3 font-bold text-slate-800 align-middle break-words pr-2">C100055 - Silver Plated Photo</td>
+                                     <td class="py-2.5 px-3 text-right text-slate-500 font-bold whitespace-nowrap align-middle">0.12M</td>
+                                 </tr>
+                                 <tr class="hover:bg-slate-50 transition duration-200">
+                                     <td class="py-2.5 px-1 text-center font-extrabold text-emerald-600 align-middle">4</td>
+                                     <td class="py-2.5 px-3 font-bold text-slate-800 align-middle break-words pr-2">C100009 - Normandy Vase</td>
+                                     <td class="py-2.5 px-3 text-right text-slate-500 font-bold whitespace-nowrap align-middle">0.12M</td>
+                                 </tr>
+                                 <tr class="hover:bg-slate-50 transition duration-200">
+                                     <td class="py-2.5 px-1 text-center font-extrabold text-emerald-600 align-middle">5</td>
+                                     <td class="py-2.5 px-3 font-bold text-slate-800 align-middle break-words pr-2">C100010 - Wisper-Cut Vase</td>
+                                     <td class="py-2.5 px-3 text-right text-slate-500 font-bold whitespace-nowrap align-middle">0.12M</td>
+                                 </tr>
+                                 <tr class="hover:bg-slate-50 transition duration-200">
+                                     <td class="py-2.5 px-1 text-center font-extrabold text-emerald-600 align-middle">6</td>
+                                     <td class="py-2.5 px-3 font-bold text-slate-800 align-middle break-words pr-2">C100040 - Channel Speaker Sys</td>
+                                     <td class="py-2.5 px-3 text-right text-slate-500 font-bold whitespace-nowrap align-middle">0.09M</td>
+                                 </tr>
+                                 <tr class="hover:bg-slate-50 transition duration-200">
+                                     <td class="py-2.5 px-1 text-center font-extrabold text-emerald-600 align-middle">7</td>
+                                     <td class="py-2.5 px-3 font-bold text-slate-800 align-middle break-words pr-2">C100004 - Walnut Medallian</td>
+                                     <td class="py-2.5 px-3 text-right text-slate-500 font-bold whitespace-nowrap align-middle">0.08M</td>
+                                 </tr>
+                                 <tr class="hover:bg-slate-50 transition duration-200">
+                                     <td class="py-2.5 px-1 text-center font-extrabold text-emerald-600 align-middle">8</td>
+                                     <td class="py-2.5 px-3 font-bold text-slate-800 align-middle break-words pr-2">C100005 - Cherry Finished Crystal</td>
+                                     <td class="py-2.5 px-3 text-right text-slate-500 font-bold whitespace-nowrap align-middle">0.08M</td>
+                                 </tr>
+                                 <tr class="hover:bg-slate-50 transition duration-200">
+                                     <td class="py-2.5 px-1 text-center font-extrabold text-emerald-600 align-middle">9</td>
+                                     <td class="py-2.5 px-3 font-bold text-slate-800 align-middle break-words pr-2">C100003 - Cherry Finish Frame</td>
+                                     <td class="py-2.5 px-3 text-right text-slate-500 font-bold whitespace-nowrap align-middle">0.08M</td>
+                                 </tr>
+                                 <tr class="hover:bg-slate-50 transition duration-200">
+                                     <td class="py-2.5 px-1 text-center font-extrabold text-emerald-600 align-middle">10</td>
+                                     <td class="py-2.5 px-3 font-bold text-slate-800 align-middle break-words pr-2">C100051 - Bamboo Digital</td>
+                                     <td class="py-2.5 px-3 text-right text-slate-500 font-bold whitespace-nowrap align-middle">0.08M</td>
+                                 </tr>
+                             </tbody>
+                         </table>
                     </div>
                  </div>
 
