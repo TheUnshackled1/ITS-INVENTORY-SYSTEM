@@ -751,8 +751,8 @@ def activity_log(request):
         'edited': sum(1 for log in logs_data if log['action'] == 'edited'),
         'deleted': sum(1 for log in logs_data if log['action'] == 'deleted'),
         'uploaded': sum(1 for log in logs_data if log['action'] == 'uploaded'),
-        'borrowed': sum(1 for log in logs_data if log['action'] == 'borrowed'),
-        'returned': sum(1 for log in logs_data if log['action'] == 'returned'),
+        'borrowed': IssuanceLog.objects.count(),
+        'returned': IssuanceLog.objects.filter(status='returned').count(),
     }
         
     return render(request, "activity_log.html", {
