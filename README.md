@@ -1,9 +1,11 @@
 # 📦 ITS Inventory Management System
 
-> **A Django-based web application for tracking IT equipment, managing borrowing transactions, and maintaining a full audit trail — built for the ITS Department.**
+> **A web-based inventory management system built with Django for the Information Technology Services (ITS) department. Designed for internal tracking of IT assets, audit logs, and bulk Excel uploads.**
+
+🌐 **Live Demo:** [itsinventory.pythonanywhere.com](http://itsinventory.pythonanywhere.com/)
 
 ![Python](https://img.shields.io/badge/Python-3.13+-3776AB?logo=python&logoColor=white)
-![Django](https://img.shields.io/badge/Django-5.2-092E20?logo=django&logoColor=white)
+![Django](https://img.shields.io/badge/Django-6.0-092E20?logo=django&logoColor=white)
 ![SQLite](https://img.shields.io/badge/SQLite-Local%20Dev-003B57?logo=sqlite&logoColor=white)
 ![TailwindCSS](https://img.shields.io/badge/Tailwind_CSS-CDN-06B6D4?logo=tailwindcss&logoColor=white)
 ![License](https://img.shields.io/badge/License-MIT-22c55e?logo=opensourceinitiative&logoColor=white)
@@ -126,7 +128,7 @@ flowchart LR
 
 | Layer | Technology |
 |---|---|
-| **Web Framework** | Django 5.2 |
+| **Web Framework** | Django 6.0 |
 | **Language** | Python 3.11+ |
 | **Database** | SQLite 3 (default) |
 | **Frontend Styling** | Tailwind CSS (CDN) |
