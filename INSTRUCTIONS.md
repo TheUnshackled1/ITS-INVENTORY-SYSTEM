@@ -85,12 +85,12 @@ pip install -r requirements.txt
 ```
 
 This installs:
-- Django 6.0.6 (Web framework)
+- Django 5.2 (Web framework)
 - openpyxl 3.1.5 (Excel file parsing for `.xlsx` bulk imports)
-- asgiref 3.11.1 (Async support)
-- sqlparse 0.5.5 (SQL formatting)
+- asgiref 3.8.1 (Async support)
+- sqlparse 0.5.3 (SQL formatting)
 - et-xmlfile 2.0.0 (openpyxl dependency)
-- tzdata 2026.2 (Timezone data for `Asia/Manila`)
+- tzdata 2025.2 (Timezone data for `Asia/Manila`)
 
 > 💡 If you encounter errors, ensure your pip is up to date:
 > ```powershell

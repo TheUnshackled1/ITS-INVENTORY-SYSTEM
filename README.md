@@ -3,7 +3,7 @@
 > **A Django-based web application for tracking IT equipment, managing borrowing transactions, and maintaining a full audit trail — built for the ITS Department.**
 
 ![Python](https://img.shields.io/badge/Python-3.13+-3776AB?logo=python&logoColor=white)
-![Django](https://img.shields.io/badge/Django-6.0.6-092E20?logo=django&logoColor=white)
+![Django](https://img.shields.io/badge/Django-5.2-092E20?logo=django&logoColor=white)
 ![SQLite](https://img.shields.io/badge/SQLite-Local%20Dev-003B57?logo=sqlite&logoColor=white)
 ![TailwindCSS](https://img.shields.io/badge/Tailwind_CSS-CDN-06B6D4?logo=tailwindcss&logoColor=white)
 ![License](https://img.shields.io/badge/License-MIT-22c55e?logo=opensourceinitiative&logoColor=white)
@@ -126,8 +126,8 @@ flowchart LR
 
 | Layer | Technology |
 |---|---|
-| **Web Framework** | Django 6.0.6 |
-| **Language** | Python 3.13+ |
+| **Web Framework** | Django 5.2 |
+| **Language** | Python 3.11+ |
 | **Database** | SQLite 3 (default) |
 | **Frontend Styling** | Tailwind CSS (CDN) |
 | **DataTables** | SimpleDatatables 9.0.3 |
@@ -197,9 +197,9 @@ pip install -r requirements.txt
 ```
 
 This installs:
-- Django 6.0.6 (Web framework)
+- Django 5.2 (Web framework)
 - openpyxl 3.1.5 (Excel file parsing for bulk imports)
-- asgiref, sqlparse, et-xmlfile, tzdata (Django dependencies)
+- asgiref 3.8.1, sqlparse 0.5.3, et-xmlfile 2.0.0, tzdata 2025.2 (Django dependencies)
 
 > 💡 If you encounter errors, ensure pip is up to date:
 > ```powershell
@@ -409,15 +409,16 @@ python manage.py runserver
 
 ### The Project
 
-The **ITS Inventory Management System** was developed as an internal tool for the **Information Technology Services (ITS) Department** to modernize equipment tracking and borrowing workflows. It replaces manual spreadsheet-based processes with a centralized, auditable, web-based platform.
+The **ITS Inventory Management System** was originally developed as an internal tool for the **Information Technology Services (ITS) Department** and has been formally turned over to the **Management Information Systems (MIS) Department** for continued operation and maintenance. It replaces manual spreadsheet-based processes with a centralized, auditable, web-based platform.
 
 ### Context & Motivation
 
 | | |
 |---|---|
-| 🏢 **Department** | Information Technology Services (ITS) |
+| 🏢 **Original Department** | Information Technology Services (ITS) |
+| 🏢 **Current Owner** | Management Information Systems (MIS) |
 | 🎯 **Problem Solved** | Replace manual spreadsheet tracking with a centralized digital inventory system |
-| 👥 **Users Served** | ITS Staff, Department Administrators |
+| 👥 **Users Served** | MIS Staff, Department Administrators |
 | 🗓️ **Year** | 2026 |
 
 ### Key Design Decisions
@@ -428,9 +429,9 @@ The **ITS Inventory Management System** was developed as an internal tool for th
 - **Bulk Import Pipeline** — The Excel/CSV import pipeline handles messy real-world data with robust parsing, fallback defaults, and status normalization
 - **Premium UI** — Tailwind CSS with custom design tokens, glassmorphism cards, micro-animations, and hand-crafted SVG icons deliver a polished, modern aesthetic
 
-### Built With ❤️ For
+### Turned Over To
 
-This system was designed for the ITS Department — aiming to make equipment management faster, more transparent, and fully auditable.
+This system was originally built for the ITS Department and has been handed over to the **Management Information Systems (MIS) Department** — ensuring continued, transparent, and fully auditable equipment management.
 
 ---
 
