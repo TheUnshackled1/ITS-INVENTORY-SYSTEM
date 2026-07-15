@@ -15,6 +15,81 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="{% static 'css/inventory.css' %}" />
+  <style>
+    @media print {
+      /* Hide everything except the print area */
+      body > * { display: none !important; }
+      #print-report-area { display: block !important; }
+
+      /* Print page setup */
+      @page { size: A4 landscape; margin: 15mm; }
+
+      #print-report-area {
+        font-family: "Inter", "Segoe UI", sans-serif;
+        color: #0f172a;
+      }
+
+      #print-report-area .print-header {
+        text-align: center;
+        margin-bottom: 16px;
+      }
+
+      #print-report-area .print-header h1 {
+        font-size: 18pt;
+        font-weight: 900;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: #1e3a8a;
+      }
+
+      #print-report-area .print-header p {
+        font-size: 9pt;
+        color: #64748b;
+        margin-top: 2px;
+      }
+
+      #print-report-area table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 8pt;
+      }
+
+      #print-report-area thead tr {
+        background: #1e3a8a;
+        color: #ffffff;
+      }
+
+      #print-report-area th {
+        padding: 6px 8px;
+        text-align: center;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        border: 1px solid #1e40af;
+      }
+
+      #print-report-area td {
+        padding: 5px 8px;
+        text-align: center;
+        border: 1px solid #e2e8f0;
+        font-size: 7.5pt;
+        vertical-align: middle;
+      }
+
+      #print-report-area tbody tr:nth-child(even) { background: #f8fafc; }
+
+      #print-report-area tfoot td {
+        padding: 8px;
+        text-align: right;
+        font-size: 8pt;
+        color: #64748b;
+        border-top: 2px solid #e2e8f0;
+      }
+    }
+
+    /* Hide print area from screen view */
+    #print-report-area { display: none; }
+  </style>
 </head>
 
 <body class="min-h-screen font-sans text-slate-900 antialiased">
@@ -83,14 +158,24 @@
               </div>
 
               <!-- Action Buttons -->
-              <div class="flex flex-wrap items-center gap-3 justify-center lg:justify-end lg:w-1/3 relative z-10">
+              <div class="flex flex-wrap items-center gap-2 justify-center lg:justify-end lg:w-1/3 relative z-10">
+
+                <!-- Print Report -->
+                <button type="button" id="printReportBtn"
+                  class="inline-flex cursor-pointer items-center justify-center gap-1.5 rounded-xl bg-slate-700 px-4 py-2 text-xs font-bold text-white shadow-[0_4px_12px_rgba(51,65,85,0.3)] ring-1 ring-inset ring-white/20 transition-all hover:bg-slate-600 hover:shadow-[0_6px_16px_rgba(51,65,85,0.4)] hover:-translate-y-0.5 whitespace-nowrap">
+                  <svg class="h-3.5 w-3.5 stroke-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
+                  </svg>
+                  Print Report
+                </button>
+
                 <form action="{% url 'inventory-upload' %}" method="POST" enctype="multipart/form-data" class="m-0">
                   {% csrf_token %}
                   <input type="file" name="excel_file" id="excel-upload-header" accept=".xlsx, .csv" class="hidden"
                     onchange="this.form.submit()" />
                   <label for="excel-upload-header"
-                    class="inline-flex cursor-pointer items-center justify-center gap-2 rounded-xl bg-green-600 px-6 py-2.5 text-sm font-bold text-white shadow-[0_4px_12px_rgba(22,163,74,0.3)] ring-1 ring-inset ring-white/20 transition-all hover:bg-green-500 hover:shadow-[0_6px_16px_rgba(22,163,74,0.4)] hover:-translate-y-0.5">
-                    <svg class="h-4 w-4 stroke-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    class="inline-flex cursor-pointer items-center justify-center gap-1.5 rounded-xl bg-green-600 px-4 py-2 text-xs font-bold text-white shadow-[0_4px_12px_rgba(22,163,74,0.3)] ring-1 ring-inset ring-white/20 transition-all hover:bg-green-500 hover:shadow-[0_6px_16px_rgba(22,163,74,0.4)] hover:-translate-y-0.5 whitespace-nowrap">
+                    <svg class="h-3.5 w-3.5 stroke-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path>
                     </svg>
                     Upload Excel
@@ -98,8 +183,8 @@
                 </form>
 
                 <button type="button" id="openAddModalBtnTop"
-                  class="inline-flex cursor-pointer items-center justify-center gap-2 rounded-xl bg-emerald-600 px-6 py-2.5 text-sm font-bold text-white shadow-[0_4px_12px_rgba(5,150,105,0.3)] ring-1 ring-inset ring-white/20 transition-all hover:bg-emerald-500 hover:shadow-[0_6px_16px_rgba(5,150,105,0.4)] hover:-translate-y-0.5">
-                  <svg class="h-4 w-4 stroke-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  class="inline-flex cursor-pointer items-center justify-center gap-1.5 rounded-xl bg-emerald-600 px-4 py-2 text-xs font-bold text-white shadow-[0_4px_12px_rgba(5,150,105,0.3)] ring-1 ring-inset ring-white/20 transition-all hover:bg-emerald-500 hover:shadow-[0_6px_16px_rgba(5,150,105,0.4)] hover:-translate-y-0.5 whitespace-nowrap">
+                  <svg class="h-3.5 w-3.5 stroke-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"></path>
                   </svg>
                   Add record
@@ -711,6 +796,72 @@
       </div>
     </div>
   </div>
+  <!-- Print Report Hidden Section -->
+  <div id="print-report-area">
+    <div class="print-header">
+      <h1>ITS Inventory Equipment Report</h1>
+      <p>Generated on: <span id="print-date"></span> &nbsp;|&nbsp; Total Records: <span id="print-total"></span></p>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Item Type</th>
+          <th>Description</th>
+          <th>Brand</th>
+          <th>Model</th>
+          <th>Serial No.</th>
+          <th>Qty</th>
+          <th>Inv Date</th>
+          <th>Disp Date</th>
+          <th>Location</th>
+          <th>Status</th>
+          <th>Defect</th>
+        </tr>
+      </thead>
+      <tbody id="print-tbody">
+        <!-- Populated by JS before printing -->
+      </tbody>
+      <tfoot>
+        <tr>
+          <td colspan="12">ITS Inventory Management System &mdash; Confidential Report</td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+
+  <script>
+    document.getElementById('printReportBtn').addEventListener('click', function () {
+      const raw = document.getElementById('inventory-data');
+      if (!raw) { alert('No inventory data found.'); return; }
+
+      const items = JSON.parse(raw.textContent || raw.innerText);
+      const tbody = document.getElementById('print-tbody');
+      const now = new Date().toLocaleString('en-PH', { dateStyle: 'long', timeStyle: 'short' });
+      document.getElementById('print-date').textContent = now;
+      document.getElementById('print-total').textContent = items.length;
+
+      tbody.innerHTML = items.map((item, idx) => `
+        <tr>
+          <td>${idx + 1}</td>
+          <td>${item.item_type || '—'}</td>
+          <td>${item.item_description || '—'}</td>
+          <td>${item.brand || '—'}</td>
+          <td>${item.model || '—'}</td>
+          <td>${item.serial_number || '—'}</td>
+          <td>${item.quantity ?? '—'}</td>
+          <td>${item.date_inventory || '—'}</td>
+          <td>${item.date_disposal || '—'}</td>
+          <td>${item.location || '—'}</td>
+          <td>${item.status || '—'}</td>
+          <td>${item.defect_description || '—'}</td>
+        </tr>
+      `).join('');
+
+      window.print();
+    });
+  </script>
+
   <!-- All custom scripts have been moved to static/js/inventory.js -->
 </body>
 </html>
