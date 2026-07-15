@@ -2,13 +2,14 @@ from django.contrib import admin
 from django.urls import path
 from django.contrib.auth import views as auth_views
 from inventory import views
-from inventory.views import add_inventory, edit_inventory, inventory_list, CustomLoginView, activity_log
+from inventory.views import add_inventory, edit_inventory, inventory_list, CustomLoginView, activity_log, dashboard_view
 
 admin.site.site_header = "MIS Inventory Admin"
 admin.site.site_title = "MIS Inventory Portal"
 admin.site.index_title = "Welcome to the MIS Inventory Django Built-in Dashboard"
 
 urlpatterns = [
+    path('dashboard/', dashboard_view, name='dashboard'),
     path('', inventory_list, name='inventory-list'),
     path('inventory/add/', add_inventory, name='inventory-create'),
     path('inventory/<int:pk>/edit/', edit_inventory, name='inventory-edit'),

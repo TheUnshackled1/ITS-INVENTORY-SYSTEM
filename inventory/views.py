@@ -119,6 +119,10 @@ def get_distinct_text_values(queryset, field_name, annotation_name):
 
 
 @login_required
+def dashboard_view(request):
+    return render(request, "dashboard.html")
+
+@login_required
 def inventory_list(request):
     base_queryset = Inventory.objects.all().annotate(
         trimmed_item_type=Trim('item_type'),
