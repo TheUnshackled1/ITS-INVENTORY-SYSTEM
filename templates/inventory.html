@@ -291,8 +291,8 @@
         </section>
         {% endif %}
         <section class="backdrop-card mt-4 rounded-3xl border border-white/70 shadow-soft ring-1 ring-slate-200/60">
-          <div class="p-4 lg:p-5">
-            <form method="GET" id="filter-form" class="grid gap-3 lg:grid-cols-[1fr_auto_auto_auto_auto] items-end">
+          <div class="p-4 lg:p-5 flex flex-col xl:flex-row xl:items-end xl:justify-between gap-4 xl:gap-6 w-full">
+            <form method="GET" id="filter-form" class="flex-1 grid gap-3 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-[minmax(0,1fr)_auto_auto_auto_auto] items-end w-full">
               <div class="w-full">
                 <label class="block text-center text-[11px] font-bold text-slate-500 uppercase tracking-widest mb-1.5">Search Keywords</label>
                 <div class="relative">
@@ -356,10 +356,10 @@
             </form>
 
             <!-- Action Buttons (Grouped with table controls) -->
-            <div class="mt-4 pt-4 border-t border-slate-100 flex flex-wrap items-center gap-2 justify-start lg:justify-end">
+            <div class="flex flex-wrap items-center justify-start xl:justify-end gap-2 shrink-0 w-full xl:w-auto mt-2 pt-4 xl:mt-0 xl:pt-0 border-t xl:border-t-0 border-slate-200/60">
               <!-- Print Report -->
               <button type="button" id="printReportBtn"
-                class="inline-flex cursor-pointer items-center justify-center gap-1.5 rounded-xl bg-slate-700 px-4 py-2 text-xs font-bold text-white shadow-[0_4px_12px_rgba(51,65,85,0.3)] ring-1 ring-inset ring-white/20 transition-all hover:bg-slate-600 hover:shadow-[0_6px_16px_rgba(51,65,85,0.4)] hover:-translate-y-0.5 whitespace-nowrap">
+                class="inline-flex cursor-pointer items-center justify-center gap-1.5 rounded-xl bg-slate-700 px-4 h-[44px] text-sm font-bold text-white shadow-[0_4px_12px_rgba(51,65,85,0.3)] ring-1 ring-inset ring-white/20 transition-all hover:bg-slate-600 hover:shadow-[0_6px_16px_rgba(51,65,85,0.4)] hover:-translate-y-0.5 whitespace-nowrap">
                 <svg class="h-3.5 w-3.5 stroke-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
                 </svg>
@@ -371,7 +371,7 @@
                 <input type="file" name="excel_file" id="excel-upload-header" accept=".xlsx, .csv" class="hidden"
                   onchange="this.form.submit()" />
                 <label for="excel-upload-header"
-                  class="inline-flex cursor-pointer items-center justify-center gap-1.5 rounded-xl bg-green-600 px-4 py-2 text-xs font-bold text-white shadow-[0_4px_12px_rgba(22,163,74,0.3)] ring-1 ring-inset ring-white/20 transition-all hover:bg-green-500 hover:shadow-[0_6px_16px_rgba(22,163,74,0.4)] hover:-translate-y-0.5 whitespace-nowrap">
+                  class="inline-flex cursor-pointer items-center justify-center gap-1.5 rounded-xl bg-green-600 px-4 h-[44px] text-sm font-bold text-white shadow-[0_4px_12px_rgba(22,163,74,0.3)] ring-1 ring-inset ring-white/20 transition-all hover:bg-green-500 hover:shadow-[0_6px_16px_rgba(22,163,74,0.4)] hover:-translate-y-0.5 whitespace-nowrap">
                   <svg class="h-3.5 w-3.5 stroke-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path>
                   </svg>
@@ -380,7 +380,7 @@
               </form>
 
               <button type="button" id="openAddModalBtnTop"
-                class="inline-flex cursor-pointer items-center justify-center gap-1.5 rounded-xl bg-emerald-600 px-4 py-2 text-xs font-bold text-white shadow-[0_4px_12px_rgba(5,150,105,0.3)] ring-1 ring-inset ring-white/20 transition-all hover:bg-emerald-500 hover:shadow-[0_6px_16px_rgba(5,150,105,0.4)] hover:-translate-y-0.5 whitespace-nowrap">
+                class="inline-flex cursor-pointer items-center justify-center gap-1.5 rounded-xl bg-emerald-600 px-4 h-[44px] text-sm font-bold text-white shadow-[0_4px_12px_rgba(5,150,105,0.3)] ring-1 ring-inset ring-white/20 transition-all hover:bg-emerald-500 hover:shadow-[0_6px_16px_rgba(5,150,105,0.4)] hover:-translate-y-0.5 whitespace-nowrap">
                 <svg class="h-3.5 w-3.5 stroke-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"></path>
                 </svg>
