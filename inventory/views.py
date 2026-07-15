@@ -122,9 +122,11 @@ def get_distinct_text_values(queryset, field_name, annotation_name):
 def dashboard_view(request):
     recent_items = Inventory.objects.order_by('-id')[:10]
     recent_borrowings = IssuanceLog.objects.order_by('-date_issued', '-id')[:10]
+    recent_activity = AuditLog.objects.order_by('-timestamp', '-id')[:10]
     return render(request, "dashboard.html", {
         "recent_items": recent_items,
-        "recent_borrowings": recent_borrowings
+        "recent_borrowings": recent_borrowings,
+        "recent_activity": recent_activity
     })
 
 @login_required
