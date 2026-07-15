@@ -95,3 +95,14 @@
     --card-border:  rgba(254, 202, 202, 0.65);
     --card-shadow:  rgba(225, 29, 72, 0.30);
 }
+
+/* ─── Top 10 Masonry Grid ─────────────────────── */
+.dashboard-charts-grid {
+    min-height: calc(100vh - 260px); /* Forces the grid to stretch to bottom of screen */
+}
+
+/* Increases the thickness of the green value bars */
+.top-10-bar {
+    height: 32px !important; 
+    border-radius: 6px;
+}
