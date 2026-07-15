@@ -248,7 +248,7 @@
                                  </thead>
                                  <tbody class="divide-y divide-slate-50">
                                      {% for item in recent_items %}
-                                     <tr class="hover:bg-slate-50 transition duration-200">
+                                     <tr class="h-[48px] hover:bg-slate-50 transition duration-200">
                                          <td class="py-2.5 px-1 text-center font-extrabold text-emerald-600 align-middle">{{ forloop.counter }}</td>
                                          <td class="py-2.5 px-3 font-bold text-slate-800 align-middle break-words text-center px-1">
                                              {{ item.model|default:item.item_description }}
@@ -294,7 +294,7 @@
                              </thead>
                              <tbody class="divide-y divide-slate-50">
                                  {% for log in recent_borrowings %}
-                                 <tr class="hover:bg-slate-50 transition duration-200">
+                                 <tr class="h-[48px] hover:bg-slate-50 transition duration-200">
                                      <td class="py-2.5 px-1 text-center font-extrabold text-emerald-600 align-middle">{{ forloop.counter }}</td>
                                      <td class="py-2.5 px-2 font-bold text-slate-800 align-middle break-words text-center px-1">
                                          {{ log.borrower_name|default:"-" }}
@@ -355,7 +355,7 @@
                              </thead>
                              <tbody class="divide-y divide-slate-50">
                                  {% for log in recent_activity %}
-                                 <tr class="hover:bg-slate-50 transition duration-200">
+                                 <tr class="h-[48px] hover:bg-slate-50 transition duration-200">
                                      <td class="py-2.5 px-1 text-center font-extrabold text-emerald-600 align-middle">{{ forloop.counter }}</td>
                                      <td class="py-2.5 px-2 font-bold text-slate-800 align-middle break-words text-center px-1">
                                          {{ log.item_type|default:"-" }}
