@@ -10,9 +10,22 @@
         padding-left: 20px !important; /* Safety padding */
         padding-right: 20px !important;
     }
+
+    /* Make the title match the thick white Django logo style */
+    #site-name {
+        margin-left: 0;
+    }
+    #site-name a {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
+        font-weight: 800 !important;
+        color: #ffffff !important;
+        text-transform: uppercase !important;
+        letter-spacing: 0.5px !important;
+        font-size: 24px !important;
+        text-decoration: none !important;
+    }
 </style>
 {% endblock %}
-
 {% block extrahead %}
 {{ block.super }}
 <link rel="icon" type="image/x-icon" href="https://docs.djangoproject.com/favicon.ico">
