@@ -1,6 +1,6 @@
 # 📦 ITS Inventory Management System
 
-> **A web-based inventory management system built with Django for the Information Technology Services (ITS) department. Designed for internal tracking of IT assets, audit logs, and bulk Excel uploads.**
+> **A web-based inventory management system built with Django for the Information and Communications Technology (ICT) department. Designed for internal tracking of IT assets, audit logs, and bulk Excel uploads.**
 
 🌐 **Live Demo:** [itsinventory.pythonanywhere.com](http://itsinventory.pythonanywhere.com/)
 
