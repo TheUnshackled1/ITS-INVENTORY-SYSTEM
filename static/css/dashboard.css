@@ -106,3 +106,8 @@
     height: 32px !important; 
     border-radius: 6px;
 }
+
+/* Force Inter font natively across the whole dashboard body */
+body {
+    font-family: 'Inter', sans-serif !important;
+}
