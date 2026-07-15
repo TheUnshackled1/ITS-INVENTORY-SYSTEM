@@ -4,6 +4,10 @@ from django.contrib.auth import views as auth_views
 from inventory import views
 from inventory.views import add_inventory, edit_inventory, inventory_list, CustomLoginView, activity_log
 
+admin.site.site_header = "MIS Inventory Admin"
+admin.site.site_title = "MIS Inventory Portal"
+admin.site.index_title = "Welcome to the MIS Inventory Django Built-in Dashboard"
+
 urlpatterns = [
     path('', inventory_list, name='inventory-list'),
     path('inventory/add/', add_inventory, name='inventory-create'),

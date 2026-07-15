@@ -4,3 +4,5 @@ asgiref==3.8.1
 sqlparse==0.5.3
 et-xmlfile==2.0.0
 tzdata==2025.2
+django-admin-interface
+django-colorfield

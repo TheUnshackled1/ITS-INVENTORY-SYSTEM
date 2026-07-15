@@ -1,0 +1,20 @@
+{% extends "admin/base_site.html" %}
+
+{% block extrastyle %}
+{{ block.super }}
+<style>
+    /* Center the entire dashboard layout horizontally on wide screens */
+    #content {
+        max-width: 1200px !important;
+        margin: 60px auto !important; /* Large spacing above and below */
+        padding-left: 20px !important; /* Safety padding */
+        padding-right: 20px !important;
+    }
+</style>
+{% endblock %}
+
+{% block extrahead %}
+{{ block.super }}
+<link rel="icon" type="image/x-icon" href="https://docs.djangoproject.com/favicon.ico">
+<link rel="apple-touch-icon" href="https://static.djangoproject.com/img/icon-touch.png">
+{% endblock %}
