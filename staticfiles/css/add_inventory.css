@@ -1,0 +1,35 @@
+body {
+    background:
+        radial-gradient(circle at top left,
+            rgba(33, 154, 131, 0.2),
+            transparent 26%),
+        radial-gradient(circle at top right,
+            rgba(59, 130, 246, 0.16),
+            transparent 22%),
+        linear-gradient(180deg, #f8fafc 0%, #eff6f8 100%);
+}
+
+.backdrop-card {
+    background: rgba(255, 255, 255, 0.82);
+    backdrop-filter: blur(18px);
+}
+
+.form-input,
+.form-select,
+.form-textarea {
+    width: 100%;
+    border-radius: 0.875rem;
+    border: 1px solid rgb(226 232 240);
+    background: rgba(255, 255, 255, 0.95);
+    color: rgb(15 23 42);
+    padding: 0.75rem 0.9rem;
+    box-shadow: 0 10px 24px rgba(15, 23, 42, 0.06);
+}
+
+.form-input:focus,
+.form-select:focus,
+.form-textarea:focus {
+    outline: none;
+    border-color: rgb(33 154 131);
+    box-shadow: 0 0 0 4px rgba(33, 154, 131, 0.15);
+}
