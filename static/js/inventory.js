@@ -253,7 +253,7 @@ document.addEventListener("DOMContentLoaded", function () {
       });
 
       // ----- Custom Search + Pagination Engine -----
-      const PAGE_SIZE = 50;
+      const PAGE_SIZE = 15;
       let currentPage = 1;
       let activeRows = []; // currently matching rows
 
