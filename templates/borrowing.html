@@ -88,18 +88,22 @@
             <div class="stats-scene">
             <div id="stats-cards-container" class="grid grid-cols-2 gap-3 sm:grid-cols-3 xl:grid-cols-3">
 
-              <!-- Total Issuances Card -->
+              <!-- Borrowed Card -->
               <div class="stats-card stats-card--total p-4">
                 <div class="relative flex h-full flex-col gap-3">
                   <div class="flex items-center text-blue-700 gap-2 font-medium">
-                    <svg class="h-4 w-4 stroke-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
-                    Total Issuances
+                    <svg class="h-4 w-4 stroke-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" /></svg>
+                    Currently Borrowed
                   </div>
-                  <div>
-                    <p class="text-3xl font-extrabold text-blue-950 leading-none">{{ stats.total }}</p>
+                  <div class="flex items-center justify-between">
+                    <p class="text-3xl font-extrabold text-blue-950 leading-none">{{ stats.borrowed }}</p>
+                    <span class="inline-flex items-center gap-1 rounded-full bg-blue-100 px-2 py-1 text-xs font-bold text-blue-700 ring-1 ring-inset ring-blue-700/10">
+                      <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" /></svg>
+                      {% if stats.total %}{% widthratio stats.borrowed stats.total 100 %}%{% else %}0%{% endif %}
+                    </span>
                   </div>
                   <div class="h-1 w-full rounded-full bg-blue-100 overflow-hidden">
-                    <div class="h-full w-full rounded-full bg-blue-400"></div>
+                    <div class="h-full rounded-full bg-blue-400" style="width:{% if stats.total %}{% widthratio stats.borrowed stats.total 100 %}%{% else %}0%{% endif %}"></div>
                   </div>
                 </div>
               </div>
@@ -111,8 +115,12 @@
                     <svg class="h-4 w-4 stroke-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
                     Returned
                   </div>
-                  <div>
+                  <div class="flex items-center justify-between">
                     <p class="text-3xl font-extrabold text-emerald-900 leading-none">{{ stats.returned|default:"0" }}</p>
+                    <span class="inline-flex items-center gap-1 rounded-full bg-emerald-100 px-2 py-1 text-xs font-bold text-emerald-700 ring-1 ring-inset ring-emerald-700/10">
+                      <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
+                      {% if stats.total %}{% widthratio stats.returned|default:0 stats.total 100 %}%{% else %}0%{% endif %}
+                    </span>
                   </div>
                   <div class="h-1 w-full rounded-full bg-emerald-100 overflow-hidden">
                     <div class="h-full rounded-full bg-emerald-400" style="width:{% if stats.total %}{% widthratio stats.returned|default:0 stats.total 100 %}%{% else %}0%{% endif %}"></div>
@@ -127,8 +135,12 @@
                     <svg class="h-4 w-4 stroke-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                     Overdue
                   </div>
-                  <div>
+                  <div class="flex items-center justify-between">
                     <p class="text-3xl font-extrabold text-rose-900 leading-none">{{ stats.overdue }}</p>
+                    <span class="inline-flex items-center gap-1 rounded-full bg-rose-100 px-2 py-1 text-xs font-bold text-rose-700 ring-1 ring-inset ring-rose-700/10">
+                      <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
+                      {% if stats.total %}{% widthratio stats.overdue stats.total 100 %}%{% else %}0%{% endif %}
+                    </span>
                   </div>
                   <div class="h-1 w-full rounded-full bg-rose-100 overflow-hidden">
                     <div class="h-full rounded-full bg-rose-400" style="width:{% if stats.total %}{% widthratio stats.overdue stats.total 100 %}%{% else %}0%{% endif %}"></div>
