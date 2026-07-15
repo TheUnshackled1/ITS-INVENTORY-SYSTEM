@@ -722,15 +722,37 @@ def upload_excel(request):
 @login_required(login_url='login')
 def activity_log(request):
     import json
-    from django.utils.timezone import localtime
+    from django.utils.timezone import localtime, now
+    from datetime import timedelta
     search_query = request.GET.get('q', '').strip()
+    date_filter = request.GET.get('date', '').strip()
+    user_filter = request.GET.get('user', '').strip()
+    module_filter = request.GET.get('module', '').strip()
+
     logs = AuditLog.objects.all().order_by('-timestamp')
+    
     if search_query:
         logs = logs.filter(
             Q(item_type__icontains=search_query) |
             Q(performed_by__icontains=search_query) |
             Q(action__icontains=search_query)
-        )    
+        )
+    
+    if date_filter == 'today':
+        logs = logs.filter(timestamp__date=now().date())
+    elif date_filter == '7days':
+        logs = logs.filter(timestamp__gte=now() - timedelta(days=7))
+    elif date_filter == '30days':
+        logs = logs.filter(timestamp__gte=now() - timedelta(days=30))
+        
+    if user_filter:
+        logs = logs.filter(performed_by__iexact=user_filter)
+        
+    if module_filter:
+        logs = logs.filter(action__iexact=module_filter)
+        
+    distinct_users = get_distinct_text_values(AuditLog.objects.all(), 'performed_by', 'trimmed_user')
+    distinct_modules = [m[0] for m in AuditLog.ACTION_CHOICES]
     logs_data = []
     for log in logs:
         # Convert timestamp to local timezone for UI display
@@ -759,6 +781,11 @@ def activity_log(request):
         "logs": logs,
         "logs_json": json.dumps(logs_data), 
         "search_query": search_query,
+        "selected_date": date_filter,
+        "selected_user": user_filter,
+        "selected_module": module_filter,
+        "distinct_users": distinct_users,
+        "distinct_modules": distinct_modules,
         "stats": stats
     })
 
