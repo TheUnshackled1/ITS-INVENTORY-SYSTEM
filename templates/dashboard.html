@@ -230,7 +230,7 @@
         <div class="dashboard-charts-grid grid grid-cols-1 lg:grid-cols-3 gap-5 lg:gap-6 pb-8 w-full min-h-0">
             
             <!-- Column -->
-            <div class="bg-white rounded-3xl border border-slate-200 shadow-sm p-4 lg:p-6 w-full flex flex-col relative h-max">
+            <div class="bg-white rounded-3xl border border-slate-200 shadow-sm p-4 lg:p-6 w-full flex flex-col relative h-full">
                  <div class="flex flex-col pb-2 min-h-0">
                     <h2 class="text-lg font-extrabold text-black uppercase tracking-wide mb-6 shrink-0 text-center">10 RECENT ITEMS</h2>
                     
@@ -272,13 +272,13 @@
                  </div>
 
                  <!-- Footer Toggles -->
-                 <div class="w-full pt-4 flex justify-center gap-4 border-t border-slate-100 mt-4">
+                 <div class="w-full pt-4 mt-auto flex justify-center gap-4 border-t border-slate-100">
                      <a href="{% url 'inventory-list' %}" class="inline-flex cursor-pointer items-center justify-center rounded-xl bg-emerald-600 px-8 py-2 text-xs font-bold text-white shadow-[0_4px_12px_rgba(5,150,105,0.3)] ring-1 ring-inset ring-white/20 transition-all hover:bg-emerald-500 hover:shadow-[0_6px_16px_rgba(5,150,105,0.4)] hover:-translate-y-0.5 whitespace-nowrap">View --&gt;</a>
                  </div>
             </div>
 
             <!-- Column 2: Center (Top 10 Items Duplicate) -->
-            <div class="bg-white rounded-3xl border border-slate-200 shadow-sm p-4 lg:p-6 w-full flex flex-col relative h-max">
+            <div class="bg-white rounded-3xl border border-slate-200 shadow-sm p-4 lg:p-6 w-full flex flex-col relative h-full">
                  <div class="flex flex-col pb-2 min-h-0">
                     <h2 class="text-lg font-extrabold text-black uppercase tracking-wide mb-6 shrink-0 text-center">RECENT BORROWINGS</h2>
                     
@@ -333,13 +333,13 @@
                  </div>
 
                  <!-- Footer Toggles -->
-                 <div class="w-full pt-4 flex justify-center gap-4 border-t border-slate-100 mt-4">
+                 <div class="w-full pt-4 mt-auto flex justify-center gap-4 border-t border-slate-100">
                      <a href="{% url 'borrowing-list' %}" class="inline-flex cursor-pointer items-center justify-center rounded-xl bg-emerald-600 px-8 py-2 text-xs font-bold text-white shadow-[0_4px_12px_rgba(5,150,105,0.3)] ring-1 ring-inset ring-white/20 transition-all hover:bg-emerald-500 hover:shadow-[0_6px_16px_rgba(5,150,105,0.4)] hover:-translate-y-0.5 whitespace-nowrap">View --&gt;</a>
                  </div>
             </div>
 
             <!-- Column 3: Right (Spans full height) -->
-            <div class="bg-white rounded-3xl border border-slate-200 shadow-sm p-4 lg:p-6 w-full flex flex-col relative h-max">
+            <div class="bg-white rounded-3xl border border-slate-200 shadow-sm p-4 lg:p-6 w-full flex flex-col relative h-full">
                  <div class="flex flex-col pb-2 min-h-0">
                     <h2 class="text-lg font-extrabold text-black uppercase tracking-wide mb-6 text-center">RECENT ACTIVITY</h2>
                     
@@ -413,7 +413,7 @@
                  </div>
 
                  <!-- Footer Toggles -->
-                 <div class="w-full pt-4 flex justify-center gap-4 border-t border-slate-100 mt-4">
+                 <div class="w-full pt-4 mt-auto flex justify-center gap-4 border-t border-slate-100">
                      <a href="{% url 'activity-log' %}" class="inline-flex cursor-pointer items-center justify-center rounded-xl bg-emerald-600 px-8 py-2 text-xs font-bold text-white shadow-[0_4px_12px_rgba(5,150,105,0.3)] ring-1 ring-inset ring-white/20 transition-all hover:bg-emerald-500 hover:shadow-[0_6px_16px_rgba(5,150,105,0.4)] hover:-translate-y-0.5 whitespace-nowrap">View --&gt;</a>
                  </div>
             </div>
