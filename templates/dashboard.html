@@ -236,68 +236,37 @@
             <!-- Column 2: Center (Top 10 Items Duplicate) -->
             <div class="lg:row-span-2 bg-white rounded-3xl border border-slate-200 shadow-sm p-4 lg:p-6 w-full flex flex-col relative justify-between">
                  <div class="flex flex-col flex-1 pb-2 min-h-0">
-                    <h2 class="text-lg font-bold text-slate-800 mb-6 shrink-0">Top 10 Items Based on Value</h2>
+                    <h2 class="text-lg font-bold text-slate-800 mb-6 shrink-0">Recent Borrowings</h2>
                     
                     <div class="w-full relative min-h-0">
                          <table class="w-full text-left text-xs font-semibold text-slate-500 table-fixed border-collapse">
                              <thead class="text-[10px] text-slate-400 uppercase tracking-widest border-b border-slate-100">
                                  <tr>
                                      <th class="pb-3 px-1 font-bold w-6 text-center">#</th>
-                                     <th class="pb-3 px-3 font-bold w-[45%]">Item</th>
-                                     <th class="pb-3 px-1 font-bold text-right pr-2">Value (M)</th>
+                                     <th class="pb-3 px-3 font-bold w-[45%]">Borrower</th>
+                                     <th class="pb-3 px-1 font-bold">Item Name</th>
                                  </tr>
                              </thead>
                              <tbody class="divide-y divide-slate-50">
+                                 {% for log in recent_borrowings %}
                                  <tr class="hover:bg-slate-50 transition duration-200">
-                                     <td class="py-2.5 px-1 text-center font-extrabold text-emerald-600 align-middle">1</td>
-                                     <td class="py-2.5 px-3 font-bold text-slate-800 align-middle break-words pr-2">C100006 - Cherry Finished Crystal</td>
-                                     <td class="py-2.5 px-3 text-right text-slate-500 font-bold whitespace-nowrap align-middle">0.14M</td>
+                                     <td class="py-2.5 px-1 text-center font-extrabold text-emerald-600 align-middle">{{ forloop.counter }}</td>
+                                     <td class="py-2.5 px-3 font-bold text-slate-800 align-middle break-words pr-2">
+                                         {{ log.borrower_name|default:"-" }}
+                                     </td>
+                                     <td class="py-2.5 px-1 font-semibold text-slate-600 align-middle break-words pr-2">
+                                         {% if log.inventory_item %}
+                                            {{ log.inventory_item.model|default:log.inventory_item.item_type }}
+                                         {% else %}
+                                            -
+                                         {% endif %}
+                                     </td>
                                  </tr>
-                                 <tr class="hover:bg-slate-50 transition duration-200">
-                                     <td class="py-2.5 px-1 text-center font-extrabold text-emerald-600 align-middle">2</td>
-                                     <td class="py-2.5 px-3 font-bold text-slate-800 align-middle break-words pr-2">C100011 - Winter Frost Vase</td>
-                                     <td class="py-2.5 px-3 text-right text-slate-500 font-bold whitespace-nowrap align-middle">0.13M</td>
+                                 {% empty %}
+                                 <tr>
+                                     <td colspan="3" class="py-6 text-center text-sm text-slate-400 font-medium">No recent borrowings found.</td>
                                  </tr>
-                                 <tr class="hover:bg-slate-50 transition duration-200">
-                                     <td class="py-2.5 px-1 text-center font-extrabold text-emerald-600 align-middle">3</td>
-                                     <td class="py-2.5 px-3 font-bold text-slate-800 align-middle break-words pr-2">C100055 - Silver Plated Photo</td>
-                                     <td class="py-2.5 px-3 text-right text-slate-500 font-bold whitespace-nowrap align-middle">0.12M</td>
-                                 </tr>
-                                 <tr class="hover:bg-slate-50 transition duration-200">
-                                     <td class="py-2.5 px-1 text-center font-extrabold text-emerald-600 align-middle">4</td>
-                                     <td class="py-2.5 px-3 font-bold text-slate-800 align-middle break-words pr-2">C100009 - Normandy Vase</td>
-                                     <td class="py-2.5 px-3 text-right text-slate-500 font-bold whitespace-nowrap align-middle">0.12M</td>
-                                 </tr>
-                                 <tr class="hover:bg-slate-50 transition duration-200">
-                                     <td class="py-2.5 px-1 text-center font-extrabold text-emerald-600 align-middle">5</td>
-                                     <td class="py-2.5 px-3 font-bold text-slate-800 align-middle break-words pr-2">C100010 - Wisper-Cut Vase</td>
-                                     <td class="py-2.5 px-3 text-right text-slate-500 font-bold whitespace-nowrap align-middle">0.12M</td>
-                                 </tr>
-                                 <tr class="hover:bg-slate-50 transition duration-200">
-                                     <td class="py-2.5 px-1 text-center font-extrabold text-emerald-600 align-middle">6</td>
-                                     <td class="py-2.5 px-3 font-bold text-slate-800 align-middle break-words pr-2">C100040 - Channel Speaker Sys</td>
-                                     <td class="py-2.5 px-3 text-right text-slate-500 font-bold whitespace-nowrap align-middle">0.09M</td>
-                                 </tr>
-                                 <tr class="hover:bg-slate-50 transition duration-200">
-                                     <td class="py-2.5 px-1 text-center font-extrabold text-emerald-600 align-middle">7</td>
-                                     <td class="py-2.5 px-3 font-bold text-slate-800 align-middle break-words pr-2">C100004 - Walnut Medallian</td>
-                                     <td class="py-2.5 px-3 text-right text-slate-500 font-bold whitespace-nowrap align-middle">0.08M</td>
-                                 </tr>
-                                 <tr class="hover:bg-slate-50 transition duration-200">
-                                     <td class="py-2.5 px-1 text-center font-extrabold text-emerald-600 align-middle">8</td>
-                                     <td class="py-2.5 px-3 font-bold text-slate-800 align-middle break-words pr-2">C100005 - Cherry Finished Crystal</td>
-                                     <td class="py-2.5 px-3 text-right text-slate-500 font-bold whitespace-nowrap align-middle">0.08M</td>
-                                 </tr>
-                                 <tr class="hover:bg-slate-50 transition duration-200">
-                                     <td class="py-2.5 px-1 text-center font-extrabold text-emerald-600 align-middle">9</td>
-                                     <td class="py-2.5 px-3 font-bold text-slate-800 align-middle break-words pr-2">C100003 - Cherry Finish Frame</td>
-                                     <td class="py-2.5 px-3 text-right text-slate-500 font-bold whitespace-nowrap align-middle">0.08M</td>
-                                 </tr>
-                                 <tr class="hover:bg-slate-50 transition duration-200">
-                                     <td class="py-2.5 px-1 text-center font-extrabold text-emerald-600 align-middle">10</td>
-                                     <td class="py-2.5 px-3 font-bold text-slate-800 align-middle break-words pr-2">C100051 - Bamboo Digital</td>
-                                     <td class="py-2.5 px-3 text-right text-slate-500 font-bold whitespace-nowrap align-middle">0.08M</td>
-                                 </tr>
+                                 {% endfor %}
                              </tbody>
                          </table>
                     </div>
