@@ -409,13 +409,13 @@ python manage.py runserver
 
 ### The Project
 
-The **ITS Inventory Management System** was originally developed as an internal tool for the **Information Technology Services (ITS) Department** and has been formally turned over to the **Management Information Systems (MIS) Department** for continued operation and maintenance. It replaces manual spreadsheet-based processes with a centralized, auditable, web-based platform.
+The **ITS Inventory Management System** was originally developed as an internal tool for the **Information and Communications Technology (ICT) Department** and has been formally turned over to the **Management Information Systems (MIS) Department** for continued operation and maintenance. It replaces manual spreadsheet-based processes with a centralized, auditable, web-based platform.
 
 ### Context & Motivation
 
 | | |
 |---|---|
-| 🏢 **Original Department** | Information Technology Services (ITS) |
+| 🏢 **Original Department** | Information and Communications Technology (ICT) |
 | 🏢 **Current Owner** | Management Information Systems (MIS) |
 | 🎯 **Problem Solved** | Replace manual spreadsheet tracking with a centralized digital inventory system |
 | 👥 **Users Served** | MIS Staff, Department Administrators |
@@ -431,7 +431,7 @@ The **ITS Inventory Management System** was originally developed as an internal 
 
 ### Turned Over To
 
-This system was originally built for the ITS Department and has been handed over to the **Management Information Systems (MIS) Department** — ensuring continued, transparent, and fully auditable equipment management.
+This system was originally built for the ICT Department and has been handed over to the **Management Information Systems (MIS) Department** — ensuring continued, transparent, and fully auditable equipment management.
 
 ---
 
