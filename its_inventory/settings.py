@@ -8,7 +8,7 @@ SECRET_KEY = 'django-insecure-r4u7g=hkcw-p4acm^_3az8fwra%lfva+xg=_uwg6bt7_mhc+y5
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['itsinventory.pythonanywhere.com', '127.0.0.1', 'localhost']
 
 # Application definition
 INSTALLED_APPS = [
@@ -87,6 +87,7 @@ STATIC_URL = 'static/'
 STATICFILES_DIRS = [
     BASE_DIR / 'static',
 ]
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 # Auth redirects
 LOGIN_URL = '/login/'
