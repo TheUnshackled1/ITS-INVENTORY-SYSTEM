@@ -261,7 +261,8 @@ def inventory_list(request):
     inventory_data = list(inventory_items.values(
         'pk', 'item_type', 'item_description', 'brand', 'model',
         'serial_number', 'quantity', 'date_inventory', 'date_disposal',
-        'location', 'status', 'defect_description'
+        'location', 'status', 'defect_description',
+        'created_at', 'updated_at', 'last_updated_by'
     ))
     for item in inventory_data:
         item['original_no'] = pk_to_no.get(item['pk'], '')
@@ -273,6 +274,10 @@ def inventory_list(request):
         item['date_disposal_ui'] = item['date_disposal'].strftime('%b %d, %Y') if item['date_disposal'] else '-'
         # Serialize status display manually
         item['get_status_display'] = dict(Inventory.STATUS_CHOICES).get(item['status'], item['status'].replace("_", " ").title())   
+        # Audit metadata serialization
+        item['created_at'] = item['created_at'].strftime('%b %d, %Y') if item['created_at'] else item['date_inventory'].strftime('%b %d, %Y') if item['date_inventory'] else ''
+        item['updated_at'] = item['updated_at'].strftime('%b %d, %Y') if item['updated_at'] else ''
+        item['last_updated_by'] = item['last_updated_by'] or 'System'
     # Build active borrowings map for Context
     active_issuances = list(IssuanceLog.objects.filter(
         status__in=['borrowed', 'overdue'],
