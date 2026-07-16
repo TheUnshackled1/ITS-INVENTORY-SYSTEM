@@ -13,8 +13,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <link rel="stylesheet" href="{% static 'css/inventory.css' %}" />
-  <link rel="stylesheet" href="{% static 'css/dashboard.css' %}" />
+  <link rel="stylesheet" href="{% static 'css/inventory.css' %}?v=2.1" />
+  <link rel="stylesheet" href="{% static 'css/dashboard.css' %}?v=2.1" />
 </head>
 
 <body class="min-h-screen font-sans text-slate-900 antialiased bg-slate-50" style="background-image: url('data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23e2e8f0\' fill-opacity=\'0.2\'%3E%3Cpath d=\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');">
@@ -128,7 +128,7 @@
 
               <!-- Centered Title -->
               <div class="flex justify-center text-center lg:absolute lg:left-1/2 lg:-translate-x-1/2 lg:w-1/3">
-                <h1 class="text-xl lg:text-3xl font-extrabold uppercase tracking-[0.15em] text-blue-700 drop-shadow-sm whitespace-nowrap">
+                <h1 class="text-xl lg:text-3xl font-bold uppercase tracking-[4px] text-blue-700 drop-shadow-sm whitespace-nowrap">
                   DASHBOARD
                 </h1>
               </div>
@@ -143,7 +143,7 @@
                 <div id="stats-cards-container" class="grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-5 w-full">
 
                   <!-- Total Assets Card -->
-                  <div class="stats-card stats-card--total p-4 lg:h-[110px] col-span-1" data-live-stat="total">
+                  <div class="stats-card stats-card--total p-4 col-span-1" data-live-stat="total">
                     <div class="relative flex h-full flex-col gap-3 justify-center">
                       <div class="flex items-center text-blue-700 gap-2 font-medium">
                         <svg class="h-4 w-4 stroke-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
@@ -162,7 +162,7 @@
                   </div>
 
                   <!-- Current Borrowings Card -->
-                  <div class="stats-card stats-card--available p-4 lg:h-[110px] col-span-1" data-live-stat="borrowed">
+                  <div class="stats-card stats-card--available p-4 col-span-1" data-live-stat="borrowed">
                     <div class="relative flex h-full flex-col gap-3 justify-center">
                       <div class="flex items-center text-emerald-700 gap-2 font-medium shrink-0">
                         <svg class="h-4 w-4 stroke-2 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"/></svg>
@@ -181,7 +181,7 @@
                   </div>
 
                   <!-- Overdue Items Card -->
-                  <div class="stats-card stats-card--not-working p-4 lg:h-[110px] col-span-1" data-live-stat="overdue">
+                  <div class="stats-card stats-card--not-working p-4 col-span-1" data-live-stat="overdue">
                     <div class="relative flex h-full flex-col gap-3 justify-center">
                       <div class="flex items-center text-rose-700 gap-1.5 font-medium shrink-0 tracking-tight whitespace-nowrap">
                         <svg class="h-4 w-4 stroke-2 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
@@ -200,7 +200,7 @@
                   </div>
 
                   <!-- Pending Repairs Card -->
-                  <div class="stats-card stats-card--repair p-4 lg:h-[110px] col-span-1" data-live-stat="repair">
+                  <div class="stats-card stats-card--repair p-4 col-span-1" data-live-stat="repair">
                     <div class="relative flex h-full flex-col gap-3 justify-center">
                       <div class="flex items-center text-amber-700 gap-1.5 font-medium shrink-0 tracking-tight whitespace-nowrap">
                         <svg class="h-4 w-4 stroke-2 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
@@ -259,33 +259,30 @@
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                
                <!-- Add Item -->
-               <a href="{% url 'inventory-list' %}?action=add" class="flex flex-col items-center justify-center p-6 bg-white border border-slate-200 rounded-3xl shadow-sm hover:shadow-md hover:border-emerald-300 transition-all group overflow-hidden relative cursor-pointer">
+               <a href="{% url 'inventory-list' %}?action=add" class="flex flex-col items-center justify-center p-4 bg-white border border-slate-200 rounded-3xl shadow-sm hover:shadow-md hover:border-emerald-300 transition-all group overflow-hidden relative cursor-pointer">
                    <div class="absolute inset-0 bg-emerald-500/0 group-hover:bg-emerald-50 transition-colors"></div>
                    <div class="w-12 h-12 bg-emerald-100 text-emerald-600 rounded-2xl flex items-center justify-center mb-3 group-hover:scale-110 transition-transform shadow-sm relative z-10">
                        <svg class="w-6 h-6 stroke-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/></svg>
                    </div>
-                   <span class="font-extrabold text-slate-800 tracking-wide text-sm relative z-10 uppercase">Add New Item</span>
-                   <span class="text-xs text-slate-500 font-medium relative z-10 mt-1">Register a new equipment</span>
+                   <span class="font-bold text-slate-800 tracking-wide text-sm relative z-10 uppercase">Add New Item</span>
                </a>
 
                <!-- Borrow Item -->
-               <a href="{% url 'borrowing-list' %}?action=borrow" class="flex flex-col items-center justify-center p-6 bg-white border border-slate-200 rounded-3xl shadow-sm hover:shadow-md hover:border-sky-300 transition-all group overflow-hidden relative cursor-pointer">
-                   <div class="absolute inset-0 bg-sky-500/0 group-hover:bg-sky-50 transition-colors"></div>
-                   <div class="w-12 h-12 bg-sky-100 text-sky-600 rounded-2xl flex items-center justify-center mb-3 group-hover:scale-110 transition-transform shadow-sm relative z-10">
+               <a href="{% url 'borrowing-list' %}?action=borrow" class="flex flex-col items-center justify-center p-4 bg-white border border-slate-200 rounded-3xl shadow-sm hover:shadow-md hover:border-blue-300 transition-all group overflow-hidden relative cursor-pointer">
+                   <div class="absolute inset-0 bg-blue-500/0 group-hover:bg-blue-50 transition-colors"></div>
+                   <div class="w-12 h-12 bg-blue-100 text-blue-600 rounded-2xl flex items-center justify-center mb-3 group-hover:scale-110 transition-transform shadow-sm relative z-10">
                        <svg class="w-6 h-6 stroke-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"/></svg>
                    </div>
-                   <span class="font-extrabold text-slate-800 tracking-wide text-sm relative z-10 uppercase">Issue an Item</span>
-                   <span class="text-xs text-slate-500 font-medium relative z-10 mt-1">Borrow inventory to users</span>
+                   <span class="font-bold text-slate-800 tracking-wide text-sm relative z-10 uppercase">Issue an Item</span>
                </a>
 
                <!-- Bulk Upload -->
-               <a href="{% url 'inventory-list' %}?action=upload" class="flex flex-col items-center justify-center p-6 bg-white border border-slate-200 rounded-3xl shadow-sm hover:shadow-md hover:border-indigo-300 transition-all group overflow-hidden relative cursor-pointer">
-                   <div class="absolute inset-0 bg-indigo-500/0 group-hover:bg-indigo-50 transition-colors"></div>
-                   <div class="w-12 h-12 bg-indigo-100 text-indigo-600 rounded-2xl flex items-center justify-center mb-3 group-hover:scale-110 transition-transform shadow-sm relative z-10">
+               <a href="{% url 'inventory-list' %}?action=upload" class="flex flex-col items-center justify-center p-4 bg-white border border-slate-200 rounded-3xl shadow-sm hover:shadow-md hover:border-purple-300 transition-all group overflow-hidden relative cursor-pointer">
+                   <div class="absolute inset-0 bg-purple-500/0 group-hover:bg-purple-50 transition-colors"></div>
+                   <div class="w-12 h-12 bg-purple-100 text-purple-600 rounded-2xl flex items-center justify-center mb-3 group-hover:scale-110 transition-transform shadow-sm relative z-10">
                        <svg class="w-6 h-6 stroke-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/></svg>
                    </div>
-                   <span class="font-extrabold text-slate-800 tracking-wide text-sm relative z-10 uppercase">Excel Upload</span>
-                   <span class="text-xs text-slate-500 font-medium relative z-10 mt-1">Batch import system datasets</span>
+                   <span class="font-bold text-slate-800 tracking-wide text-sm relative z-10 uppercase">Excel Upload</span>
                </a>
 
             </div>
@@ -313,7 +310,7 @@
                              </thead>
                              <tbody class="divide-y divide-slate-50">
                                  {% for log in recent_borrowings %}
-                                 <tr class="h-[48px] hover:bg-slate-50 transition duration-200">
+                                 <tr class="h-[48px] even:bg-slate-50 hover:bg-slate-100 transition duration-200">
                                      <td class="py-2.5 px-1 text-center font-extrabold text-slate-900 align-middle">{{ forloop.counter }}</td>
                                      <td class="py-2.5 px-2 font-bold text-slate-800 align-middle break-words text-center px-1">
                                          {{ log.borrower_name|default:"-" }}
@@ -374,7 +371,7 @@
                              </thead>
                              <tbody class="divide-y divide-slate-50">
                                  {% for log in recent_activity %}
-                                 <tr class="h-[48px] hover:bg-slate-50 transition duration-200">
+                                 <tr class="h-[48px] even:bg-slate-50 hover:bg-slate-100 transition duration-200">
                                      <td class="py-2.5 px-1 text-center font-extrabold text-slate-900 align-middle">{{ forloop.counter }}</td>
                                      <td class="py-2.5 px-2 font-bold text-slate-800 align-middle break-words text-center px-1">
                                          {{ log.item_type|default:"-" }}
