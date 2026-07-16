@@ -96,19 +96,19 @@ document.addEventListener("DOMContentLoaded", function () {
           let displayStatus = item.get_status_display || statusValue.toUpperCase();
           
           if (statusValue === 'available') {
-              statusBadge = `<span class="inline-flex justify-center flex-shrink-0 items-center gap-1.5 w-28 px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider text-emerald-600">
+              statusBadge = `<span class="inline-flex justify-center flex-shrink-0 items-center gap-1.5 w-28 px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider text-emerald-700 bg-emerald-100 border border-emerald-200 rounded-full">
                   <svg class="h-1.5 w-1.5 fill-emerald-600" viewBox="0 0 6 6" aria-hidden="true"><circle cx="3" cy="3" r="3" /></svg>${displayStatus}
               </span>`;
           } else if (statusValue === 'in_use') {
-              statusBadge = `<span class="inline-flex justify-center flex-shrink-0 items-center gap-1.5 w-max px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider text-sky-600">
+              statusBadge = `<span class="inline-flex justify-center flex-shrink-0 items-center gap-1.5 w-max px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider text-sky-700 bg-sky-100 border border-sky-200 rounded-full">
                   <svg class="h-1.5 w-1.5 flex-shrink-0 fill-current" viewBox="0 0 6 6" aria-hidden="true"><circle cx="3" cy="3" r="3" /></svg>${displayStatus}
               </span>`;
           } else if (statusValue === 'repair') {
-              statusBadge = `<span class="inline-flex justify-center flex-shrink-0 items-center gap-1.5 w-max px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider text-amber-500">
+              statusBadge = `<span class="inline-flex justify-center flex-shrink-0 items-center gap-1.5 w-max px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider text-amber-700 bg-amber-100 border border-amber-200 rounded-full">
                   <svg class="h-1.5 w-1.5 flex-shrink-0 fill-current" viewBox="0 0 6 6" aria-hidden="true"><circle cx="3" cy="3" r="3" /></svg>${displayStatus}
               </span>`;
           } else {
-              statusBadge = `<span class="inline-flex justify-center flex-shrink-0 items-center gap-1.5 w-max px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider text-rose-600">
+              statusBadge = `<span class="inline-flex justify-center flex-shrink-0 items-center gap-1.5 w-max px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider text-rose-700 bg-rose-100 border border-rose-200 rounded-full">
                   <svg class="h-1.5 w-1.5 flex-shrink-0 fill-current" viewBox="0 0 6 6" aria-hidden="true"><circle cx="3" cy="3" r="3" /></svg>${displayStatus}
               </span>`;
           }
@@ -190,19 +190,19 @@ document.addEventListener("DOMContentLoaded", function () {
 
           let actionBadge = "";
           if (log.action === 'added') {
-            actionBadge = `<span class="inline-flex justify-center flex-shrink-0 items-center gap-1.5 w-max px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider text-emerald-600"><svg class="h-1.5 w-1.5 flex-shrink-0 fill-current" viewBox="0 0 6 6" aria-hidden="true"><circle cx="3" cy="3" r="3" /></svg>Added</span>`;
+            actionBadge = `<span class="inline-flex justify-center flex-shrink-0 items-center gap-1.5 w-max px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider text-emerald-700 bg-emerald-100 border border-emerald-200 rounded-full"><svg class="h-1.5 w-1.5 flex-shrink-0 fill-current" viewBox="0 0 6 6" aria-hidden="true"><circle cx="3" cy="3" r="3" /></svg>Added</span>`;
           } else if (log.action === 'edited') {
-            actionBadge = `<span class="inline-flex justify-center flex-shrink-0 items-center gap-1.5 w-max px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider text-blue-600"><svg class="h-1.5 w-1.5 flex-shrink-0 fill-current" viewBox="0 0 6 6" aria-hidden="true"><circle cx="3" cy="3" r="3" /></svg>Edited</span>`;
+            actionBadge = `<span class="inline-flex justify-center flex-shrink-0 items-center gap-1.5 w-max px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider text-blue-700 bg-blue-100 border border-blue-200 rounded-full"><svg class="h-1.5 w-1.5 flex-shrink-0 fill-current" viewBox="0 0 6 6" aria-hidden="true"><circle cx="3" cy="3" r="3" /></svg>Edited</span>`;
           } else if (log.action === 'deleted') {
-            actionBadge = `<span class="inline-flex justify-center flex-shrink-0 items-center gap-1.5 w-max px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider text-rose-600"><svg class="h-1.5 w-1.5 flex-shrink-0 fill-current" viewBox="0 0 6 6" aria-hidden="true"><circle cx="3" cy="3" r="3" /></svg>Deleted</span>`;
+            actionBadge = `<span class="inline-flex justify-center flex-shrink-0 items-center gap-1.5 w-max px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider text-rose-700 bg-rose-100 border border-rose-200 rounded-full"><svg class="h-1.5 w-1.5 flex-shrink-0 fill-current" viewBox="0 0 6 6" aria-hidden="true"><circle cx="3" cy="3" r="3" /></svg>Deleted</span>`;
           } else if (log.action === 'uploaded') {
-            actionBadge = `<span class="inline-flex justify-center flex-shrink-0 items-center gap-1.5 w-max px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider text-teal-600"><svg class="h-1.5 w-1.5 flex-shrink-0 fill-current" viewBox="0 0 6 6" aria-hidden="true"><circle cx="3" cy="3" r="3" /></svg>Uploaded</span>`;
+            actionBadge = `<span class="inline-flex justify-center flex-shrink-0 items-center gap-1.5 w-max px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider text-teal-700 bg-teal-100 border border-teal-200 rounded-full"><svg class="h-1.5 w-1.5 flex-shrink-0 fill-current" viewBox="0 0 6 6" aria-hidden="true"><circle cx="3" cy="3" r="3" /></svg>Uploaded</span>`;
           } else if (log.action === 'borrowed') {
-            actionBadge = `<span class="inline-flex justify-center flex-shrink-0 items-center gap-1.5 w-max px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider text-sky-600"><svg class="h-1.5 w-1.5 flex-shrink-0 fill-current" viewBox="0 0 6 6" aria-hidden="true"><circle cx="3" cy="3" r="3" /></svg>Borrowed</span>`;
+            actionBadge = `<span class="inline-flex justify-center flex-shrink-0 items-center gap-1.5 w-max px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider text-sky-700 bg-sky-100 border border-sky-200 rounded-full"><svg class="h-1.5 w-1.5 flex-shrink-0 fill-current" viewBox="0 0 6 6" aria-hidden="true"><circle cx="3" cy="3" r="3" /></svg>Borrowed</span>`;
           } else if (log.action === 'returned') {
-            actionBadge = `<span class="inline-flex justify-center flex-shrink-0 items-center gap-1.5 w-max px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider text-slate-500"><svg class="h-1.5 w-1.5 flex-shrink-0 fill-current" viewBox="0 0 6 6" aria-hidden="true"><circle cx="3" cy="3" r="3" /></svg>Returned</span>`;
+            actionBadge = `<span class="inline-flex justify-center flex-shrink-0 items-center gap-1.5 w-max px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider text-slate-600 bg-slate-100 border border-slate-200 rounded-full"><svg class="h-1.5 w-1.5 flex-shrink-0 fill-current" viewBox="0 0 6 6" aria-hidden="true"><circle cx="3" cy="3" r="3" /></svg>Returned</span>`;
           } else {
-            actionBadge = `<span class="inline-flex justify-center flex-shrink-0 items-center gap-1.5 w-max px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider text-slate-600"><svg class="h-1.5 w-1.5 flex-shrink-0 fill-current" viewBox="0 0 6 6" aria-hidden="true"><circle cx="3" cy="3" r="3" /></svg>${escapeHtml(log.action)}</span>`;
+            actionBadge = `<span class="inline-flex justify-center flex-shrink-0 items-center gap-1.5 w-max px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider text-slate-700 bg-slate-100 border border-slate-200 rounded-full"><svg class="h-1.5 w-1.5 flex-shrink-0 fill-current" viewBox="0 0 6 6" aria-hidden="true"><circle cx="3" cy="3" r="3" /></svg>${escapeHtml(log.action)}</span>`;
           }
           
           // Case formatting 
@@ -869,7 +869,30 @@ document.addEventListener("DOMContentLoaded", function () {
       document.getElementById("form_brand").value = row.dataset.brand || "";
       document.getElementById("form_model").value = row.dataset.model || "";
       document.getElementById("form_serial_number").value = row.dataset.serial || "";
-      document.getElementById("form_status").value = (row.dataset.status || "available").toLowerCase();
+      // Intelligent Edit Lock for Borrowed items to prevent manual status bypassing
+      const statusSelect = document.getElementById("form_status");
+      const rStatus = (row.dataset.status || "").toLowerCase();
+      if (rStatus === 'in_use' || rStatus === 'borrowed') {
+          if (!Array.from(statusSelect.options).some(opt => opt.value === rStatus)) {
+              const opt = document.createElement('option');
+              opt.value = rStatus;
+              opt.text = 'Currently Borrowed (In Use)';
+              statusSelect.add(opt);
+          }
+          statusSelect.value = rStatus;
+          statusSelect.classList.add('cursor-not-allowed', 'opacity-70', 'bg-slate-100');
+          statusSelect.disabled = true;
+      } else {
+          statusSelect.disabled = false;
+          statusSelect.classList.remove('cursor-not-allowed', 'opacity-70', 'bg-slate-100');
+          for (let i = 0; i < statusSelect.options.length; i++) {
+              if (statusSelect.options[i].value === 'in_use' || statusSelect.options[i].value === 'borrowed') {
+                  statusSelect.remove(i);
+                  break;
+              }
+          }
+          statusSelect.value = rStatus || "available";
+      }
       document.getElementById("form_quantity").value = row.dataset.qty || "1";
       document.getElementById("form_date_inventory").value = row.dataset.invdate || "";
       document.getElementById("form_date_disposal").value = row.dataset.dispdate || "";
