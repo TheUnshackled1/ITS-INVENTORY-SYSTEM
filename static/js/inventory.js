@@ -905,11 +905,26 @@ document.addEventListener("DOMContentLoaded", function () {
           statusSelect.value = rStatus || "available";
       }
 
-      // Handle defect field disabling
+      // Handle defect field disabling & Status colors
       const defectField = document.getElementById("form_defect_description");
       const defectLabel = document.getElementById("defect_label");
       function handleDefectState() {
           const val = statusSelect.value;
+          
+          // Apply dynamic colors based on status value
+          statusSelect.classList.remove('bg-emerald-50', 'text-emerald-800', 'border-emerald-300', 'focus:border-emerald-600', 'focus:ring-emerald-600', 'bg-amber-50', 'text-amber-800', 'border-amber-300', 'focus:border-amber-600', 'focus:ring-amber-600', 'bg-slate-100', 'text-slate-700', 'border-slate-300', 'focus:border-slate-600', 'focus:ring-slate-600', 'bg-slate-800', 'text-white', 'border-slate-900', 'focus:border-slate-900', 'focus:ring-slate-900', 'bg-blue-50', 'text-blue-800', 'border-blue-300');
+          if (val === 'available') {
+             statusSelect.classList.add('bg-emerald-50', 'text-emerald-800', 'border-emerald-300', 'focus:border-emerald-600', 'focus:ring-emerald-600');
+          } else if (val === 'repair') {
+             statusSelect.classList.add('bg-amber-50', 'text-amber-800', 'border-amber-300', 'focus:border-amber-600', 'focus:ring-amber-600');
+          } else if (val === 'disposed') {
+             statusSelect.classList.add('bg-slate-100', 'text-slate-700', 'border-slate-300', 'focus:border-slate-600', 'focus:ring-slate-600');
+          } else if (val === 'lost') {
+             statusSelect.classList.add('bg-slate-800', 'text-white', 'border-slate-900', 'focus:border-slate-900', 'focus:ring-slate-900');
+          } else {
+             statusSelect.classList.add('bg-blue-50', 'text-blue-800', 'border-blue-300', 'focus:border-blue-600', 'focus:ring-blue-600');
+          }
+          
           if (val === 'available' || val === 'borrowed' || val === 'in_use') {
               defectField.disabled = true;
               defectField.classList.add('cursor-not-allowed', 'bg-slate-100', 'text-slate-400');

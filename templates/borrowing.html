@@ -299,8 +299,8 @@
                   </td>
                   <td class="px-2 py-2 align-middle text-center">
                     {% if log.status == 'borrowed' %}
-                    <span class="inline-flex justify-center flex-shrink-0 items-center gap-1.5 w-max px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider text-sky-700 bg-sky-50 border border-sky-200 rounded-full">
-                      <svg class="h-3 w-3 flex-shrink-0 text-sky-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" /></svg>Borrowed
+                    <span class="inline-flex justify-center flex-shrink-0 items-center gap-1.5 w-max px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider text-sky-600 bg-sky-50/70 border border-sky-100 rounded-full">
+                      <svg class="h-3 w-3 flex-shrink-0 text-sky-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" /></svg>Borrowed
                     </span>
                     {% elif log.status == 'returned' %}
                     <span class="inline-flex justify-center flex-shrink-0 items-center gap-1.5 w-max px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider text-emerald-700 bg-emerald-100 border border-emerald-200 rounded-full">
@@ -321,9 +321,9 @@
                       Return
                     </button>
                     {% else %}
-                    <span class="inline-flex justify-center w-[85px] items-center gap-1.5 rounded-full bg-emerald-50 px-3 py-1.5 text-[11px] font-bold uppercase tracking-wider text-emerald-700 ring-1 ring-inset ring-emerald-200 shadow-sm">
-                      <svg class="w-3.5 h-3.5 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
-                      Done
+                    <span class="inline-flex justify-center w-[85px] items-center gap-1.5 rounded-full bg-emerald-50/40 border border-emerald-100/50 px-3 py-1.5 text-[11px] font-bold uppercase tracking-wider text-emerald-600/70 cursor-default">
+                      <svg class="w-3.5 h-3.5 text-emerald-500/70" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+                      DONE
                     </span>
                     {% endif %}
                   </td>
