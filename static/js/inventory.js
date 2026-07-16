@@ -211,11 +211,24 @@ document.addEventListener("DOMContentLoaded", function () {
           // Case formatting 
           const performedByFixed = log.performed_by ? escapeHtml(log.performed_by.charAt(0).toUpperCase() + log.performed_by.slice(1).toLowerCase()) : "";
           
+          // Date formatting for 2-line stack (e.g. Jul 16, 2026 \n 10:28 AM)
+          let dateRaw = log.timestamp_ui || "";
+          // Format expected: "Jul. 16, 2026, 10:28 a.m."
+          let splitIdx = dateRaw.lastIndexOf(", ");
+          let dateFmt = dateRaw;
+          if (splitIdx !== -1) {
+             let d1 = dateRaw.substring(0, splitIdx).replace(".", ""); // "Jul 16, 2026"
+             let d2 = dateRaw.substring(splitIdx + 2).toUpperCase().replace(/\./g, ""); // "10:28 AM"
+             dateFmt = `${escapeHtml(d1)}<br/><span class="text-[10px] font-bold text-slate-500 mt-0.5 inline-block">${escapeHtml(d2)}</span>`;
+          } else {
+             dateFmt = escapeHtml(dateRaw);
+          }
+
           htmlRows.push(`
-            <tr class="transition-colors hover:bg-blue-50 cursor-pointer">
+            <tr class="log-row-trigger transition-colors cursor-pointer group" data-summary="${escapeHtml(log.description)}" data-details="${escapeHtml(log.details)}" data-item="${escapeHtml(log.item_type)}">
               <td class="px-2 py-2 align-middle font-semibold text-slate-900 text-center text-xs w-16">${counter}</td>
               <td class="px-2 py-2 align-middle text-center text-[13px] uppercase font-black text-slate-900 transition-colors">
-                <span class="log-item-type inline-flex items-center justify-center gap-1 text-blue-600 hover:text-blue-800 cursor-pointer transition-colors group" data-summary="${escapeHtml(log.description)}" data-details="${escapeHtml(log.details)}" data-item="${escapeHtml(log.item_type)}">
+                <span class="inline-flex items-center justify-center gap-1 text-blue-600 group-hover:text-blue-800 transition-colors">
                   ${escapeHtml(log.item_type)}
                   <svg class="w-3 h-3 text-blue-400 group-hover:text-blue-600 transition-colors flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 16v-4M12 8h.01"/></svg>
                 </span>
@@ -227,7 +240,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 </div>
               </td>
               <td class="px-2 py-2 align-middle text-center font-medium">${actionBadge}</td>
-              <td class="px-2 py-2 align-middle text-center text-xs text-slate-700 font-mono tracking-tight">${escapeHtml(log.timestamp_ui)}</td>
+              <td class="px-2 py-2 align-middle text-center text-xs text-slate-700 font-mono tracking-tight group-hover:text-slate-900">${dateFmt}</td>
             </tr>
           `);
         }
@@ -812,7 +825,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Attach click listener to log item links (using event delegation for simplicity or individual listeners)
   document.addEventListener("click", function(e) {
-    const trigger = e.target.closest(".log-item-type");
+    const trigger = e.target.closest(".log-row-trigger");
     if (trigger) {
       e.preventDefault();
       const itemType = trigger.getAttribute("data-item");

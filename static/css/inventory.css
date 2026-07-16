@@ -572,3 +572,13 @@ table thead th {
     color: #0f172a !important;
     font-weight: 800 !important;
 }
+
+/* Global Subtle Enterprise Zebra Striping */
+table tbody tr:nth-child(even) {
+    background-color: #fafbfc !important;
+}
+
+/* Global Subtle Hover States for interactive tables */
+table tbody tr:hover {
+    background-color: #f8faff !important;
+}
