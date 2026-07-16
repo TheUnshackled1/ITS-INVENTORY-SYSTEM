@@ -145,6 +145,7 @@ def dashboard_view(request):
         'overdue_pct': get_pct(overdue_items, total_issuances),
         'pending_repairs': pending_repairs,
         'repair_pct': get_pct(pending_repairs, total_assets),
+        'today_requests': IssuanceLog.objects.filter(date_issued=now().date()).count(),
     }
 
     available_cnt = Inventory.objects.filter(status='available').count()
@@ -181,9 +182,9 @@ def dashboard_view(request):
         'data': list(trend_dict.values())
     }
 
-    recent_items = Inventory.objects.order_by('-id')[:10]
-    recent_borrowings = IssuanceLog.objects.order_by('-date_issued', '-id')[:10]
-    recent_activity = AuditLog.objects.order_by('-timestamp', '-id')[:10]
+    recent_items = Inventory.objects.order_by('-id')[:6]
+    recent_borrowings = IssuanceLog.objects.order_by('-date_issued', '-id')[:6]
+    recent_activity = AuditLog.objects.order_by('-timestamp', '-id')[:6]
 
     return render(request, "dashboard.html", {
         "kpi": kpi,
