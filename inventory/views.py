@@ -837,9 +837,14 @@ def activity_log(request):
             'performed_by': log.performed_by or '',
             'action': log.action or '',
             'timestamp_ui': local_time.strftime('%b. %d, %Y, %I:%M %p').replace("AM", "a.m.").replace("PM", "p.m.") if local_time else '-'
-        })      
+        })
+    def get_pct(part, total):
+        if total == 0: return 0
+        return round((part / total) * 100, 1)
+
+    total_logs = len(logs_data)
     stats = {
-        'total': len(logs_data),
+        'total': total_logs,
         'added': sum(1 for log in logs_data if log['action'] == 'added'),
         'edited': sum(1 for log in logs_data if log['action'] == 'edited'),
         'deleted': sum(1 for log in logs_data if log['action'] == 'deleted'),
@@ -847,7 +852,15 @@ def activity_log(request):
         'borrowed': IssuanceLog.objects.count(),
         'returned': IssuanceLog.objects.filter(status='returned').count(),
     }
-        
+    
+    stats.update({
+        'added_pct': get_pct(stats['added'], total_logs),
+        'edited_pct': get_pct(stats['edited'], total_logs),
+        'deleted_pct': get_pct(stats['deleted'], total_logs),
+        'uploaded_pct': get_pct(stats['uploaded'], total_logs),
+        'borrowed_pct': get_pct(stats['borrowed'], total_logs),
+        'returned_pct': get_pct(stats['returned'], total_logs),
+    })
     return render(request, "activity_log.html", {
         "logs": logs,
         "logs_json": json.dumps(logs_data), 
@@ -1081,11 +1094,18 @@ def borrowing_list(request):
     currently_borrowed = IssuanceLog.objects.filter(status='borrowed').count()
     returned_count = IssuanceLog.objects.filter(status='returned').count()
     overdue_count = IssuanceLog.objects.filter(status='overdue').count()
+    def get_pct(part, total):
+        if total == 0: return 0
+        return round((part / total) * 100, 1)
+
     stats = {
         'total': total_issuances,
         'borrowed': currently_borrowed,
         'returned': returned_count,
         'overdue': overdue_count,
+        'borrowed_pct': get_pct(currently_borrowed, total_issuances),
+        'returned_pct': get_pct(returned_count, total_issuances),
+        'overdue_pct': get_pct(overdue_count, total_issuances),
     }
     return render(request, 'borrowing.html', {
         'logs': logs,

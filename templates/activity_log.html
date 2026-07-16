@@ -101,7 +101,7 @@
                       <p class="text-3xl font-extrabold text-emerald-950 leading-none">{{ stats.added }}</p>
                     </div>
                     <div class="h-1 w-full rounded-full bg-emerald-100 overflow-hidden">
-                      <div class="h-full rounded-full bg-emerald-400" style="width:{% if stats.total %}{% widthratio stats.added stats.total 100 %}%{% else %}0%{% endif %}"></div>
+                      <div class="h-full rounded-full bg-emerald-400" style="width:{{ stats.added_pct|default:'0' }}%"></div>
                     </div>
                   </div>
                 </div>
@@ -117,7 +117,7 @@
                       <p class="text-3xl font-extrabold text-blue-950 leading-none">{{ stats.edited }}</p>
                     </div>
                     <div class="h-1 w-full rounded-full bg-blue-100 overflow-hidden">
-                      <div class="h-full rounded-full bg-blue-400" style="width:{% if stats.total %}{% widthratio stats.edited stats.total 100 %}%{% else %}0%{% endif %}"></div>
+                      <div class="h-full rounded-full bg-blue-400" style="width:{{ stats.edited_pct|default:'0' }}%"></div>
                     </div>
                   </div>
                 </div>
@@ -133,7 +133,7 @@
                       <p class="text-3xl font-extrabold text-rose-950 leading-none">{{ stats.deleted }}</p>
                     </div>
                     <div class="h-1 w-full rounded-full bg-rose-100 overflow-hidden">
-                      <div class="h-full rounded-full bg-rose-400" style="width:{% if stats.total %}{% widthratio stats.deleted stats.total 100 %}%{% else %}0%{% endif %}"></div>
+                      <div class="h-full rounded-full bg-rose-400" style="width:{{ stats.deleted_pct|default:'0' }}%"></div>
                     </div>
                   </div>
                 </div>
@@ -149,7 +149,7 @@
                       <p class="text-3xl font-extrabold text-purple-950 leading-none">{{ stats.uploaded }}</p>
                     </div>
                     <div class="h-1 w-full rounded-full bg-purple-100 overflow-hidden">
-                      <div class="h-full rounded-full bg-purple-400" style="width:{% if stats.total %}{% widthratio stats.uploaded stats.total 100 %}%{% else %}0%{% endif %}"></div>
+                      <div class="h-full rounded-full bg-purple-400" style="width:{{ stats.uploaded_pct|default:'0' }}%"></div>
                     </div>
                   </div>
                 </div>
@@ -165,7 +165,7 @@
                       <p class="text-3xl font-extrabold text-sky-950 leading-none">{{ stats.borrowed }}</p>
                     </div>
                     <div class="h-1 w-full rounded-full bg-sky-100 overflow-hidden">
-                      <div class="h-full rounded-full bg-sky-400" style="width:{% if stats.total %}{% widthratio stats.borrowed stats.total 100 %}%{% else %}0%{% endif %}"></div>
+                      <div class="h-full rounded-full bg-sky-400" style="width:{{ stats.borrowed_pct|default:'0' }}%"></div>
                     </div>
                   </div>
                 </div>
@@ -181,7 +181,7 @@
                       <p class="text-3xl font-extrabold text-slate-800 leading-none">{{ stats.returned }}</p>
                     </div>
                     <div class="h-1 w-full rounded-full bg-slate-200 overflow-hidden">
-                      <div class="h-full rounded-full bg-slate-400" style="width:{% if stats.total %}{% widthratio stats.returned stats.total 100 %}%{% else %}0%{% endif %}"></div>
+                      <div class="h-full rounded-full bg-slate-400" style="width:{{ stats.returned_pct|default:'0' }}%"></div>
                     </div>
                   </div>
                 </div>

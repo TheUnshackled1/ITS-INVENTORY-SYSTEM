@@ -99,11 +99,11 @@
                     <p class="text-3xl font-extrabold text-blue-950 leading-none">{{ stats.borrowed }}</p>
                     <span class="inline-flex items-center gap-1 rounded-full bg-blue-100 px-2 py-1 text-xs font-bold text-blue-700 ring-1 ring-inset ring-blue-700/10">
                       <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" /></svg>
-                      {% if stats.total %}{% widthratio stats.borrowed stats.total 100 %}%{% else %}0%{% endif %}
+                      {{ stats.borrowed_pct }}%
                     </span>
                   </div>
                   <div class="h-1 w-full rounded-full bg-blue-100 overflow-hidden">
-                    <div class="h-full rounded-full bg-blue-400" style="width:{% if stats.total %}{% widthratio stats.borrowed stats.total 100 %}%{% else %}0%{% endif %}"></div>
+                    <div class="h-full rounded-full bg-blue-400" style="width:{{ stats.borrowed_pct }}%"></div>
                   </div>
                 </div>
               </div>
@@ -119,11 +119,11 @@
                     <p class="text-3xl font-extrabold text-emerald-900 leading-none">{{ stats.returned|default:"0" }}</p>
                     <span class="inline-flex items-center gap-1 rounded-full bg-emerald-100 px-2 py-1 text-xs font-bold text-emerald-700 ring-1 ring-inset ring-emerald-700/10">
                       <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
-                      {% if stats.total %}{% widthratio stats.returned|default:0 stats.total 100 %}%{% else %}0%{% endif %}
+                      {{ stats.returned_pct }}%
                     </span>
                   </div>
                   <div class="h-1 w-full rounded-full bg-emerald-100 overflow-hidden">
-                    <div class="h-full rounded-full bg-emerald-400" style="width:{% if stats.total %}{% widthratio stats.returned|default:0 stats.total 100 %}%{% else %}0%{% endif %}"></div>
+                    <div class="h-full rounded-full bg-emerald-400" style="width:{{ stats.returned_pct }}%"></div>
                   </div>
                 </div>
               </div>
@@ -139,11 +139,11 @@
                     <p class="text-3xl font-extrabold text-rose-900 leading-none">{{ stats.overdue }}</p>
                     <span class="inline-flex items-center gap-1 rounded-full bg-rose-100 px-2 py-1 text-xs font-bold text-rose-700 ring-1 ring-inset ring-rose-700/10">
                       <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
-                      {% if stats.total %}{% widthratio stats.overdue stats.total 100 %}%{% else %}0%{% endif %}
+                      {{ stats.overdue_pct }}%
                     </span>
                   </div>
                   <div class="h-1 w-full rounded-full bg-rose-100 overflow-hidden">
-                    <div class="h-full rounded-full bg-rose-400" style="width:{% if stats.total %}{% widthratio stats.overdue stats.total 100 %}%{% else %}0%{% endif %}"></div>
+                    <div class="h-full rounded-full bg-rose-400" style="width:{{ stats.overdue_pct }}%"></div>
                   </div>
                 </div>
               </div>
@@ -175,20 +175,20 @@
               <!-- Tab Filters -->
               <div class="flex items-center gap-2 flex-wrap">
                 <a href="{% url 'borrowing-list' %}{% if search_query %}?q={{ search_query }}{% endif %}"
-                  class="px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-wider transition-all {% if current_tab == 'all' %}bg-slate-900 text-white shadow-md{% else %}bg-slate-100 text-slate-600 hover:bg-slate-200{% endif %}">
-                  All
+                  class="px-4 py-2 rounded-xl text-[11px] font-bold uppercase tracking-wider transition-all duration-200 {% if current_tab == 'all' %}bg-slate-900 text-white shadow-md{% else %}bg-slate-100 text-slate-600 hover:bg-slate-200{% endif %}">
+                  ALL ({{ stats.total }})
                 </a>
                 <a href="{% url 'borrowing-list' %}?tab=borrowed{% if search_query %}&q={{ search_query }}{% endif %}"
-                  class="px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-wider transition-all {% if current_tab == 'borrowed' %}bg-sky-600 text-white shadow-md{% else %}bg-sky-50 text-sky-700 hover:bg-sky-100{% endif %}">
-                  Borrowed
+                  class="px-4 py-2 rounded-xl text-[11px] font-bold uppercase tracking-wider transition-all duration-200 {% if current_tab == 'borrowed' %}bg-sky-600 text-white shadow-md{% else %}bg-sky-50 text-sky-700 hover:bg-sky-100{% endif %}">
+                  BORROWED ({{ stats.borrowed }})
                 </a>
                 <a href="{% url 'borrowing-list' %}?tab=returned{% if search_query %}&q={{ search_query }}{% endif %}"
-                  class="px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-wider transition-all {% if current_tab == 'returned' %}bg-emerald-600 text-white shadow-md{% else %}bg-emerald-50 text-emerald-700 hover:bg-emerald-100{% endif %}">
-                  Returned
+                  class="px-4 py-2 rounded-xl text-[11px] font-bold uppercase tracking-wider transition-all duration-200 {% if current_tab == 'returned' %}bg-emerald-600 text-white shadow-md{% else %}bg-emerald-50 text-emerald-700 hover:bg-emerald-100{% endif %}">
+                  RETURNED ({{ stats.returned }})
                 </a>
                 <a href="{% url 'borrowing-list' %}?tab=overdue{% if search_query %}&q={{ search_query }}{% endif %}"
-                  class="px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-wider transition-all {% if current_tab == 'overdue' %}bg-rose-600 text-white shadow-md{% else %}bg-rose-50 text-rose-700 hover:bg-rose-100{% endif %}">
-                  Overdue
+                  class="px-4 py-2 rounded-xl text-[11px] font-bold uppercase tracking-wider transition-all duration-200 {% if current_tab == 'overdue' %}bg-rose-600 text-white shadow-md{% else %}bg-rose-50 text-rose-700 hover:bg-rose-100{% endif %}">
+                  OVERDUE ({{ stats.overdue }})
                 </a>
               </div>
             </div>
@@ -200,9 +200,6 @@
             <table id="borrowing-table" class="w-full text-sm text-slate-700 whitespace-nowrap min-w-[1000px]">
               <thead class="bg-slate-50 text-xs uppercase tracking-[0.18em] text-slate-500">
                 <tr>
-                  <th scope="col" class="px-2 py-2 font-semibold">
-                    <span class="inline-flex w-full items-center justify-center">No.</span>
-                  </th>
                   <th scope="col" class="px-2 py-2 font-semibold">
                     <span class="inline-flex w-full items-center justify-center">Borrower</span>
                   </th>
@@ -238,10 +235,8 @@
               </thead>
               <tbody class="divide-y divide-slate-200 bg-white">
                 {% for log in logs %}
-                <tr class="transition-colors hover:bg-slate-50/80 {% if log.status == 'overdue' %}border-l-4 border-rose-500{% endif %}">
-                  <td class="px-2 py-2 align-middle font-semibold text-slate-900 text-center text-xs w-16">
-                    {{ forloop.counter }}
-                  </td>
+                <tr class="transition-all duration-200 group {% if log.status == 'returned' %}opacity-[0.95] bg-slate-50/40 hover:bg-slate-100/50{% else %}hover:bg-[#f8fafc]{% endif %} {% if log.status == 'overdue' %}border-l-4 border-rose-500{% endif %}">
+
                   <td class="px-2 py-2 align-middle text-center text-xs font-semibold text-slate-900">
                     {{ log.borrower_name }}
                   </td>
@@ -299,8 +294,8 @@
                   </td>
                   <td class="px-2 py-2 align-middle text-center">
                     {% if log.status == 'borrowed' %}
-                    <span class="inline-flex justify-center flex-shrink-0 items-center gap-1.5 w-max px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider text-sky-600 bg-sky-50/70 border border-sky-100 rounded-full">
-                      <svg class="h-3 w-3 flex-shrink-0 text-sky-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" /></svg>Borrowed
+                    <span class="inline-flex justify-center flex-shrink-0 items-center gap-1.5 w-max px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider text-blue-700 bg-[#EFF6FF] border border-blue-100 rounded-full">
+                      <svg class="h-3 w-3 flex-shrink-0 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" /></svg>Borrowed
                     </span>
                     {% elif log.status == 'returned' %}
                     <span class="inline-flex justify-center flex-shrink-0 items-center gap-1.5 w-max px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider text-emerald-700 bg-emerald-100 border border-emerald-200 rounded-full">
