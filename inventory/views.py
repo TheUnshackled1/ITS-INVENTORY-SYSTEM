@@ -361,6 +361,9 @@ def serialize_inventory_item(item):
         'location': item.location or '',
         'status': item.status or 'available',
         'defect_description': item.defect_description or '',
+        'created_at': item.created_at.strftime('%b %d, %Y') if item.created_at else str(item.date_inventory) if item.date_inventory else '',
+        'updated_at': item.updated_at.strftime('%b %d, %Y') if item.updated_at else '',
+        'last_updated_by': item.last_updated_by or 'System',
     }   
     active_issuances = list(item.issuances.filter(status__in=['borrowed', 'overdue']).values(
         'borrower_name', 'office_location', 'quantity_borrowed', 'status'
@@ -377,7 +380,9 @@ def add_inventory(request):
         form = InventoryForm(request.POST)
         is_ajax = request.headers.get('x-requested-with') == 'XMLHttpRequest' or request.headers.get('Accept') == 'application/json'
         if form.is_valid():
-            item = form.save()
+            item = form.save(commit=False)
+            item.last_updated_by = request.user.first_name or request.user.username
+            item.save()
             log_action(request, "added", item)
             if is_ajax:
                 return JsonResponse({'success': True, 'item': serialize_inventory_item(item)})
@@ -453,6 +458,7 @@ def edit_inventory(request, pk):
                 if is_ajax:
                     return JsonResponse({'success': True, 'no_changes': True})
                 return redirect('inventory-list')               
+            updated_item.last_updated_by = request.user.first_name or request.user.username
             updated_item.save()
             log_action(request, "edited", updated_item, old_item=old_item)
             if is_ajax:

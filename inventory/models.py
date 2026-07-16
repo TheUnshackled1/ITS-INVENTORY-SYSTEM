@@ -35,6 +35,9 @@ class Inventory(models.Model):
         blank=True,
         null=True
     )
+    created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True)
+    updated_at = models.DateTimeField(auto_now=True, null=True, blank=True)
+    last_updated_by = models.CharField(max_length=150, blank=True, null=True)
     def __str__(self):
         return f"{self.item_type} - {self.serial_number}"
     def save(self, *args, **kwargs):

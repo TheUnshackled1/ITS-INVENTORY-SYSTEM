@@ -138,6 +138,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 data-location="${escapeHtml(displayLocation)}"
                 data-status="${escapeHtml(statusValue)}"
                 data-defect="${escapeHtml(item.defect_description)}"
+                data-created_at="${escapeHtml(item.created_at || item.date_inventory_raw || '')}"
+                data-updated_at="${escapeHtml(item.updated_at || '')}"
+                data-audit_user="${escapeHtml(item.last_updated_by || 'System')}"
                 data-borrowings='${escapeHtml(JSON.stringify(item.active_borrowings || []))}'>
               <td class="px-2 py-2 align-middle font-semibold text-slate-900 text-xs">${escapeHtml(item.original_no)}</td>
               <td class="px-2 py-2 align-middle text-xs font-semibold leading-tight text-slate-900"><span class="inline-flex items-center gap-1 text-blue-600 hover:text-blue-800 transition-colors cursor-pointer"><span>${escapeHtml(item.item_type) || "-"}</span><svg class="w-3 h-3 text-blue-400 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 16v-4M12 8h.01"/></svg></span></td>
@@ -859,10 +862,18 @@ document.addEventListener("DOMContentLoaded", function () {
         const rowStatus = (row.dataset.status || '').toLowerCase();
         const rowQty = parseInt(row.dataset.qty || '0', 10);
         if (rowStatus === 'available' && rowQty > 0) {
-          borrowBtn.classList.remove('hidden');
+          borrowBtn.disabled = false;
+          borrowBtn.textContent = "Borrow Item";
         } else {
-          borrowBtn.classList.add('hidden');
+          borrowBtn.disabled = true;
+          // Set text depending on status
+          if (rowStatus === 'borrowed' || rowStatus === 'in_use') {
+             borrowBtn.textContent = "Borrowed";
+          } else {
+             borrowBtn.textContent = "Unavailable";
+          }
         }
+        borrowBtn.classList.remove('hidden');
       }
       
       document.getElementById("form_item_type").value = row.dataset.type || "";
@@ -893,6 +904,28 @@ document.addEventListener("DOMContentLoaded", function () {
           }
           statusSelect.value = rStatus || "available";
       }
+
+      // Handle defect field disabling
+      const defectField = document.getElementById("form_defect_description");
+      const defectLabel = document.getElementById("defect_label");
+      function handleDefectState() {
+          const val = statusSelect.value;
+          if (val === 'available' || val === 'borrowed' || val === 'in_use') {
+              defectField.disabled = true;
+              defectField.classList.add('cursor-not-allowed', 'bg-slate-100', 'text-slate-400');
+              defectField.classList.remove('bg-white', 'text-slate-800');
+              defectLabel.classList.add('text-slate-400');
+              defectLabel.classList.remove('text-slate-700');
+          } else {
+              defectField.disabled = false;
+              defectField.classList.remove('cursor-not-allowed', 'bg-slate-100', 'text-slate-400');
+              defectField.classList.add('bg-white', 'text-slate-800');
+              defectLabel.classList.remove('text-slate-400');
+              defectLabel.classList.add('text-slate-700');
+          }
+      }
+      handleDefectState();
+      statusSelect.onchange = handleDefectState;
       document.getElementById("form_quantity").value = row.dataset.qty || "1";
       document.getElementById("form_date_inventory").value = row.dataset.invdate || "";
       document.getElementById("form_date_disposal").value = row.dataset.dispdate || "";
@@ -934,7 +967,15 @@ document.addEventListener("DOMContentLoaded", function () {
         });
       }, 0);
       
-      openDrawer("Edit Inventory Record");
+      const auditFooter = document.getElementById("auditFooter");
+      if (auditFooter) {
+        document.getElementById("auditCreatedDate").textContent = row.dataset.created_at || row.dataset.invdate || "--";
+        document.getElementById("auditUpdatedDate").textContent = row.dataset.updated_at || "--";
+        document.getElementById("auditUpdatedBy").textContent = row.dataset.audit_user || "System";
+        auditFooter.classList.remove("hidden");
+      }
+
+      openDrawer("Edit Inventory Item");
     }
   });
 
