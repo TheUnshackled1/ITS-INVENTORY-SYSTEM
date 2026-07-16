@@ -126,28 +126,31 @@ def dashboard_view(request):
     from datetime import timedelta
     from django.db.models import Count
 
-    # KPI Calculations
-    total_items = Inventory.objects.count()
-    available_cnt = Inventory.objects.filter(status='available').count()
-    repair_cnt = Inventory.objects.filter(status='repair').count()
-    working_cnt = Inventory.objects.filter(status='working').count()
-    not_working_cnt = Inventory.objects.filter(status='not_working').count()
+    # Global KPI Calculations
+    total_assets = Inventory.objects.count()
+    total_issuances = IssuanceLog.objects.count()
+    current_borrowings = IssuanceLog.objects.filter(status='borrowed').count()
+    overdue_items = IssuanceLog.objects.filter(status='overdue').count()
+    pending_repairs = Inventory.objects.filter(status='repair').count()
 
     def get_pct(part, total):
         if total == 0: return 0
         return round((part / total) * 100, 1)
 
     kpi = {
-        'total': total_items,
-        'available': available_cnt,
-        'available_pct': get_pct(available_cnt, total_items),
-        'repair': repair_cnt,
-        'repair_pct': get_pct(repair_cnt, total_items),
-        'working': working_cnt,
-        'working_pct': get_pct(working_cnt, total_items),
-        'not_working': not_working_cnt,
-        'not_working_pct': get_pct(not_working_cnt, total_items),
+        'total_assets': total_assets,
+        'current_borrowings': current_borrowings,
+        'cb_pct': get_pct(current_borrowings, total_issuances),
+        'overdue_items': overdue_items,
+        'overdue_pct': get_pct(overdue_items, total_issuances),
+        'pending_repairs': pending_repairs,
+        'repair_pct': get_pct(pending_repairs, total_assets),
     }
+
+    available_cnt = Inventory.objects.filter(status='available').count()
+    repair_cnt = pending_repairs
+    working_cnt = Inventory.objects.filter(status='working').count()
+    not_working_cnt = Inventory.objects.filter(status='not_working').count()
 
     # Chart 1: Inventory Status Pie Chart payload
     pie_chart_data = {
