@@ -96,7 +96,7 @@ document.addEventListener("DOMContentLoaded", function () {
           let displayStatus = item.get_status_display || statusValue.toUpperCase();
           
           if (statusValue === 'available') {
-              statusBadge = `<span class="inline-flex justify-center flex-shrink-0 items-center gap-1.5 w-28 px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider text-emerald-700 bg-emerald-100 border border-emerald-200 rounded-full">
+              statusBadge = `<span class="inline-flex justify-center flex-shrink-0 items-center gap-1.5 w-28 px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider text-emerald-700 bg-green-100 border border-emerald-200 rounded-full">
                   <svg class="h-1.5 w-1.5 fill-emerald-600" viewBox="0 0 6 6" aria-hidden="true"><circle cx="3" cy="3" r="3" /></svg>${displayStatus}
               </span>`;
           } else if (statusValue === 'in_use') {
