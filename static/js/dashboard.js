@@ -80,9 +80,72 @@ document.addEventListener("DOMContentLoaded", () => {
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
+                animation: {
+                    x: {
+                        type: 'number',
+                        easing: 'linear',
+                        duration: (context) => (1500 / trendData.data.length),
+                        from: NaN, 
+                        delay: (ctx) => {
+                            if (ctx.type !== 'data' || ctx.xStarted) { return 0; }
+                            ctx.xStarted = true;
+                            return ctx.index * (1500 / trendData.data.length);
+                        }
+                    },
+                    y: {
+                        type: 'number',
+                        easing: 'linear',
+                        duration: (context) => (1500 / trendData.data.length),
+                        from: (ctx) => {
+                            if (ctx.index === 0) {
+                                return ctx.chart.scales.y.getPixelForValue(0);
+                            }
+                            const meta = ctx.chart.getDatasetMeta(ctx.datasetIndex);
+                            const prev = meta.data[ctx.index - 1];
+                            return prev ? prev.getProps(['y'], true).y : 0;
+                        },
+                        delay: (ctx) => {
+                            if (ctx.type !== 'data' || ctx.yStarted) { return 0; }
+                            ctx.yStarted = true;
+                            return ctx.index * (1500 / trendData.data.length);
+                        }
+                    },
+                    onComplete: function(animation) {
+                        const chart = animation.chart;
+                        if (animation.initial && !chart.canvas.hasAttribute('data-pulsed')) {
+                            chart.canvas.setAttribute('data-pulsed', 'true');
+                            
+                            const meta = chart.getDatasetMeta(0);
+                            if (meta && meta.data && meta.data.length > 0) {
+                                const lastPoint = meta.data[meta.data.length - 1];
+                                
+                                const pulseDot = document.createElement('div');
+                                pulseDot.style.position = 'absolute';
+                                pulseDot.style.left = lastPoint.x + 'px';
+                                pulseDot.style.top = lastPoint.y + 'px';
+                                pulseDot.style.width = '12px';
+                                pulseDot.style.height = '12px';
+                                pulseDot.style.transform = 'translate(-50%, -50%)';
+                                pulseDot.style.pointerEvents = 'none';
+                                
+                                // Infinite heartbeat pulse using Tailwind ping
+                                const ring = document.createElement('div');
+                                ring.className = 'w-full h-full rounded-full bg-blue-500 animate-ping opacity-75';
+                                
+                                pulseDot.appendChild(ring);
+                                chart.canvas.parentElement.style.position = 'relative';
+                                chart.canvas.parentElement.appendChild(pulseDot);
+                                // The pulse remains permanently across the session as a heartbeat loop!
+                            }
+                        }
+                    }
+                },
                 plugins: {
                     legend: { display: false },
                     tooltip: {
+                        animation: {
+                            duration: 150
+                        },
                         backgroundColor: 'rgba(15, 23, 42, 0.9)', // slate-900
                         titleFont: { size: 13, weight: 'bold' },
                         bodyFont: { size: 12, weight: 'bold' },
@@ -126,6 +189,12 @@ document.addEventListener("DOMContentLoaded", () => {
                 responsive: true,
                 maintainAspectRatio: false,
                 cutout: '70%',
+                animation: {
+                    animateRotate: true,
+                    animateScale: true,
+                    duration: 1400,
+                    easing: 'easeOutQuart'
+                },
                 plugins: {
                     legend: {
                         position: 'right',
