@@ -854,6 +854,20 @@ document.addEventListener("DOMContentLoaded", function () {
     if (deleteBtn) deleteBtn.classList.add("hidden");
     const borrowBtn = document.getElementById("borrowRecordBtn");
     if (borrowBtn) borrowBtn.classList.add("hidden");
+    
+    // Ensure defect field isn't locked from previous edit
+    const defectField = document.getElementById("form_defect_description");
+    if (defectField) {
+        defectField.disabled = false;
+        defectField.classList.remove('cursor-not-allowed', 'bg-slate-100', 'text-slate-400');
+        defectField.classList.add('bg-white', 'text-slate-800');
+    }
+    const defectLabel = document.getElementById("defect_label");
+    if (defectLabel) {
+        defectLabel.classList.remove('text-slate-400');
+        defectLabel.classList.add('text-slate-700');
+    }
+    
     openDrawer("Add Inventory Record");
   };
 
@@ -946,19 +960,7 @@ document.addEventListener("DOMContentLoaded", function () {
              statusSelect.classList.add('bg-blue-50', 'text-blue-800', 'border-blue-300', 'focus:border-blue-600', 'focus:ring-blue-600');
           }
           
-          if (val === 'available' || val === 'borrowed' || val === 'in_use') {
-              defectField.disabled = true;
-              defectField.classList.add('cursor-not-allowed', 'bg-slate-100', 'text-slate-400');
-              defectField.classList.remove('bg-white', 'text-slate-800');
-              defectLabel.classList.add('text-slate-400');
-              defectLabel.classList.remove('text-slate-700');
-          } else {
-              defectField.disabled = false;
-              defectField.classList.remove('cursor-not-allowed', 'bg-slate-100', 'text-slate-400');
-              defectField.classList.add('bg-white', 'text-slate-800');
-              defectLabel.classList.remove('text-slate-400');
-              defectLabel.classList.add('text-slate-700');
-          }
+          defectField.disabled = false;
       }
       handleDefectState();
       statusSelect.onchange = handleDefectState;
