@@ -196,7 +196,7 @@ document.addEventListener("DOMContentLoaded", function () {
           } else if (log.action === 'deleted') {
             actionBadge = `<span class="inline-flex justify-center flex-shrink-0 items-center gap-1.5 w-max px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider text-rose-700 bg-rose-100 border border-rose-200 rounded-full"><svg class="h-1.5 w-1.5 flex-shrink-0 fill-current" viewBox="0 0 6 6" aria-hidden="true"><circle cx="3" cy="3" r="3" /></svg>Deleted</span>`;
           } else if (log.action === 'uploaded') {
-            actionBadge = `<span class="inline-flex justify-center flex-shrink-0 items-center gap-1.5 w-max px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider text-teal-700 bg-teal-100 border border-teal-200 rounded-full"><svg class="h-1.5 w-1.5 flex-shrink-0 fill-current" viewBox="0 0 6 6" aria-hidden="true"><circle cx="3" cy="3" r="3" /></svg>Uploaded</span>`;
+            actionBadge = `<span class="inline-flex justify-center flex-shrink-0 items-center gap-1.5 w-max px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider text-purple-700 bg-purple-100 border border-purple-200 rounded-full"><svg class="h-1.5 w-1.5 flex-shrink-0 fill-current" viewBox="0 0 6 6" aria-hidden="true"><circle cx="3" cy="3" r="3" /></svg>Uploaded</span>`;
           } else if (log.action === 'borrowed') {
             actionBadge = `<span class="inline-flex justify-center flex-shrink-0 items-center gap-1.5 w-max px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider text-sky-700 bg-sky-100 border border-sky-200 rounded-full"><svg class="h-1.5 w-1.5 flex-shrink-0 fill-current" viewBox="0 0 6 6" aria-hidden="true"><circle cx="3" cy="3" r="3" /></svg>Borrowed</span>`;
           } else if (log.action === 'returned') {
@@ -209,7 +209,7 @@ document.addEventListener("DOMContentLoaded", function () {
           const performedByFixed = log.performed_by ? escapeHtml(log.performed_by.charAt(0).toUpperCase() + log.performed_by.slice(1).toLowerCase()) : "";
           
           htmlRows.push(`
-            <tr class="transition-colors hover:bg-slate-50/80">
+            <tr class="transition-colors hover:bg-blue-50 cursor-pointer">
               <td class="px-2 py-2 align-middle font-semibold text-slate-900 text-center text-xs w-16">${counter}</td>
               <td class="px-2 py-2 align-middle text-center text-[13px] uppercase font-black text-slate-900 transition-colors">
                 <span class="log-item-type inline-flex items-center justify-center gap-1 text-blue-600 hover:text-blue-800 cursor-pointer transition-colors group" data-summary="${escapeHtml(log.description)}" data-details="${escapeHtml(log.details)}" data-item="${escapeHtml(log.item_type)}">

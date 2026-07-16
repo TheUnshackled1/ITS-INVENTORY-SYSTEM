@@ -524,10 +524,10 @@ table {
 .datatable-pagination .datatable-active a:hover,
 .datatable-pagination .datatable-active button,
 .datatable-pagination .datatable-active button:hover {
-    background: #000000 !important;
-    border-color: #000000 !important;
+    background: #2563eb !important;
+    border-color: #2563eb !important;
     color: #ffffff !important;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.2) !important;
+    box-shadow: 0 1px 3px rgba(37,99,235,0.2) !important;
 }
 
 .datatable-pagination .datatable-hidden {

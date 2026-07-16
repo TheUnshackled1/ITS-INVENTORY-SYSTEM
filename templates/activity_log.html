@@ -141,15 +141,15 @@
                 <!-- Uploaded Card -->
                 <div class="stats-card stats-card--uploaded p-4">
                   <div class="relative flex h-full flex-col gap-3">
-                  <div class="flex items-center text-teal-700 gap-2 font-medium">
+                  <div class="flex items-center text-purple-700 gap-2 font-medium">
                     <svg class="h-4 w-4 stroke-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/></svg>
                     Uploaded
                   </div>
                     <div>
-                      <p class="text-3xl font-extrabold text-teal-950 leading-none">{{ stats.uploaded }}</p>
+                      <p class="text-3xl font-extrabold text-purple-950 leading-none">{{ stats.uploaded }}</p>
                     </div>
-                    <div class="h-1 w-full rounded-full bg-teal-100 overflow-hidden">
-                      <div class="h-full rounded-full bg-teal-400" style="width:{% if stats.total %}{% widthratio stats.uploaded stats.total 100 %}%{% else %}0%{% endif %}"></div>
+                    <div class="h-1 w-full rounded-full bg-purple-100 overflow-hidden">
+                      <div class="h-full rounded-full bg-purple-400" style="width:{% if stats.total %}{% widthratio stats.uploaded stats.total 100 %}%{% else %}0%{% endif %}"></div>
                     </div>
                   </div>
                 </div>
