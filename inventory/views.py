@@ -120,10 +120,72 @@ def get_distinct_text_values(queryset, field_name, annotation_name):
 
 @login_required
 def dashboard_view(request):
+    import json
+    from django.db.models.functions import TruncDate
+    from django.utils.timezone import now
+    from datetime import timedelta
+    from django.db.models import Count
+
+    # KPI Calculations
+    total_items = Inventory.objects.count()
+    available_cnt = Inventory.objects.filter(status='available').count()
+    repair_cnt = Inventory.objects.filter(status='repair').count()
+    working_cnt = Inventory.objects.filter(status='working').count()
+    not_working_cnt = Inventory.objects.filter(status='not_working').count()
+
+    def get_pct(part, total):
+        if total == 0: return 0
+        return round((part / total) * 100, 1)
+
+    kpi = {
+        'total': total_items,
+        'available': available_cnt,
+        'available_pct': get_pct(available_cnt, total_items),
+        'repair': repair_cnt,
+        'repair_pct': get_pct(repair_cnt, total_items),
+        'working': working_cnt,
+        'working_pct': get_pct(working_cnt, total_items),
+        'not_working': not_working_cnt,
+        'not_working_pct': get_pct(not_working_cnt, total_items),
+    }
+
+    # Chart 1: Inventory Status Pie Chart payload
+    pie_chart_data = {
+        'labels': ['Available', 'Working', 'Under Repair', 'Not Working'],
+        'data': [available_cnt, working_cnt, repair_cnt, not_working_cnt]
+    }
+
+    # Chart 2: Borrowing Trend (Last 7 Days)
+    end_date = now().date()
+    start_date = end_date - timedelta(days=6)
+    
+    # Generate continuous 7 days list to ensure zero-fill
+    date_labels = [(start_date + timedelta(days=i)).strftime('%b %d') for i in range(7)]
+    trend_dict = {label: 0 for label in date_labels}
+
+    borrowing_trends = IssuanceLog.objects.filter(
+        date_issued__gte=start_date,
+        date_issued__lte=end_date
+    ).values('date_issued').annotate(c=Count('id')).order_by('date_issued')
+
+    for entry in borrowing_trends:
+        label = entry['date_issued'].strftime('%b %d')
+        if label in trend_dict:
+            trend_dict[label] = entry['c']
+
+    trend_chart_data = {
+        'labels': date_labels,
+        'data': list(trend_dict.values())
+    }
+
     recent_items = Inventory.objects.order_by('-id')[:10]
     recent_borrowings = IssuanceLog.objects.order_by('-date_issued', '-id')[:10]
     recent_activity = AuditLog.objects.order_by('-timestamp', '-id')[:10]
+
     return render(request, "dashboard.html", {
+        "kpi": kpi,
+        "pie_chart_json": pie_chart_data,
+        "trend_chart_json": trend_chart_data,
         "recent_items": recent_items,
         "recent_borrowings": recent_borrowings,
         "recent_activity": recent_activity
