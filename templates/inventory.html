@@ -191,15 +191,15 @@
               <!-- Available Card -->
               <div class="stats-card stats-card--available p-4">
                 <div class="relative flex h-full flex-col gap-3">
-                  <div class="flex items-center text-emerald-700 gap-2 font-medium">
-                    <svg class="h-4 w-4 stroke-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                    Available
+                  <div class="flex items-center justify-between mb-1.5 w-full">
+                    <span class="text-[10px] font-extrabold text-slate-500 uppercase tracking-widest pl-1">Available</span>
+                    <span class="text-xs font-black text-slate-800 pr-1">{{ stats.available }}<span class="text-slate-400 font-bold ml-1">Items</span></span>
                   </div>
-                  <div>
-                    <p class="text-3xl font-extrabold text-emerald-900 leading-none">{{ stats.available }}</p>
+                  <div class="w-full bg-slate-100 rounded-full h-2 min-h-2 relative overflow-hidden flex shadow-inner">
+                    <div class="h-full rounded-full bg-emerald-400" style="width:{{ stats.available_pct }}%"></div>
                   </div>
-                  <div class="h-1 w-full rounded-full bg-emerald-100 overflow-hidden">
-                    <div class="h-full rounded-full bg-emerald-400" style="width:{% if stats.total %}{% widthratio stats.available stats.total 100 %}%{% else %}0%{% endif %}"></div>
+                  <div class="mt-1.5 text-right w-full pr-1">
+                    <span class="text-[10px] font-bold text-slate-400">{{ stats.available_pct }}% of total</span>
                   </div>
                 </div>
               </div>
@@ -207,15 +207,15 @@
               <!-- Under Repair Card -->
               <div class="stats-card stats-card--repair p-4">
                 <div class="relative flex h-full flex-col gap-3">
-                  <div class="flex items-center text-amber-700 gap-2 font-medium">
-                    <svg class="h-4 w-4 stroke-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
-                    Under Repair
+                  <div class="flex items-center justify-between mb-1.5 w-full">
+                    <span class="text-[10px] font-extrabold text-slate-500 uppercase tracking-widest pl-1">Under Repair</span>
+                    <span class="text-xs font-black text-slate-800 pr-1">{{ stats.repair }}<span class="text-slate-400 font-bold ml-1">Items</span></span>
                   </div>
-                  <div>
-                    <p class="text-3xl font-extrabold text-amber-900 leading-none">{{ stats.repair }}</p>
+                  <div class="w-full bg-slate-100 rounded-full h-2 min-h-2 relative overflow-hidden flex shadow-inner">
+                    <div class="h-full rounded-full bg-amber-400" style="width:{{ stats.repair_pct }}%"></div>
                   </div>
-                  <div class="h-1 w-full rounded-full bg-amber-100 overflow-hidden">
-                    <div class="h-full rounded-full bg-amber-400" style="width:{% if stats.total %}{% widthratio stats.repair stats.total 100 %}%{% else %}0%{% endif %}"></div>
+                  <div class="mt-1.5 text-right w-full pr-1">
+                    <span class="text-[10px] font-bold text-slate-400">{{ stats.repair_pct }}% of total</span>
                   </div>
                 </div>
               </div>
@@ -223,15 +223,15 @@
               <!-- Working Card -->
               <div class="stats-card stats-card--working p-4">
                 <div class="relative flex h-full flex-col gap-3">
-                  <div class="flex items-center text-sky-700 gap-2 font-medium">
-                    <svg class="h-4 w-4 stroke-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
-                    Working
+                  <div class="flex items-center justify-between mb-1.5 w-full">
+                    <span class="text-[10px] font-extrabold text-slate-500 uppercase tracking-widest pl-1">Working</span>
+                    <span class="text-xs font-black text-slate-800 pr-1">{{ stats.working }}<span class="text-slate-400 font-bold ml-1">Items</span></span>
                   </div>
-                  <div>
-                    <p class="text-3xl font-extrabold text-sky-900 leading-none">{{ stats.working }}</p>
+                  <div class="w-full bg-slate-100 rounded-full h-2 min-h-2 relative overflow-hidden flex shadow-inner">
+                    <div class="h-full rounded-full bg-sky-400" style="width:{{ stats.working_pct }}%"></div>
                   </div>
-                  <div class="h-1 w-full rounded-full bg-sky-100 overflow-hidden">
-                    <div class="h-full rounded-full bg-sky-400" style="width:{% if stats.total %}{% widthratio stats.working stats.total 100 %}%{% else %}0%{% endif %}"></div>
+                  <div class="mt-1.5 text-right w-full pr-1">
+                    <span class="text-[10px] font-bold text-slate-400">{{ stats.working_pct }}% of total</span>
                   </div>
                 </div>
               </div>
@@ -239,15 +239,15 @@
               <!-- Not Working Card -->
               <div class="stats-card stats-card--not-working p-4">
                 <div class="relative flex h-full flex-col gap-3">
-                  <div class="flex items-center text-rose-700 gap-2 font-medium">
-                    <svg class="h-4 w-4 stroke-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
-                    Not Working
+                  <div class="flex items-center justify-between mb-1.5 w-full">
+                    <span class="text-[10px] font-extrabold text-slate-500 uppercase tracking-widest pl-1">Not Working</span>
+                    <span class="text-xs font-black text-slate-800 pr-1">{{ stats.not_working }}<span class="text-slate-400 font-bold ml-1">Items</span></span>
                   </div>
-                  <div>
-                    <p class="text-3xl font-extrabold text-rose-900 leading-none">{{ stats.not_working }}</p>
+                  <div class="w-full bg-slate-100 rounded-full h-2 min-h-2 relative overflow-hidden flex shadow-inner">
+                    <div class="h-full rounded-full bg-rose-400" style="width:{{ stats.not_working_pct }}%"></div>
                   </div>
-                  <div class="h-1 w-full rounded-full bg-rose-100 overflow-hidden">
-                    <div class="h-full rounded-full bg-rose-400" style="width:{% if stats.total %}{% widthratio stats.not_working stats.total 100 %}%{% else %}0%{% endif %}"></div>
+                  <div class="mt-1.5 text-right w-full pr-1">
+                    <span class="text-[10px] font-bold text-slate-400">{{ stats.not_working_pct }}% of total</span>
                   </div>
                 </div>
               </div>
@@ -304,12 +304,12 @@
                     </svg>
                   </span>
                   <input id="filter-search" type="text" name="q" value="{{ search_query|default:'' }}"
-                    placeholder="SEARCH ITEMS..." class="uppercase w-full text-center bg-slate-50 border-slate-900 border-2 focus:border-slate-900 focus:ring-0 rounded-xl shadow-sm text-sm font-semibold text-slate-800 py-2.5 pl-9 pr-3 transition-colors placeholder:text-slate-400 placeholder:uppercase" />
+                    placeholder="SEARCH ITEMS..." class="uppercase w-full text-center bg-slate-50 border-slate-900 border-2 focus:border-slate-900 focus:ring-0 rounded-xl shadow-sm text-sm font-semibold text-slate-800 h-[46px] pl-9 pr-3 transition-colors placeholder:text-slate-400 placeholder:uppercase" />
                 </div>
               </div>
               <div>
                 <label class="block text-center text-[11px] font-bold text-slate-500 uppercase tracking-widest mb-1.5">Status Filter</label>
-                <select id="filter-status" name="status" class="uppercase w-full text-center bg-slate-50 border-slate-900 border-2 focus:border-slate-900 focus:ring-0 rounded-xl shadow-sm text-sm font-semibold text-slate-800 py-2.5 px-3 transition-colors cursor-pointer"
+                <select id="filter-status" name="status" class="uppercase w-full text-center bg-slate-50 border-slate-900 border-2 focus:border-slate-900 focus:ring-0 rounded-xl shadow-sm text-sm font-semibold text-slate-800 h-[46px] px-3 transition-colors cursor-pointer"
                   onchange="this.form.submit()">
                   <option value="">ALL STATUS</option>
                   {% for option in status_options %}
@@ -320,7 +320,7 @@
 
               <div>
                 <label class="block text-center text-[11px] font-bold text-slate-500 uppercase tracking-widest mb-1.5">Location Filter</label>
-                <select id="filter-location" name="location" class="uppercase w-full text-center bg-slate-50 border-slate-900 border-2 focus:border-slate-900 focus:ring-0 rounded-xl shadow-sm text-sm font-semibold text-slate-800 py-2.5 px-3 transition-colors cursor-pointer"
+                <select id="filter-location" name="location" class="uppercase w-full text-center bg-slate-50 border-slate-900 border-2 focus:border-slate-900 focus:ring-0 rounded-xl shadow-sm text-sm font-semibold text-slate-800 h-[46px] px-3 transition-colors cursor-pointer"
                   onchange="this.form.submit()">
                   <option value="">ALL LOCATIONS</option>
                   {% for location in distinct_locations %}
@@ -331,7 +331,7 @@
 
               <div>
                 <label class="block text-center text-[11px] font-bold text-slate-500 uppercase tracking-widest mb-1.5">Item Filter</label>
-                <select id="filter-item-type" name="item_type" class="uppercase w-full text-center bg-slate-50 border-slate-900 border-2 focus:border-slate-900 focus:ring-0 rounded-xl shadow-sm text-sm font-semibold text-slate-800 py-2.5 px-3 transition-colors cursor-pointer"
+                <select id="filter-item-type" name="item_type" class="uppercase w-full text-center bg-slate-50 border-slate-900 border-2 focus:border-slate-900 focus:ring-0 rounded-xl shadow-sm text-sm font-semibold text-slate-800 h-[46px] px-3 transition-colors cursor-pointer"
                   onchange="this.form.submit()">
                   <option value="">ALL ITEM TYPES</option>
                   {% for item_type in distinct_item_types %}

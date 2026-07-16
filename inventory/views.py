@@ -316,12 +316,19 @@ def inventory_list(request):
     not_working_count = Inventory.objects.filter(
         defect_description__iregex=r'not working'
     ).count()
+    def get_pct(part, total):
+        return round((part / total) * 100, 1) if total > 0 else 0
+
     stats = {
         'total': total_items,
         'available': available_count,
+        'available_pct': get_pct(available_count, total_items),
         'repair': repair_count,
+        'repair_pct': get_pct(repair_count, total_items),
         'working': in_use_count,
+        'working_pct': get_pct(in_use_count, total_items),
         'not_working': not_working_count,
+        'not_working_pct': get_pct(not_working_count, total_items),
     }
     response = render(
         request,

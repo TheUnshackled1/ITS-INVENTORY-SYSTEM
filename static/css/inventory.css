@@ -571,14 +571,15 @@ table thead th {
     text-transform: uppercase !important;
     color: #0f172a !important;
     font-weight: 800 !important;
+    background-color: #F8FAFC !important;
 }
 
 /* Global Subtle Enterprise Zebra Striping */
 table tbody tr:nth-child(even) {
-    background-color: #fafbfc !important;
+    background-color: #F8FAFC !important;
 }
 
 /* Global Subtle Hover States for interactive tables */
 table tbody tr:hover {
-    background-color: #f8faff !important;
+    background-color: #F3F8FF !important;
 }

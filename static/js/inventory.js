@@ -107,8 +107,16 @@ document.addEventListener("DOMContentLoaded", function () {
               statusBadge = `<span class="inline-flex justify-center flex-shrink-0 items-center gap-1.5 w-max px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider text-amber-700 bg-amber-100 border border-amber-200 rounded-full">
                   <svg class="h-1.5 w-1.5 flex-shrink-0 fill-current" viewBox="0 0 6 6" aria-hidden="true"><circle cx="3" cy="3" r="3" /></svg>${displayStatus}
               </span>`;
-          } else {
+          } else if (statusValue === 'not_working') {
               statusBadge = `<span class="inline-flex justify-center flex-shrink-0 items-center gap-1.5 w-max px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider text-rose-700 bg-rose-100 border border-rose-200 rounded-full">
+                  <svg class="h-1.5 w-1.5 flex-shrink-0 fill-current" viewBox="0 0 6 6" aria-hidden="true"><circle cx="3" cy="3" r="3" /></svg>${displayStatus}
+              </span>`;
+          } else if (statusValue === 'disposed') {
+              statusBadge = `<span class="inline-flex justify-center flex-shrink-0 items-center gap-1.5 w-max px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider text-slate-800 bg-slate-200 border border-slate-300 rounded-full">
+                  <svg class="h-1.5 w-1.5 flex-shrink-0 fill-current text-slate-800" viewBox="0 0 6 6" aria-hidden="true"><circle cx="3" cy="3" r="3" /></svg>${displayStatus}
+              </span>`;
+          } else {
+              statusBadge = `<span class="inline-flex justify-center flex-shrink-0 items-center gap-1.5 w-max px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider text-slate-600 bg-slate-100 border border-slate-200 rounded-full">
                   <svg class="h-1.5 w-1.5 flex-shrink-0 fill-current" viewBox="0 0 6 6" aria-hidden="true"><circle cx="3" cy="3" r="3" /></svg>${displayStatus}
               </span>`;
           }
@@ -125,7 +133,7 @@ document.addEventListener("DOMContentLoaded", function () {
           }
 
           htmlRows.push(`
-            <tr class="inventory-row transition-colors hover:bg-slate-50/80 cursor-pointer"
+            <tr class="inventory-row transition-colors cursor-pointer"
                 data-id="${item.pk}"
                 data-type="${escapeHtml(item.item_type)}"
                 data-desc="${escapeHtml(item.item_description)}"
@@ -372,7 +380,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     <button class="datatable-pagination-list-item-link" style="background:transparent; border:none; box-shadow:none; color:#64748b; font-weight:bold;">&hellip;</button>
                   </li>`;
             } else {
-                let activeStyle = p === currentPage ? 'style="background-color: #0f172a !important; color: white !important; border-color: #0f172a !important;"' : '';
+                let activeStyle = p === currentPage ? 'style="background-color: #2563eb !important; color: white !important; border-color: #2563eb !important; box-shadow: 0 1px 3px rgba(37,99,235,0.2) !important;"' : '';
                 pagesHtml += `
                   <li class="datatable-pagination-list-item ${p === currentPage ? "datatable-active" : ""}">
                     <button data-page="${p}" class="datatable-pagination-list-item-link" ${activeStyle}>${p}</button>
