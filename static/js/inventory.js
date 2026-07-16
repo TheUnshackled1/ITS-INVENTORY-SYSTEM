@@ -1,5 +1,6 @@
 // UI and DataTables Initialization
 document.addEventListener("DOMContentLoaded", function () {
+
   // Check for pending success popups from native navigation
   const pendingSuccess = localStorage.getItem("showSuccessModalFlag");
   if (pendingSuccess) {
@@ -70,8 +71,13 @@ document.addEventListener("DOMContentLoaded", function () {
       appShell.classList.add("app-shell--collapsed");
     }
     if (sidebarToggle) {
+      // Initialize rotation state based on localStorage if already collapsed on load
+      if (appShell.classList.contains("app-shell--collapsed")) {
+         sidebarToggle.classList.add("collapsed");
+      }
       sidebarToggle.addEventListener("click", () => {
         appShell.classList.toggle("app-shell--collapsed");
+        sidebarToggle.classList.toggle("collapsed");
         localStorage.setItem("sidebarCollapsed", appShell.classList.contains("app-shell--collapsed"));
       });
     }
