@@ -150,8 +150,8 @@ def dashboard_view(request):
 
     available_cnt = Inventory.objects.filter(status='available').count()
     repair_cnt = pending_repairs
-    working_cnt = Inventory.objects.filter(status='working').count()
-    not_working_cnt = Inventory.objects.filter(status='not_working').count()
+    working_cnt = Inventory.objects.filter(status='in_use').count()
+    not_working_cnt = Inventory.objects.filter(defect_description__iregex=r'not working').count()
 
     # Chart 1: Inventory Status Pie Chart payload
     pie_chart_data = {
