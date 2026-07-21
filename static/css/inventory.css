@@ -486,7 +486,6 @@ table {
 .datatable-top .datatable-search {
     display: none !important;
 }
-
 table thead th {
     text-transform: uppercase !important;
     color: #0f172a !important;
