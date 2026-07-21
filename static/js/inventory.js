@@ -495,48 +495,35 @@ document.addEventListener("DOMContentLoaded", function () {
   const animateModalOpen = (overlay, card) => {
     overlay.style.display = "flex";
     overlay.classList.remove("hidden", "pointer-events-none");
-    
-    // Instantly snap card to the far left invisibly
     card.style.transition = "none";
     card.classList.remove("translate-x-0", "translate-x-[100vw]", "opacity-100");
     card.classList.add("-translate-x-[100vw]", "opacity-0");
-    
-    // Force DOM reflow to lock the position before animating
     void overlay.offsetWidth;
     void card.offsetWidth;
-    
-    // Release strict transition constraint and trigger slide into center
     card.style.transition = ""; 
     overlay.classList.remove("opacity-0");
     card.classList.remove("-translate-x-[100vw]", "opacity-0");
     card.classList.add("translate-x-0", "opacity-100");
   };
-
   const animateModalClose = (overlay, card) => {
     overlay.classList.add("opacity-0");
     card.classList.remove("translate-x-0", "opacity-100");
-    // Slide off completely to the right
     card.classList.add("translate-x-[100vw]", "opacity-0");
-    
     setTimeout(() => {
       overlay.classList.add("hidden", "pointer-events-none");
       overlay.style.display = "none";
     }, 500);
   };
-
-  // --- Success Modal Controller ---
   const successModalOverlay = document.getElementById("successModalOverlay");
   const successModalCard = document.getElementById("successModalCard");
   const successModalMessage = document.getElementById("successModalMessage");
   const successModalCloseBtn = document.getElementById("successModalCloseBtn");
-
   window.showSuccessModal = function(msg = "Congratulations your record has been successfully saved") {
     if (successModalMessage) successModalMessage.textContent = msg;
     if (successModalOverlay && successModalCard) {
       animateModalOpen(successModalOverlay, successModalCard);
     }
   };
-
   const closeSuccessModal = function() {
     if (successModalOverlay && successModalCard) {
       animateModalClose(successModalOverlay, successModalCard);
