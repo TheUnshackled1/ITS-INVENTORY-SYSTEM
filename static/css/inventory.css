@@ -244,51 +244,40 @@ table {
         transition: max-width 300ms cubic-bezier(0.4, 0, 0.2, 1), opacity 200ms cubic-bezier(0.4, 0, 0.2, 1);
         white-space: nowrap;
     }
-
-    /* Collapsed State Styles */
     .app-shell--collapsed .sidebar {
         width: 5rem;
     }
-    
     .app-shell--collapsed .content-shell {
         margin-left: 5rem;
     }
-
     .app-shell--collapsed .sidebar__brand-text,
     .app-shell--collapsed .sidebar__link span:not(.sidebar__icon) {
         max-width: 0;
         opacity: 0;
         overflow: hidden;
     }
-    
     .app-shell--collapsed .sidebar__link {
         justify-content: center;
         padding-left: 0;
         padding-right: 0;
         gap: 0;
     }
-    
     .app-shell--collapsed .sidebar__icon {
         margin: 0;
     }
-
     .app-shell--collapsed .sidebar__brand {
         flex-direction: column;
         padding: 0.85rem 0;
         justify-content: center;
         gap: 0.5rem;
     }
-    
     .app-shell--collapsed #sidebarToggle {
         margin-left: 0;
     }
-    
-    /* When collapsed, rotate the toggle icon */
     .app-shell--collapsed #sidebarToggle svg {
         transform: rotate(180deg);
     }
 }
-
 @media (max-width: 1023px) {
     .app-shell {
         flex-direction: column;
@@ -297,13 +286,9 @@ table {
         display: none;
     }
 }
-
-/* DataTables Custom Overrides */
 .datatable-wrapper .datatable-container {
     overflow-x: auto;
 }
-
-/* Hide raw table until simple-datatables initializes (prevents layout flash) */
 #inventory-table:not(.datatable-table),
 #activity-log-table:not(.datatable-table) {
     visibility: hidden;
@@ -314,7 +299,6 @@ table {
     min-width: 1100px;
     width: 100%;
 }
-
 #inventory-table th,
 #inventory-table td {
     white-space: nowrap;
@@ -322,8 +306,6 @@ table {
     text-align: center;
     padding: 0.5rem;
 }
-
-/* Item col — allow wrapping */
 #inventory-table th:nth-child(2),
 #inventory-table td:nth-child(2) {
     white-space: normal;
