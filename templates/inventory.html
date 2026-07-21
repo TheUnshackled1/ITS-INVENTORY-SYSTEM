@@ -209,7 +209,6 @@
                   </div>
                 </div>
               </div>
-
               <!-- Working Card -->
               <div class="stats-card stats-card--working p-4">
                 <div class="relative flex h-full flex-col gap-3">
@@ -225,7 +224,6 @@
                   </div>
                 </div>
               </div>
-
               <!-- Not Working Card -->
               <div class="stats-card stats-card--not-working p-4">
                 <div class="relative flex h-full flex-col gap-3">
@@ -241,12 +239,8 @@
                   </div>
                 </div>
               </div>
-
             </div>
             </div> <!-- /stats-scene -->
-
-
-
           </div>
         </section>
         {% if messages %}
@@ -315,7 +309,6 @@
                   {% endfor %}
                 </select>
               </div>
-
               <div>
                 <label class="block text-center text-[11px] font-bold text-slate-500 uppercase tracking-widest mb-1.5">Item Filter</label>
                 <select id="filter-item-type" name="item_type" class="uppercase w-full text-center bg-slate-50 border-slate-900 border-2 focus:border-slate-900 focus:ring-0 rounded-xl shadow-sm text-sm font-semibold text-slate-800 h-[46px] px-3 transition-colors cursor-pointer"
@@ -341,7 +334,6 @@
               <input type="hidden" name="dir" value="{{ current_direction }}" />
               {% endif %}
             </form>
-
             <!-- Action Buttons (Grouped with table controls) -->
             <div class="flex flex-wrap items-center gap-4 shrink-0 w-full xl:w-auto mt-2 pt-4 xl:mt-0 xl:pt-0 border-t xl:border-t-0 border-slate-200/60">
               <!-- Print Report (Tertiary) -->
@@ -352,7 +344,6 @@
                 </svg>
                 Print Report
               </button>
-
               <!-- Upload Excel (Secondary) -->
               <form action="{% url 'inventory-upload' %}" method="POST" enctype="multipart/form-data" class="m-0">
                 {% csrf_token %}
@@ -366,7 +357,6 @@
                   Upload Excel
                 </label>
               </form>
-
               <!-- Add Record (Primary) -->
               <button type="button" id="openAddModalBtnTop"
                 class="inline-flex cursor-pointer items-center justify-center gap-1.5 rounded-xl bg-emerald-600 px-4 h-[44px] text-sm font-bold text-white shadow-[0_4px_12px_rgba(5,150,105,0.3)] ring-1 ring-inset ring-white/20 transition-all hover:bg-emerald-500 hover:shadow-[0_8px_20px_rgba(5,150,105,0.4)] hover:-translate-y-0.5 whitespace-nowrap">
@@ -461,7 +451,6 @@
     </div>
   </div>
   <script src="https://cdn.jsdelivr.net/npm/simple-datatables@9.0.3"></script>
-  
   <!-- Right-Slide Drawer Modal -->
   <div id="sideDrawerModal" style="display: none;" class="fixed inset-0 z-[100] hidden">
     <!-- Overlay -->
@@ -476,18 +465,14 @@
         </button>
         <h2 id="modalTitle" class="text-2xl font-black tracking-tight text-slate-900">Record</h2>
       </div>
-
       <!-- Scroller -->
       <div class="flex-1 overflow-y-auto px-8 py-2 custom-scrollbar">
-
         <form id="inventoryForm" class="space-y-7" onsubmit="event.preventDefault();">
           <input type="hidden" name="id" id="form_id" value="">
           {% csrf_token %}
-          
           <!-- Form Error Banner -->
           <div id="formErrorMessage" class="hidden rounded-lg bg-red-50 p-4 mb-4 text-sm font-semibold text-red-800 border border-red-200 w-full shadow-sm mt-0">
           </div>
-          
           <!-- ITEM INFORMATION -->
           <div>
             <div class="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 mb-3 border-b border-slate-100 pb-2">Item Information</div>
