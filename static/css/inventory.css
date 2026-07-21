@@ -313,8 +313,6 @@ table {
     min-width: 7rem;
     max-width: 10rem;
 }
-
-/* Description col — allow wrapping */
 #inventory-table th:nth-child(3),
 #inventory-table td:nth-child(3) {
     white-space: normal;
@@ -322,8 +320,6 @@ table {
     min-width: 10rem;
     max-width: 16rem;
 }
-
-/* Brand, Model */
 #inventory-table th:nth-child(4),
 #inventory-table td:nth-child(4),
 #inventory-table th:nth-child(5),
@@ -333,30 +329,22 @@ table {
     white-space: normal;
     word-break: break-word;
 }
-
-/* No. col */
 #inventory-table th:nth-child(1),
 #inventory-table td:nth-child(1) {
     min-width: 2.8rem;
     width: 3rem;
 }
-
-/* Qty */
 #inventory-table th:nth-child(7),
 #inventory-table td:nth-child(7) {
     min-width: 2.8rem;
     width: 3rem;
 }
-
-/* Inv Date, Disp Date */
 #inventory-table th:nth-child(8),
 #inventory-table td:nth-child(8),
 #inventory-table th:nth-child(9),
 #inventory-table td:nth-child(9) {
     min-width: 6.5rem;
 }
-
-/* Location */
 #inventory-table th:nth-child(10),
 #inventory-table td:nth-child(10) {
     min-width: 8rem;
@@ -364,14 +352,10 @@ table {
     white-space: normal;
     word-break: break-word;
 }
-
-/* Status */
 #inventory-table th:nth-child(11),
 #inventory-table td:nth-child(11) {
     min-width: 6.5rem;
 }
-
-/* Defect */
 #inventory-table th:nth-child(12),
 #inventory-table td:nth-child(12) {
     min-width: 7rem;
@@ -379,31 +363,25 @@ table {
     white-space: normal;
     word-break: break-word;
 }
-
 #inventory-table td {
     line-height: 1.1;
 }
-
-/* Global Table Hover & Zebra Striping */
 .datatable-table tbody tr,
 #inventory-table tbody tr,
 #activity-log-table tbody tr {
     transition: background-color 150ms ease;
     cursor: pointer;
 }
-
 .datatable-table tbody tr:hover,
 #inventory-table tbody tr:hover,
 #activity-log-table tbody tr:hover {
     background-color: #f1f5f9 !important; /* slate-100 */
 }
-
 .datatable-table tbody tr:nth-child(even),
 #inventory-table tbody tr:nth-child(even),
 #activity-log-table tbody tr:nth-child(even) {
     background-color: #f8fafc; /* slate-50 */
 }
-
 .datatable-bottom {
     display: flex !important;
     align-items: center !important;
@@ -416,7 +394,6 @@ table {
     margin-top: 0 !important;
     border-top: 1px solid rgb(226 232 240) !important;
 }
-
 @media (max-width: 640px) {
     .datatable-bottom {
         flex-direction: column !important;
@@ -424,14 +401,12 @@ table {
         padding: 1rem !important;
     }
 }
-
 .datatable-info {
     margin: 0 !important;
     color: #0f172a !important;
     font-size: 0.875rem !important;
     font-weight: 600 !important;
 }
-
 .datatable-pagination {
     margin: 0 !important;
     display: flex !important;
@@ -453,7 +428,6 @@ table {
 .datatable-pagination li {
     margin: 0 !important;
 }
-
 .datatable-pagination li a,
 .datatable-pagination li button {
     border-radius: 4px !important;
@@ -476,7 +450,6 @@ table {
     color: #0f172a !important;
     border-color: rgb(203 213 225) !important;
 }
-
 .datatable-pagination .datatable-active a,
 .datatable-pagination .datatable-active a:hover,
 .datatable-pagination .datatable-active button,
@@ -486,20 +459,15 @@ table {
     color: #ffffff !important;
     box-shadow: 0 1px 3px rgba(37,99,235,0.2) !important;
 }
-
 .datatable-pagination .datatable-hidden {
     display: none !important;
 }
-
 .datatable-pagination .datatable-disabled a,
 .datatable-pagination .datatable-disabled button {
     opacity: 0.5 !important;
     cursor: not-allowed !important;
     background: transparent !important;
 }
-
-/* Removed legacy pseudo-element text replacers for simple-datatables pagination items. The JavaScript engine now handles full DOM structuring. */
-
 .datatable-input,
 .datatable-selector {
     border-radius: 0.875rem !important;
