@@ -229,15 +229,10 @@ document.addEventListener("DOMContentLoaded", function () {
       window.logData = [];
     }
   }
-
-  // DataTable Logic
   const dataTablesElements = document.querySelectorAll("#inventory-table, #activity-log-table");
-  
   dataTablesElements.forEach(tableEl => {
     let dataTable = null;
-    
     if (window.simpleDatatables) {
-      // Load ALL rows into DOM at once (no internal DT pagination)
       dataTable = new window.simpleDatatables.DataTable(tableEl, {
         searchable: false,
         sortable: false,
@@ -245,36 +240,26 @@ document.addEventListener("DOMContentLoaded", function () {
         perPageSelect: false,
         perPage: 100000,
       });
-
-      // ----- Custom Search + Pagination Engine -----
       const PAGE_SIZE = 15;
       let currentPage = 1;
-      let activeRows = []; // currently matching rows
-
+      let activeRows = [];
       function getAllRows() {
         const isInvVirtual = tableEl.id === 'inventory-table' && window.inventoryData && window.generateHtmlRows;
         const isLogVirtual = tableEl.id === 'activity-log-table' && window.logData && window.generateLogRows;
-        
         if (isInvVirtual) return window.inventoryData;
         if (isLogVirtual) return window.logData;
-        
         const tbody = tableEl.querySelector("tbody");
         return tbody ? Array.from(tbody.querySelectorAll("tr:not(.no-results-row)")) : [];
       }
-
       function renderPage() {
         const all = getAllRows();
         const isInvVirtual = tableEl.id === 'inventory-table' && window.inventoryData && window.generateHtmlRows;
         const isLogVirtual = tableEl.id === 'activity-log-table' && window.logData && window.generateLogRows;
         const isVirtual = isInvVirtual || isLogVirtual;
-        
-        // Hide every row first if rendering physically
         if (!isVirtual) {
             all.forEach(r => r.style.display = "none");
         }
-
         if (activeRows.length === 0) {
-          // Show no-results
           let noRow = tableEl.querySelector(".no-results-row");
           if (!noRow) {
             noRow = document.createElement("tr");
@@ -285,7 +270,6 @@ document.addEventListener("DOMContentLoaded", function () {
             if (tbody) tbody.appendChild(noRow);
           }
           noRow.style.display = "";
-          
           if (isVirtual) {
               const tbody = tableEl.querySelector("tbody");
               if (tbody) {
@@ -294,14 +278,10 @@ document.addEventListener("DOMContentLoaded", function () {
               }
           }
         } else {
-          // Remove any stale no-results row
           const noRow = tableEl.querySelector(".no-results-row");
           if (noRow) noRow.remove();
-
-          // Show current page slice
           const start = (currentPage - 1) * PAGE_SIZE;
           const slice = activeRows.slice(start, start + PAGE_SIZE);
-          
           if (isVirtual) {
               const tbody = tableEl.querySelector("tbody");
               if (tbody) {
@@ -315,14 +295,11 @@ document.addEventListener("DOMContentLoaded", function () {
               slice.forEach(r => r.style.display = "");
           }
         }
-
         renderPagination();
       }
-
       function renderPagination() {
         const bottomBar = document.querySelector(".datatable-bottom");
         if (!bottomBar) return;
-
         const totalRows = activeRows.length;
         const totalPages = Math.ceil(totalRows / PAGE_SIZE);
         const start = totalRows === 0 ? 0 : (currentPage - 1) * PAGE_SIZE + 1;
