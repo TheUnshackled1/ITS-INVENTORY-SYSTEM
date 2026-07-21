@@ -1,17 +1,9 @@
-/* Custom CSS for Dashboard specific layouts (Stats Cards now inherit cleanly from inventory.css) */
-
-/* ─── Top 10 Masonry Grid ─────────────────────── */
 .dashboard-charts-grid {
-    /* Removed fixed min-height stretch - the grid now naturally hugs its content */
 }
-
-/* Increases the thickness of the green value bars */
 .top-10-bar {
     height: 32px !important; 
     border-radius: 6px;
 }
-
-/* Force Inter font natively across the whole dashboard body */
 body {
     font-family: 'Inter', sans-serif !important;
 }
