@@ -218,7 +218,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 chart.ctx.restore();
             }
         };
-
         // 2) Status Pie Chart
         new Chart(pieCtx, {
             type: 'doughnut',
