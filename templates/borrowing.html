@@ -196,6 +196,7 @@
             </div>
           </div>
 
+          {% if logs %}
           <hr class="border-slate-200" />
 
           <div class="overflow-x-auto">
@@ -336,6 +337,31 @@
               </tbody>
             </table>
           </div>
+          {% else %}
+          <div class="mx-auto flex w-full max-w-md flex-col items-center justify-center gap-4 py-20 text-center flex-1">
+            <div class="flex h-16 w-16 items-center justify-center rounded-2xl bg-slate-50 text-slate-400 ring-1 ring-slate-200/60 shadow-sm">
+              <!-- Using the same clock/history icon for parity, or maybe an inbox icon -->
+              <svg class="w-8 h-8 stroke-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+            </div>
+            <div>
+               <h2 class="text-xl font-bold tracking-tight text-slate-900 mb-1">
+                 No borrowing entries found.
+               </h2>
+               <p class="text-sm leading-6 text-slate-500">
+                 {% if search_query %}
+                   Try adjusting your search query, or clear it to see all entries.
+                 {% else %}
+                   You haven't issued any items yet. When you borrow out equipment, it will appear here.
+                 {% endif %}
+               </p>
+            </div>
+            {% if search_query %}
+            <a href="{% url 'borrowing-list' %}" class="inline-flex items-center rounded-full bg-slate-800 px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-slate-700">
+              Clear Search
+            </a>
+            {% endif %}
+          </div>
+          {% endif %}
         </section>
       </main>
     </div>
