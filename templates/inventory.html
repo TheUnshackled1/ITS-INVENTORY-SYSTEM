@@ -806,10 +806,8 @@
       const card = document.getElementById('infoModalCard');
       const msgEl = document.getElementById('infoModalMessage');
       const closeBtn = document.getElementById('infoModalCloseBtn');
-
       msgEl.textContent = message;
       overlay.style.display = 'flex';
-      
       // Trigger animations
       requestAnimationFrame(() => {
         requestAnimationFrame(() => {
@@ -819,13 +817,11 @@
           card.classList.add('translate-x-0', 'opacity-100');
         });
       });
-
       const closeInfo = () => {
         overlay.classList.remove('opacity-100');
         overlay.classList.add('opacity-0', 'pointer-events-none');
         card.classList.remove('translate-x-0', 'opacity-100');
         card.classList.add('-translate-x-[100vw]', 'opacity-0');
-        
         setTimeout(() => {
           overlay.style.display = 'none';
         }, 500);
@@ -833,23 +829,19 @@
       };
       closeBtn.addEventListener('click', closeInfo);
     }
-
     document.getElementById('printReportBtn').addEventListener('click', function () {
       const raw = document.getElementById('inventory-data');
-      
       // Check if data block is completely missing OR if the inner bracket data is empty '[]'
       const rawData = raw ? (raw.textContent || raw.innerText).trim() : '';
       if (!raw || rawData === '' || rawData === '[]') { 
           showCustomInfo('No inventory data available to print.'); 
           return; 
       }
-
       const items = JSON.parse(raw.textContent || raw.innerText);
       const tbody = document.getElementById('print-tbody');
       const now = new Date().toLocaleString('en-PH', { dateStyle: 'long', timeStyle: 'short' });
       document.getElementById('print-date').textContent = now;
       document.getElementById('print-total').textContent = items.length;
-
       tbody.innerHTML = items.map((item, idx) => `
         <tr>
           <td>${idx + 1}</td>
@@ -866,11 +858,9 @@
           <td>${item.defect_description || '—'}</td>
         </tr>
       `).join('');
-
       window.print();
     });
   </script>
-
   <!-- All custom scripts have been moved to static/js/inventory.js -->
 </body>
 </html>
