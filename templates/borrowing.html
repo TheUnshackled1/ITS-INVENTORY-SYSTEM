@@ -156,12 +156,12 @@
         </section>
 
         <section class="backdrop-card mt-4 rounded-3xl border border-white/70 shadow-soft ring-1 ring-slate-200/60 flex-1 flex flex-col mb-4">
-          <div class="p-4 lg:p-5">
-            <div class="flex flex-col sm:flex-row items-start sm:items-center gap-3 w-full">
+          <div class="p-4 lg:p-5 flex flex-col xl:flex-row xl:items-start gap-3 w-full">
+            <form method="GET" class="flex-1 grid gap-3 grid-cols-1 md:grid-cols-[minmax(0,1fr)_auto] items-end w-full">
               <!-- Search -->
-              <form method="GET" class="flex items-center gap-3 flex-1 max-w-sm">
+              <div class="w-full">
                 {% if current_tab != 'all' %}<input type="hidden" name="tab" value="{{ current_tab }}" />{% endif %}
-                <div class="relative flex-1">
+                <div class="relative">
                   <span class="absolute inset-y-0 left-3 flex items-center text-slate-400 pointer-events-none">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
                       stroke="currentColor" stroke-width="2">
@@ -170,30 +170,30 @@
                     </svg>
                   </span>
                   <input id="filter-search" type="text" name="q" value="{{ search_query|default:'' }}"
-                    placeholder="Search borrower..." class="uppercase w-full bg-slate-50 border-slate-900 border-2 focus:border-slate-900 focus:ring-0 rounded-xl shadow-sm text-sm font-semibold text-slate-800 py-2.5 pl-9 pr-3 transition-colors placeholder:text-slate-400 placeholder:uppercase" />
+                    placeholder="Search borrower..." class="uppercase w-full text-center md:text-left bg-slate-50 border-slate-900 border-2 focus:border-slate-900 focus:ring-0 rounded-xl shadow-sm text-sm font-semibold text-slate-800 py-2.5 pl-9 pr-3 transition-colors placeholder:text-slate-400 placeholder:uppercase" />
                 </div>
-              </form>
+              </div>
 
               <!-- Tab Filters -->
-              <div class="flex items-center gap-2 flex-wrap">
+              <div class="flex items-center gap-2 flex-wrap pb-0.5">
                 <a href="{% url 'borrowing-list' %}{% if search_query %}?q={{ search_query }}{% endif %}"
-                  class="px-4 py-2 rounded-xl text-[11px] font-bold uppercase tracking-wider transition-all duration-200 {% if current_tab == 'all' %}bg-slate-900 text-white shadow-md{% else %}bg-slate-100 text-slate-600 hover:bg-slate-200{% endif %}">
+                  class="px-4 py-2.5 rounded-xl text-[11px] font-bold uppercase tracking-wider transition-all duration-200 {% if current_tab == 'all' or not current_tab %}bg-slate-900 text-white shadow-md border-2 border-slate-900{% else %}bg-slate-50 text-slate-600 hover:bg-slate-100 border-2 border-transparent{% endif %}">
                   ALL ({{ stats.total }})
                 </a>
                 <a href="{% url 'borrowing-list' %}?tab=borrowed{% if search_query %}&q={{ search_query }}{% endif %}"
-                  class="px-4 py-2 rounded-xl text-[11px] font-bold uppercase tracking-wider transition-all duration-200 {% if current_tab == 'borrowed' %}bg-sky-600 text-white shadow-md{% else %}bg-sky-50 text-sky-700 hover:bg-sky-100{% endif %}">
+                  class="px-4 py-2.5 rounded-xl text-[11px] font-bold uppercase tracking-wider transition-all duration-200 {% if current_tab == 'borrowed' %}bg-sky-600 text-white shadow-md border-2 border-sky-600{% else %}bg-sky-50 text-sky-700 hover:bg-sky-100 border-2 border-transparent{% endif %}">
                   BORROWED ({{ stats.borrowed }})
                 </a>
                 <a href="{% url 'borrowing-list' %}?tab=returned{% if search_query %}&q={{ search_query }}{% endif %}"
-                  class="px-4 py-2 rounded-xl text-[11px] font-bold uppercase tracking-wider transition-all duration-200 {% if current_tab == 'returned' %}bg-emerald-600 text-white shadow-md{% else %}bg-emerald-50 text-emerald-700 hover:bg-emerald-100{% endif %}">
+                  class="px-4 py-2.5 rounded-xl text-[11px] font-bold uppercase tracking-wider transition-all duration-200 {% if current_tab == 'returned' %}bg-emerald-600 text-white shadow-md border-2 border-emerald-600{% else %}bg-emerald-50 text-emerald-700 hover:bg-emerald-100 border-2 border-transparent{% endif %}">
                   RETURNED ({{ stats.returned }})
                 </a>
                 <a href="{% url 'borrowing-list' %}?tab=overdue{% if search_query %}&q={{ search_query }}{% endif %}"
-                  class="px-4 py-2 rounded-xl text-[11px] font-bold uppercase tracking-wider transition-all duration-200 {% if current_tab == 'overdue' %}bg-rose-600 text-white shadow-md{% else %}bg-rose-50 text-rose-700 hover:bg-rose-100{% endif %}">
+                  class="px-4 py-2.5 rounded-xl text-[11px] font-bold uppercase tracking-wider transition-all duration-200 {% if current_tab == 'overdue' %}bg-rose-600 text-white shadow-md border-2 border-rose-600{% else %}bg-rose-50 text-rose-700 hover:bg-rose-100 border-2 border-transparent{% endif %}">
                   OVERDUE ({{ stats.overdue }})
                 </a>
               </div>
-            </div>
+            </form>
           </div>
 
           {% if logs %}
