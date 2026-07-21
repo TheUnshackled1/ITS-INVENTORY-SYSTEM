@@ -181,7 +181,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 ctx.translate(centerX, centerY);
                 ctx.rotate(angle);
                 ctx.translate(-centerX, -centerY);
-                
                 if (progress < 1) {
                     requestAnimationFrame(() => chart.update('none'));
                 }
@@ -190,7 +189,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 chart.ctx.restore();
             }
         };
-        // 2) Status Pie Chart
         new Chart(pieCtx, {
             type: 'doughnut',
             plugins: [customSpinPlugin],
@@ -199,10 +197,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 datasets: [{
                     data: pieData.data,
                     backgroundColor: [
-                        '#10b981', // emerald-500 (Available)
-                        '#0ea5e9', // sky-500 (Working)
-                        '#f59e0b', // amber-500 (Repair)
-                        '#f43f5e'  // rose-500 (Not Working)
+                        '#10b981', 
+                        '#0ea5e9', 
+                        '#f59e0b', 
+                        '#f43f5e'  
                     ],
                     borderWidth: 0,
                     hoverOffset: 4
