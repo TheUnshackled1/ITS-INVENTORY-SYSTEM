@@ -855,9 +855,48 @@
   </div>
 
   <script>
+    function showCustomInfo(message) {
+      const overlay = document.getElementById('infoModalOverlay');
+      const card = document.getElementById('infoModalCard');
+      const msgEl = document.getElementById('infoModalMessage');
+      const closeBtn = document.getElementById('infoModalCloseBtn');
+
+      msgEl.textContent = message;
+      overlay.style.display = 'flex';
+      
+      // Trigger animations
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          overlay.classList.remove('opacity-0', 'pointer-events-none');
+          overlay.classList.add('opacity-100');
+          card.classList.remove('-translate-x-[100vw]', 'opacity-0');
+          card.classList.add('translate-x-0', 'opacity-100');
+        });
+      });
+
+      const closeInfo = () => {
+        overlay.classList.remove('opacity-100');
+        overlay.classList.add('opacity-0', 'pointer-events-none');
+        card.classList.remove('translate-x-0', 'opacity-100');
+        card.classList.add('-translate-x-[100vw]', 'opacity-0');
+        
+        setTimeout(() => {
+          overlay.style.display = 'none';
+        }, 500);
+        closeBtn.removeEventListener('click', closeInfo);
+      };
+      closeBtn.addEventListener('click', closeInfo);
+    }
+
     document.getElementById('printReportBtn').addEventListener('click', function () {
       const raw = document.getElementById('inventory-data');
-      if (!raw) { alert('No inventory data found.'); return; }
+      
+      // Check if data block is completely missing OR if the inner bracket data is empty '[]'
+      const rawData = raw ? (raw.textContent || raw.innerText).trim() : '';
+      if (!raw || rawData === '' || rawData === '[]') { 
+          showCustomInfo('No inventory data available to print.'); 
+          return; 
+      }
 
       const items = JSON.parse(raw.textContent || raw.innerText);
       const tbody = document.getElementById('print-tbody');
