@@ -230,15 +230,12 @@ document.addEventListener('DOMContentLoaded', function() {
         function renderPagination(activeRows) {
             const bottomBar = tableEl.closest('.datatable-wrapper') ? tableEl.closest('.datatable-wrapper').querySelector('.datatable-bottom') : document.querySelector(".datatable-bottom");
             if (!bottomBar) return;
-
             const totalRows = activeRows.length;
             const totalPages = Math.ceil(totalRows / PAGE_SIZE);
             const start = totalRows === 0 ? 0 : (currentPage - 1) * PAGE_SIZE + 1;
             const end = Math.min(currentPage * PAGE_SIZE, totalRows);
-
             let pagesHtml = '';
             let pageNumbers = [];
-            
             if (totalPages <= 7) {
                 for (let i = 1; i <= totalPages; i++) pageNumbers.push(i);
             } else {
@@ -249,8 +246,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 } else {
                     pageNumbers = [1, '...', currentPage - 1, currentPage, currentPage + 1, '...', totalPages];
                 }
-            }
-            
+            }  
             pageNumbers.forEach(p => {
                 if (p === '...') {
                     pagesHtml += `
@@ -265,12 +261,9 @@ document.addEventListener('DOMContentLoaded', function() {
                       </li>`;
                 }
             });
-
             const formattedTotal = totalRows.toLocaleString();
-
             bottomBar.innerHTML = `
-              <div class="datatable-info shrink-0 text-slate-700 font-medium tracking-wide" style="font-size:0.875rem">${start}-${end} of ${formattedTotal}</div>
-              
+              <div class="datatable-info shrink-0 text-slate-700 font-medium tracking-wide" style="font-size:0.875rem">${start}-${end} of ${formattedTotal}</div>      
               <nav class="datatable-pagination flex-1 flex justify-center">
                 <ul class="datatable-pagination-list" style="display:flex; align-items:center; gap:0.25rem;">
                   <li class="datatable-pagination-list-item ${currentPage === 1 ? "datatable-disabled opacity-50 pointer-events-none" : ""}" style="background: transparent !important; border: none !important; box-shadow: none !important;">
@@ -282,14 +275,12 @@ document.addEventListener('DOMContentLoaded', function() {
               </li>
                 </ul>
               </nav>
-
               <div class="datatable-jump shrink-0 flex items-center gap-2">
                 <span class="text-sm font-medium text-slate-700">Page</span>
                 <input type="number" min="1" max="${totalPages}" value="${currentPage}" class="dt-jump-input w-16 text-center border border-slate-200 rounded focus:border-slate-900 focus:ring-1 focus:ring-slate-900 h-[38px] text-sm font-bold text-slate-800 shadow-sm" style="padding-top:0; padding-bottom:0;" />
                 <button type="button" class="dt-jump-btn font-extrabold text-sm text-slate-900 bg-white hover:bg-slate-50 border border-slate-200 shadow-sm rounded px-3 h-[38px] transition-colors">Go</button>
               </div>
             `;
-
             bottomBar.querySelectorAll("button[data-page]").forEach(btn => {
               btn.addEventListener("click", function () {
                 const page = parseInt(this.dataset.page);
@@ -299,7 +290,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 tableEl.closest("section")?.scrollIntoView({ behavior: "smooth", block: "start" });
               });
             });
-            
             const jumpBtn = bottomBar.querySelector(".dt-jump-btn");
             const jumpInput = bottomBar.querySelector(".dt-jump-input");
             if (jumpBtn && jumpInput) {
@@ -324,7 +314,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 });
             }
         }
-        
         // Let Simple Datatables build the DOM, then render our engine immediately
         dataTable.on('datatable.init', () => {
             renderPage();
