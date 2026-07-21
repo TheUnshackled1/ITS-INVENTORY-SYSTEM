@@ -18,13 +18,10 @@ textarea,
 table {
     font-family: "Inter", "Segoe UI", system-ui, sans-serif;
 }
-
 .backdrop-card {
     background: rgba(255, 255, 255, 0.82);
     backdrop-filter: blur(18px);
 }
-
-/* ─── Stats Scene ─────────────────────────────── */
 .stats-scene {
     position: relative;
     padding: 1.5rem 0;
@@ -32,13 +29,10 @@ table {
     overflow: hidden;
     border-radius: 1.25rem;
 }
-
 #stats-cards-container {
     position: relative;
     z-index: 1;
 }
-
-/* ─── Glass Card Base ─────────────────────────── */
 .stats-card {
     position: relative;
     overflow: hidden;
@@ -51,75 +45,54 @@ table {
     transition: transform 220ms ease, box-shadow 220ms ease;
     cursor: default;
 }
-
-/* Eliminate shiny glare surface from enterprise layout */
 .stats-card::after {
     display: none;
 }
-
 .stats-card:hover {
     transform: translateY(-3px);
     box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -2px rgba(0, 0, 0, 0.04);
 }
-
-/* ─── Card Variants (Enterprise Palette) ───────────────────────────── */
 .stats-card--total {
-    --card-accent: #2563eb; /* Primary Blue */
+    --card-accent: #2563eb;
 }
-
 .stats-card--available {
-    --card-accent: #10b981; /* Success Green */
+    --card-accent: #10b981;
 }
-
 .stats-card--repair {
-    --card-accent: #f59e0b; /* Warning Amber */
+    --card-accent: #f59e0b;
 }
 
 .stats-card--working {
-    --card-accent: #3b82f6; /* Info Blue */
+    --card-accent: #3b82f6;
 }
-
 .stats-card--not-working {
-    --card-accent: #ef4444; /* Error Red */
+    --card-accent: #ef4444;
 }
-
-/* ─── Activity Log Card Variants ─────────────── */
-
 .stats-card--added {
-    --card-accent: #10b981; /* Emerald */
+    --card-accent: #10b981;
 }
-
 .stats-card--edited {
-    --card-accent: #2563eb; /* Blue */
+    --card-accent: #2563eb;
 }
-
 .stats-card--deleted {
-    --card-accent: #ef4444; /* Rose/Red */
+    --card-accent: #ef4444;
 }
-
 .stats-card--uploaded {
-    --card-accent: #8b5cf6; /* Purple Analytics/Upload */
+    --card-accent: #8b5cf6;
 }
-
 .stats-card--borrowed {
-    --card-accent: #0284c7; /* Sky */
+    --card-accent: #0284c7;
 }
-
 .stats-card--returned {
-    --card-accent: #6b7280; /* Slate Gray */
+    --card-accent: #6b7280;
 }
-
-
-/* Hide fallback Native Empty States inside simple-datatables */
 .dataTable-empty {
     display: none !important;
 }
-
 .app-shell {
     display: flex;
     min-height: 100vh;
 }
-
 .sidebar {
     width: 100%;
     margin: 1rem;
@@ -535,7 +508,6 @@ table {
     background: white !important;
     transition: all 0.2s ease;
 }
-
 .datatable-pagination li a:hover,
 .datatable-pagination li button:hover {
     background: rgb(241 245 249) !important;

@@ -8,7 +8,6 @@ body {
             transparent 22%),
         linear-gradient(180deg, #f8fafc 0%, #eff6f8 100%);
 }
-
 .backdrop-card {
     background: rgba(255, 255, 255, 0.82);
     backdrop-filter: blur(18px);
