@@ -169,7 +169,6 @@
             </div>
 
             <!-- Statistics Cards -->
-            {% if has_inventory_records %}
             <!-- Stats Scene: colorful glass background + grid -->
             <div class="stats-scene">
             <div id="stats-cards-container" class="grid grid-cols-2 gap-3 sm:grid-cols-3 xl:grid-cols-5">
@@ -182,7 +181,7 @@
                     Total Items
                   </div>
                   <div>
-                    <p class="text-3xl font-extrabold text-blue-950 leading-none">{{ stats.total }}</p>
+                    <p class="text-3xl font-extrabold text-blue-950 leading-none">{{ stats.total|default:"0" }}</p>
                   </div>
                   <div class="h-1 w-full rounded-full bg-blue-100 overflow-hidden">
                     <div class="h-full w-full rounded-full bg-blue-400"></div>
@@ -195,13 +194,13 @@
                 <div class="relative flex h-full flex-col gap-3">
                   <div class="flex items-center justify-between mb-1.5 w-full">
                     <span class="text-[10px] font-extrabold text-slate-500 uppercase tracking-widest pl-1">Available</span>
-                    <span class="text-xs font-black text-slate-800 pr-1">{{ stats.available }}<span class="text-slate-400 font-bold ml-1">Items</span></span>
+                    <span class="text-xs font-black text-slate-800 pr-1">{{ stats.available|default:"0" }}<span class="text-slate-400 font-bold ml-1">Items</span></span>
                   </div>
                   <div class="w-full bg-slate-100 rounded-full h-2 min-h-2 relative overflow-hidden flex shadow-inner">
-                    <div class="h-full rounded-full bg-emerald-400" style="width:{{ stats.available_pct }}%"></div>
+                    <div class="h-full rounded-full bg-emerald-400" style="width:{{ stats.available_pct|default:"0" }}%"></div>
                   </div>
                   <div class="mt-1.5 text-right w-full pr-1">
-                    <span class="text-[10px] font-bold text-slate-400">{{ stats.available_pct }}% of total</span>
+                    <span class="text-[10px] font-bold text-slate-400">{{ stats.available_pct|default:"0" }}% of total</span>
                   </div>
                 </div>
               </div>
@@ -211,13 +210,13 @@
                 <div class="relative flex h-full flex-col gap-3">
                   <div class="flex items-center justify-between mb-1.5 w-full">
                     <span class="text-[10px] font-extrabold text-slate-500 uppercase tracking-widest pl-1">Under Repair</span>
-                    <span class="text-xs font-black text-slate-800 pr-1">{{ stats.repair }}<span class="text-slate-400 font-bold ml-1">Items</span></span>
+                    <span class="text-xs font-black text-slate-800 pr-1">{{ stats.repair|default:"0" }}<span class="text-slate-400 font-bold ml-1">Items</span></span>
                   </div>
                   <div class="w-full bg-slate-100 rounded-full h-2 min-h-2 relative overflow-hidden flex shadow-inner">
-                    <div class="h-full rounded-full bg-amber-400" style="width:{{ stats.repair_pct }}%"></div>
+                    <div class="h-full rounded-full bg-amber-400" style="width:{{ stats.repair_pct|default:"0" }}%"></div>
                   </div>
                   <div class="mt-1.5 text-right w-full pr-1">
-                    <span class="text-[10px] font-bold text-slate-400">{{ stats.repair_pct }}% of total</span>
+                    <span class="text-[10px] font-bold text-slate-400">{{ stats.repair_pct|default:"0" }}% of total</span>
                   </div>
                 </div>
               </div>
@@ -227,13 +226,13 @@
                 <div class="relative flex h-full flex-col gap-3">
                   <div class="flex items-center justify-between mb-1.5 w-full">
                     <span class="text-[10px] font-extrabold text-slate-500 uppercase tracking-widest pl-1">Working</span>
-                    <span class="text-xs font-black text-slate-800 pr-1">{{ stats.working }}<span class="text-slate-400 font-bold ml-1">Items</span></span>
+                    <span class="text-xs font-black text-slate-800 pr-1">{{ stats.working|default:"0" }}<span class="text-slate-400 font-bold ml-1">Items</span></span>
                   </div>
                   <div class="w-full bg-slate-100 rounded-full h-2 min-h-2 relative overflow-hidden flex shadow-inner">
-                    <div class="h-full rounded-full bg-sky-400" style="width:{{ stats.working_pct }}%"></div>
+                    <div class="h-full rounded-full bg-sky-400" style="width:{{ stats.working_pct|default:"0" }}%"></div>
                   </div>
                   <div class="mt-1.5 text-right w-full pr-1">
-                    <span class="text-[10px] font-bold text-slate-400">{{ stats.working_pct }}% of total</span>
+                    <span class="text-[10px] font-bold text-slate-400">{{ stats.working_pct|default:"0" }}% of total</span>
                   </div>
                 </div>
               </div>
@@ -243,20 +242,19 @@
                 <div class="relative flex h-full flex-col gap-3">
                   <div class="flex items-center justify-between mb-1.5 w-full">
                     <span class="text-[10px] font-extrabold text-slate-500 uppercase tracking-widest pl-1">Not Working</span>
-                    <span class="text-xs font-black text-slate-800 pr-1">{{ stats.not_working }}<span class="text-slate-400 font-bold ml-1">Items</span></span>
+                    <span class="text-xs font-black text-slate-800 pr-1">{{ stats.not_working|default:"0" }}<span class="text-slate-400 font-bold ml-1">Items</span></span>
                   </div>
                   <div class="w-full bg-slate-100 rounded-full h-2 min-h-2 relative overflow-hidden flex shadow-inner">
-                    <div class="h-full rounded-full bg-rose-400" style="width:{{ stats.not_working_pct }}%"></div>
+                    <div class="h-full rounded-full bg-rose-400" style="width:{{ stats.not_working_pct|default:"0" }}%"></div>
                   </div>
                   <div class="mt-1.5 text-right w-full pr-1">
-                    <span class="text-[10px] font-bold text-slate-400">{{ stats.not_working_pct }}% of total</span>
+                    <span class="text-[10px] font-bold text-slate-400">{{ stats.not_working_pct|default:"0" }}% of total</span>
                   </div>
                 </div>
               </div>
 
             </div>
             </div> <!-- /stats-scene -->
-            {% endif %}
 
 
 

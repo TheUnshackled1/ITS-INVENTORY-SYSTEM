@@ -87,7 +87,6 @@
               </div>
             </div>
 
-            {% if logs %}
             <!-- Statistics Cards -->
             <div class="stats-scene">
               <div id="stats-cards-container" class="grid grid-cols-2 gap-3 sm:grid-cols-3 xl:grid-cols-6">
@@ -100,7 +99,7 @@
                     Added
                   </div>
                     <div>
-                      <p class="text-3xl font-extrabold text-emerald-950 leading-none">{{ stats.added }}</p>
+                      <p class="text-3xl font-extrabold text-emerald-950 leading-none">{{ stats.added|default:"0" }}</p>
                     </div>
                     <div class="h-1 w-full rounded-full bg-emerald-100 overflow-hidden">
                       <div class="h-full rounded-full bg-emerald-400" style="width:{{ stats.added_pct|default:'0' }}%"></div>
@@ -116,7 +115,7 @@
                     Edited
                   </div>
                     <div>
-                      <p class="text-3xl font-extrabold text-blue-950 leading-none">{{ stats.edited }}</p>
+                      <p class="text-3xl font-extrabold text-blue-950 leading-none">{{ stats.edited|default:"0" }}</p>
                     </div>
                     <div class="h-1 w-full rounded-full bg-blue-100 overflow-hidden">
                       <div class="h-full rounded-full bg-blue-400" style="width:{{ stats.edited_pct|default:'0' }}%"></div>
@@ -132,7 +131,7 @@
                     Deleted
                   </div>
                     <div>
-                      <p class="text-3xl font-extrabold text-rose-950 leading-none">{{ stats.deleted }}</p>
+                      <p class="text-3xl font-extrabold text-rose-950 leading-none">{{ stats.deleted|default:"0" }}</p>
                     </div>
                     <div class="h-1 w-full rounded-full bg-rose-100 overflow-hidden">
                       <div class="h-full rounded-full bg-rose-400" style="width:{{ stats.deleted_pct|default:'0' }}%"></div>
@@ -148,7 +147,7 @@
                     Uploaded
                   </div>
                     <div>
-                      <p class="text-3xl font-extrabold text-purple-950 leading-none">{{ stats.uploaded }}</p>
+                      <p class="text-3xl font-extrabold text-purple-950 leading-none">{{ stats.uploaded|default:"0" }}</p>
                     </div>
                     <div class="h-1 w-full rounded-full bg-purple-100 overflow-hidden">
                       <div class="h-full rounded-full bg-purple-400" style="width:{{ stats.uploaded_pct|default:'0' }}%"></div>
@@ -164,7 +163,7 @@
                     Borrowed
                   </div>
                     <div>
-                      <p class="text-3xl font-extrabold text-sky-950 leading-none">{{ stats.borrowed }}</p>
+                      <p class="text-3xl font-extrabold text-sky-950 leading-none">{{ stats.borrowed|default:"0" }}</p>
                     </div>
                     <div class="h-1 w-full rounded-full bg-sky-100 overflow-hidden">
                       <div class="h-full rounded-full bg-sky-400" style="width:{{ stats.borrowed_pct|default:'0' }}%"></div>
@@ -180,7 +179,7 @@
                     Returned
                   </div>
                     <div>
-                      <p class="text-3xl font-extrabold text-slate-800 leading-none">{{ stats.returned }}</p>
+                      <p class="text-3xl font-extrabold text-slate-800 leading-none">{{ stats.returned|default:"0" }}</p>
                     </div>
                     <div class="h-1 w-full rounded-full bg-slate-200 overflow-hidden">
                       <div class="h-full rounded-full bg-slate-400" style="width:{{ stats.returned_pct|default:'0' }}%"></div>
@@ -190,7 +189,6 @@
 
               </div>
             </div>
-            {% endif %}
           </div>
         </section>
 
