@@ -828,15 +828,12 @@ document.addEventListener("DOMContentLoaded", function () {
           activeBorrowingsList.innerHTML = '';
         }
       }
-      
-      // Auto-expand dynamically injected content
       setTimeout(() => {
         document.querySelectorAll('textarea').forEach(ta => {
           ta.style.height = 'auto';
           ta.style.height = ta.scrollHeight + 'px';
         });
       }, 0);
-      
       const auditFooter = document.getElementById("auditFooter");
       if (auditFooter) {
         document.getElementById("auditCreatedDate").textContent = row.dataset.created_at || row.dataset.invdate || "--";
@@ -848,22 +845,17 @@ document.addEventListener("DOMContentLoaded", function () {
       openDrawer("Edit Inventory Item");
     }
   });
-
-  // Save Record AJAX Action
   if (saveRecordBtn && inventoryForm) {
     saveRecordBtn.addEventListener("click", () => {
       const formData = new FormData(inventoryForm);
       if (!formData.get("quantity") || formData.get("quantity") === "") {
         formData.set("quantity", "1");
       }
-      
       let itemId = formData.get("id");
       const url = isEditing && itemId ? `/inventory/${itemId}/edit/` : `/inventory/add/`;
-      
       const prevText = saveRecordBtn.textContent;
       saveRecordBtn.textContent = "Saving...";
       saveRecordBtn.disabled = true;
-
       fetch(url, {
         method: "POST",
         body: formData,
@@ -875,21 +867,16 @@ document.addEventListener("DOMContentLoaded", function () {
       .then(response => response.json())
       .then(data => {
         saveRecordBtn.textContent = prevText;
-        saveRecordBtn.disabled = false;
-        
+        saveRecordBtn.disabled = false;      
         if (data.success) {
           closeDrawer();
-          
           if (data.no_changes) {
               localStorage.setItem("showSuccessModalFlag", "no_changes");
           } else {
               localStorage.setItem("showSuccessModalFlag", isEditing ? "edited" : "added");
           }
-          
-          // Refresh the page natively to guarantee perfect DataTable indexing
           window.location.reload();
         } else {
-          // Display validation errors!
           let errorMsg = "Could not save record. Please check your inputs.";
           if (data.errors) {
             errorMsg = "Validation failed. Please correct the fields marked in the form.";
@@ -903,7 +890,6 @@ document.addEventListener("DOMContentLoaded", function () {
               errorDiv.classList.remove("hidden");
             }
           }
-          
           if (typeof window.showErrorModal === 'function') {
             window.showErrorModal(errorMsg);
           } else {
@@ -915,14 +901,12 @@ document.addEventListener("DOMContentLoaded", function () {
         console.error("AJAX Error:", err);
         saveRecordBtn.textContent = prevText;
         saveRecordBtn.disabled = false;
-        
         const networkError = "Network error. Please check your connection and try again.";
         const errorDiv = document.getElementById("formErrorMessage");
         if (errorDiv) {
           errorDiv.textContent = networkError;
           errorDiv.classList.remove("hidden");
         }
-        
         if (typeof window.showErrorModal === 'function') {
           window.showErrorModal(networkError);
         } else {
@@ -931,13 +915,11 @@ document.addEventListener("DOMContentLoaded", function () {
       });
     });
   }
-  // Delete Record AJAX Action
   const deleteRecordBtn = document.getElementById("deleteRecordBtn");
   const deleteConfirmModalOverlay = document.getElementById("deleteConfirmModalOverlay");
   const deleteConfirmModalCard = document.getElementById("deleteConfirmModalCard");
   const cancelDeleteActionBtn = document.getElementById("cancelDeleteActionBtn");
   const confirmDeleteActionBtn = document.getElementById("confirmDeleteActionBtn");
-
   let deleteTargetItemId = null;
   let deleteTargetBtn = null;
 
@@ -946,30 +928,24 @@ document.addEventListener("DOMContentLoaded", function () {
       animateModalClose(deleteConfirmModalOverlay, deleteConfirmModalCard);
     }
   }
-
   if (cancelDeleteActionBtn) cancelDeleteActionBtn.addEventListener("click", closeDeleteConfirmModal);
 
   if (deleteRecordBtn && inventoryForm) {
     deleteRecordBtn.addEventListener("click", () => {
       const formData = new FormData(inventoryForm);
       const itemId = formData.get("id");
-      
       if (itemId && isEditing) {
         deleteTargetItemId = itemId;
         deleteTargetBtn = deleteRecordBtn;
-        
-        // Open the custom CSS modal instead of native confirm
         if (deleteConfirmModalOverlay && deleteConfirmModalCard) {
           animateModalOpen(deleteConfirmModalOverlay, deleteConfirmModalCard);
         } else {
-          // Fallback if modal is missing
           if (confirm("Are you sure you want to delete this record? This action cannot be undone.")) {
              executeDeleteRequest(itemId, deleteRecordBtn);
           }
         }
       }
     });
-
     if (confirmDeleteActionBtn) {
       confirmDeleteActionBtn.addEventListener("click", () => {
         closeDeleteConfirmModal();
@@ -978,13 +954,11 @@ document.addEventListener("DOMContentLoaded", function () {
         }
       });
     }
-
     function executeDeleteRequest(itemId, btnRef) {
       const url = `/inventory/${itemId}/delete/`;
       const prevText = btnRef.textContent;
       btnRef.textContent = "Deleting...";
       btnRef.disabled = true;
-
       fetch(url, {
         method: "POST",
         headers: {
@@ -1013,7 +987,6 @@ document.addEventListener("DOMContentLoaded", function () {
         console.error("AJAX Error:", err);
         btnRef.textContent = prevText;
         btnRef.disabled = false;
-        
         const networkError = "Network error while attempting to delete. Please try again.";
         if (typeof window.showErrorModal === 'function') {
           window.showErrorModal(networkError);
