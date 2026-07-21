@@ -529,36 +529,27 @@ document.addEventListener("DOMContentLoaded", function () {
       animateModalClose(successModalOverlay, successModalCard);
     }
   };
-
   if (successModalCloseBtn) successModalCloseBtn.addEventListener("click", closeSuccessModal);
-
-  // --- Error Modal Controller ---
   const errorModalOverlay = document.getElementById("errorModalOverlay");
   const errorModalCard = document.getElementById("errorModalCard");
   const errorModalMessage = document.getElementById("errorModalMessage");
   const errorModalCloseBtn = document.getElementById("errorModalCloseBtn");
-
   window.showErrorModal = function(msg = "Ooops.. something wrong, try one more time") {
     if (errorModalMessage) errorModalMessage.textContent = msg;
     if (errorModalOverlay && errorModalCard) {
       animateModalOpen(errorModalOverlay, errorModalCard);
     }
   };
-
   const closeErrorModal = function() {
     if (errorModalOverlay && errorModalCard) {
       animateModalClose(errorModalOverlay, errorModalCard);
     }
   };
-
   if (errorModalCloseBtn) errorModalCloseBtn.addEventListener("click", closeErrorModal);
-
-  // --- Info Modal Controller ---
   const infoModalOverlay = document.getElementById("infoModalOverlay");
   const infoModalCard = document.getElementById("infoModalCard");
   const infoModalMessage = document.getElementById("infoModalMessage");
   const infoModalCloseBtn = document.getElementById("infoModalCloseBtn");
-
   window.showInfoModal = function(msg = "Info") {
     if (infoModalMessage) infoModalMessage.textContent = msg;
     if (infoModalOverlay && infoModalCard) {
