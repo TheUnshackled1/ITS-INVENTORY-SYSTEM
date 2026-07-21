@@ -1,7 +1,4 @@
-// UI and DataTables Initialization
 document.addEventListener("DOMContentLoaded", function () {
-
-  // Check for pending success popups from native navigation
   const pendingSuccess = localStorage.getItem("showSuccessModalFlag");
   if (pendingSuccess) {
     localStorage.removeItem("showSuccessModalFlag");
@@ -30,33 +27,25 @@ document.addEventListener("DOMContentLoaded", function () {
         .replace(/"/g, "&quot;")
         .replace(/'/g, "&#039;");
   };
-
-  // --- Card Numbers Count-Up Animation ---
   const statNumbers = document.querySelectorAll("#stats-cards-container p.text-3xl");
   if (statNumbers.length > 0) {
     statNumbers.forEach(el => {
       const targetStr = el.textContent.trim().replace(/,/g, '');
       const target = parseInt(targetStr, 10);
-      
       if (!isNaN(target) && target > 0) {
         el.textContent = "0";
-        const duration = 500; // 1 second
+        const duration = 500;
         const start = performance.now();
-        
         const step = (now) => {
           const progress = Math.min((now - start) / duration, 1);
-          // Ease-out cubic formula for smooth deceleration
           const easeOut = 1 - Math.pow(1 - progress, 3);
-          
           el.textContent = Math.floor(easeOut * target);
-          
           if (progress < 1) {
             window.requestAnimationFrame(step);
           } else {
-            el.textContent = target; // Ensure exact final value
+            el.textContent = target;
           }
         };
-        
         window.requestAnimationFrame(step);
       }
     });
