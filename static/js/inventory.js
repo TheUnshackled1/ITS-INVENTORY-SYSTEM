@@ -154,22 +154,17 @@ document.addEventListener("DOMContentLoaded", function () {
       window.inventoryData = [];
     }
   }
-
-  // JSON-based Bulk Rendering Logic for Logs
   const logDataElement = document.getElementById("logs-data");
   const logTbodyElement = document.getElementById("logs-tbody");
-
   if (logDataElement && logTbodyElement) {
     try {
       window.logData = JSON.parse(logDataElement.textContent);
       window.generateLogRows = function(dataSlice, pageStartIndex) {
         let htmlRows = [];
         const len = dataSlice.length;
-        
         for (let i = 0; i < len; i++) {
           const log = dataSlice[i];
           const counter = pageStartIndex + i + 1;
-          
           let performedByBadge = "";
           if (log.performed_by.toLowerCase() === 'admin') {
             performedByBadge = `<div class="w-6 h-6 rounded-full bg-blue-50 flex items-center justify-center border border-blue-100 shadow-[0_2px_8px_rgba(59,130,246,0.25)] flex-shrink-0">
@@ -180,7 +175,6 @@ document.addEventListener("DOMContentLoaded", function () {
                           <svg class="w-3 h-3 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" /></svg>
                         </div>`;
           }
-
           let actionBadge = "";
           if (log.action === 'added') {
             actionBadge = `<span class="inline-flex justify-center flex-shrink-0 items-center gap-1.5 w-max px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider text-emerald-700 bg-emerald-100 border border-emerald-200 rounded-full"><svg class="h-1.5 w-1.5 flex-shrink-0 fill-current" viewBox="0 0 6 6" aria-hidden="true"><circle cx="3" cy="3" r="3" /></svg>Added</span>`;
@@ -197,13 +191,8 @@ document.addEventListener("DOMContentLoaded", function () {
           } else {
             actionBadge = `<span class="inline-flex justify-center flex-shrink-0 items-center gap-1.5 w-max px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider text-slate-700 bg-slate-100 border border-slate-200 rounded-full"><svg class="h-1.5 w-1.5 flex-shrink-0 fill-current" viewBox="0 0 6 6" aria-hidden="true"><circle cx="3" cy="3" r="3" /></svg>${escapeHtml(log.action)}</span>`;
           }
-          
-          // Case formatting 
           const performedByFixed = log.performed_by ? escapeHtml(log.performed_by.charAt(0).toUpperCase() + log.performed_by.slice(1).toLowerCase()) : "";
-          
-          // Date formatting for 2-line stack (e.g. Jul 16, 2026 \n 10:28 AM)
           let dateRaw = log.timestamp_ui || "";
-          // Format expected: "Jul. 16, 2026, 10:28 a.m."
           let splitIdx = dateRaw.lastIndexOf(", ");
           let dateFmt = dateRaw;
           if (splitIdx !== -1) {
@@ -213,7 +202,6 @@ document.addEventListener("DOMContentLoaded", function () {
           } else {
              dateFmt = escapeHtml(dateRaw);
           }
-
           htmlRows.push(`
             <tr class="log-row-trigger transition-colors cursor-pointer group" data-summary="${escapeHtml(log.description)}" data-details="${escapeHtml(log.details)}" data-item="${escapeHtml(log.item_type)}">
               <td class="px-2 py-2 align-middle font-semibold text-slate-900 text-center text-xs w-16">${counter}</td>
