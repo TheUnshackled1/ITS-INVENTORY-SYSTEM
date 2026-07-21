@@ -440,34 +440,20 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     }
   });
-
-  // --- Auto-expanding Textareas ---
   function adjustTextareaHeight(el) {
-    // Reset height to evaluate raw scrollHeight
     el.style.height = 'auto';
-    
-    // In border-box layouts (like Tailwind), scrollHeight doesn't include borders,
-    // so setting height to scrollHeight shrinks the content area slightly,
-    // causing scrolling or continuous jittery growth. We must add the border widths safely.
     const style = window.getComputedStyle(el);
     const borderTop = parseFloat(style.borderTopWidth) || 0;
     const borderBottom = parseFloat(style.borderBottomWidth) || 0;
-    
     el.style.height = (el.scrollHeight + borderTop + borderBottom) + 'px';
   }
-
   document.querySelectorAll('textarea').forEach(textarea => {
-    // Add overflow-hidden in JS just in case it's missed in HTML
     textarea.style.overflow = 'hidden';
-    // Adjust initially
     adjustTextareaHeight(textarea);
-    // Listen to input
     textarea.addEventListener('input', function() {
       adjustTextareaHeight(this);
     });
   });
-
-  // --- Side Drawer Modal Controller ---
   const sideDrawerModal = document.getElementById("sideDrawerModal");
   const sideDrawerOverlay = document.getElementById("sideDrawerOverlay");
   const sideDrawerPanel = document.getElementById("sideDrawerPanel");
@@ -476,10 +462,8 @@ document.addEventListener("DOMContentLoaded", function () {
   const inventoryForm = document.getElementById("inventoryForm");
   const saveRecordBtn = document.getElementById("saveRecordBtn");
   const modalTitle = document.getElementById("modalTitle");
-  
   let isEditing = false;
   let editingRow = null;
-
   function openDrawer(title = "Add Inventory Record") {
     modalTitle.textContent = title;
     sideDrawerModal.style.display = "block"; // Remove inline display:none
@@ -491,31 +475,23 @@ document.addEventListener("DOMContentLoaded", function () {
     sideDrawerPanel.classList.remove("translate-x-full");
     sideDrawerPanel.classList.add("translate-x-0");
   }
-
   function closeDrawer() {
     sideDrawerOverlay.classList.remove("opacity-100");
     sideDrawerOverlay.classList.add("opacity-0");
     sideDrawerPanel.classList.remove("translate-x-0");
     sideDrawerPanel.classList.add("translate-x-full");
-    
-    // Wait for animation to finish
     setTimeout(() => {
       sideDrawerModal.classList.add("hidden");
       sideDrawerModal.style.display = "none"; // Re-hide perfectly
       inventoryForm.reset();
-      // Reset textareas to default height
       document.querySelectorAll('textarea').forEach(ta => ta.style.height = 'auto');
       document.getElementById("form_id").value = "";
       isEditing = false;
       editingRow = null;
     }, 300);
   }
-
-  // Close handlers
   if (closeDrawerBtn) closeDrawerBtn.addEventListener("click", closeDrawer);
   if (sideDrawerOverlay) sideDrawerOverlay.addEventListener("click", closeDrawer);
-
-  // --- Generalized Modal Animation Helpers (Left to Right Slide) ---
   const animateModalOpen = (overlay, card) => {
     overlay.style.display = "flex";
     overlay.classList.remove("hidden", "pointer-events-none");
