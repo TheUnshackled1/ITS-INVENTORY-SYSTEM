@@ -416,7 +416,6 @@
       </div>
     </div>
   </div>
-
   <!-- Success Overlay Modal -->
   <div id="successModalOverlay" style="display: none;" class="fixed inset-0 z-[200] flex items-center justify-center bg-slate-900/60 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300">
     <div id="successModalCard" class="relative w-full max-w-[340px] bg-white rounded-3xl shadow-2xl overflow-hidden transform -translate-x-[100vw] opacity-0 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] mx-4">
@@ -430,22 +429,19 @@
         </div>
         <h3 class="text-[14px] font-extrabold tracking-[0.25em] uppercase drop-shadow-sm text-center">Success</h3>
       </div>
-      
       <!-- Bottom White Half -->
       <div class="px-6 py-7 text-center bg-white flex flex-col items-center">
         <div class="w-full bg-slate-50 rounded-xl border border-slate-100 p-5 mb-5 shadow-sm">
           <p id="successModalMessage" class="text-[13px] text-slate-800 font-bold leading-relaxed">
             Item has been successfully returned
           </p>
-        </div>
-        
+        </div>  
         <button type="button" id="successModalCloseBtn" class="px-10 rounded-xl bg-emerald-600 py-3 text-[13px] font-extrabold text-white transition-all shadow-sm hover:shadow-md hover:bg-emerald-700 hover:-translate-y-0.5 focus:outline-none focus:ring-4 focus:ring-emerald-600/30">
           Continue
         </button>
       </div>
     </div>
   </div>
-
   <!-- Error Overlay Modal -->
   <div id="errorModalOverlay" style="display: none;" class="fixed inset-0 z-[400] flex items-center justify-center bg-slate-900/60 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300">
     <div id="errorModalCard" class="relative w-full max-w-[340px] bg-white rounded-3xl shadow-2xl overflow-hidden transform -translate-x-[100vw] opacity-0 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] mx-4">
@@ -458,23 +454,20 @@
           </svg>
         </div>
         <h3 class="text-[14px] font-extrabold tracking-[0.25em] uppercase drop-shadow-sm text-center">Error</h3>
-      </div>
-      
+      </div>      
       <!-- Bottom White Half -->
       <div class="px-6 py-7 text-center bg-white flex flex-col items-center">
         <div class="w-full bg-slate-50 rounded-xl border border-slate-100 p-5 mb-5 shadow-sm">
           <p id="errorModalMessage" class="text-[13px] text-slate-800 font-bold leading-relaxed">
             Ooops.. something wrong, try one more time
           </p>
-        </div>
-        
+        </div>        
         <button type="button" id="errorModalCloseBtn" class="px-10 rounded-xl bg-rose-600 py-3 text-[13px] font-extrabold text-white transition-all shadow-sm hover:shadow-md hover:bg-rose-700 hover:-translate-y-0.5 focus:outline-none focus:ring-4 focus:ring-rose-600/30">
           Okay
         </button>
       </div>
     </div>
   </div>
-
   <!-- Log Detail Overlay Modal -->
   <div id="logDetailModalOverlay" style="display: none;" class="fixed inset-0 z-[400] flex items-center justify-center bg-slate-900/60 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300">
     <div id="logDetailModalCard" class="relative w-full max-w-[340px] bg-white rounded-3xl shadow-2xl overflow-hidden transform -translate-x-[100vw] opacity-0 transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] mx-4">
@@ -482,7 +475,6 @@
       <button type="button" id="logDetailModalCloseBtn" class="absolute top-3 right-3 w-7 h-7 flex items-center justify-center rounded-full bg-rose-600 text-white hover:bg-rose-700 transition-colors shadow-sm focus:outline-none focus:ring-4 focus:ring-rose-600/30 z-[100]">
         <svg class="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
       </button>
-
       <!-- Top Blue Half -->
       <div class="bg-blue-600 px-6 pt-7 pb-6 flex flex-col items-center justify-center text-white">
         <!-- Info Icon -->
@@ -492,8 +484,7 @@
           </svg>
         </div>
         <h3 class="text-[14px] font-extrabold tracking-[0.25em] uppercase drop-shadow-sm text-center">Details</h3>
-      </div>
-      
+      </div>      
       <!-- Bottom White Half -->
       <div class="bg-white px-6 py-7 flex flex-col items-center text-center">
         <div class="w-full bg-slate-50 rounded-xl border border-slate-100 p-5 shadow-sm">
@@ -502,8 +493,6 @@
       </div>
     </div>
   </div>
-
   <script src="https://cdn.jsdelivr.net/npm/simple-datatables@9.0.3"></script>
 </body>
-
 </html>
