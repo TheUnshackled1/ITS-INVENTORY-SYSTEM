@@ -1,6 +1,5 @@
 from django.db import models
 from django.utils import timezone
-
 class Inventory(models.Model):
     STATUS_CHOICES = [
         ("available", "Available"),
@@ -44,7 +43,6 @@ class Inventory(models.Model):
         if self.serial_number == "":
             self.serial_number = None
         super().save(*args, **kwargs)
-
 class AuditLog(models.Model):
     ACTION_CHOICES = [
         ("added",   "Added"),
@@ -61,14 +59,10 @@ class AuditLog(models.Model):
     details     = models.TextField(blank=True, null=True)
     performed_by = models.CharField(max_length=150, default="System")
     timestamp   = models.DateTimeField(default=timezone.now)
-
     class Meta:
         ordering = ["-timestamp"]
-
     def __str__(self):
         return f"[{self.action}] {self.item_type} by {self.performed_by}"
-
-
 class IssuanceLog(models.Model):
     STATUS_CHOICES = [
         ("borrowed", "Borrowed"),
@@ -92,9 +86,7 @@ class IssuanceLog(models.Model):
         max_length=20, choices=STATUS_CHOICES, default="borrowed"
     )
     notes = models.TextField(blank=True, null=True)
-
     class Meta:
         ordering = ["-date_issued"]
-
     def __str__(self):
         return f"Issued {self.quantity_borrowed}x to {self.borrower_name}"
