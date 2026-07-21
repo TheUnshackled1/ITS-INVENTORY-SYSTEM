@@ -1,15 +1,11 @@
 from pathlib import Path
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-r4u7g=hkcw-p4acm^_3az8fwra%lfva+xg=_uwg6bt7_mhc+y5'
-
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 ALLOWED_HOSTS = ['itsinventory.pythonanywhere.com', '127.0.0.1', 'localhost']
-
 # Application definition
 INSTALLED_APPS = [
     'admin_interface',
@@ -47,7 +43,6 @@ TEMPLATES = [
     },
 ]
 WSGI_APPLICATION = 'its_inventory.wsgi.application'
-
 # Database
 DATABASES = {
     'default': {
@@ -55,7 +50,6 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-
 # Password validation
 # https://docs.djangoproject.com/en/6.0/ref/settings/#auth-password-validators
 AUTH_PASSWORD_VALIDATORS = [
@@ -72,16 +66,12 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
-
-
 # Internationalization
 # https://docs.djangoproject.com/en/6.0/topics/i18n/
 LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'Asia/Manila'
 USE_I18N = True
 USE_TZ = True
-
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
@@ -90,7 +80,6 @@ STATICFILES_DIRS = [
     BASE_DIR / 'static',
 ]
 STATIC_ROOT = BASE_DIR / 'staticfiles'
-
 # Auth redirects
 LOGIN_URL = '/login/'
 LOGIN_REDIRECT_URL = 'dashboard'
