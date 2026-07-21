@@ -996,8 +996,6 @@ document.addEventListener("DOMContentLoaded", function () {
       });
     }
   }
-
-  // --- Borrow Modal Controller ---
   const borrowModalOverlay = document.getElementById('borrowModalOverlay');
   const borrowModalCard = document.getElementById('borrowModalCard');
   const borrowRecordBtn = document.getElementById('borrowRecordBtn');
@@ -1005,20 +1003,15 @@ document.addEventListener("DOMContentLoaded", function () {
   const borrowForm = document.getElementById('borrowForm');
   const borrowFormError = document.getElementById('borrowFormError');
   const borrowModalItemName = document.getElementById('borrowModalItemName');
-
   function openBorrowModal() {
     if (!borrowModalOverlay || !borrowModalCard) return;
-    // Pre-fill inventory id and item name from the open drawer
     const formId = document.getElementById('form_id')?.value;
     const itemType = document.getElementById('form_item_type')?.value || '';
     const availQty = parseInt(document.getElementById('form_quantity')?.value || '1', 10);
-
     document.getElementById('borrow_inventory_id').value = formId;
     if (borrowModalItemName) borrowModalItemName.textContent = itemType;
     const qtyInput = document.getElementById('borrow_quantity');
     if (qtyInput) { qtyInput.max = availQty; qtyInput.value = 1; }
-
-    // Clear form fields
     if (borrowForm) {
       document.getElementById('borrow_borrower_name').value = '';
       document.getElementById('borrow_office_location').value = '';
@@ -1027,27 +1020,22 @@ document.addEventListener("DOMContentLoaded", function () {
       document.getElementById('borrow_expected_return').value = '';
     }
     if (borrowFormError) { borrowFormError.classList.add('hidden'); borrowFormError.textContent = ''; }
-
     animateModalOpen(borrowModalOverlay, borrowModalCard);
   }
-
   function closeBorrowModal() {
     if (!borrowModalOverlay || !borrowModalCard) return;
     animateModalClose(borrowModalOverlay, borrowModalCard);
   }
-
   if (borrowRecordBtn) borrowRecordBtn.addEventListener('click', openBorrowModal);
   if (cancelBorrowBtn) cancelBorrowBtn.addEventListener('click', closeBorrowModal);
   if (borrowModalOverlay) borrowModalOverlay.addEventListener('click', function(e) {
     if (e.target === borrowModalOverlay) closeBorrowModal();
   });
-
   if (borrowForm) {
     borrowForm.addEventListener('submit', function(e) {
       e.preventDefault();
       const submitBtn = document.getElementById('submitBorrowBtn');
       const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]')?.value;
-
       const payload = {
         inventory_id: document.getElementById('borrow_inventory_id').value,
         borrower_name: document.getElementById('borrow_borrower_name').value.trim(),
@@ -1057,7 +1045,6 @@ document.addEventListener("DOMContentLoaded", function () {
         expected_return: document.getElementById('borrow_expected_return').value,
         quantity_borrowed: parseInt(document.getElementById('borrow_quantity').value || '1', 10),
       };
-
       if (!payload.borrower_name || !payload.office_location || !payload.expected_return || !payload.tel_no || !payload.purpose) {
         if (borrowFormError) {
           borrowFormError.textContent = 'Please fill in all required fields.';
@@ -1065,7 +1052,6 @@ document.addEventListener("DOMContentLoaded", function () {
         }
         return;
       }
-
       const qtyInput = document.getElementById('borrow_quantity');
       const maxQty = parseInt(qtyInput.getAttribute('max') || '0', 10);
       if (payload.quantity_borrowed > maxQty) {
@@ -1077,9 +1063,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
         return;
       }
-
       if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = 'Issuing...'; }
-
       fetch('/borrowing/issue/', {
         method: 'POST',
         headers: {
