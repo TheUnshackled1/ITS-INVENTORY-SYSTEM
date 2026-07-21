@@ -168,9 +168,61 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
 
+        // Custom Plugin to Spin the Doughnut without affecting the legend
+        const customSpinPlugin = {
+            id: 'customSpin',
+            beforeDatasetDraw: (chart) => {
+                const ctx = chart.ctx;
+                const chartArea = chart.chartArea;
+                if (!chartArea) return;
+                
+                if (!chart.donutSpinStart) {
+                    chart.donutSpinStart = performance.now();
+                }
+                const now = performance.now();
+                const elapsed = now - chart.donutSpinStart;
+                const duration = 2000; // matching both native and custom durations
+                
+                let progress = Math.min(elapsed / duration, 1);
+                // easeOutQuart
+                progress = 1 - Math.pow(1 - progress, 4);
+                
+                const centerX = (chartArea.left + chartArea.right) / 2;
+                const centerY = (chartArea.top + chartArea.bottom) / 2;
+                const radius = Math.max(chartArea.right - chartArea.left, chartArea.bottom - chartArea.top);
+                
+                ctx.save();
+                
+                // 1. Spicy "grow from nothing" wedge clip
+                const startSweep = -Math.PI / 2; 
+                const endSweep = startSweep + (Math.PI * 2 * Math.max(progress, 0.001));
+                
+                ctx.beginPath();
+                ctx.moveTo(centerX, centerY);
+                ctx.arc(centerX, centerY, radius, startSweep, endSweep);
+                ctx.closePath();
+                ctx.clip();
+                
+                // 2. Spicy continuous 360 Spin
+                const angle = (1 - progress) * -Math.PI * 2;
+                
+                ctx.translate(centerX, centerY);
+                ctx.rotate(angle);
+                ctx.translate(-centerX, -centerY);
+                
+                if (progress < 1) {
+                    requestAnimationFrame(() => chart.update('none'));
+                }
+            },
+            afterDatasetDraw: (chart) => {
+                chart.ctx.restore();
+            }
+        };
+
         // 2) Status Pie Chart
         new Chart(pieCtx, {
             type: 'doughnut',
+            plugins: [customSpinPlugin],
             data: {
                 labels: pieData.labels,
                 datasets: [{
@@ -192,7 +244,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 animation: {
                     animateRotate: true,
                     animateScale: true,
-                    duration: 1400,
+                    duration: 2000,
                     easing: 'easeOutQuart'
                 },
                 plugins: {
