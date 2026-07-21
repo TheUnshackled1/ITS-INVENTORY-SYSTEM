@@ -143,10 +143,8 @@ document.addEventListener('DOMContentLoaded', function() {
             const notes          = conditionNotes.value.trim();
             const locationInput  = document.getElementById('returnConditionLocation');
             const returnLocation = locationInput ? locationInput.value.trim() : '';
-
             confirmReturnBtn.disabled     = true;
             confirmReturnBtn.textContent  = 'Returning...';
-
             fetch(`/borrowing/${id}/return/`, {
                 method: 'POST',
                 headers: {
@@ -186,7 +184,6 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
     }
-
     // ─── Initialize SimpleDatatables ─────────────────────────────────────────
     const tableEl = document.getElementById('borrowing-table');
     if (tableEl && window.simpleDatatables) {
@@ -198,7 +195,6 @@ document.addEventListener('DOMContentLoaded', function() {
             perPageSelect: false,
             perPage: 100000,
         });
-
         // ----- Custom Pagination Engine -----
         const PAGE_SIZE = 15;
         let currentPage = 1;
@@ -207,11 +203,9 @@ document.addEventListener('DOMContentLoaded', function() {
             const tbody = tableEl.querySelector("tbody");
             return tbody ? Array.from(tbody.querySelectorAll("tr:not(.no-results-row)")) : [];
         }
-
         function renderPage() {
             const all = getAllRows();
             all.forEach(r => r.style.display = "none");
-
             let activeRows = all;
             if (activeRows.length === 0) {
                 let noRow = tableEl.querySelector(".no-results-row");
@@ -233,7 +227,6 @@ document.addEventListener('DOMContentLoaded', function() {
             }
             renderPagination(activeRows);
         }
-
         function renderPagination(activeRows) {
             const bottomBar = tableEl.closest('.datatable-wrapper') ? tableEl.closest('.datatable-wrapper').querySelector('.datatable-bottom') : document.querySelector(".datatable-bottom");
             if (!bottomBar) return;
