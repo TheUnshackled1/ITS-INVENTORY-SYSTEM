@@ -160,7 +160,7 @@
             <form method="GET" class="flex-1 grid gap-3 grid-cols-1 md:grid-cols-[minmax(0,400px)_180px_1fr] items-end w-full">
               <!-- Search -->
               <div class="w-full">
-                <label class="block text-center md:text-left text-[11px] font-bold text-slate-500 uppercase tracking-widest mb-1.5 ml-1">Search Keywords</label>
+                <label class="block text-center text-[11px] font-bold text-slate-500 uppercase tracking-widest mb-1.5">Search Keywords</label>
                 <div class="relative">
                   <span class="absolute inset-y-0 left-3 flex items-center text-slate-400 pointer-events-none">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
@@ -170,14 +170,14 @@
                     </svg>
                   </span>
                   <input id="filter-search" type="text" name="q" value="{{ search_query|default:'' }}"
-                    placeholder="SEARCH BORROWER..." class="w-full text-center md:text-left bg-slate-50 border-slate-900 border-2 focus:border-slate-900 focus:ring-0 rounded-xl shadow-sm text-sm font-semibold text-slate-800 h-[46px] pl-9 pr-3 transition-colors placeholder:text-slate-400 placeholder:uppercase" />
+                    placeholder="SEARCH BORROWER..." class="w-full text-center bg-slate-50 border-slate-900 border-2 focus:border-slate-900 focus:ring-0 rounded-xl shadow-sm text-sm font-semibold text-slate-800 h-[46px] pl-9 pr-3 transition-colors placeholder:text-slate-400 placeholder:uppercase" />
                 </div>
               </div>
 
               <!-- Status Filter -->
               <div class="min-w-[180px]">
-                <label class="block text-center md:text-left text-[11px] font-bold text-slate-500 uppercase tracking-widest mb-1.5 ml-1">Status Filter</label>
-                <select id="filter-status" name="tab" class="uppercase w-full text-center md:text-left bg-slate-50 border-slate-900 border-2 focus:border-slate-900 focus:ring-0 rounded-xl shadow-sm text-sm font-semibold text-slate-800 h-[46px] px-3 transition-colors cursor-pointer"
+                <label class="block text-center text-[11px] font-bold text-slate-500 uppercase tracking-widest mb-1.5">Status Filter</label>
+                <select id="filter-status" name="tab" class="uppercase w-full text-center bg-slate-50 border-slate-900 border-2 focus:border-slate-900 focus:ring-0 rounded-xl shadow-sm text-sm font-semibold text-slate-800 h-[46px] px-3 transition-colors cursor-pointer"
                   onchange="this.form.submit()">
                   <option value="all" {% if current_tab == 'all' or not current_tab %}selected{% endif %}>ALL</option>
                   <option value="borrowed" {% if current_tab == 'borrowed' %}selected{% endif %}>BORROWED</option>
