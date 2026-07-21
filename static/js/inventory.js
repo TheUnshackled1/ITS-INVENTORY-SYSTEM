@@ -681,15 +681,12 @@ document.addEventListener("DOMContentLoaded", function () {
       animateModalClose(logDetailModalOverlay, logDetailModalCard);
     }
   };
-
   if (logDetailModalCloseBtn) logDetailModalCloseBtn.addEventListener("click", closeLogDetailModal);
   if (logDetailModalOverlay) logDetailModalOverlay.addEventListener("click", function(e) {
     if (e.target === logDetailModalOverlay) {
       closeLogDetailModal();
     }
   });
-
-  // Attach click listener to log item links (using event delegation for simplicity or individual listeners)
   document.addEventListener("click", function(e) {
     const trigger = e.target.closest(".log-row-trigger");
     if (trigger) {
@@ -700,8 +697,6 @@ document.addEventListener("DOMContentLoaded", function () {
       openLogDetailModal(itemType, summary, details);
     }
   });
-
-  // Add Record Action
   const addModalHandler = () => {
     isEditing = false;
     inventoryForm.reset();
@@ -711,9 +706,7 @@ document.addEventListener("DOMContentLoaded", function () {
     if (submitBtn) submitBtn.textContent = "Save Record";
     if (deleteBtn) deleteBtn.classList.add("hidden");
     const borrowBtn = document.getElementById("borrowRecordBtn");
-    if (borrowBtn) borrowBtn.classList.add("hidden");
-    
-    // Ensure defect field isn't locked from previous edit
+    if (borrowBtn) borrowBtn.classList.add("hidden"); 
     const defectField = document.getElementById("form_defect_description");
     if (defectField) {
         defectField.disabled = false;
