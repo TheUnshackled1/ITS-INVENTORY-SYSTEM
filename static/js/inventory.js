@@ -556,48 +556,38 @@ document.addEventListener("DOMContentLoaded", function () {
       animateModalOpen(infoModalOverlay, infoModalCard);
     }
   };
-
   const closeInfoModal = function() {
     if (infoModalOverlay && infoModalCard) {
       animateModalClose(infoModalOverlay, infoModalCard);
     }
   };
-
   if (infoModalCloseBtn) infoModalCloseBtn.addEventListener("click", closeInfoModal);
-
-  // --- Log Detail Modal Controller ---
   const logDetailModalOverlay = document.getElementById("logDetailModalOverlay");
   const logDetailModalCard = document.getElementById("logDetailModalCard");
   const logDetailItemType = document.getElementById("logDetailItemType");
   const logDetailSummary = document.getElementById("logDetailSummary");
   const logDetailModalCloseBtn = document.getElementById("logDetailModalCloseBtn");
-
   window.openLogDetailModal = function(itemType, summary, detailsJSON) {
     if (logDetailItemType) logDetailItemType.textContent = itemType || "-";
     if (logDetailSummary) {
       let html = '';
       let detailObj = null;
       let summaryText = summary;
-
       if (detailsJSON && detailsJSON !== "None") {
         try { detailObj = JSON.parse(detailsJSON); } catch(e) { console.error("Could not parse detailsJSON", e); }
       }
-      
-      // Fallback for old logs where summary IS the JSON
       if (!detailObj && summaryText) {
         try {
           detailObj = JSON.parse(summaryText);
-          summaryText = null; // Don't render JSON as raw text
+          summaryText = null;
         } catch(e) {}
       }
-
       if (detailObj) {
         if (detailObj.before && detailObj.after) {
           if (logDetailModalCard) {
             logDetailModalCard.classList.remove("max-w-md", "max-w-xl", "max-w-lg", "max-w-4xl");
             logDetailModalCard.classList.add("max-w-[520px]");
           }
-          
           let beforeHtml = '<div class="grid grid-cols-2 gap-x-2 gap-y-4 text-left w-full">';
           for (const [k, v] of Object.entries(detailObj.before)) {
             if (k.startsWith('_')) continue;
@@ -611,7 +601,6 @@ document.addEventListener("DOMContentLoaded", function () {
             `;
           }
           beforeHtml += '</div>';
-
           let afterHtml = '<div class="grid grid-cols-2 gap-x-2 gap-y-4 text-left w-full">';
           for (const [k, v] of Object.entries(detailObj.after)) {
             if (k.startsWith('_')) continue;
@@ -625,7 +614,6 @@ document.addEventListener("DOMContentLoaded", function () {
             `;
           }
           afterHtml += '</div>';
-
           html += `
             <div class="flex flex-col md:flex-row items-stretch justify-center gap-3 w-full relative">
               <!-- Original State -->
@@ -637,20 +625,14 @@ document.addEventListener("DOMContentLoaded", function () {
                 </h4>
                 ${beforeHtml}
               </div>
-
-              <!-- Arrow Separator -->
               <div class="flex items-center justify-center shrink-0 md:self-center py-2 md:py-0 relative z-10 w-8">
-                <!-- Desktop Right Arrow -->
                 <div class="hidden md:flex w-8 h-8 rounded-full bg-blue-50 items-center justify-center text-blue-500 shadow-sm border border-blue-200 ring-4 ring-white absolute">
                   <svg class="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
                 </div>
-                <!-- Mobile Down Arrow -->
                 <div class="flex md:hidden w-8 h-8 rounded-full bg-blue-50 items-center justify-center text-blue-500 shadow-sm border border-blue-200 ring-4 ring-white absolute">
                   <svg class="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M19 14l-7 7m0 0l-7-7m7 7V3"/></svg>
                 </div>
               </div>
-
-              <!-- Changed State -->
               <div class="flex-1 bg-white p-4 rounded-2xl border border-blue-200 shadow-sm relative overflow-hidden ring-2 ring-blue-500/10 text-left">
                 <div class="absolute top-0 right-0 bg-blue-500 text-white text-[9px] font-bold px-3 py-1 rounded-bl-xl uppercase tracking-wider shadow-sm">Updated</div>
                 <h4 class="text-xs font-bold text-blue-700 mb-4 flex items-center gap-2">
@@ -666,7 +648,6 @@ document.addEventListener("DOMContentLoaded", function () {
             logDetailModalCard.classList.remove("max-w-4xl", "max-w-xl", "max-w-lg", "max-w-[520px]", "max-w-md");
             logDetailModalCard.classList.add("max-w-[370px]");
           }
-          
           html += '<div class="grid grid-cols-2 gap-x-4 gap-y-5 text-left w-full mt-2 pb-2">';
           for (const [k, v] of Object.entries(detailObj)) {
             if (k.startsWith('_')) continue;
@@ -680,9 +661,7 @@ document.addEventListener("DOMContentLoaded", function () {
           html += '</div>';
         }
       }
-      
       if (summaryText && !detailObj) {
-        // Only show plain text if there's no grid available
         html += `
           <div class="w-full text-left mt-2">
              <span class="text-[9px] font-extrabold text-slate-400 uppercase tracking-widest mb-1 block">Details</span>
@@ -690,7 +669,6 @@ document.addEventListener("DOMContentLoaded", function () {
           </div>
         `;
       }
-      
       logDetailSummary.innerHTML = html;
       logDetailSummary.className = "text-sm font-medium text-slate-600 leading-relaxed w-full max-h-[60vh] overflow-y-auto custom-scrollbar";
     }
@@ -698,7 +676,6 @@ document.addEventListener("DOMContentLoaded", function () {
       animateModalOpen(logDetailModalOverlay, logDetailModalCard);
     }
   };
-
   const closeLogDetailModal = function() {
     if (logDetailModalOverlay && logDetailModalCard) {
       animateModalClose(logDetailModalOverlay, logDetailModalCard);
