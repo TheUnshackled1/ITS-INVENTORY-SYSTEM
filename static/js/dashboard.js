@@ -1,8 +1,3 @@
-/**
- * dashboard.js
- * Contains the extracted countUpAnimation logic for the glassmorphic stats cards.
- */
-
 document.addEventListener("DOMContentLoaded", () => {
     function countUpAnimation(target, duration, el) {
         let start = 0;
@@ -18,10 +13,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
         updateCount();
     }
-
-    // Target elements with data-live-stat
     const statsElements = document.querySelectorAll("[data-live-stat]");
-    
     statsElements.forEach((el) => {
         const valElem = el.querySelector("p");
         if (valElem) {
@@ -34,56 +26,38 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         }
     });
-
-    // -------------------------------------------------------------
-    // Dashboard Chart.js Integration
-    // -------------------------------------------------------------
     const trendCtx = document.getElementById('trendChart');
     const pieCtx = document.getElementById('pieChart');
-
     if (trendCtx && pieCtx && window.Chart) {
-        
         let pieData = { labels: [], data: [] };
         let trendData = { labels: [], data: [] };
-
         try {
             pieData = JSON.parse(document.getElementById('pie-chart-data').textContent);
             trendData = JSON.parse(document.getElementById('trend-chart-data').textContent);
         } catch (e) {
             console.error("Dashboard charts JSON parse error:", e);
         }
-
-        // Apply global defaults for Chart.js
         Chart.defaults.font.family = "'Inter', sans-serif";
         Chart.defaults.color = "#64748b"; // slate-500
-
-        // Custom Plugin for Smooth Laser Wipe on Line Chart
         const trendWipePlugin = {
             id: 'trendWipe',
             beforeDatasetDraw: (chart) => {
                 const ctx = chart.ctx;
                 const chartArea = chart.chartArea;
                 if (!chartArea) return;
-                
                 if (!chart.trendWipeStart) {
                     chart.trendWipeStart = performance.now();
                 }
                 const elapsed = performance.now() - chart.trendWipeStart;
-                const duration = 2000;
-                
+                const duration = 2000; 
                 let progress = Math.min(elapsed / duration, 1);
                 progress = 1 - Math.pow(1 - progress, 4); // easeOutQuart
-                
                 ctx.save();
                 ctx.beginPath();
-                // Expand total wipe distance to perfectly reveal the final overflowing dot geometry
                 const totalWipeDistance = chartArea.width + 40;
                 const currentWidth = totalWipeDistance * progress;
-                
-                // Use a generous clipping rect so line borders, points, and shadows are not vertically cut
                 ctx.rect(chartArea.left - 20, chartArea.top - 40, currentWidth, chartArea.height + 80);
-                ctx.clip();
-                
+                ctx.clip();      
                 if (progress < 1) {
                     requestAnimationFrame(() => chart.update('none'));
                 }
@@ -92,8 +66,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 chart.ctx.restore();
             }
         };
-
-        // 1) Trend Line Chart
         new Chart(trendCtx, {
             type: 'line',
             plugins: [trendWipePlugin],
@@ -123,12 +95,10 @@ document.addEventListener("DOMContentLoaded", () => {
                     onComplete: function(animation) {
                         const chart = animation.chart;
                         if (animation.initial && !chart.canvas.hasAttribute('data-pulsed')) {
-                            chart.canvas.setAttribute('data-pulsed', 'true');
-                            
+                            chart.canvas.setAttribute('data-pulsed', 'true');      
                             const meta = chart.getDatasetMeta(0);
                             if (meta && meta.data && meta.data.length > 0) {
                                 const lastPoint = meta.data[meta.data.length - 1];
-                                
                                 const pulseDot = document.createElement('div');
                                 pulseDot.style.position = 'absolute';
                                 pulseDot.style.left = lastPoint.x + 'px';
@@ -137,15 +107,11 @@ document.addEventListener("DOMContentLoaded", () => {
                                 pulseDot.style.height = '12px';
                                 pulseDot.style.transform = 'translate(-50%, -50%)';
                                 pulseDot.style.pointerEvents = 'none';
-                                
-                                // Infinite heartbeat pulse using Tailwind ping
                                 const ring = document.createElement('div');
                                 ring.className = 'w-full h-full rounded-full bg-blue-500 animate-ping opacity-75';
-                                
                                 pulseDot.appendChild(ring);
                                 chart.canvas.parentElement.style.position = 'relative';
                                 chart.canvas.parentElement.appendChild(pulseDot);
-                                // The pulse remains permanently across the session as a heartbeat loop!
                             }
                         }
                     }
