@@ -718,31 +718,22 @@ document.addEventListener("DOMContentLoaded", function () {
         defectLabel.classList.remove('text-slate-400');
         defectLabel.classList.add('text-slate-700');
     }
-    
     openDrawer("Add Inventory Record");
   };
-
   if (openAddModalBtn) openAddModalBtn.addEventListener("click", addModalHandler);
-  
   const openAddModalBtnTop = document.getElementById("openAddModalBtnTop");
   if (openAddModalBtnTop) openAddModalBtnTop.addEventListener("click", addModalHandler);
-
-  // Open modal when clicking a row (Event Delegation)
   document.addEventListener("click", function(e) {
     const row = e.target.closest(".inventory-row");
     const activeTable = document.getElementById("inventory-table");
-    
     if (row && activeTable && activeTable.contains(row)) {
       isEditing = true;
       editingRow = row;
       document.getElementById("form_id").value = row.dataset.id || "";
-      
       const submitBtn = document.getElementById("saveRecordBtn");
       const deleteBtn = document.getElementById("deleteRecordBtn");
       if (submitBtn) submitBtn.textContent = "Edit Record";
       if (deleteBtn) deleteBtn.classList.remove("hidden");
-      
-      // Show Borrow button only when available and qty > 0
       const borrowBtn = document.getElementById("borrowRecordBtn");
       if (borrowBtn) {
         const rowStatus = (row.dataset.status || '').toLowerCase();
@@ -752,7 +743,6 @@ document.addEventListener("DOMContentLoaded", function () {
           borrowBtn.textContent = "Borrow Item";
         } else {
           borrowBtn.disabled = true;
-          // Set text depending on status
           if (rowStatus === 'borrowed' || rowStatus === 'in_use') {
              borrowBtn.textContent = "Borrowed";
           } else {
@@ -761,12 +751,10 @@ document.addEventListener("DOMContentLoaded", function () {
         }
         borrowBtn.classList.remove('hidden');
       }
-      
       document.getElementById("form_item_type").value = row.dataset.type || "";
       document.getElementById("form_brand").value = row.dataset.brand || "";
       document.getElementById("form_model").value = row.dataset.model || "";
       document.getElementById("form_serial_number").value = row.dataset.serial || "";
-      // Intelligent Edit Lock for Borrowed items to prevent manual status bypassing
       const statusSelect = document.getElementById("form_status");
       const rStatus = (row.dataset.status || "").toLowerCase();
       if (rStatus === 'in_use' || rStatus === 'borrowed') {
@@ -790,14 +778,10 @@ document.addEventListener("DOMContentLoaded", function () {
           }
           statusSelect.value = rStatus || "available";
       }
-
-      // Handle defect field disabling & Status colors
       const defectField = document.getElementById("form_defect_description");
       const defectLabel = document.getElementById("defect_label");
       function handleDefectState() {
           const val = statusSelect.value;
-          
-          // Apply dynamic colors based on status value
           statusSelect.classList.remove('bg-emerald-50', 'text-emerald-800', 'border-emerald-300', 'focus:border-emerald-600', 'focus:ring-emerald-600', 'bg-amber-50', 'text-amber-800', 'border-amber-300', 'focus:border-amber-600', 'focus:ring-amber-600', 'bg-slate-100', 'text-slate-700', 'border-slate-300', 'focus:border-slate-600', 'focus:ring-slate-600', 'bg-slate-800', 'text-white', 'border-slate-900', 'focus:border-slate-900', 'focus:ring-slate-900', 'bg-blue-50', 'text-blue-800', 'border-blue-300');
           if (val === 'available') {
              statusSelect.classList.add('bg-emerald-50', 'text-emerald-800', 'border-emerald-300', 'focus:border-emerald-600', 'focus:ring-emerald-600');
@@ -821,8 +805,6 @@ document.addEventListener("DOMContentLoaded", function () {
       document.getElementById("form_location").value = row.dataset.location || "";
       document.getElementById("form_item_description").value = row.dataset.desc || "";
       document.getElementById("form_defect_description").value = row.dataset.defect || "";
-      
-      // Populate active borrowings
       const activeBorrowingsContainer = document.getElementById("active_borrowings_container");
       const activeBorrowingsList = document.getElementById("active_borrowings_list");
       if (activeBorrowingsContainer && activeBorrowingsList) {
@@ -830,7 +812,6 @@ document.addEventListener("DOMContentLoaded", function () {
         try {
           borrowings = JSON.parse(row.dataset.borrowings || "[]");
         } catch (e) {}
-        
         if (borrowings && borrowings.length > 0) {
           activeBorrowingsList.innerHTML = borrowings.map(b => 
             `<div class="bg-white px-3 py-2.5 rounded-lg flex items-center justify-start gap-3 text-sm shadow-sm border border-slate-100 flex-wrap">
