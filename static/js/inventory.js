@@ -50,17 +50,13 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     });
   }
-
-  // Sidebar Toggle Logic
   const sidebarToggle = document.getElementById("sidebarToggle");
   const appShell = document.querySelector(".app-shell");
-  
   if (appShell) {
     if (localStorage.getItem("sidebarCollapsed") === "true") {
       appShell.classList.add("app-shell--collapsed");
     }
     if (sidebarToggle) {
-      // Initialize rotation state based on localStorage if already collapsed on load
       if (appShell.classList.contains("app-shell--collapsed")) {
          sidebarToggle.classList.add("collapsed");
       }
@@ -71,25 +67,19 @@ document.addEventListener("DOMContentLoaded", function () {
       });
     }
   }
-
-  // JSON-based Bulk Rendering Logic
   const jsonDataElement = document.getElementById("inventory-data");
   const tbodyElement = document.getElementById("inventory-tbody");
-
   if (jsonDataElement && tbodyElement) {
     try {
       window.inventoryData = JSON.parse(jsonDataElement.textContent);
       window.generateHtmlRows = function(dataSlice) {
         let htmlRows = [];
         const len = dataSlice.length;
-        
         for (let i = 0; i < len; i++) {
           const item = dataSlice[i];
-          
           let statusBadge = "";
           let statusValue = item.status || "available";
           let displayStatus = item.get_status_display || statusValue.toUpperCase();
-          
           if (statusValue === 'available') {
               statusBadge = `<span class="inline-flex justify-center flex-shrink-0 items-center gap-1.5 w-28 px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider text-emerald-700 bg-green-100 border border-emerald-200 rounded-full">
                   <svg class="h-1.5 w-1.5 fill-emerald-600" viewBox="0 0 6 6" aria-hidden="true"><circle cx="3" cy="3" r="3" /></svg>${displayStatus}
@@ -115,9 +105,7 @@ document.addEventListener("DOMContentLoaded", function () {
                   <svg class="h-1.5 w-1.5 flex-shrink-0 fill-current" viewBox="0 0 6 6" aria-hidden="true"><circle cx="3" cy="3" r="3" /></svg>${displayStatus}
               </span>`;
           }
-
           let defectBadge = item.defect_description ? escapeHtml(item.defect_description) : `<span class="text-slate-400">-</span>`;
-          
           let displayLocation = item.location;
           if (statusValue === 'in_use' && item.active_borrowings && item.active_borrowings.length > 0) {
               if (item.active_borrowings.length === 1) {
@@ -126,7 +114,6 @@ document.addEventListener("DOMContentLoaded", function () {
                   displayLocation = "Multiple Locations (In Use)";
               }
           }
-
           htmlRows.push(`
             <tr class="inventory-row transition-colors cursor-pointer"
                 data-id="${item.pk}"
