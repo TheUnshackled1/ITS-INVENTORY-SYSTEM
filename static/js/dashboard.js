@@ -57,9 +57,46 @@ document.addEventListener("DOMContentLoaded", () => {
         Chart.defaults.font.family = "'Inter', sans-serif";
         Chart.defaults.color = "#64748b"; // slate-500
 
+        // Custom Plugin for Smooth Laser Wipe on Line Chart
+        const trendWipePlugin = {
+            id: 'trendWipe',
+            beforeDatasetDraw: (chart) => {
+                const ctx = chart.ctx;
+                const chartArea = chart.chartArea;
+                if (!chartArea) return;
+                
+                if (!chart.trendWipeStart) {
+                    chart.trendWipeStart = performance.now();
+                }
+                const elapsed = performance.now() - chart.trendWipeStart;
+                const duration = 2000;
+                
+                let progress = Math.min(elapsed / duration, 1);
+                progress = 1 - Math.pow(1 - progress, 4); // easeOutQuart
+                
+                ctx.save();
+                ctx.beginPath();
+                // Expand total wipe distance to perfectly reveal the final overflowing dot geometry
+                const totalWipeDistance = chartArea.width + 40;
+                const currentWidth = totalWipeDistance * progress;
+                
+                // Use a generous clipping rect so line borders, points, and shadows are not vertically cut
+                ctx.rect(chartArea.left - 20, chartArea.top - 40, currentWidth, chartArea.height + 80);
+                ctx.clip();
+                
+                if (progress < 1) {
+                    requestAnimationFrame(() => chart.update('none'));
+                }
+            },
+            afterDatasetDraw: (chart) => {
+                chart.ctx.restore();
+            }
+        };
+
         // 1) Trend Line Chart
         new Chart(trendCtx, {
             type: 'line',
+            plugins: [trendWipePlugin],
             data: {
                 labels: trendData.labels,
                 datasets: [{
@@ -81,35 +118,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 responsive: true,
                 maintainAspectRatio: false,
                 animation: {
-                    x: {
-                        type: 'number',
-                        easing: 'linear',
-                        duration: (context) => (1500 / trendData.data.length),
-                        from: NaN, 
-                        delay: (ctx) => {
-                            if (ctx.type !== 'data' || ctx.xStarted) { return 0; }
-                            ctx.xStarted = true;
-                            return ctx.index * (1500 / trendData.data.length);
-                        }
-                    },
-                    y: {
-                        type: 'number',
-                        easing: 'linear',
-                        duration: (context) => (1500 / trendData.data.length),
-                        from: (ctx) => {
-                            if (ctx.index === 0) {
-                                return ctx.chart.scales.y.getPixelForValue(0);
-                            }
-                            const meta = ctx.chart.getDatasetMeta(ctx.datasetIndex);
-                            const prev = meta.data[ctx.index - 1];
-                            return prev ? prev.getProps(['y'], true).y : 0;
-                        },
-                        delay: (ctx) => {
-                            if (ctx.type !== 'data' || ctx.yStarted) { return 0; }
-                            ctx.yStarted = true;
-                            return ctx.index * (1500 / trendData.data.length);
-                        }
-                    },
+                    duration: 2000,
+                    easing: 'easeOutQuart',
                     onComplete: function(animation) {
                         const chart = animation.chart;
                         if (animation.initial && !chart.canvas.hasAttribute('data-pulsed')) {
@@ -139,6 +149,15 @@ document.addEventListener("DOMContentLoaded", () => {
                             }
                         }
                     }
+                },
+                animations: {
+                    // Suppress dataset structural jumping to allow perfect wipe reveal
+                    y: { duration: 0 },
+                    x: { duration: 0 },
+                    colors: { duration: 0 }
+                },
+                layout: {
+                    padding: { right: 25, top: 10 }
                 },
                 plugins: {
                     legend: { display: false },
