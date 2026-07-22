@@ -304,7 +304,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // ============================================
   // FORGOT PASSWORD LOGIC
   // ============================================
-  const forgotPasswordLink = document.getElementById('forgotPasswordLink');
+  const triggerForgotPasswordBtn = document.getElementById('triggerForgotPasswordBtn');
   const loginFieldsContainer = document.getElementById('loginFieldsContainer');
   const forgotPasswordEmailContainer = document.getElementById('forgotPasswordEmailContainer');
   const backToLoginFromEmail = document.getElementById('backToLoginFromEmail');
@@ -330,8 +330,8 @@ document.addEventListener('DOMContentLoaded', () => {
     clearInterval(forgotInterval);
   };
 
-  if (forgotPasswordLink) {
-    forgotPasswordLink.addEventListener('click', (e) => {
+  if (triggerForgotPasswordBtn) {
+    triggerForgotPasswordBtn.addEventListener('click', (e) => {
       e.preventDefault();
       hideSignupError(); 
       loginFieldsContainer.classList.add('hidden');
