@@ -18,6 +18,26 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   }
+
+  // Toggle Signup Password Visibility
+  const toggleSignupBtn = document.getElementById('toggleSignupPassword');
+  const signupPasswordInput = document.getElementById('id_signup_password');
+  const eyeSignupOpen = document.getElementById('eyeSignupOpen');
+  const eyeSignupClosed = document.getElementById('eyeSignupClosed');
+
+  if (toggleSignupBtn && signupPasswordInput) {
+    toggleSignupBtn.addEventListener('click', () => {
+      const type = signupPasswordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+      signupPasswordInput.setAttribute('type', type);
+      if (type === 'text') {
+        eyeSignupOpen.classList.add('hidden');
+        eyeSignupClosed.classList.remove('hidden');
+      } else {
+        eyeSignupOpen.classList.remove('hidden');
+        eyeSignupClosed.classList.add('hidden');
+      }
+    });
+  }
   // Snappy Icon Animation On Type
   const inputs = document.querySelectorAll('input');
   inputs.forEach(input => {
