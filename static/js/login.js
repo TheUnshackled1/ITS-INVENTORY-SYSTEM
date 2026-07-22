@@ -305,7 +305,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // FORGOT PASSWORD LOGIC
   // ============================================
   const triggerForgotPasswordBtn = document.getElementById('triggerForgotPasswordBtn');
-  const loginFieldsContainer = document.getElementById('loginFieldsContainer');
+  const loginViewMainContent = document.getElementById('loginViewMainContent');
   const forgotPasswordEmailContainer = document.getElementById('forgotPasswordEmailContainer');
   const backToLoginFromEmail = document.getElementById('backToLoginFromEmail');
   const submitForgotEmailBtn = document.getElementById('submitForgotEmailBtn');
@@ -317,24 +317,36 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const forgotPasswordResetContainer = document.getElementById('forgotPasswordResetContainer');
   const submitForgotResetBtn = document.getElementById('submitForgotResetBtn');
+  const forgotErrorToast = document.getElementById('forgotErrorToast');
 
   let forgotInterval;
   let forgotTimeRemaining = 120; // 2 minutes
+  
+  function showForgotError(msg) {
+    if(!forgotErrorToast) return;
+    forgotErrorToast.textContent = msg;
+    forgotErrorToast.classList.remove('hidden');
+  }
+  function hideForgotError() {
+    if(forgotErrorToast) forgotErrorToast.classList.add('hidden');
+  }
 
   const showLoginFromForgot = (e) => {
     if(e) e.preventDefault();
     forgotPasswordEmailContainer.classList.add('hidden');
     forgotPasswordOtpContainer.classList.add('hidden');
     forgotPasswordResetContainer.classList.add('hidden');
-    loginFieldsContainer.classList.remove('hidden');
+    if (loginViewMainContent) { loginViewMainContent.classList.remove('hidden'); }
     clearInterval(forgotInterval);
+    hideForgotError();
   };
 
   if (triggerForgotPasswordBtn) {
     triggerForgotPasswordBtn.addEventListener('click', (e) => {
       e.preventDefault();
       hideSignupError(); 
-      loginFieldsContainer.classList.add('hidden');
+      hideForgotError();
+      if (loginViewMainContent) { loginViewMainContent.classList.add('hidden'); }
       forgotPasswordEmailContainer.classList.remove('hidden');
     });
   }
@@ -366,7 +378,7 @@ document.addEventListener('DOMContentLoaded', () => {
           forgotOtpTimer.textContent = '00:00';
           forgotOtpTimer.classList.replace('text-blue-600', 'text-red-500');
         }
-        showSignupError('Verification code expired. Please request a new one.');
+        showForgotError('Verification code expired. Please request a new one.');
         if(submitForgotOtpBtn) submitForgotOtpBtn.classList.add('opacity-50', 'pointer-events-none');
       } else {
         const mm = Math.floor(forgotTimeRemaining / 60).toString().padStart(2, '0');
@@ -380,10 +392,10 @@ document.addEventListener('DOMContentLoaded', () => {
   if (submitForgotEmailBtn) {
     submitForgotEmailBtn.addEventListener('click', async (e) => {
       e.preventDefault();
-      hideSignupError();
+      hideForgotError();
       const email = document.getElementById('id_forgot_email').value.trim();
       if (!email) {
-        showSignupError('Please enter your email.');
+        showForgotError('Please enter your email.');
         return;
       }
 
@@ -409,10 +421,10 @@ document.addEventListener('DOMContentLoaded', () => {
           forgotPasswordOtpContainer.classList.remove('hidden');
           startForgotOtpTimer();
         } else {
-          showSignupError(data.error);
+          showForgotError(data.error);
         }
       } catch (err) {
-        showSignupError('Error: ' + err.toString());
+        showForgotError('Error: ' + err.toString());
       } finally {
         submitForgotEmailBtn.classList.remove('pointer-events-none');
         textEl.textContent = 'SEND CODE';
@@ -426,10 +438,10 @@ document.addEventListener('DOMContentLoaded', () => {
   if (submitForgotOtpBtn) {
     submitForgotOtpBtn.addEventListener('click', async (e) => {
       e.preventDefault();
-      hideSignupError();
+      hideForgotError();
       const otp = document.getElementById('id_forgot_otp').value.trim();
       if (!otp || otp.length !== 6) {
-        showSignupError('Please enter a valid 6-digit OTP.');
+        showForgotError('Please enter a valid 6-digit OTP.');
         return;
       }
 
@@ -455,10 +467,10 @@ document.addEventListener('DOMContentLoaded', () => {
           forgotPasswordOtpContainer.classList.add('hidden');
           forgotPasswordResetContainer.classList.remove('hidden');
         } else {
-          showSignupError(data.error);
+          showForgotError(data.error);
         }
       } catch (err) {
-        showSignupError('Error: ' + err.toString());
+        showForgotError('Error: ' + err.toString());
       } finally {
         submitForgotOtpBtn.classList.remove('pointer-events-none');
         textEl.textContent = 'VERIFY';
@@ -472,16 +484,16 @@ document.addEventListener('DOMContentLoaded', () => {
   if (submitForgotResetBtn) {
     submitForgotResetBtn.addEventListener('click', async (e) => {
       e.preventDefault();
-      hideSignupError();
+      hideForgotError();
       const pwd = document.getElementById('id_forgot_new_password').value;
       const confirm = document.getElementById('id_forgot_confirm_password').value;
       
       if (!pwd || !confirm) {
-        showSignupError('Please fill out all password fields.');
+        showForgotError('Please fill out all password fields.');
         return;
       }
       if (pwd !== confirm) {
-        showSignupError('Passwords do not match.');
+        showForgotError('Passwords do not match.');
         return;
       }
 
@@ -515,10 +527,10 @@ document.addEventListener('DOMContentLoaded', () => {
           document.getElementById('id_forgot_confirm_password').value = '';
           
         } else {
-          showSignupError(data.error);
+          showForgotError(data.error);
         }
       } catch (err) {
-        showSignupError('Error: ' + err.toString());
+        showForgotError('Error: ' + err.toString());
       } finally {
         submitForgotResetBtn.classList.remove('pointer-events-none');
         textEl.textContent = 'SAVE PASSWORD';
