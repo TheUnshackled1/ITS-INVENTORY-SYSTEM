@@ -1193,3 +1193,97 @@ def verify_registration_otp(request):
         request.session.modified = True
         return JsonResponse({'success': True, 'message': 'Account created successfully.'})
 
+\n
+@csrf_exempt
+def forgot_password_send_otp(request):
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body)
+            email = data.get('email', '').strip()
+            if not email:
+                return JsonResponse({'success': False, 'error': 'Email is required.'})
+
+            # Check if user exists
+            user = User.objects.filter(email=email).first()
+            if not user:
+                return JsonResponse({'success': False, 'error': 'Account with this email does not exist.'})
+
+            otp = str(random.randint(100000, 999999))
+            request.session['forgot_otp_temp'] = {
+                'email': email,
+                'otp': otp,
+                'timestamp': time.time()
+            }
+
+            send_mail(
+                'Password Recovery - ITS Inventory System',
+                f'Your 6-digit password recovery code is: {otp}. This code expires in 2 minutes.',
+                None,
+                [email],
+                fail_silently=False,
+            )
+
+            return JsonResponse({'success': True, 'message': 'Recovery OTP sent successfully.'})
+
+        except Exception as e:
+            return JsonResponse({'success': False, 'error': str(e)})
+    return JsonResponse({'success': False, 'error': 'Invalid request.'})
+
+@csrf_exempt
+def forgot_password_verify_otp(request):
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body)
+            otp_input = data.get('otp', '').strip()
+
+            cache = request.session.get('forgot_otp_temp')
+            if not cache:
+                return JsonResponse({'success': False, 'error': 'Session expired. Please request a new OTP.'})
+
+            elapsed = time.time() - cache['timestamp']
+            if elapsed > 120:
+                del request.session['forgot_otp_temp']
+                return JsonResponse({'success': False, 'error': 'OTP expired.'})
+
+            if otp_input != cache['otp']:
+                return JsonResponse({'success': False, 'error': 'Invalid OTP.'})
+
+            request.session['forgot_otp_verified'] = True
+            return JsonResponse({'success': True, 'message': 'OTP verified.'})
+
+        except Exception as e:
+            return JsonResponse({'success': False, 'error': str(e)})
+    return JsonResponse({'success': False, 'error': 'Invalid request.'})
+
+@csrf_exempt
+def forgot_password_reset(request):
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body)
+            new_password = data.get('new_password', '')
+            
+            if not new_password:
+                return JsonResponse({'success': False, 'error': 'Password is required'})
+                
+            is_verified = request.session.get('forgot_otp_verified', False)
+            cache = request.session.get('forgot_otp_temp')
+
+            if not is_verified or not cache:
+                return JsonResponse({'success': False, 'error': 'Unauthorized password reset.'})
+
+            user = User.objects.filter(email=cache.get('email')).first()
+            if not user:
+                return JsonResponse({'success': False, 'error': 'User not found.'})
+
+            user.set_password(new_password)
+            user.save()
+
+            # Clean up
+            del request.session['forgot_otp_temp']
+            del request.session['forgot_otp_verified']
+
+            return JsonResponse({'success': True, 'message': 'Password has been reset successfully.'})
+
+        except Exception as e:
+            return JsonResponse({'success': False, 'error': str(e)})
+    return JsonResponse({'success': False, 'error': 'Invalid request.'})

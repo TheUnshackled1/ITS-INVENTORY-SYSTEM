@@ -301,4 +301,231 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // ============================================
+  // FORGOT PASSWORD LOGIC
+  // ============================================
+  const forgotPasswordLink = document.getElementById('forgotPasswordLink');
+  const loginFieldsContainer = document.getElementById('loginFieldsContainer');
+  const forgotPasswordEmailContainer = document.getElementById('forgotPasswordEmailContainer');
+  const backToLoginFromEmail = document.getElementById('backToLoginFromEmail');
+  const submitForgotEmailBtn = document.getElementById('submitForgotEmailBtn');
+  
+  const forgotPasswordOtpContainer = document.getElementById('forgotPasswordOtpContainer');
+  const backToLoginFromOtp = document.getElementById('backToLoginFromOtp');
+  const submitForgotOtpBtn = document.getElementById('submitForgotOtpBtn');
+  const forgotOtpTimer = document.getElementById('forgotOtpTimer');
+
+  const forgotPasswordResetContainer = document.getElementById('forgotPasswordResetContainer');
+  const submitForgotResetBtn = document.getElementById('submitForgotResetBtn');
+
+  let forgotInterval;
+  let forgotTimeRemaining = 120; // 2 minutes
+
+  const showLoginFromForgot = (e) => {
+    if(e) e.preventDefault();
+    forgotPasswordEmailContainer.classList.add('hidden');
+    forgotPasswordOtpContainer.classList.add('hidden');
+    forgotPasswordResetContainer.classList.add('hidden');
+    loginFieldsContainer.classList.remove('hidden');
+    clearInterval(forgotInterval);
+  };
+
+  if (forgotPasswordLink) {
+    forgotPasswordLink.addEventListener('click', (e) => {
+      e.preventDefault();
+      hideSignupError(); 
+      loginFieldsContainer.classList.add('hidden');
+      forgotPasswordEmailContainer.classList.remove('hidden');
+    });
+  }
+
+  if (backToLoginFromEmail) {
+    backToLoginFromEmail.addEventListener('click', showLoginFromForgot);
+  }
+  
+  if (backToLoginFromOtp) {
+    backToLoginFromOtp.addEventListener('click', showLoginFromForgot);
+  }
+
+  function startForgotOtpTimer() {
+    clearInterval(forgotInterval);
+    forgotTimeRemaining = 120;
+    
+    const m = Math.floor(forgotTimeRemaining / 60).toString().padStart(2, '0');
+    const s = (forgotTimeRemaining % 60).toString().padStart(2, '0');
+    if(forgotOtpTimer) {
+      forgotOtpTimer.textContent = m + ':' + s;
+      forgotOtpTimer.className = 'text-blue-600 font-bold text-[14px]';
+    }
+    
+    forgotInterval = setInterval(() => {
+      forgotTimeRemaining--;
+      if (forgotTimeRemaining <= 0) {
+        clearInterval(forgotInterval);
+        if(forgotOtpTimer) {
+          forgotOtpTimer.textContent = '00:00';
+          forgotOtpTimer.classList.replace('text-blue-600', 'text-red-500');
+        }
+        showSignupError('Verification code expired. Please request a new one.');
+        if(submitForgotOtpBtn) submitForgotOtpBtn.classList.add('opacity-50', 'pointer-events-none');
+      } else {
+        const mm = Math.floor(forgotTimeRemaining / 60).toString().padStart(2, '0');
+        const ss = (forgotTimeRemaining % 60).toString().padStart(2, '0');
+        if(forgotOtpTimer) forgotOtpTimer.textContent = mm + ':' + ss;
+      }
+    }, 1000);
+  }
+
+  // 1. Submit Forgot Email
+  if (submitForgotEmailBtn) {
+    submitForgotEmailBtn.addEventListener('click', async (e) => {
+      e.preventDefault();
+      hideSignupError();
+      const email = document.getElementById('id_forgot_email').value.trim();
+      if (!email) {
+        showSignupError('Please enter your email.');
+        return;
+      }
+
+      const textEl = document.getElementById('submitForgotEmailText');
+      const arrowEl = document.getElementById('submitForgotEmailArrow');
+      const spinnerEl = document.getElementById('submitForgotEmailSpinner');
+
+      submitForgotEmailBtn.classList.add('pointer-events-none');
+      textEl.textContent = 'SENDING...';
+      if(arrowEl) arrowEl.classList.add('hidden');
+      if(spinnerEl) spinnerEl.classList.remove('hidden');
+
+      try {
+        const response = await fetch('/api/forgot-password/', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email })
+        });
+        const data = await response.json();
+        
+        if (data.success) {
+          forgotPasswordEmailContainer.classList.add('hidden');
+          forgotPasswordOtpContainer.classList.remove('hidden');
+          startForgotOtpTimer();
+        } else {
+          showSignupError(data.error);
+        }
+      } catch (err) {
+        showSignupError('Error: ' + err.toString());
+      } finally {
+        submitForgotEmailBtn.classList.remove('pointer-events-none');
+        textEl.textContent = 'SEND CODE';
+        if(arrowEl) arrowEl.classList.remove('hidden');
+        if(spinnerEl) spinnerEl.classList.add('hidden');
+      }
+    });
+  }
+
+  // 2. Submit Forgot OTP
+  if (submitForgotOtpBtn) {
+    submitForgotOtpBtn.addEventListener('click', async (e) => {
+      e.preventDefault();
+      hideSignupError();
+      const otp = document.getElementById('id_forgot_otp').value.trim();
+      if (!otp || otp.length !== 6) {
+        showSignupError('Please enter a valid 6-digit OTP.');
+        return;
+      }
+
+      const textEl = document.getElementById('submitForgotOtpText');
+      const arrowEl = document.getElementById('submitForgotOtpArrow');
+      const spinnerEl = document.getElementById('submitForgotOtpSpinner');
+
+      submitForgotOtpBtn.classList.add('pointer-events-none');
+      textEl.textContent = 'VERIFYING...';
+      if(arrowEl) arrowEl.classList.add('hidden');
+      if(spinnerEl) spinnerEl.classList.remove('hidden');
+
+      try {
+        const response = await fetch('/api/forgot-verify-otp/', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ otp })
+        });
+        const data = await response.json();
+        
+        if (data.success) {
+          clearInterval(forgotInterval);
+          forgotPasswordOtpContainer.classList.add('hidden');
+          forgotPasswordResetContainer.classList.remove('hidden');
+        } else {
+          showSignupError(data.error);
+        }
+      } catch (err) {
+        showSignupError('Error: ' + err.toString());
+      } finally {
+        submitForgotOtpBtn.classList.remove('pointer-events-none');
+        textEl.textContent = 'VERIFY';
+        if(arrowEl) arrowEl.classList.remove('hidden');
+        if(spinnerEl) spinnerEl.classList.add('hidden');
+      }
+    });
+  }
+
+  // 3. Submit New Password
+  if (submitForgotResetBtn) {
+    submitForgotResetBtn.addEventListener('click', async (e) => {
+      e.preventDefault();
+      hideSignupError();
+      const pwd = document.getElementById('id_forgot_new_password').value;
+      const confirm = document.getElementById('id_forgot_confirm_password').value;
+      
+      if (!pwd || !confirm) {
+        showSignupError('Please fill out all password fields.');
+        return;
+      }
+      if (pwd !== confirm) {
+        showSignupError('Passwords do not match.');
+        return;
+      }
+
+      const textEl = document.getElementById('submitForgotResetText');
+      const arrowEl = document.getElementById('submitForgotResetArrow');
+      const spinnerEl = document.getElementById('submitForgotResetSpinner');
+
+      submitForgotResetBtn.classList.add('pointer-events-none');
+      textEl.textContent = 'SAVING...';
+      if(arrowEl) arrowEl.classList.add('hidden');
+      if(spinnerEl) spinnerEl.classList.remove('hidden');
+
+      try {
+        const response = await fetch('/api/forgot-reset-password/', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ new_password: pwd })
+        });
+        const data = await response.json();
+        
+        if (data.success) {
+          showLoginFromForgot();
+          
+          let msg = "<span class='block text-[15px] mb-2'>Password Reset! 🎉</span><span class='block text-[13px] font-medium text-slate-600 leading-relaxed mb-3'>Your ITS Inventory account password was changed successfully.</span><span class='block text-[12px] text-emerald-600 font-extrabold uppercase tracking-[0.1em] mt-3'>You can now login</span>";
+          showSuccessModal(msg);
+          
+          // clear inputs
+          document.getElementById('id_forgot_email').value = '';
+          document.getElementById('id_forgot_otp').value = '';
+          document.getElementById('id_forgot_new_password').value = '';
+          document.getElementById('id_forgot_confirm_password').value = '';
+          
+        } else {
+          showSignupError(data.error);
+        }
+      } catch (err) {
+        showSignupError('Error: ' + err.toString());
+      } finally {
+        submitForgotResetBtn.classList.remove('pointer-events-none');
+        textEl.textContent = 'SAVE PASSWORD';
+        if(arrowEl) arrowEl.classList.remove('hidden');
+        if(spinnerEl) spinnerEl.classList.add('hidden');
+      }
+    });
+  }
+
 });
