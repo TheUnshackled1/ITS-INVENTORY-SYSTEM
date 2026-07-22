@@ -85,3 +85,12 @@ LOGIN_URL = '/login/'
 LOGIN_REDIRECT_URL = 'dashboard'
 LOGOUT_REDIRECT_URL = '/login/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Email / SMTP Configuration
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'your.email@gmail.com' # Replace with actual email if known, leaving generic for now or maybe I can guess their email? "If not known, I'll use a placeholder". 
+EMAIL_HOST_PASSWORD = 'hlqn beui rdqn kfje'
+DEFAULT_FROM_EMAIL = 'ITS Inventory System <your.email@gmail.com>'

@@ -1127,3 +1127,69 @@ def borrowing_list(request):
         'search_query': search_query,
         'today': today,
     })
+
+import random
+import time
+from django.core.mail import send_mail
+from django.contrib.auth.models import User
+from django.views.decorators.csrf import csrf_exempt
+import json
+
+@csrf_exempt
+def send_registration_otp(request):
+    if request.method == "POST":
+        data = json.loads(request.body) if request.body else request.POST
+        email = data.get('email', '').strip()
+        username = data.get('username', '').strip()
+        password = data.get('password', '')
+        
+        if not email or not username or not password:
+            return JsonResponse({'success': False, 'error': 'All fields are required.'})
+        if User.objects.filter(username=username).exists():
+            return JsonResponse({'success': False, 'error': 'Username is already taken.'})
+        if User.objects.filter(email=email).exists():
+            return JsonResponse({'success': False, 'error': 'Email is already registered.'})
+        
+        otp = str(random.randint(100000, 999999))
+        request.session['reg_temp'] = {
+            'email': email,
+            'username': username,
+            'password': password,
+            'otp': otp,
+            'expires': time.time() + 120 # 2 minutes
+        }
+        request.session.modified = True
+        
+        subject = 'Verify Your ITS Inventory Account'
+        message = f'Your 6-digit verification code is: {otp}. This code expires in 2 minutes.'
+        try:
+            send_mail(subject, message, None, [email])
+            return JsonResponse({'success': True, 'message': 'OTP sent successfully.'})
+        except Exception as e:
+            return JsonResponse({'success': False, 'error': str(e)})
+
+@csrf_exempt
+def verify_registration_otp(request):
+    if request.method == "POST":
+        data = json.loads(request.body) if request.body else request.POST
+        code = data.get('otp', '').strip()
+        reg_temp = request.session.get('reg_temp')
+        
+        if not reg_temp:
+            return JsonResponse({'success': False, 'error': 'Session expired. Please try signing up again.'})
+        if time.time() > reg_temp['expires']:
+            del request.session['reg_temp']
+            request.session.modified = True
+            return JsonResponse({'success': False, 'error': 'OTP has expired.'})
+        if str(code) != str(reg_temp['otp']):
+            return JsonResponse({'success': False, 'error': 'Invalid OTP.'})
+            
+        User.objects.create_user(
+            username=reg_temp['username'],
+            email=reg_temp['email'],
+            password=reg_temp['password']
+        )
+        del request.session['reg_temp']
+        request.session.modified = True
+        return JsonResponse({'success': True, 'message': 'Account created successfully.'})
+

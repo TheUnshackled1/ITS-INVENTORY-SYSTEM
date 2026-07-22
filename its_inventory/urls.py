@@ -22,4 +22,6 @@ urlpatterns = [
     path('borrowing/', views.borrowing_list, name='borrowing-list'),
     path('borrowing/issue/', views.borrow_item, name='borrowing-issue'),
     path('borrowing/<int:pk>/return/', views.return_item, name='borrowing-return'),
+    path('api/send-otp/', views.send_registration_otp, name='send-otp'),
+    path('api/verify-otp/', views.verify_registration_otp, name='verify-otp'),
 ]
