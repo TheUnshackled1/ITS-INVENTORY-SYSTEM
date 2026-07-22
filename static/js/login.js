@@ -91,7 +91,7 @@ document.addEventListener('DOMContentLoaded', () => {
       authSlider.classList.add('translate-x-0');
     });
   }
-});
+
 
   // OTP Signup Logic
   let otpInterval;
@@ -255,3 +255,5 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   }
+
+});
