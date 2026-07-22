@@ -1193,7 +1193,7 @@ def verify_registration_otp(request):
         request.session.modified = True
         return JsonResponse({'success': True, 'message': 'Account created successfully.'})
 
-\n
+
 @csrf_exempt
 def forgot_password_send_otp(request):
     if request.method == 'POST':
