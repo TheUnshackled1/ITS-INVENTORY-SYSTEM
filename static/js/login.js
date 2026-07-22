@@ -272,7 +272,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (data.success) {
           // Success! Show Modal
           clearInterval(otpInterval);
-          showSuccessModal('Congratulations! Your ITS Inventory account has been successfully verified and created.<br><br>You can now login.');
+          showSuccessModal("<span class='block text-[15px] mb-2'>Congratulations! 🎉</span><span class='block text-[13px] font-medium text-slate-600 leading-relaxed mb-3'>Your ITS Inventory account has been successfully verified and created.</span><span class='block text-[12px] text-emerald-600 font-extrabold uppercase tracking-[0.1em] mt-3'>You can now login</span>");
           
           // Optionally populate username
           document.getElementById('id_username').value = document.getElementById('id_signup_username').value;
