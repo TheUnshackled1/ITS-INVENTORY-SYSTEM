@@ -93,6 +93,52 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
 
+
+  // Success Modal Logic for Login Page
+  const successModalOverlay = document.getElementById('successModalOverlay');
+  const successModalCard = document.getElementById('successModalCard');
+  const successModalMessage = document.getElementById('successModalMessage');
+  const successModalCloseBtn = document.getElementById('successModalCloseBtn');
+
+  function showSuccessModal(msg) {
+    if (successModalMessage) successModalMessage.innerHTML = msg;
+    if (successModalOverlay) {
+      successModalOverlay.style.display = 'flex';
+      // Trigger reflow
+      void successModalOverlay.offsetWidth;
+      successModalOverlay.classList.remove('opacity-0', 'pointer-events-none');
+      successModalOverlay.classList.add('opacity-100', 'pointer-events-auto');
+    }
+    if (successModalCard) {
+      successModalCard.classList.remove('-translate-x-[100vw]', 'opacity-0');
+      successModalCard.classList.add('translate-x-0', 'opacity-100');
+    }
+  }
+
+  function hideSuccessModal() {
+    if (successModalOverlay) {
+      successModalOverlay.classList.remove('opacity-100', 'pointer-events-auto');
+      successModalOverlay.classList.add('opacity-0', 'pointer-events-none');
+    }
+    if (successModalCard) {
+      successModalCard.classList.remove('translate-x-0', 'opacity-100');
+      successModalCard.classList.add('-translate-x-[100vw]', 'opacity-0');
+    }
+    setTimeout(() => {
+      if (successModalOverlay) successModalOverlay.style.display = 'none';
+      // Return to login
+      const authSlider = document.getElementById('authSlider');
+      if(authSlider) {
+        authSlider.classList.remove('-translate-x-1/2');
+        authSlider.classList.add('translate-x-0');
+      }
+    }, 500);
+  }
+
+  if (successModalCloseBtn) {
+    successModalCloseBtn.addEventListener('click', hideSuccessModal);
+  }
+
   // OTP Signup Logic
   let otpInterval;
   let timeRemaining = 120; // 2 minutes
@@ -224,10 +270,9 @@ document.addEventListener('DOMContentLoaded', () => {
         
         const data = await response.json();
         if (data.success) {
-          // Success! Slide back to login screen
+          // Success! Show Modal
           clearInterval(otpInterval);
-          document.getElementById('authSlider').classList.remove('-translate-x-1/2');
-          document.getElementById('authSlider').classList.add('translate-x-0');
+          showSuccessModal('Congratulations! Your ITS Inventory account has been successfully verified and created.<br><br>You can now login.');
           
           // Optionally populate username
           document.getElementById('id_username').value = document.getElementById('id_signup_username').value;
