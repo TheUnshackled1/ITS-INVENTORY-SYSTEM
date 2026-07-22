@@ -186,7 +186,7 @@ document.addEventListener('DOMContentLoaded', () => {
           showSignupError(data.error);
         }
       } catch (err) {
-        showSignupError('Connection error. Please try again.');
+        showSignupError('JS Error: ' + (err.message || err.toString()));
       } finally {
         triggerSignupBtn.classList.remove('pointer-events-none');
         triggerSignupText.textContent = 'CREATE ACCOUNT';
@@ -246,7 +246,7 @@ document.addEventListener('DOMContentLoaded', () => {
           showSignupError(data.error);
         }
       } catch (err) {
-        showSignupError('Connection error. Please try again.');
+        showSignupError('JS Error: ' + (err.message || err.toString()));
       } finally {
         verifyOtpBtn.classList.remove('pointer-events-none');
         verifyOtpText.textContent = 'VERIFY & SIGNUP';
