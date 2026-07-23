@@ -139,6 +139,44 @@ document.addEventListener('DOMContentLoaded', () => {
     successModalCloseBtn.addEventListener('click', hideSuccessModal);
   }
 
+  // Error Modal Logic for Login Page
+  const errorModalOverlay = document.getElementById('errorModalOverlay');
+  const errorModalCard = document.getElementById('errorModalCard');
+  const errorModalMessage = document.getElementById('errorModalMessage');
+  const errorModalCloseBtn = document.getElementById('errorModalCloseBtn');
+
+  function showErrorModal(msg) {
+    if (errorModalMessage) errorModalMessage.innerHTML = msg;
+    if (errorModalOverlay) {
+      errorModalOverlay.style.display = 'flex';
+      void errorModalOverlay.offsetWidth;
+      errorModalOverlay.classList.remove('opacity-0', 'pointer-events-none');
+      errorModalOverlay.classList.add('opacity-100', 'pointer-events-auto');
+    }
+    if (errorModalCard) {
+      errorModalCard.classList.remove('-translate-x-[100vw]', 'opacity-0');
+      errorModalCard.classList.add('translate-x-0', 'opacity-100');
+    }
+  }
+
+  function hideErrorModal() {
+    if (errorModalOverlay) {
+      errorModalOverlay.classList.remove('opacity-100', 'pointer-events-auto');
+      errorModalOverlay.classList.add('opacity-0', 'pointer-events-none');
+    }
+    if (errorModalCard) {
+      errorModalCard.classList.remove('translate-x-0', 'opacity-100');
+      errorModalCard.classList.add('-translate-x-[100vw]', 'opacity-0');
+    }
+    setTimeout(() => {
+      if (errorModalOverlay) errorModalOverlay.style.display = 'none';
+    }, 500);
+  }
+
+  if (errorModalCloseBtn) {
+    errorModalCloseBtn.addEventListener('click', hideErrorModal);
+  }
+
   // OTP Signup Logic
   let otpInterval;
   let timeRemaining = 120; // 2 minutes
@@ -326,13 +364,17 @@ document.addEventListener('DOMContentLoaded', () => {
   const forgotEmailInput = document.getElementById('id_forgot_email');
 
   function showForgotError(msg) {
-    if(!forgotErrorToast) return;
-    if (forgotErrorMessage) {
-      forgotErrorMessage.textContent = msg;
-    } else {
-      forgotErrorToast.textContent = msg;
+    if (typeof showErrorModal === 'function') {
+      showErrorModal(msg);
     }
-    forgotErrorToast.classList.remove('hidden');
+    if (forgotErrorToast) {
+      if (forgotErrorMessage) {
+        forgotErrorMessage.textContent = msg;
+      } else {
+        forgotErrorToast.textContent = msg;
+      }
+      forgotErrorToast.classList.remove('hidden');
+    }
     if (forgotEmailInput && !forgotPasswordEmailContainer.classList.contains('hidden')) {
       forgotEmailInput.classList.add('border-red-500', 'ring-4', 'ring-red-500/10');
       forgotEmailInput.classList.remove('border-slate-300');
