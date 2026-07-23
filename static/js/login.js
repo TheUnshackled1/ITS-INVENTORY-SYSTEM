@@ -322,13 +322,34 @@ document.addEventListener('DOMContentLoaded', () => {
   let forgotInterval;
   let forgotTimeRemaining = 120; // 2 minutes
   
+  const forgotErrorMessage = document.getElementById('forgotErrorMessage');
+  const forgotEmailInput = document.getElementById('id_forgot_email');
+
   function showForgotError(msg) {
     if(!forgotErrorToast) return;
-    forgotErrorToast.textContent = msg;
+    if (forgotErrorMessage) {
+      forgotErrorMessage.textContent = msg;
+    } else {
+      forgotErrorToast.textContent = msg;
+    }
     forgotErrorToast.classList.remove('hidden');
+    if (forgotEmailInput && !forgotPasswordEmailContainer.classList.contains('hidden')) {
+      forgotEmailInput.classList.add('border-red-500', 'ring-4', 'ring-red-500/10');
+      forgotEmailInput.classList.remove('border-slate-300');
+    }
   }
   function hideForgotError() {
     if(forgotErrorToast) forgotErrorToast.classList.add('hidden');
+    if (forgotEmailInput) {
+      forgotEmailInput.classList.remove('border-red-500', 'ring-4', 'ring-red-500/10');
+      forgotEmailInput.classList.add('border-slate-300');
+    }
+  }
+
+  if (forgotEmailInput) {
+    forgotEmailInput.addEventListener('input', () => {
+      hideForgotError();
+    });
   }
 
   const showLoginFromForgot = (e) => {

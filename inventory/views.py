@@ -1204,9 +1204,9 @@ def forgot_password_send_otp(request):
                 return JsonResponse({'success': False, 'error': 'Email is required.'})
 
             # Check if user exists
-            user = User.objects.filter(email=email).first()
+            user = User.objects.filter(email__iexact=email).first()
             if not user:
-                return JsonResponse({'success': False, 'error': 'Account with this email does not exist.'})
+                return JsonResponse({'success': False, 'error': 'This email address is not registered in our system.'})
 
             otp = str(random.randint(100000, 999999))
             request.session['forgot_otp_temp'] = {
@@ -1271,7 +1271,7 @@ def forgot_password_reset(request):
             if not is_verified or not cache:
                 return JsonResponse({'success': False, 'error': 'Unauthorized password reset.'})
 
-            user = User.objects.filter(email=cache.get('email')).first()
+            user = User.objects.filter(email__iexact=cache.get('email')).first()
             if not user:
                 return JsonResponse({'success': False, 'error': 'User not found.'})
 
