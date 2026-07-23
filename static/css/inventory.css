@@ -498,3 +498,19 @@ table tbody tr:nth-child(even) {
 table tbody tr:hover {
     background-color: #F3F8FF !important;
 }
+
+@keyframes dotBlink {
+    0%, 100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 0.2;
+        transform: scale(0.75);
+    }
+}
+
+.status-dot-blink {
+    animation: dotBlink 1.4s ease-in-out infinite;
+    transform-origin: center;
+}

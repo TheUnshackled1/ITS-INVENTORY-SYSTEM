@@ -82,27 +82,27 @@ document.addEventListener("DOMContentLoaded", function () {
           let displayStatus = item.get_status_display || statusValue.toUpperCase();
           if (statusValue === 'available') {
               statusBadge = `<span class="inline-flex justify-center flex-shrink-0 items-center gap-1.5 w-28 px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider text-emerald-700 bg-green-100 border border-emerald-200 rounded-full">
-                  <svg class="h-1.5 w-1.5 fill-emerald-600" viewBox="0 0 6 6" aria-hidden="true"><circle cx="3" cy="3" r="3" /></svg>${displayStatus}
+                  <svg class="h-1.5 w-1.5 fill-emerald-600 status-dot-blink" viewBox="0 0 6 6" aria-hidden="true"><circle cx="3" cy="3" r="3" /></svg>${displayStatus}
               </span>`;
           } else if (statusValue === 'in_use') {
               statusBadge = `<span class="inline-flex justify-center flex-shrink-0 items-center gap-1.5 w-max px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider text-sky-700 bg-sky-100 border border-sky-200 rounded-full">
-                  <svg class="h-1.5 w-1.5 flex-shrink-0 fill-current" viewBox="0 0 6 6" aria-hidden="true"><circle cx="3" cy="3" r="3" /></svg>${displayStatus}
+                  <svg class="h-1.5 w-1.5 flex-shrink-0 fill-current status-dot-blink" viewBox="0 0 6 6" aria-hidden="true"><circle cx="3" cy="3" r="3" /></svg>${displayStatus}
               </span>`;
           } else if (statusValue === 'repair') {
               statusBadge = `<span class="inline-flex justify-center flex-shrink-0 items-center gap-1.5 w-max px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider text-amber-700 bg-amber-100 border border-amber-200 rounded-full">
-                  <svg class="h-1.5 w-1.5 flex-shrink-0 fill-current" viewBox="0 0 6 6" aria-hidden="true"><circle cx="3" cy="3" r="3" /></svg>${displayStatus}
+                  <svg class="h-1.5 w-1.5 flex-shrink-0 fill-current status-dot-blink" viewBox="0 0 6 6" aria-hidden="true"><circle cx="3" cy="3" r="3" /></svg>${displayStatus}
               </span>`;
           } else if (statusValue === 'not_working') {
               statusBadge = `<span class="inline-flex justify-center flex-shrink-0 items-center gap-1.5 w-max px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider text-rose-700 bg-rose-100 border border-rose-200 rounded-full">
-                  <svg class="h-1.5 w-1.5 flex-shrink-0 fill-current" viewBox="0 0 6 6" aria-hidden="true"><circle cx="3" cy="3" r="3" /></svg>${displayStatus}
+                  <svg class="h-1.5 w-1.5 flex-shrink-0 fill-current status-dot-blink" viewBox="0 0 6 6" aria-hidden="true"><circle cx="3" cy="3" r="3" /></svg>${displayStatus}
               </span>`;
           } else if (statusValue === 'disposed') {
               statusBadge = `<span class="inline-flex justify-center flex-shrink-0 items-center gap-1.5 w-max px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider text-slate-800 bg-slate-200 border border-slate-300 rounded-full">
-                  <svg class="h-1.5 w-1.5 flex-shrink-0 fill-current text-slate-800" viewBox="0 0 6 6" aria-hidden="true"><circle cx="3" cy="3" r="3" /></svg>${displayStatus}
+                  <svg class="h-1.5 w-1.5 flex-shrink-0 fill-current text-slate-800 status-dot-blink" viewBox="0 0 6 6" aria-hidden="true"><circle cx="3" cy="3" r="3" /></svg>${displayStatus}
               </span>`;
           } else {
               statusBadge = `<span class="inline-flex justify-center flex-shrink-0 items-center gap-1.5 w-max px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider text-slate-600 bg-slate-100 border border-slate-200 rounded-full">
-                  <svg class="h-1.5 w-1.5 flex-shrink-0 fill-current" viewBox="0 0 6 6" aria-hidden="true"><circle cx="3" cy="3" r="3" /></svg>${displayStatus}
+                  <svg class="h-1.5 w-1.5 flex-shrink-0 fill-current status-dot-blink" viewBox="0 0 6 6" aria-hidden="true"><circle cx="3" cy="3" r="3" /></svg>${displayStatus}
               </span>`;
           }
           let defectBadge = item.defect_description ? escapeHtml(item.defect_description) : `<span class="text-slate-400">-</span>`;
