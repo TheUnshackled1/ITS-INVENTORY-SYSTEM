@@ -197,12 +197,11 @@ document.addEventListener('DOMContentLoaded', () => {
   const signupErrorToast = document.getElementById('signupErrorToast');
 
   function showSignupError(msg) {
-    if(!signupErrorToast) return;
-    signupErrorToast.textContent = msg;
-    signupErrorToast.classList.remove('hidden');
+    if (typeof showErrorModal === 'function') {
+      showErrorModal(msg);
+    }
   }
   function hideSignupError() {
-    if(signupErrorToast) signupErrorToast.classList.add('hidden');
   }
 
   function startOtpTimer() {
