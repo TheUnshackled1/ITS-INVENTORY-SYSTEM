@@ -1,6 +1,6 @@
-# 🚀 ITS Inventory Management System — Setup Instructions
+# 🚀 ITS Inventory Management System — Setup & Security Instructions
 
-> Detailed step-by-step guide for setting up the project on **Windows** with **Python 3.13+**.
+> Detailed step-by-step guide for setting up the project on **Windows** with **Python 3.13+**, including security configuration, email setup, and API authentication endpoints.
 
 ---
 
@@ -13,10 +13,12 @@
 - [4. Configure the Database](#4-configure-the-database)
   - [Option A — SQLite (Default)](#option-a--sqlite-default)
   - [Option B — PostgreSQL (Production)](#option-b--postgresql-production)
-- [5. Run Migrations](#5-run-migrations)
-- [6. Create a Superuser](#6-create-a-superuser)
-- [7. Collect Static Files](#7-collect-static-files-optional)
+- [5. Email & Security Configuration](#5-email--security-configuration)
+  - [OTP Email Settings](#otp-email-settings)
+- [6. Run Migrations](#6-run-migrations)
+- [7. Create a Superuser](#7-create-a-superuser)
 - [8. Start the Development Server](#8-start-the-development-server)
+- [9. Authentication API Endpoints](#9-authentication-api-endpoints)
 - [Troubleshooting](#-troubleshooting)
 - [Running in Production](#-running-in-production)
 
@@ -85,12 +87,12 @@ pip install -r requirements.txt
 ```
 
 This installs:
-- Django 5.2 (Web framework)
-- openpyxl 3.1.5 (Excel file parsing for `.xlsx` bulk imports)
-- asgiref 3.8.1 (Async support)
-- sqlparse 0.5.3 (SQL formatting)
-- et-xmlfile 2.0.0 (openpyxl dependency)
-- tzdata 2025.2 (Timezone data for `Asia/Manila`)
+- **Django 5.2** (Web framework)
+- **openpyxl 3.1.5** (Excel file parsing for `.xlsx` bulk imports)
+- **pandas 3.0.3 & numpy 2.5.1** (Data processing)
+- **Pillow 12.3.0** (Image handling)
+- **django-admin-interface & django-colorfield** (Admin customization)
+- **asgiref, sqlparse, et_xmlfile, tzdata** (Core backend utilities)
 
 > 💡 If you encounter errors, ensure your pip is up to date:
 > ```powershell
@@ -148,7 +150,31 @@ DATABASES = {
 
 ---
 
-## 5. Run Migrations
+## 5. Email & Security Configuration
+
+The system features an **Email & OTP Authentication & Recovery Engine** for user registration and self-service password reset.
+
+### OTP Email Settings
+
+In local development, Django is configured to output sent emails to the console or use Django's mail backend. For production, configure SMTP in `its_inventory/settings.py` or `.env`:
+
+```python
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'your_email@gmail.com'
+EMAIL_HOST_PASSWORD = 'your_app_password'
+```
+
+Key security parameters enforced:
+- **6-Digit Verification Code** generated via secure random generator.
+- **120-Second OTP Lifespan**: Codes expire automatically after 2 minutes.
+- **Case-Insensitive Email Lookup**: Password recovery uses `email__iexact` to locate user accounts seamlessly.
+
+---
+
+## 6. Run Migrations
 
 Apply all database migrations to set up the schema:
 
@@ -162,10 +188,11 @@ The following tables will be created:
 - `inventory_inventory` — Equipment records (type, brand, model, serial, status, location, etc.)
 - `inventory_issuancelog` — Borrowing transactions (borrower, dates, quantities, status)
 - `inventory_auditlog` — Activity trail (actions, before/after snapshots, user attribution)
+- `auth_user` — User account store with password hashes
 
 ---
 
-## 6. Create a Superuser
+## 7. Create a Superuser
 
 Create the first admin account:
 
@@ -175,22 +202,8 @@ python manage.py createsuperuser
 
 You will be prompted to enter:
 - **Username** — choose any username
-- **Email** — optional but recommended
+- **Email** — registered email address
 - **Password** — must meet Django's password strength requirements
-
-> This account is used to log in to both the main application at `/login/` and the Django Admin panel at `/admin/`.
-
----
-
-## 7. Collect Static Files *(Optional)*
-
-Only required if you are testing static file serving with WhiteNoise or deploying to production:
-
-```powershell
-python manage.py collectstatic --noinput
-```
-
-> For local development with `DEBUG = True`, Django serves static files automatically — no collection needed.
 
 ---
 
@@ -205,13 +218,25 @@ The application will be available at:
 | URL | Description |
 |---|---|
 | **http://127.0.0.1:8000/** | Inventory Dashboard (redirects to login if not authenticated) |
-| **http://127.0.0.1:8000/login/** | Login page |
+| **http://127.0.0.1:8000/login/** | Login, Signup & Password Recovery Portal |
 | **http://127.0.0.1:8000/borrowing/** | Borrowing Tracker |
 | **http://127.0.0.1:8000/activity-log/** | Activity Log (full audit trail) |
 | **http://127.0.0.1:8000/upload/** | Excel/CSV bulk import |
 | **http://127.0.0.1:8000/admin/** | Django Admin panel |
 
-Log in at `/login/` with the superuser credentials you just created. The sidebar navigation provides access to all three main views: **Dashboard**, **Borrowing**, and **Activity Logs**.
+---
+
+## 9. Authentication API Endpoints
+
+The frontend (`static/js/login.js`) communicates asynchronously with Django via JSON API endpoints:
+
+| Endpoint | Method | Request Payload | Description |
+|---|---|---|---|
+| `/api/send-otp/` | `POST` | `{email, username, password}` | Validates user availability and sends a 6-digit registration OTP to the email address. |
+| `/api/verify-otp/` | `POST` | `{otp}` | Verifies registration OTP and creates the new `User` account upon validation. |
+| `/api/forgot-password/` | `POST` | `{email}` | Queries `User` by case-insensitive email (`email__iexact`) and sends a password recovery OTP code. |
+| `/api/forgot-verify-otp/` | `POST` | `{otp}` | Validates the recovery OTP code and marks the session as verified. |
+| `/api/forgot-reset-password/` | `POST` | `{new_password}` | Resets the user's password and clears temporary verification session tokens. |
 
 ---
 
@@ -268,15 +293,6 @@ The bulk import expects data starting from **row 4** of the spreadsheet (rows 1�
 
 ---
 
-### `psycopg.OperationalError: connection refused` *(PostgreSQL only)*
-PostgreSQL is not running. Start it via **Services** (`services.msc`) or:
-```powershell
-net start postgresql-x64-16
-```
-Or switch back to SQLite by reverting the `DATABASES` setting in `settings.py`.
-
----
-
 ## 🌐 Running in Production
 
 > ⚠️ Review all security settings before exposing this to the internet.
@@ -312,21 +328,6 @@ MIDDLEWARE = [
 ```
 
 **5. Use PostgreSQL** — do not use SQLite in production.
-
-**6. Recommended: manage secrets with `django-environ`:**
-```powershell
-pip install django-environ
-```
-Then load from a `.env` file in `settings.py`:
-```python
-import environ
-env = environ.Env()
-environ.Env.read_env()
-
-SECRET_KEY = env('SECRET_KEY')
-DEBUG = env.bool('DEBUG', default=False)
-ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', default=[])
-```
 
 ---
 
