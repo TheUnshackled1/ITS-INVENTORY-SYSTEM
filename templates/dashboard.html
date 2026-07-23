@@ -376,31 +376,31 @@
                                      <td class="py-2.5 px-1 align-middle text-center">
                                          {% if log.action == 'added' %}
                                          <span class="inline-flex justify-center items-center gap-1.5 text-[10px] font-bold uppercase tracking-widest text-emerald-600">
-                                             <svg class="h-1.5 w-1.5 fill-current" viewBox="0 0 6 6"><circle cx="3" cy="3" r="3" /></svg>Added
+                                             <svg class="h-1.5 w-1.5 fill-current status-dot-blink" viewBox="0 0 6 6"><circle cx="3" cy="3" r="3" /></svg>Added
                                          </span>
                                          {% elif log.action == 'edited' %}
                                          <span class="inline-flex justify-center items-center gap-1.5 text-[10px] font-bold uppercase tracking-widest text-amber-500">
-                                             <svg class="h-1.5 w-1.5 fill-current" viewBox="0 0 6 6"><circle cx="3" cy="3" r="3" /></svg>Edited
+                                             <svg class="h-1.5 w-1.5 fill-current status-dot-blink" viewBox="0 0 6 6"><circle cx="3" cy="3" r="3" /></svg>Edited
                                          </span>
                                          {% elif log.action == 'returned' %}
                                          <span class="inline-flex justify-center items-center gap-1.5 text-[10px] font-bold uppercase tracking-widest text-emerald-500">
-                                             <svg class="h-1.5 w-1.5 fill-current" viewBox="0 0 6 6"><circle cx="3" cy="3" r="3" /></svg>Returned
+                                             <svg class="h-1.5 w-1.5 fill-current status-dot-blink" viewBox="0 0 6 6"><circle cx="3" cy="3" r="3" /></svg>Returned
                                          </span>
                                          {% elif log.action == 'borrowed' %}
                                          <span class="inline-flex justify-center items-center gap-1.5 text-[10px] font-bold uppercase tracking-widest text-sky-500">
-                                             <svg class="h-1.5 w-1.5 fill-current" viewBox="0 0 6 6"><circle cx="3" cy="3" r="3" /></svg>Borrowed
+                                             <svg class="h-1.5 w-1.5 fill-current status-dot-blink" viewBox="0 0 6 6"><circle cx="3" cy="3" r="3" /></svg>Borrowed
                                          </span>
                                          {% elif log.action == 'deleted' %}
                                          <span class="inline-flex justify-center items-center gap-1.5 text-[10px] font-bold uppercase tracking-widest text-rose-500">
-                                             <svg class="h-1.5 w-1.5 fill-current" viewBox="0 0 6 6"><circle cx="3" cy="3" r="3" /></svg>Deleted
+                                             <svg class="h-1.5 w-1.5 fill-current status-dot-blink" viewBox="0 0 6 6"><circle cx="3" cy="3" r="3" /></svg>Deleted
                                          </span>
                                          {% elif log.action == 'uploaded' %}
                                          <span class="inline-flex justify-center items-center gap-1.5 text-[10px] font-bold uppercase tracking-widest text-teal-500">
-                                             <svg class="h-1.5 w-1.5 fill-current" viewBox="0 0 6 6"><circle cx="3" cy="3" r="3" /></svg>Uploaded
+                                             <svg class="h-1.5 w-1.5 fill-current status-dot-blink" viewBox="0 0 6 6"><circle cx="3" cy="3" r="3" /></svg>Uploaded
                                          </span>
                                          {% else %}
                                          <span class="inline-flex justify-center items-center gap-1.5 text-[10px] font-bold uppercase tracking-widest text-slate-500">
-                                             <svg class="h-1.5 w-1.5 fill-current" viewBox="0 0 6 6"><circle cx="3" cy="3" r="3" /></svg>{{ log.action|default:"-"|title }}
+                                             <svg class="h-1.5 w-1.5 fill-current status-dot-blink" viewBox="0 0 6 6"><circle cx="3" cy="3" r="3" /></svg>{{ log.action|default:"-"|title }}
                                          </span>
                                          {% endif %}
                                      </td>
