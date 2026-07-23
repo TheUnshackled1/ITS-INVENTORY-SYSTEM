@@ -104,14 +104,18 @@ document.addEventListener('DOMContentLoaded', () => {
     if (successModalMessage) successModalMessage.innerHTML = msg;
     if (successModalOverlay) {
       successModalOverlay.style.display = 'flex';
-      // Trigger reflow
-      void successModalOverlay.offsetWidth;
-      successModalOverlay.classList.remove('opacity-0', 'pointer-events-none');
-      successModalOverlay.classList.add('opacity-100', 'pointer-events-auto');
-    }
-    if (successModalCard) {
-      successModalCard.classList.remove('-translate-x-[100vw]', 'opacity-0');
-      successModalCard.classList.add('translate-x-0', 'opacity-100');
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          if (successModalOverlay) {
+            successModalOverlay.classList.remove('opacity-0', 'pointer-events-none');
+            successModalOverlay.classList.add('opacity-100', 'pointer-events-auto');
+          }
+          if (successModalCard) {
+            successModalCard.classList.remove('-translate-x-[100vw]', 'opacity-0');
+            successModalCard.classList.add('translate-x-0', 'opacity-100');
+          }
+        });
+      });
     }
   }
 
@@ -149,13 +153,18 @@ document.addEventListener('DOMContentLoaded', () => {
     if (errorModalMessage) errorModalMessage.innerHTML = msg;
     if (errorModalOverlay) {
       errorModalOverlay.style.display = 'flex';
-      void errorModalOverlay.offsetWidth;
-      errorModalOverlay.classList.remove('opacity-0', 'pointer-events-none');
-      errorModalOverlay.classList.add('opacity-100', 'pointer-events-auto');
-    }
-    if (errorModalCard) {
-      errorModalCard.classList.remove('-translate-x-[100vw]', 'opacity-0');
-      errorModalCard.classList.add('translate-x-0', 'opacity-100');
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          if (errorModalOverlay) {
+            errorModalOverlay.classList.remove('opacity-0', 'pointer-events-none');
+            errorModalOverlay.classList.add('opacity-100', 'pointer-events-auto');
+          }
+          if (errorModalCard) {
+            errorModalCard.classList.remove('-translate-x-[100vw]', 'opacity-0');
+            errorModalCard.classList.add('translate-x-0', 'opacity-100');
+          }
+        });
+      });
     }
   }
 
