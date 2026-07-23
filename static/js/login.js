@@ -367,21 +367,12 @@ document.addEventListener('DOMContentLoaded', () => {
     if (typeof showErrorModal === 'function') {
       showErrorModal(msg);
     }
-    if (forgotErrorToast) {
-      if (forgotErrorMessage) {
-        forgotErrorMessage.textContent = msg;
-      } else {
-        forgotErrorToast.textContent = msg;
-      }
-      forgotErrorToast.classList.remove('hidden');
-    }
     if (forgotEmailInput && !forgotPasswordEmailContainer.classList.contains('hidden')) {
       forgotEmailInput.classList.add('border-red-500', 'ring-4', 'ring-red-500/10');
       forgotEmailInput.classList.remove('border-slate-300');
     }
   }
   function hideForgotError() {
-    if(forgotErrorToast) forgotErrorToast.classList.add('hidden');
     if (forgotEmailInput) {
       forgotEmailInput.classList.remove('border-red-500', 'ring-4', 'ring-red-500/10');
       forgotEmailInput.classList.add('border-slate-300');
