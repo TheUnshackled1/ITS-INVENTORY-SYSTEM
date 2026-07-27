@@ -315,7 +315,7 @@ This system was originally built for the ICT Department and has been handed over
 
 This project is licensed under the **MIT License** — see the [LICENSE](LICENSE) file for full details.
 
-```
+```text
 MIT License
 
 Copyright (c) 2026 John Tyrone Pagunsan Coronel (TheUnshackled1) — https://github.com/TheUnshackled1
