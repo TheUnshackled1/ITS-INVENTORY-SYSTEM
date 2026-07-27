@@ -86,9 +86,6 @@ table {
 .stats-card--returned {
     --card-accent: #6b7280;
 }
-.dataTable-empty {
-    display: none !important;
-}
 .app-shell {
     display: flex;
     min-height: 100vh;

@@ -210,8 +210,6 @@ document.addEventListener('DOMContentLoaded', () => {
       showErrorModal(msg);
     }
   }
-  function hideSignupError() {
-  }
 
   function startOtpTimer() {
     clearInterval(otpInterval);
@@ -240,7 +238,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (triggerSignupBtn) {
     triggerSignupBtn.addEventListener('click', async (e) => {
       e.preventDefault();
-      hideSignupError();
+      
 
       const email = document.getElementById('id_signup_email').value.trim();
       const username = document.getElementById('id_signup_username').value.trim();
@@ -291,7 +289,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (verifyOtpBtn) {
     verifyOtpBtn.addEventListener('click', async (e) => {
       e.preventDefault();
-      hideSignupError();
+      
 
       const otp = document.getElementById('id_signup_otp').value.trim();
       if (!otp || otp.length !== 6) {
@@ -406,7 +404,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (triggerForgotPasswordBtn) {
     triggerForgotPasswordBtn.addEventListener('click', (e) => {
       e.preventDefault();
-      hideSignupError(); 
+       
       hideForgotError();
       if (loginViewMainContent) { loginViewMainContent.classList.add('hidden'); }
       forgotPasswordEmailContainer.classList.remove('hidden');
@@ -603,3 +601,4 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
 });
+
