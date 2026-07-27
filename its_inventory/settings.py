@@ -1,8 +1,9 @@
 from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+import os
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-r4u7g=hkcw-p4acm^_3az8fwra%lfva+xg=_uwg6bt7_mhc+y5'
+SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-r4u7g=hkcw-p4acm^_3az8fwra%lfva+xg=_uwg6bt7_mhc+y5')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 ALLOWED_HOSTS = ['itsinventory.pythonanywhere.com', '127.0.0.1', 'localhost']
