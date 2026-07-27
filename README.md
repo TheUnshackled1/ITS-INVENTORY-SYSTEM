@@ -92,40 +92,13 @@ The result: a centralized, transparent, and accountable inventory system with a 
 
 ### Overall Flow
 
-```mermaid
-flowchart TD
-    classDef default fill:#092E20,stroke:#fff,stroke-width:2px,color:#fff
-    classDef db fill:#003B57,stroke:#fff,stroke-width:2px,color:#fff
-    classDef highlight fill:#4169E1,stroke:#fff,stroke-width:2px,color:#fff
-
-    A["🧑‍💼 ITS Staff<br/>Add / Edit / Delete / Import"] -->|CRUD Operations| B[("🗄️ Inventory DB<br/>SQLite")]
-    B -->|Syncs to| C{"📊 Inventory Dashboard<br/>Search / Filter / Sort / Export"}
-    C -->|Issue Equipment| D["🔄 Borrowing Tracker<br/>Issue / Return / Overdue"]
-    D -->|Restores Quantity| B
-    A -->|All Actions Logged| E["📝 Activity Log<br/>Audit Trail + Diffs"]
-    F["🔑 Auth Portal<br/>Login / Signup OTP / Reset OTP"] -->|Authenticates| A
-
-    class B db
-    class C highlight
-```
+![Overall System Architecture](docs/architecture.drawio.svg)
+> ✏️ **Draw.io Source File:** [`docs/architecture.drawio`](docs/architecture.drawio) *(Editable in [Draw.io / app.diagrams.net](https://app.diagrams.net/))*
 
 ### Borrowing Lifecycle
 
-```mermaid
-flowchart LR
-    classDef pending fill:#3b82f6,stroke:#fff,stroke-width:2px,color:#fff
-    classDef overdue fill:#ef4444,stroke:#fff,stroke-width:2px,color:#fff
-    classDef resolved fill:#22c55e,stroke:#fff,stroke-width:2px,color:#fff
-
-    A(["📋 Issued"]) --> B(["⏳ Borrowed"])
-    B --> C(["✅ Returned"])
-    B --> D(["🚨 Overdue<br/>Past Expected Date"])
-    D --> E(["✅ Returned"])
-
-    class A,B pending
-    class C,E resolved
-    class D overdue
-```
+![Borrowing Lifecycle](docs/borrowing_lifecycle.drawio.svg)
+> ✏️ **Draw.io Source File:** [`docs/borrowing_lifecycle.drawio`](docs/borrowing_lifecycle.drawio) *(Editable in [Draw.io / app.diagrams.net](https://app.diagrams.net/))*
 
 ---
 
@@ -264,6 +237,11 @@ The application will be available at `http://127.0.0.1:8000/`.
 
 ```
 📦 system/
+├── 📂 docs/                       📐 System Architecture & Draw.io diagrams
+│   ├── 📐 architecture.drawio.svg  # Overall system flow SVG diagram
+│   ├── 📐 architecture.drawio      # Editable Draw.io XML source
+│   ├── 📐 borrowing_lifecycle.drawio.svg # Borrowing lifecycle SVG diagram
+│   └── 📐 borrowing_lifecycle.drawio     # Editable Draw.io XML source
 ├── 📂 its_inventory/              ⚙️ Django project: settings, urls, wsgi, asgi
 │   ├── 🐍 settings.py             # Project configuration (DB, middleware, email, etc.)
 │   ├── 🐍 urls.py                 # Root URL routing & API mapping
