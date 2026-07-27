@@ -126,9 +126,9 @@ The result: a centralized, transparent, and accountable inventory system with a 
 
 | Tool | Minimum Version | Download |
 |---|---|---|
-| **Python** | 3.13 | https://www.python.org/downloads/ |
+| **Python** | 3.13 | [python.org/downloads](https://www.python.org/downloads/) |
 | **pip** | Latest | Bundled with Python |
-| **Git** | Any | https://git-scm.com/download/win |
+| **Git** | Any | [git-scm.com/download/win](https://git-scm.com/download/win) |
 
 ---
 
@@ -151,6 +151,9 @@ python -m venv env
 
 # Activate it (PowerShell)
 .\env\Scripts\Activate
+
+# Or activate it (Command Prompt)
+env\Scripts\activate.bat
 ```
 
 ---
