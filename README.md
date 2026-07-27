@@ -227,13 +227,14 @@ The application will be available at `http://127.0.0.1:8000/`.
 
 | Endpoint | Method | Description |
 |---|---|---|
-| `/` | `GET` | Inventory list (main dashboard) |
+| `/` | `GET` | Main Analytics Dashboard |
+| `/inventory/` | `GET` | Inventory records list |
 | `/login/` | `GET/POST` | Login, Signup & Password Recovery Portal |
 | `/logout/` | `POST` | Log out and redirect to login |
-| `/inventory/add/` | `GET/POST` | Add a new inventory record |
-| `/inventory/<pk>/edit/` | `GET/POST` | Edit an existing inventory record |
+| `/inventory/add/` | `POST` | Add a new inventory record (AJAX) |
+| `/inventory/<pk>/edit/` | `POST` | Edit an existing inventory record (AJAX) |
 | `/inventory/<pk>/delete/` | `POST` | Delete an inventory record (AJAX) |
-| `/upload/` | `GET/POST` | Bulk upload via Excel/CSV |
+| `/upload/` | `POST` | Bulk upload via Excel/CSV (Modal) |
 | `/borrowing/` | `GET` | Borrowing tracker dashboard |
 | `/borrowing/issue/` | `POST` | Issue equipment to a borrower (AJAX) |
 | `/borrowing/<pk>/return/` | `POST` | Mark an item as returned (AJAX) |
@@ -252,7 +253,7 @@ The application will be available at `http://127.0.0.1:8000/`.
 | Setting | Default | Recommendation |
 |---|---|---|
 | `DEBUG` | `True` | Set to `False` and configure `ALLOWED_HOSTS` |
-| `SECRET_KEY` | Hardcoded | Rotate and load from environment variable |
+| `SECRET_KEY` | Environment / Hardcoded | Rotate and load from environment variable |
 | `DATABASES` | SQLite | Consider PostgreSQL for production workloads |
 | `OTP Expiration` | 120s | Configured 2-minute expiration for all email OTPs |
 | `Email Lookup` | `email__iexact` | Case-insensitive email query for secure recovery |
@@ -268,20 +269,21 @@ The application will be available at `http://127.0.0.1:8000/`.
 │   ├── 🐍 urls.py                 # Root URL routing & API mapping
 │   ├── 🐍 wsgi.py                 # WSGI entry point
 │   └── 🐍 asgi.py                 # ASGI entry point
-├── 📂 inventory/                  ⚙️ Main app: models, views, forms, admin
+├── 📂 inventory/                  ⚙️ Main app: models, views, forms, admin, tests
 │   ├── 🐍 models.py               # Inventory, IssuanceLog, AuditLog models
 │   ├── 🐍 views.py                # All CRUD, borrowing, audit log, and OTP/Auth API logic
 │   ├── 🐍 forms.py                # Django ModelForms for inventory
-│   └── 🐍 admin.py                # Django Admin registration
+│   ├── 🐍 admin.py                # Django Admin registration
+│   └── 🐍 tests.py                # Automated Django unit test suite
 ├── 📂 templates/                  🎨 HTML templates
 │   ├── 🌐 login.html              # Login, Signup, Reset Password & Overlay Modals
-│   ├── 🌐 inventory.html          # Main inventory dashboard
+│   ├── 🌐 inventory.html          # Main inventory records list & modals
+│   ├── 🌐 dashboard.html          # Main analytics dashboard
 │   ├── 🌐 borrowing.html          # Borrowing tracker
-│   ├── 🌐 activity_log.html       # Audit log viewer
-│   └── 🌐 inventory_upload.html   # Excel/CSV upload page
+│   └── 🌐 activity_log.html       # Audit log viewer
 ├── 📂 static/                     🎨 Static assets
-│   ├── 📂 css/                    # Inventory, borrowing, login stylesheets
-│   └── 📂 js/                     # Login slider/OTP/Modal handlers, inventory, tailwind config
+│   ├── 📂 css/                    # Inventory & login stylesheets
+│   └── 📂 js/                     # Login, inventory, borrowing, dashboard & tailwind scripts
 ├── 🗄️ db.sqlite3                  # SQLite database (auto-generated)
 ├── 🐍 manage.py                   # Django management CLI
 ├── ⚙️ requirements.txt            # Python dependencies
