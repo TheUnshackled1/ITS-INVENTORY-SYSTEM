@@ -120,8 +120,6 @@ def get_distinct_text_values(queryset, field_name, annotation_name):
 
 @login_required
 def dashboard_view(request):
-    import json
-    from django.db.models.functions import TruncDate
     from django.utils.timezone import now
     from datetime import timedelta
     from django.db.models import Count
@@ -402,15 +400,7 @@ def add_inventory(request):
             return redirect('inventory-list')
         elif is_ajax:
             return JsonResponse({'success': False, 'errors': form.errors}, status=400)
-    else:
-        form = InventoryForm()
-    return render(
-        request,
-        'add_inventory.html',
-        {
-            'form': form,
-        },
-    )
+    return redirect('inventory-list')
 
 @login_required
 def edit_inventory(request, pk):
@@ -479,18 +469,7 @@ def edit_inventory(request, pk):
             return redirect('inventory-list')
         elif is_ajax:
             return JsonResponse({'success': False, 'errors': form.errors}, status=400)
-    else:
-        form = InventoryForm(instance=inventory_item)
-        for field_name in optional_fields:
-            form.fields[field_name].required = False
-    return render(
-        request,
-        'add_inventory.html',
-        {
-            'form': form,
-            'inventory_item': inventory_item,
-        },
-    )
+    return redirect('inventory-list')
 def parse_date(date_val):
     if not date_val:
         return None
@@ -539,8 +518,10 @@ def upload_excel(request):
                             qty = 1
                         status_raw = str(get_row_value(row, 9, 'available')).lower().replace("-", " ").replace("_", " ").strip()
                         status = 'available'
+                        defect_desc = get_row_value(row, 10, "") or ""
                         if 'not working' in status_raw:
-                            status = 'not_working'
+                            status = 'repair'
+                            defect_desc = defect_desc or 'Not working'
                         elif 'working' in status_raw or 'available' in status_raw:
                             status = 'available'
                         elif 'use' in status_raw:
@@ -565,7 +546,7 @@ def upload_excel(request):
                             'date_inventory': parse_date(get_row_value(row, 7, None)) or datetime.now().date(),
                             'location': get_row_value(row, 8, "") or "",
                             'status': status,
-                            'defect_description': get_row_value(row, 10, "") or ""
+                            'defect_description': defect_desc
                         })
                 elif filename.endswith('.csv'):
                     data = excel_file.read().decode('utf-8').splitlines()
@@ -584,8 +565,10 @@ def upload_excel(request):
                             qty = 1
                         status_raw = str(get_row_value(row, 9, 'available')).lower().replace("-", " ").replace("_", " ").strip()
                         status = 'available'
+                        defect_desc = get_row_value(row, 10, "") or ""
                         if 'not working' in status_raw:
-                            status = 'not_working'
+                            status = 'repair'
+                            defect_desc = defect_desc or 'Not working'
                         elif 'working' in status_raw or 'available' in status_raw:
                             status = 'available'
                         elif 'use' in status_raw:
@@ -610,7 +593,7 @@ def upload_excel(request):
                             'date_inventory': parse_date(get_row_value(row, 7, None)) or datetime.now().date(),
                             'location': get_row_value(row, 8, ""),
                             'status': status,
-                            'defect_description': get_row_value(row, 10, "")
+                            'defect_description': defect_desc
                         })
                 else:
                     messages.error(
@@ -629,20 +612,6 @@ def upload_excel(request):
                         item.serial_number: item 
                         for item in Inventory.objects.filter(serial_number__in=serials_in_batch)
                     }
-                    # We also need to map items uniquely lacking serial numbers via compound tuple keys
-                    blank_keys_in_batch = [
-                        (
-                            normalize_text(row['item_type']),
-                            normalize_text(row['item_description']),
-                            normalize_text(row['brand']),
-                            normalize_text(row['model']),
-                            row['date_inventory'],
-                            row['date_disposal'],
-                            normalize_text(row['location']),
-                            row['status'],
-                            normalize_text(row['defect_description']),
-                        ) for row in parsed_rows if not row['serial_number']
-                    ]                   
                     # In order to bulk-query compound fields efficiently, we iterate over a combined QuerySet.
                     # Since DB matching on 9 fields per element is complex to annotate, we fetch all non-serial items
                     # matching the basic characteristics of our batch and build an index in Python.
@@ -980,6 +949,8 @@ def return_item(request, pk):
     # Determine the status the item returns to (staff-selected in the condition modal)
     valid_return_statuses = {'available', 'repair', 'disposed', 'lost'}
     return_status = normalize_text(data.get('return_status', 'available')).lower()
+    if return_status not in valid_return_statuses:
+        return_status = 'available'
     today = datetime.now().date()
     issuance.date_returned = today
     issuance.status = 'returned'
@@ -1099,7 +1070,7 @@ def borrowing_list(request):
     if search_query:
         logs = logs.filter(
             Q(borrower_name__icontains=search_query) |
-            Q(department__icontains=search_query) |
+            Q(purpose__icontains=search_query) |
             Q(office_location__icontains=search_query) |
             Q(issued_by__icontains=search_query)
         )

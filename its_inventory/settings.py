@@ -86,11 +86,11 @@ LOGIN_REDIRECT_URL = 'dashboard'
 LOGOUT_REDIRECT_URL = '/login/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# Email / SMTP Configuration
+import os
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'jtcoronel.chmsu@gmail.com' 
-EMAIL_HOST_PASSWORD = 'hlqn beui rdqn kfje'
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER', 'jtcoronel.chmsu@gmail.com')
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD', 'hlqn beui rdqn kfje')
 DEFAULT_FROM_EMAIL = 'ITS Inventory System <jtcoronel.chmsu@gmail.com>'
