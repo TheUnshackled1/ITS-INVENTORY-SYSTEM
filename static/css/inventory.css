@@ -128,14 +128,7 @@ table {
     letter-spacing: 0.03em;
     text-transform: uppercase;
 }
-.sidebar__section-title {
-    padding: 0 0.9rem;
-    font-size: 0.72rem;
-    font-weight: 700;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: rgba(239, 246, 255, 0.72);
-}
+
 .sidebar__nav {
     display: flex;
     flex-direction: column;
