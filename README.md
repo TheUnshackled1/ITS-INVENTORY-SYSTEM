@@ -256,7 +256,12 @@ The application will be available at `http://127.0.0.1:8000/`.
 
 ```
 📦 system/
-├── 📂 docs/                       📐 System documentation, diagrams & templates
+├── 📂 .github/                    🐙 GitHub templates & issue workflows
+│   ├── 📂 ISSUE_TEMPLATE/         📋 Interactive GitHub issue templates (Bug Report, Feature Request)
+│   │   ├── 🐛 bug_report.md       # Bug report issue template
+│   │   └── 💡 feature_request.md  # Feature request issue template
+│   └── 📄 PULL_REQUEST_TEMPLATE.md# Pre-populated PR review template
+├── 📂 docs/                       📐 System Architecture & Draw.io diagrams & templates
 │   ├── 📂 assets/                 📸 UI Screenshots & Visual Snapshots
 │   │   ├── 📸 dashboard_snapshot.png
 │   │   ├── 📸 borrowing_snapshot.png
