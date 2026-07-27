@@ -104,17 +104,19 @@ The result: a centralized, transparent, and accountable inventory system with a 
 
 ## 🛠️ Tech Stack
 
-| Layer | Technology |
-|---|---|
-| **Web Framework** | Django 5.2 |
-| **Language** | Python 3.13+ |
-| **Database** | SQLite 3 (default) / PostgreSQL (production) |
-| **Frontend Styling** | Tailwind CSS (CDN) |
-| **DataTables** | SimpleDatatables 9.0.3 |
-| **Typography** | Google Fonts — Inter |
-| **Excel Parsing** | openpyxl 3.1.5 |
-| **Email Service** | Django Core Mail (SMTP) |
-| **Icons** | Inline SVG (hand-crafted) |
+| Layer / Feature | Technology & Tools | Description |
+|---|---|---|
+| **Web Framework** | Django 5.2 | Full-stack Python web framework with built-in ORM, routing & auth |
+| **Language** | Python 3.13+ | Core backend logic, OTP engine & API request handlers |
+| **Database** | SQLite 3 (default) / PostgreSQL | Relational database (SQLite for dev, PostgreSQL for production) |
+| **Frontend Styling** | Tailwind CSS (CDN) | Modern utility-first CSS framework with glassmorphism styling |
+| **DataTables** | SimpleDatatables 9.0.3 | Fast, standalone, paginated & sortable JS datatable engine |
+| **Typography** | Google Fonts — Inter | Clean, modern variable sans-serif typography |
+| **Excel Parsing** | openpyxl 3.1.5 & pandas 3.0.3 | High-performance `.xlsx` / `.csv` spreadsheet parsing for bulk imports |
+| **Email Service** | Django Core Mail (SMTP) | Automated 6-digit OTP delivery for registration & password recovery |
+| **Admin Portal** | `django-admin-interface` 0.32 | Custom Django Admin interface with color accents & branding |
+| **Diagrams & Docs** | Draw.io (SVG / XML) | System architecture & borrowing lifecycle vector diagrams |
+| **Icons** | Inline SVG (Heroicons) | Hand-crafted, responsive vector SVG iconography |
 
 ---
 
