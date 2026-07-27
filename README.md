@@ -48,12 +48,12 @@ The result: a centralized, transparent, and accountable inventory system with a 
 
 | Goal | Description |
 |---|---|
-| 📁 **Centralize Records** | Replace spreadsheet-based tracking with a unified digital inventory system |
-| 🔄 **Streamline Borrowing** | Track equipment issuance, expected returns, and overdue items in real time |
-| 🧾 **Ensure Accountability** | Log every action with user attribution and before/after state diffs |
-| 🔑 **Secure Authentication** | Email & OTP verification for account registration and password recovery |
-| 📤 **Bulk Import** | Support `.xlsx` and `.csv` uploads for rapid data migration from existing spreadsheets |
-| 🎨 **Premium UI/UX** | Deliver a polished, modern interface with Tailwind CSS, glassmorphism, overlay modals, and micro-animations |
+| 📁 **Centralize Records** | Replace spreadsheet-based tracking with a unified digital inventory system. |
+| 🔄 **Streamline Borrowing** | Track equipment issuance, expected returns, and overdue items in real time. |
+| 🧾 **Ensure Accountability** | Log every action with user attribution and before/after state diffs. |
+| 🔑 **Secure Authentication** | Email & OTP verification for account registration and password recovery. |
+| 📤 **Bulk Import** | Support `.xlsx` and `.csv` uploads for rapid data migration from existing spreadsheets. |
+| 🎨 **Premium UI/UX** | Deliver a polished, modern interface with Tailwind CSS, glassmorphic card overlays, and micro-animations. |
 
 ---
 
