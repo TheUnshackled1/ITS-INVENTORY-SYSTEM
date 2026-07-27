@@ -60,30 +60,30 @@ The result: a centralized, transparent, and accountable inventory system with a 
 ## ✨ Core Features
 
 ### 📊 Inventory Dashboard
-- **Full CRUD** — Add, view, edit, and delete inventory records via a sleek side-drawer UI
-- **Advanced Filtering** — Filter by status, location, and item type with a persistent search bar
-- **Bulk Excel Import** — Upload `.xlsx` or `.csv` files to import hundreds of records at once
-- **Status Tracking** — Visual status badges: Available, In Use, Under Repair, Disposed, Lost
-- **Sortable DataTable** — Paginated, sortable table powered by SimpleDatatables
+- **Full CRUD** — Add, view, edit, and delete inventory records via a sleek side-drawer UI.
+- **Advanced Filtering** — Filter by status, location, and item type with a persistent search bar.
+- **Bulk Excel Import** — Upload `.xlsx` or `.csv` files to import hundreds of records at once.
+- **Status Tracking** — Visual status badges: Available, In Use, Under Repair (`repair`), Disposed, Lost.
+- **Sortable DataTable** — Paginated, sortable data table powered by SimpleDatatables.
 
 ### 🔄 Borrowing Tracker
-- **Equipment Issuance** — Issue items to borrowers with office/location, quantity, and expected return date
-- **Return Processing** — One-click return confirmation with automatic quantity restoration
-- **Overdue Detection** — Automatic status escalation when items pass their expected return date
-- **Statistics Cards** — At-a-glance metrics: Total Issuances, Returned, Overdue
-- **Tab Filtering** — Quick-switch between All, Borrowed, Returned, and Overdue views
+- **Equipment Issuance** — Issue items to borrowers with office/location, quantity, and expected return date.
+- **Return Processing** — One-click return confirmation with automatic inventory quantity restoration.
+- **Overdue Detection** — Automatic status escalation when items pass their expected return date.
+- **Statistics Cards** — At-a-glance metrics: Total Issuances, Returned, Overdue.
+- **Tab Filtering** — Quick-switch between All, Borrowed, Returned, and Overdue views.
 
 ### 📝 Activity Log
-- **Full Audit Trail** — Every create, edit, delete, borrow, and return action is recorded
-- **Before/After Diffs** — Edit actions store field-level snapshots showing exactly what changed
-- **User Attribution** — Each log entry records which user performed the action
-- **Detail Modal** — Click any log entry for an expanded, side-by-side diff view
+- **Full Audit Trail** — Every create, edit, delete, borrow, and return action is recorded.
+- **Before/After Diffs** — Edit actions store field-level snapshots showing exactly what changed.
+- **User Attribution** — Each log entry records which user performed the action.
+- **Detail Modal** — Click any log entry for an expanded, side-by-side diff view.
 
 ### 🔐 Security & Authentication Portal
 - **Single-Card Sliding Portal** — Modern dual-panel auth container with smooth horizontal slide animation between Login, Signup, and Password Recovery states.
 - **Email & OTP Account Signup** — Asynchronous 6-digit OTP verification code with a 120-second lifespan sent directly to the user's email before account creation.
 - **Self-Service Password Reset** — Case-insensitive email lookup (`email__iexact`), 6-digit recovery OTP verification, and secure password update flow.
-- **System Overlay Modals** — Centered system overlay popup modals (`#errorModalOverlay` and `#successModalOverlay`) for alerts and confirmations instead of traditional inline toasts.
+- **System Overlay Modals** — Centered system overlay popup modals (`#errorModalOverlay` and `#successModalOverlay`) for alerts and confirmations.
 - **Interactive UI Micro-Animations** — Animated left direction arrows (`← Nevermind, back to login`), field focus states, password visibility toggle eyes, and button spinner states.
 
 ---
