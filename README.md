@@ -198,26 +198,26 @@ The application will be available at `http://127.0.0.1:8000/`.
 
 ## 🔗 URL & API Endpoints
 
-| Endpoint | Method | Description |
-|---|---|---|
-| `/` | `GET` | Main Analytics Dashboard |
-| `/inventory/` | `GET` | Inventory records list |
-| `/login/` | `GET/POST` | Login, Signup & Password Recovery Portal |
-| `/logout/` | `POST` | Log out and redirect to login |
-| `/inventory/add/` | `POST` | Add a new inventory record (AJAX) |
-| `/inventory/<pk>/edit/` | `POST` | Edit an existing inventory record (AJAX) |
-| `/inventory/<pk>/delete/` | `POST` | Delete an inventory record (AJAX) |
-| `/upload/` | `POST` | Bulk upload via Excel/CSV (Modal) |
-| `/borrowing/` | `GET` | Borrowing tracker dashboard |
-| `/borrowing/issue/` | `POST` | Issue equipment to a borrower (AJAX) |
-| `/borrowing/<pk>/return/` | `POST` | Mark an item as returned (AJAX) |
-| `/activity-log/` | `GET` | Full audit trail |
-| `/api/send-otp/` | `POST` | Send 6-digit registration OTP to email |
-| `/api/verify-otp/` | `POST` | Verify registration OTP & create user |
-| `/api/forgot-password/` | `POST` | Send recovery OTP (case-insensitive email lookup) |
-| `/api/forgot-verify-otp/` | `POST` | Validate password recovery OTP |
-| `/api/forgot-reset-password/` | `POST` | Save new user password |
-| `/admin/` | `GET` | Django Admin panel |
+| Category | Endpoint | Method | Route Name | Description |
+|---|---|---|---|---|
+| **Navigation** | `/` | `GET` | `dashboard` | Main Analytics Dashboard (key stats cards, breakdown charts, recent logs) |
+| **Navigation** | `/inventory/` | `GET` | `inventory-list` | Inventory management page (search, category filter, sortable datatable) |
+| **Navigation** | `/borrowing/` | `GET` | `borrowing-list` | Borrowing tracker page (all, borrowed, returned, overdue filter tabs) |
+| **Navigation** | `/activity-log/` | `GET` | `activity-log` | Audit log page (full system action history & field-level snapshot diffs) |
+| **Auth** | `/login/` | `GET/POST` | `login` | Modern sliding auth portal (Login, Signup, Password Recovery states) |
+| **Auth** | `/logout/` | `POST` | `logout` | Log out active user session and redirect to `/login/` |
+| **Inventory CRUD** | `/inventory/add/` | `POST` | `inventory-create` | Create a new equipment inventory record (AJAX POST) |
+| **Inventory CRUD** | `/inventory/<pk>/edit/` | `POST` | `inventory-edit` | Update an existing inventory record by primary key (AJAX POST) |
+| **Inventory CRUD** | `/inventory/<pk>/delete/` | `POST` | `inventory-delete` | Delete an inventory record by primary key (AJAX POST) |
+| **Inventory CRUD** | `/upload/` | `POST` | `inventory-upload` | Bulk upload equipment records via `.xlsx` or `.csv` spreadsheet (Modal POST) |
+| **Borrowing API** | `/borrowing/issue/` | `POST` | `borrowing-issue` | Issue equipment to borrower & decrement available quantity (AJAX POST) |
+| **Borrowing API** | `/borrowing/<pk>/return/` | `POST` | `borrowing-return` | Mark borrowed item as returned & restore inventory quantity (AJAX POST) |
+| **OTP Auth API** | `/api/send-otp/` | `POST` | `send_registration_otp` | Validate username/email availability & send 6-digit signup OTP to email |
+| **OTP Auth API** | `/api/verify-otp/` | `POST` | `verify_registration_otp` | Verify 6-digit signup OTP code & create new user account upon validation |
+| **OTP Recovery API** | `/api/forgot-password/` | `POST` | `forgot_password_send_otp` | Query user by case-insensitive email (`email__iexact`) & send recovery OTP |
+| **OTP Recovery API** | `/api/forgot-verify-otp/` | `POST` | `forgot_password_verify_otp` | Validate 6-digit password recovery OTP code |
+| **OTP Recovery API** | `/api/forgot-reset-password/` | `POST` | `forgot_password_reset` | Reset user password & clear verification session tokens |
+| **Admin** | `/admin/` | `GET/POST` | `admin:index` | Django built-in Admin portal & superuser management dashboard |
 
 ---
 
