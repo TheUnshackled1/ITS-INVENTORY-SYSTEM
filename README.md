@@ -6,6 +6,7 @@
 
 📄 **Quick File Links:**
 [![Setup Instructions](https://img.shields.io/badge/📖_Setup_Guide-INSTRUCTIONS.md-2563eb?style=flat-square)](INSTRUCTIONS.md)
+[![Changelog](https://img.shields.io/badge/📜_Changelog-CHANGELOG.md-059669?style=flat-square)](CHANGELOG.md)
 [![Support Resources](https://img.shields.io/badge/💬_Support-SUPPORT.md-0284c7?style=flat-square)](SUPPORT.md)
 [![Contributing Guidelines](https://img.shields.io/badge/🤝_Contributing-CONTRIBUTING.md-9333ea?style=flat-square)](CONTRIBUTING.md)
 [![Code of Conduct](https://img.shields.io/badge/📜_Code_of_Conduct-CODE__OF__CONDUCT.md-0d9488?style=flat-square)](CODE_OF_CONDUCT.md)
@@ -303,6 +304,7 @@ The application will be available at `http://127.0.0.1:8000/`.
 ├── 🐍 manage.py                   # Django management CLI
 ├── ⚙️ requirements.txt            # Python dependencies
 ├── 📄 INSTRUCTIONS.md             # Detailed setup & security documentation
+├── 📄 CHANGELOG.md                # System version release history
 ├── 📄 SUPPORT.md                  # Support resources & institutional contacts
 ├── 📄 CONTRIBUTING.md           # Developer contribution guidelines
 ├── 📄 CODE_OF_CONDUCT.md        # Community code of conduct guidelines
