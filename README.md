@@ -4,6 +4,11 @@
 
 🌐 **Live Demo:** [itsinventory.pythonanywhere.com](http://itsinventory.pythonanywhere.com/)
 
+📄 **Quick File Links:**
+[![Setup Instructions](https://img.shields.io/badge/📖_Setup_Guide-INSTRUCTIONS.md-2563eb?style=flat-square)](INSTRUCTIONS.md)
+[![MIT License](https://img.shields.io/badge/⚖️_License-LICENSE-16a34a?style=flat-square)](LICENSE)
+[![Requirements](https://img.shields.io/badge/⚙️_Dependencies-requirements.txt-d97706?style=flat-square)](requirements.txt)
+
 [![Python](https://img.shields.io/badge/Python-3.13+-3776AB?logo=python&logoColor=white)](https://www.python.org/)
 [![Django](https://img.shields.io/badge/Django-5.2-092E20?logo=django&logoColor=white)](https://www.djangoproject.com/)
 [![SQLite](https://img.shields.io/badge/SQLite-Local%20Dev-003B57?logo=sqlite&logoColor=white)](https://www.sqlite.org/)
