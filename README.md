@@ -237,11 +237,20 @@ The application will be available at `http://127.0.0.1:8000/`.
 
 ```
 📦 system/
-├── 📂 docs/                       📐 System Architecture & Draw.io diagrams
+├── 📂 docs/                       📐 System documentation, diagrams & templates
+│   ├── 📂 assets/                 📸 UI Screenshots & Visual Snapshots
+│   │   ├── 📸 dashboard_snapshot.png
+│   │   ├── 📸 borrowing_snapshot.png
+│   │   ├── 📸 activity_snapshot.png
+│   │   └── 📸 login_snapshot.png
+│   ├── 📂 excel-templates/        📊 Bulk import Excel sample templates
+│   │   ├── 📊 ITS_INVENTORY_10000.xlsx
+│   │   └── 📊 ITS_INVENTORY_2000_FIXED.xlsx
 │   ├── 📐 architecture.drawio.svg  # Overall system flow SVG diagram
 │   ├── 📐 architecture.drawio      # Editable Draw.io XML source
 │   ├── 📐 borrowing_lifecycle.drawio.svg # Borrowing lifecycle SVG diagram
 │   └── 📐 borrowing_lifecycle.drawio     # Editable Draw.io XML source
+├── 📂 env/                        🐍 Python virtual environment (local / ignored)
 ├── 📂 its_inventory/              ⚙️ Django project: settings, urls, wsgi, asgi
 │   ├── 🐍 settings.py             # Project configuration (DB, middleware, email, etc.)
 │   ├── 🐍 urls.py                 # Root URL routing & API mapping
@@ -254,11 +263,13 @@ The application will be available at `http://127.0.0.1:8000/`.
 │   ├── 🐍 admin.py                # Django Admin registration
 │   └── 🐍 tests.py                # Automated Django unit test suite
 ├── 📂 templates/                  🎨 HTML templates
-│   ├── 🌐 login.html              # Login, Signup, Reset Password & Overlay Modals
-│   ├── 🌐 inventory.html          # Main inventory records list & modals
-│   ├── 🌐 dashboard.html          # Main analytics dashboard
+│   ├── 📂 admin/                  ⚙️ Custom Django Admin templates
+│   │   └── 🌐 base_site.html      # Django admin site header & portal branding
+│   ├── 🌐 activity_log.html       # Audit log viewer
 │   ├── 🌐 borrowing.html          # Borrowing tracker
-│   └── 🌐 activity_log.html       # Audit log viewer
+│   ├── 🌐 dashboard.html          # Main analytics dashboard
+│   ├── 🌐 inventory.html          # Main inventory records list & modals
+│   └── 🌐 login.html              # Login, Signup, Reset Password & Overlay Modals
 ├── 📂 static/                     🎨 Static assets
 │   ├── 📂 css/                    🎨 Stylesheets
 │   │   ├── 🎨 inventory.css       # Main inventory & sidebar styles
