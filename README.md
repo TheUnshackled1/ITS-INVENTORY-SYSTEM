@@ -223,13 +223,17 @@ The application will be available at `http://127.0.0.1:8000/`.
 
 ## 🛡️ Configuration & Security
 
-| Setting | Default | Recommendation |
+| Setting / Feature | Default | Configuration / Recommendation |
 |---|---|---|
-| `DEBUG` | `True` | Set to `False` and configure `ALLOWED_HOSTS` |
-| `SECRET_KEY` | Environment / Hardcoded | Rotate and load from environment variable |
-| `DATABASES` | SQLite | Consider PostgreSQL for production workloads |
-| `OTP Expiration` | 120s | Configured 2-minute expiration for all email OTPs |
-| `Email Lookup` | `email__iexact` | Case-insensitive email query for secure recovery |
+| `DEBUG` | `True` | Set to `False` in production and configure `ALLOWED_HOSTS`. |
+| `SECRET_KEY` | Environment / Hardcoded | Loaded via `os.getenv('SECRET_KEY', ...)`. Override via `.env` in production. |
+| `ALLOWED_HOSTS` | `['127.0.0.1', 'localhost', ...]` | Restrict to authorized production domain names. |
+| `DATABASES` | SQLite3 (`db.sqlite3`) | Default for dev. Use PostgreSQL for high-concurrency production workloads. |
+| `CSRF Protection` | Enforced | `CsrfViewMiddleware` active with `{% csrf_token %}` across 100% of POST forms. |
+| `Authentication` | `@login_required` | Session authentication enforced across all inventory, borrowing, and audit views. |
+| `OTP Expiration` | `120s` (2 Minutes) | 6-digit verification codes expire automatically after 120 seconds. |
+| `Email Lookup` | `email__iexact` | Case-insensitive query prevents email casing mismatch during recovery. |
+| `SMTP Credentials` | `os.getenv(...)` | Loaded dynamically via `EMAIL_HOST_USER` and `EMAIL_HOST_PASSWORD` environment variables. |
 
 ---
 
