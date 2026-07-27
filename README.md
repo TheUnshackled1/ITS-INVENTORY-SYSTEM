@@ -9,6 +9,7 @@
 [![Contributing Guidelines](https://img.shields.io/badge/🤝_Contributing-CONTRIBUTING.md-9333ea?style=flat-square)](CONTRIBUTING.md)
 [![Code of Conduct](https://img.shields.io/badge/📜_Code_of_Conduct-CODE__OF__CONDUCT.md-0d9488?style=flat-square)](CODE_OF_CONDUCT.md)
 [![Security Policy](https://img.shields.io/badge/🛡️_Security_Policy-SECURITY.md-dc2626?style=flat-square)](SECURITY.md)
+[![Citation](https://img.shields.io/badge/Format-CITATION.cff-4f46e5?style=flat-square)](CITATION.cff)
 [![MIT License](https://img.shields.io/badge/⚖️_License-LICENSE-16a34a?style=flat-square)](LICENSE)
 [![Requirements](https://img.shields.io/badge/⚙️_Dependencies-requirements.txt-d97706?style=flat-square)](requirements.txt)
 
@@ -304,6 +305,7 @@ The application will be available at `http://127.0.0.1:8000/`.
 ├── 📄 CONTRIBUTING.md           # Developer contribution guidelines
 ├── 📄 CODE_OF_CONDUCT.md        # Community code of conduct guidelines
 ├── 📄 SECURITY.md                 # Security policy & vulnerability reporting guide
+├── 📄 CITATION.cff                # Academic software citation metadata
 ├── 📄 LICENSE                     # MIT License
 └── 📄 README.md                   # System documentation
 ```

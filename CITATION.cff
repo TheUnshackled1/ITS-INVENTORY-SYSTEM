@@ -1,0 +1,19 @@
+cff-version: 1.2.0
+message: "If you use this software in your institutional work or research projects, please cite it using the metadata below."
+authors:
+  - family-names: "Coronel"
+    given-names: "John Tyrone Pagunsan"
+    alias: "TheUnshackled1"
+title: "ITS Inventory Management System: Web-Based IT Asset Tracking, Borrowing Management & Audit Trail Platform"
+version: 1.0.0
+date-released: 2026-07-27
+url: "https://github.com/TheUnshackled1/ITS-INVENTORY-SYSTEM"
+repository-code: "https://github.com/TheUnshackled1/ITS-INVENTORY-SYSTEM"
+keywords:
+  - django
+  - inventory-management
+  - asset-tracking
+  - audit-log
+  - OTP-authentication
+  - python
+license: MIT
