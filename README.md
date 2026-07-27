@@ -260,8 +260,16 @@ The application will be available at `http://127.0.0.1:8000/`.
 │   ├── 🌐 borrowing.html          # Borrowing tracker
 │   └── 🌐 activity_log.html       # Audit log viewer
 ├── 📂 static/                     🎨 Static assets
-│   ├── 📂 css/                    # Inventory & login stylesheets
-│   └── 📂 js/                     # Login, inventory, borrowing, dashboard & tailwind scripts
+│   ├── 📂 css/                    🎨 Stylesheets
+│   │   ├── 🎨 inventory.css       # Main inventory & sidebar styles
+│   │   ├── 🎨 borrowing.css       # Borrowing tracker styles
+│   │   └── 🎨 login.css           # Auth portal & overlay modal styles
+│   └── 📂 js/                     📜 Frontend JavaScript scripts
+│       ├── 📜 inventory.js        # Inventory CRUD & Datatable handlers
+│       ├── 📜 borrowing.js        # Borrowing modal & search handlers
+│       ├── 📜 dashboard.js        # Analytics charts & stats handlers
+│       ├── 📜 login.js            # Auth slider, OTP & modal handlers
+│       └── 📜 tailwind-config.js  # Tailwind CSS custom theme configuration
 ├── 🗄️ db.sqlite3                  # SQLite database (auto-generated)
 ├── 🐍 manage.py                   # Django management CLI
 ├── ⚙️ requirements.txt            # Python dependencies
