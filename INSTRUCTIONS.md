@@ -217,12 +217,12 @@ The application will be available at:
 
 | URL | Description |
 |---|---|
-| **http://127.0.0.1:8000/** | Inventory Dashboard (redirects to login if not authenticated) |
-| **http://127.0.0.1:8000/login/** | Login, Signup & Password Recovery Portal |
-| **http://127.0.0.1:8000/borrowing/** | Borrowing Tracker |
-| **http://127.0.0.1:8000/activity-log/** | Activity Log (full audit trail) |
-| **http://127.0.0.1:8000/upload/** | Excel/CSV bulk import |
-| **http://127.0.0.1:8000/admin/** | Django Admin panel |
+| **http://127.0.0.1:8000/** | Main Analytics Dashboard (redirects to login if unauthenticated) |
+| **http://127.0.0.1:8000/inventory/** | Inventory Records Management (search, filter, Excel upload modal) |
+| **http://127.0.0.1:8000/login/** | Dual-Panel Login, Signup & Password Recovery Portal |
+| **http://127.0.0.1:8000/borrowing/** | Borrowing Tracker (issue & return equipment, overdue escalation) |
+| **http://127.0.0.1:8000/activity-log/** | Full System Activity Log & Audit Trail (side-by-side diff modal) |
+| **http://127.0.0.1:8000/admin/** | Built-in Django Admin Portal |
 
 ---
 
