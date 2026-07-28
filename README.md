@@ -273,6 +273,9 @@ The application will be available at `http://127.0.0.1:8000/`.
 
 ## 📁 Project Structure
 
+![Project Structure Diagram](docs/project_structure.drawio.svg)
+> ✏️ **Draw.io Source File:** [`docs/project_structure.drawio`](docs/project_structure.drawio) *(Editable in [Draw.io / app.diagrams.net](https://app.diagrams.net/))*
+
 ```
 📦 system/
 ├── 📂 .github/                    🐙 GitHub templates & issue workflows
@@ -298,7 +301,9 @@ The application will be available at `http://127.0.0.1:8000/`.
 │   ├── 📐 orm_relationships.drawio.svg  # ORM entity relationships SVG diagram
 │   ├── 📐 orm_relationships.drawio      # Editable ORM relationships Draw.io XML source
 │   ├── 📐 otp_state_machine.drawio.svg   # OTP authentication state machine SVG diagram
-│   └── 📐 otp_state_machine.drawio       # Editable OTP state machine Draw.io XML source
+│   ├── 📐 otp_state_machine.drawio       # Editable OTP state machine Draw.io XML source
+│   ├── 📐 project_structure.drawio.svg   # Project structure breakdown SVG diagram
+│   └── 📐 project_structure.drawio       # Editable project structure Draw.io XML source
 ├── 📂 env/                        🐍 Python virtual environment (local / ignored)
 ├── 📂 its_inventory/              ⚙️ Django project: settings, urls, wsgi, asgi
 │   ├── 🐍 settings.py             # Project configuration (DB, middleware, email, etc.)

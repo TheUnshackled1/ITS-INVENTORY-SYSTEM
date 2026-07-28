@@ -1,0 +1,56 @@
+<mxfile host="Electron" modified="2026-07-28T03:06:00.000Z" agent="Mozilla/5.0" version="21.6.8" type="device">
+  <diagram id="proj-struct" name="Project Structure Overview">
+    <mxGraphModel dx="1200" dy="700" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="900" pageHeight="600" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        
+        <!-- Root -->
+        <mxCell id="root" value="&lt;b style=&quot;font-size: 16px;&quot;&gt;📦 system/ (Root Repository)&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;font-size: 12px; color: #bae6fd;&quot;&gt;ITS Inventory Management System&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0f172a;strokeColor=#38bdf8;strokeWidth=2;fontColor=#ffffff;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="250" y="30" width="400" height="60" as="geometry" />
+        </mxCell>
+
+        <!-- Main Categories -->
+        <mxCell id="c_github" value="&lt;b style=&quot;font-size: 13px;&quot;&gt;📂 .github/&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;font-size: 10px; color: #cbd5e1;&quot;&gt;Issue &amp; PR Templates&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;strokeColor=#94a3b8;strokeWidth=1.5;fontColor=#ffffff;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="40" y="140" width="150" height="55" as="geometry" />
+        </mxCell>
+
+        <mxCell id="c_docs" value="&lt;b style=&quot;font-size: 13px;&quot;&gt;📂 docs/&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;font-size: 10px; color: #cbd5e1;&quot;&gt;Draw.io SVGs &amp; Assets&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;strokeColor=#94a3b8;strokeWidth=1.5;fontColor=#ffffff;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="210" y="140" width="150" height="55" as="geometry" />
+        </mxCell>
+
+        <mxCell id="c_its" value="&lt;b style=&quot;font-size: 13px;&quot;&gt;📂 its_inventory/&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;font-size: 10px; color: #a7f3d0;&quot;&gt;Project Settings &amp; URLs&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#092E20;strokeColor=#34d399;strokeWidth=1.5;fontColor=#ffffff;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="380" y="140" width="150" height="55" as="geometry" />
+        </mxCell>
+
+        <mxCell id="c_app" value="&lt;b style=&quot;font-size: 13px;&quot;&gt;📂 inventory/&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;font-size: 10px; color: #bae6fd;&quot;&gt;Models, Views &amp; Tests&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#003B57;strokeColor=#38bdf8;strokeWidth=1.5;fontColor=#ffffff;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="550" y="140" width="150" height="55" as="geometry" />
+        </mxCell>
+
+        <mxCell id="c_ui" value="&lt;b style=&quot;font-size: 13px;&quot;&gt;📂 templates/ &amp; static/&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;font-size: 10px; color: #ddd6fe;&quot;&gt;HTML, CSS &amp; JS Assets&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#581c87;strokeColor=#c084fc;strokeWidth=1.5;fontColor=#ffffff;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="720" y="140" width="150" height="55" as="geometry" />
+        </mxCell>
+
+        <!-- Sub Breakdown -->
+        <mxCell id="b_app" value="&lt;b style=&quot;font-size: 12px;&quot;&gt;⚙️ Core Application Logic&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;font-size: 10px; color: #e2e8f0;&quot;&gt;• models.py (Inventory, Issuance, Audit)&lt;br&gt;• views.py (CRUD, Borrowing, OTP APIs)&lt;br&gt;• forms.py &amp; admin.py&lt;br&gt;• tests.py (6/6 Unit Test Suite)&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#003B57;strokeColor=#38bdf8;strokeWidth=1;fontColor=#ffffff;align=left;spacingLeft=10;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="400" y="240" width="240" height="100" as="geometry" />
+        </mxCell>
+
+        <mxCell id="b_ui" value="&lt;b style=&quot;font-size: 12px;&quot;&gt;🎨 User Interface Layer&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;font-size: 10px; color: #e2e8f0;&quot;&gt;• dashboard.html &amp; inventory.html&lt;br&gt;• borrowing.html &amp; activity_log.html&lt;br&gt;• login.html (Sliding Portal)&lt;br&gt;• inventory.css, login.css &amp; JS scripts&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#581c87;strokeColor=#c084fc;strokeWidth=1;fontColor=#ffffff;align=left;spacingLeft=10;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="660" y="240" width="230" height="100" as="geometry" />
+        </mxCell>
+
+        <mxCell id="b_docs" value="&lt;b style=&quot;font-size: 12px;&quot;&gt;📄 Documentation Suite&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;font-size: 10px; color: #e2e8f0;&quot;&gt;• README.md &amp; INSTRUCTIONS.md&lt;br&gt;• ARCHITECTURE.md &amp; DEPLOYMENT.md&lt;br&gt;• TESTING.md, ROADMAP.md, CHANGELOG.md&lt;br&gt;• SECURITY.md, SUPPORT.md, CONTRIBUTING.md&lt;br&gt;• CODE_OF_CONDUCT.md, CITATION.cff, LICENSE&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;strokeColor=#94a3b8;strokeWidth=1;fontColor=#ffffff;align=left;spacingLeft=10;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="40" y="240" width="340" height="100" as="geometry" />
+        </mxCell>
+
+        <!-- Edges -->
+        <mxCell id="e1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#38bdf8;strokeWidth=1.5;" edge="1" parent="1" source="root" target="c_github" />
+        <mxCell id="e2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#38bdf8;strokeWidth=1.5;" edge="1" parent="1" source="root" target="c_docs" />
+        <mxCell id="e3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#38bdf8;strokeWidth=1.5;" edge="1" parent="1" source="root" target="c_its" />
+        <mxCell id="e4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#38bdf8;strokeWidth=1.5;" edge="1" parent="1" source="root" target="c_app" />
+        <mxCell id="e5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#38bdf8;strokeWidth=1.5;" edge="1" parent="1" source="root" target="c_ui" />
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
