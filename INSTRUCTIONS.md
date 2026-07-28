@@ -24,6 +24,13 @@
 
 ---
 
+### 🏗️ Local Development Setup Pipeline
+
+![Local Development Setup Pipeline](docs/local_setup_pipeline.drawio.svg)
+> ✏️ **Draw.io Source File:** [`docs/local_setup_pipeline.drawio`](docs/local_setup_pipeline.drawio) *(Editable in [Draw.io / app.diagrams.net](https://app.diagrams.net/))*
+
+---
+
 ## ✅ Prerequisites
 
 Make sure the following are installed on your Windows machine before you begin:

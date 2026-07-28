@@ -302,6 +302,8 @@ The application will be available at `http://127.0.0.1:8000/`.
 │   ├── 📐 contribution_workflow.drawio   # Editable contribution workflow Draw.io XML source
 │   ├── 📐 deployment_architecture.drawio.svg# Production deployment topology SVG diagram
 │   ├── 📐 deployment_architecture.drawio   # Editable deployment topology Draw.io XML source
+│   ├── 📐 local_setup_pipeline.drawio.svg# Local setup & installation pipeline SVG diagram
+│   ├── 📐 local_setup_pipeline.drawio    # Editable local setup pipeline Draw.io XML source
 │   ├── 📐 mvt_architecture.drawio.svg    # MVT architecture flow SVG diagram
 │   ├── 📐 mvt_architecture.drawio        # Editable MVT architecture Draw.io XML source
 │   ├── 📐 orm_relationships.drawio.svg  # ORM entity relationships SVG diagram
