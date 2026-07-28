@@ -1,0 +1,31 @@
+<mxfile host="Electron" modified="2026-07-28T04:00:00.000Z" agent="Mozilla/5.0" version="21.6.8" type="device">
+  <diagram id="support-flow" name="Support Escalation Channels">
+    <mxGraphModel dx="1200" dy="500" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="900" pageHeight="300" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <mxCell id="ch1" value="&lt;b style=&quot;font-size: 13px;&quot;&gt;1. Self-Service Docs&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;font-size: 10px; color: #bae6fd;&quot;&gt;INSTRUCTIONS.md &amp; README.md&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0369a1;strokeColor=#38bdf8;strokeWidth=2;fontColor=#ffffff;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="20" y="80" width="190" height="75" as="geometry" />
+        </mxCell>
+
+        <mxCell id="ch2" value="&lt;b style=&quot;font-size: 13px;&quot;&gt;2. GitHub Issues&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;font-size: 10px; color: #a7f3d0;&quot;&gt;Bug Reports &amp; Feature Requests&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#092E20;strokeColor=#34d399;strokeWidth=2;fontColor=#ffffff;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="250" y="80" width="190" height="75" as="geometry" />
+        </mxCell>
+
+        <mxCell id="ch3" value="&lt;b style=&quot;font-size: 13px;&quot;&gt;3. Security Report&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;font-size: 10px; color: #fde047;&quot;&gt;Private Security Email (SECURITY.md)&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#854d0e;strokeColor=#fde047;strokeWidth=2;fontColor=#ffffff;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="480" y="80" width="190" height="75" as="geometry" />
+        </mxCell>
+
+        <mxCell id="ch4" value="&lt;b style=&quot;font-size: 13px;&quot;&gt;4. Institutional Support&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;font-size: 10px; color: #ddd6fe;&quot;&gt;MIS &amp; ICT Department Leads&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#581c87;strokeColor=#c084fc;strokeWidth=2;fontColor=#ffffff;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="710" y="80" width="170" height="75" as="geometry" />
+        </mxCell>
+
+        <!-- Edges -->
+        <mxCell id="e1" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#38bdf8;strokeWidth=2;" edge="1" parent="1" source="ch1" target="ch2" />
+        <mxCell id="e2" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#34d399;strokeWidth=2;" edge="1" parent="1" source="ch2" target="ch3" />
+        <mxCell id="e3" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#fde047;strokeWidth=2;" edge="1" parent="1" source="ch3" target="ch4" />
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

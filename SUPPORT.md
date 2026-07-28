@@ -6,6 +6,9 @@
 
 ## 📋 Where to Get Help
 
+![Support Escalation Channels](docs/support_channels.drawio.svg)
+> ✏️ **Draw.io Source File:** [`docs/support_channels.drawio`](docs/support_channels.drawio) *(Editable in [Draw.io / app.diagrams.net](https://app.diagrams.net/))*
+
 If you encounter issues, have questions, or need assistance operating the system, please consult the resources below in order:
 
 ### 1. 📖 Self-Service Documentation
