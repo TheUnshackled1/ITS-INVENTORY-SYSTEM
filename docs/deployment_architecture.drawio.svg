@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 850 480" width="100%" height="100%" style="background-color: #0b0f19; font-family: system-ui, -apple-system, sans-serif;">
+  <defs>
+    <filter id="shadow" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#000000" flood-opacity="0.5"/>
+    </filter>
+    <marker id="arrow-blue" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#38bdf8"/>
+    </marker>
+    <marker id="arrow-green" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#34d399"/>
+    </marker>
+    <marker id="arrow-gray" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#94a3b8"/>
+    </marker>
+    <marker id="arrow-purple" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#c084fc"/>
+    </marker>
+  </defs>
+
+  <!-- Connectors -->
+  <path d="M 240 115 L 320 115" stroke="#38bdf8" stroke-width="2.5" marker-end="url(#arrow-blue)" fill="none"/>
+  <text x="245" y="105" fill="#38bdf8" font-size="11" font-weight="600">HTTPS (443)</text>
+
+  <path d="M 550 115 L 610 115" stroke="#94a3b8" stroke-width="2.5" marker-end="url(#arrow-gray)" fill="none"/>
+  <text x="555" y="105" fill="#94a3b8" font-size="11" font-weight="600">Static Mappings</text>
+
+  <path d="M 435 150 L 435 230" stroke="#34d399" stroke-width="2.5" marker-end="url(#arrow-green)" fill="none"/>
+  <text x="445" y="195" fill="#34d399" font-size="11" font-weight="600">WSGI Pass</text>
+
+  <path d="M 370 300 L 270 360" stroke="#38bdf8" stroke-width="2.5" marker-end="url(#arrow-blue)" fill="none"/>
+  <text x="260" y="325" fill="#38bdf8" font-size="11" font-weight="600">ORM Operations</text>
+
+  <path d="M 500 300 L 600 360" stroke="#c084fc" stroke-width="2.5" marker-end="url(#arrow-purple)" fill="none"/>
+  <text x="560" y="325" fill="#c084fc" font-size="11" font-weight="600">SMTP Email Outbox</text>
+
+  <!-- Nodes -->
+  <rect x="40" y="80" width="200" height="70" rx="12" fill="#0f172a" stroke="#38bdf8" stroke-width="2" filter="url(#shadow)"/>
+  <text x="140" y="110" fill="#ffffff" font-size="14" font-weight="bold" text-anchor="middle">🌐 HTTPS Client Browser</text>
+  <text x="140" y="130" fill="#cbd5e1" font-size="11" text-anchor="middle">End User Access</text>
+
+  <rect x="320" y="80" width="230" height="70" rx="12" fill="#092E20" stroke="#34d399" stroke-width="2" filter="url(#shadow)"/>
+  <text x="435" y="110" fill="#ffffff" font-size="14" font-weight="bold" text-anchor="middle">☁️ Web Gateway / Nginx</text>
+  <text x="435" y="130" fill="#a7f3d0" font-size="11" text-anchor="middle">PythonAnywhere WSGI / SSL</text>
+
+  <rect x="610" y="80" width="200" height="70" rx="12" fill="#1e293b" stroke="#94a3b8" stroke-width="2" filter="url(#shadow)"/>
+  <text x="710" y="110" fill="#ffffff" font-size="14" font-weight="bold" text-anchor="middle">📁 Static Files Storage</text>
+  <text x="710" y="130" fill="#cbd5e1" font-size="11" text-anchor="middle">/staticfiles/ (collectstatic)</text>
+
+  <rect x="320" y="230" width="230" height="70" rx="12" fill="#003B57" stroke="#38bdf8" stroke-width="2" filter="url(#shadow)"/>
+  <text x="435" y="260" fill="#ffffff" font-size="14" font-weight="bold" text-anchor="middle">⚙️ Django Application</text>
+  <text x="435" y="280" fill="#bae6fd" font-size="11" text-anchor="middle">Gunicorn Worker / Python 3.13</text>
+
+  <rect x="160" y="360" width="220" height="90" rx="12" fill="#003B57" stroke="#38bdf8" stroke-width="2" filter="url(#shadow)"/>
+  <text x="270" y="395" fill="#ffffff" font-size="15" font-weight="bold" text-anchor="middle">🗄️ Production Database</text>
+  <text x="270" y="415" fill="#bae6fd" font-size="12" text-anchor="middle">PostgreSQL / SQLite3</text>
+  <text x="270" y="432" fill="#7dd3fc" font-size="11" text-anchor="middle">db.sqlite3 / system_db</text>
+
+  <rect x="490" y="360" width="220" height="90" rx="12" fill="#581c87" stroke="#c084fc" stroke-width="2" filter="url(#shadow)"/>
+  <text x="600" y="395" fill="#ffffff" font-size="15" font-weight="bold" text-anchor="middle">📧 SMTP Email Server</text>
+  <text x="600" y="415" fill="#ddd6fe" font-size="12" text-anchor="middle">Django Core Mail</text>
+  <text x="600" y="432" fill="#c084fc" font-size="11" text-anchor="middle">6-Digit OTP Delivery</text>
+</svg>

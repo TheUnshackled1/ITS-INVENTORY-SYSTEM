@@ -28,6 +28,11 @@
 The official live production instance is deployed at:  
 **`http://itsinventory.pythonanywhere.com/`**
 
+### 🏗️ Production Deployment Topology
+
+![Production Deployment Topology](docs/deployment_architecture.drawio.svg)
+> ✏️ **Draw.io Source File:** [`docs/deployment_architecture.drawio`](docs/deployment_architecture.drawio) *(Editable in [Draw.io / app.diagrams.net](https://app.diagrams.net/))*
+
 ---
 
 ## ✅ Prerequisites
