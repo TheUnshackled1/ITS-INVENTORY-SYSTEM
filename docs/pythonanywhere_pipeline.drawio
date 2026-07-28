@@ -1,0 +1,41 @@
+<mxfile host="Electron" modified="2026-07-28T03:55:00.000Z" agent="Mozilla/5.0" version="21.6.8" type="device">
+  <diagram id="pa-pipeline" name="PythonAnywhere Deployment Steps">
+    <mxGraphModel dx="1200" dy="500" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="900" pageHeight="300" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <mxCell id="step1" value="&lt;b style=&quot;font-size: 13px;&quot;&gt;1. Clone Repository&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;font-size: 10px; color: #cbd5e1;&quot;&gt;git clone repo into ~/system&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0f172a;strokeColor=#38bdf8;strokeWidth=2;fontColor=#ffffff;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="20" y="80" width="130" height="75" as="geometry" />
+        </mxCell>
+
+        <mxCell id="step2" value="&lt;b style=&quot;font-size: 13px;&quot;&gt;2. Virtual Env&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;font-size: 10px; color: #bae6fd;&quot;&gt;python3.13 -m venv env&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0369a1;strokeColor=#38bdf8;strokeWidth=2;fontColor=#ffffff;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="170" y="80" width="130" height="75" as="geometry" />
+        </mxCell>
+
+        <mxCell id="step3" value="&lt;b style=&quot;font-size: 13px;&quot;&gt;3. Dependencies&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;font-size: 10px; color: #a7f3d0;&quot;&gt;pip install -r requirements&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#092E20;strokeColor=#34d399;strokeWidth=2;fontColor=#ffffff;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="320" y="80" width="130" height="75" as="geometry" />
+        </mxCell>
+
+        <mxCell id="step4" value="&lt;b style=&quot;font-size: 13px;&quot;&gt;4. .env &amp; Migrate&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;font-size: 10px; color: #fde047;&quot;&gt;python manage.py migrate&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#854d0e;strokeColor=#fde047;strokeWidth=2;fontColor=#ffffff;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="470" y="80" width="130" height="75" as="geometry" />
+        </mxCell>
+
+        <mxCell id="step5" value="&lt;b style=&quot;font-size: 13px;&quot;&gt;5. Collectstatic&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;font-size: 10px; color: #ddd6fe;&quot;&gt;collectstatic --noinput&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#581c87;strokeColor=#c084fc;strokeWidth=2;fontColor=#ffffff;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="620" y="80" width="130" height="75" as="geometry" />
+        </mxCell>
+
+        <mxCell id="step6" value="&lt;b style=&quot;font-size: 13px;&quot;&gt;6. WSGI &amp; SSL&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;font-size: 10px; color: #a7f3d0;&quot;&gt;Web Tab reload &amp; HTTPS&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#065f46;strokeColor=#34d399;strokeWidth=2;fontColor=#ffffff;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="770" y="80" width="130" height="75" as="geometry" />
+        </mxCell>
+
+        <!-- Edges -->
+        <mxCell id="e1" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#38bdf8;strokeWidth=2;" edge="1" parent="1" source="step1" target="step2" />
+        <mxCell id="e2" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#38bdf8;strokeWidth=2;" edge="1" parent="1" source="step2" target="step3" />
+        <mxCell id="e3" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#34d399;strokeWidth=2;" edge="1" parent="1" source="step3" target="step4" />
+        <mxCell id="e4" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#fde047;strokeWidth=2;" edge="1" parent="1" source="step4" target="step5" />
+        <mxCell id="e5" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#c084fc;strokeWidth=2;" edge="1" parent="1" source="step5" target="step6" />
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

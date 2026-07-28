@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 200" width="100%" height="100%" style="background-color: #0b0f19; font-family: system-ui, -apple-system, sans-serif;">
+  <defs>
+    <filter id="shadow" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#000000" flood-opacity="0.5"/>
+    </filter>
+    <marker id="arrow-blue" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#38bdf8"/>
+    </marker>
+    <marker id="arrow-green" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#34d399"/>
+    </marker>
+    <marker id="arrow-yellow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#fde047"/>
+    </marker>
+    <marker id="arrow-purple" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#c084fc"/>
+    </marker>
+  </defs>
+
+  <!-- Connectors -->
+  <path d="M 140 100 L 160 100" stroke="#38bdf8" stroke-width="2.5" marker-end="url(#arrow-blue)" fill="none"/>
+  <path d="M 290 100 L 310 100" stroke="#38bdf8" stroke-width="2.5" marker-end="url(#arrow-blue)" fill="none"/>
+  <path d="M 440 100 L 460 100" stroke="#34d399" stroke-width="2.5" marker-end="url(#arrow-green)" fill="none"/>
+  <path d="M 590 100 L 610 100" stroke="#fde047" stroke-width="2.5" marker-end="url(#arrow-yellow)" fill="none"/>
+  <path d="M 740 100 L 760 100" stroke="#c084fc" stroke-width="2.5" marker-end="url(#arrow-purple)" fill="none"/>
+
+  <!-- Step Cards -->
+  <rect x="15" y="60" width="125" height="80" rx="10" fill="#0f172a" stroke="#38bdf8" stroke-width="2" filter="url(#shadow)"/>
+  <text x="77" y="90" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle">1. Clone Repo</text>
+  <text x="77" y="112" fill="#cbd5e1" font-size="10" text-anchor="middle">git clone ~/system</text>
+
+  <rect x="165" y="60" width="125" height="80" rx="10" fill="#0369a1" stroke="#38bdf8" stroke-width="2" filter="url(#shadow)"/>
+  <text x="227" y="90" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle">2. Virtual Env</text>
+  <text x="227" y="112" fill="#bae6fd" font-size="10" text-anchor="middle">python3.13 -m venv</text>
+
+  <rect x="315" y="60" width="125" height="80" rx="10" fill="#092E20" stroke="#34d399" stroke-width="2" filter="url(#shadow)"/>
+  <text x="377" y="90" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle">3. Dependencies</text>
+  <text x="377" y="112" fill="#a7f3d0" font-size="10" text-anchor="middle">pip install -r reqs</text>
+
+  <rect x="465" y="60" width="125" height="80" rx="10" fill="#854d0e" stroke="#fde047" stroke-width="2" filter="url(#shadow)"/>
+  <text x="527" y="90" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle">4. .env &amp; Migrate</text>
+  <text x="527" y="112" fill="#fde047" font-size="10" text-anchor="middle">manage.py migrate</text>
+
+  <rect x="615" y="60" width="125" height="80" rx="10" fill="#581c87" stroke="#c084fc" stroke-width="2" filter="url(#shadow)"/>
+  <text x="677" y="90" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle">5. Collectstatic</text>
+  <text x="677" y="112" fill="#ddd6fe" font-size="10" text-anchor="middle">collectstatic --noinput</text>
+
+  <rect x="765" y="60" width="125" height="80" rx="10" fill="#065f46" stroke="#34d399" stroke-width="2" filter="url(#shadow)"/>
+  <text x="827" y="90" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle">6. WSGI &amp; SSL</text>
+  <text x="827" y="112" fill="#a7f3d0" font-size="10" text-anchor="middle">Reload &amp; Force HTTPS</text>
+</svg>

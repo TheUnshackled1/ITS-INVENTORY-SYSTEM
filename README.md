@@ -310,6 +310,8 @@ The application will be available at `http://127.0.0.1:8000/`.
 │   ├── 📐 otp_state_machine.drawio       # Editable OTP state machine Draw.io XML source
 │   ├── 📐 project_structure.drawio.svg   # Project structure breakdown SVG diagram
 │   ├── 📐 project_structure.drawio       # Editable project structure Draw.io XML source
+│   ├── 📐 pythonanywhere_pipeline.drawio.svg# PythonAnywhere deployment pipeline SVG diagram
+│   ├── 📐 pythonanywhere_pipeline.drawio # Editable PythonAnywhere deployment pipeline Draw.io XML source
 │   ├── 📐 roadmap_milestones.drawio.svg  # System release roadmap milestones SVG diagram
 │   └── 📐 roadmap_milestones.drawio      # Editable release roadmap Draw.io XML source
 ├── 📂 env/                        🐍 Python virtual environment (local / ignored)

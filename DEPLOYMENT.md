@@ -46,6 +46,9 @@ Before deploying, ensure you have:
 
 ## ☁️ PythonAnywhere Deployment
 
+![PythonAnywhere Deployment Pipeline](docs/pythonanywhere_pipeline.drawio.svg)
+> ✏️ **Draw.io Source File:** [`docs/pythonanywhere_pipeline.drawio`](docs/pythonanywhere_pipeline.drawio) *(Editable in [Draw.io / app.diagrams.net](https://app.diagrams.net/))*
+
 ### Step 1: Clone the Repository
 
 Log into PythonAnywhere, open a **Bash Console**, and clone the project into your home directory:
