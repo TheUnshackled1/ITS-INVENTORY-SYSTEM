@@ -300,6 +300,8 @@ The application will be available at `http://127.0.0.1:8000/`.
 │   ├── 📐 changelog_timeline.drawio      # Editable version history Draw.io XML source
 │   ├── 📐 citation_structure.drawio.svg   # Software citation metadata SVG diagram
 │   ├── 📐 citation_structure.drawio      # Editable citation metadata Draw.io XML source
+│   ├── 📐 conduct_enforcement.drawio.svg  # Code of conduct enforcement process SVG diagram
+│   ├── 📐 conduct_enforcement.drawio      # Editable code of conduct enforcement Draw.io XML source
 │   ├── 📐 contribution_workflow.drawio.svg# Developer contribution workflow SVG diagram
 │   ├── 📐 contribution_workflow.drawio   # Editable contribution workflow Draw.io XML source
 │   ├── 📐 deployment_architecture.drawio.svg# Production deployment topology SVG diagram

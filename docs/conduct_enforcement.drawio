@@ -1,0 +1,36 @@
+<mxfile host="Electron" modified="2026-07-28T04:04:00.000Z" agent="Mozilla/5.0" version="21.6.8" type="device">
+  <diagram id="conduct-flow" name="Code of Conduct Enforcement Process">
+    <mxGraphModel dx="1200" dy="500" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="900" pageHeight="300" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <mxCell id="st1" value="&lt;b style=&quot;font-size: 13px;&quot;&gt;1. Incident Report&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;font-size: 10px; color: #bae6fd;&quot;&gt;Private email to MIS lead&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0369a1;strokeColor=#38bdf8;strokeWidth=2;fontColor=#ffffff;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="20" y="80" width="150" height="75" as="geometry" />
+        </mxCell>
+
+        <mxCell id="st2" value="&lt;b style=&quot;font-size: 13px;&quot;&gt;2. Investigation&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;font-size: 10px; color: #a7f3d0;&quot;&gt;Prompt, fair &amp; private triage&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#092E20;strokeColor=#34d399;strokeWidth=2;fontColor=#ffffff;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="200" y="80" width="160" height="75" as="geometry" />
+        </mxCell>
+
+        <mxCell id="st3" value="&lt;b style=&quot;font-size: 13px;&quot;&gt;3. Correction / Warning&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;font-size: 10px; color: #fde047;&quot;&gt;Written warning &amp; guidance&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#854d0e;strokeColor=#fde047;strokeWidth=2;fontColor=#ffffff;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="390" y="80" width="170" height="75" as="geometry" />
+        </mxCell>
+
+        <mxCell id="st4" value="&lt;b style=&quot;font-size: 13px;&quot;&gt;4. Temporary Ban&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;font-size: 10px; color: #ddd6fe;&quot;&gt;Time-limited project ban&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#581c87;strokeColor=#c084fc;strokeWidth=2;fontColor=#ffffff;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="590" y="80" width="150" height="75" as="geometry" />
+        </mxCell>
+
+        <mxCell id="st5" value="&lt;b style=&quot;font-size: 13px;&quot;&gt;5. Permanent Ban&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;font-size: 10px; color: #fecdd3;&quot;&gt;Egregious violations ban&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#9f1239;strokeColor=#f43f5e;strokeWidth=2;fontColor=#ffffff;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="770" y="80" width="140" height="75" as="geometry" />
+        </mxCell>
+
+        <!-- Edges -->
+        <mxCell id="e1" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#38bdf8;strokeWidth=2;" edge="1" parent="1" source="st1" target="st2" />
+        <mxCell id="e2" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#34d399;strokeWidth=2;" edge="1" parent="1" source="st2" target="st3" />
+        <mxCell id="e3" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#fde047;strokeWidth=2;" edge="1" parent="1" source="st3" target="st4" />
+        <mxCell id="e4" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#c084fc;strokeWidth=2;" edge="1" parent="1" source="st4" target="st5" />
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

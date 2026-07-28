@@ -44,6 +44,9 @@ This Code of Conduct applies within all project spaces, including the GitHub rep
 
 ## Reporting & Enforcement
 
+![Code of Conduct Enforcement Process](docs/conduct_enforcement.drawio.svg)
+> ✏️ **Draw.io Source File:** [`docs/conduct_enforcement.drawio`](docs/conduct_enforcement.drawio) *(Editable in [Draw.io / app.diagrams.net](https://app.diagrams.net/))*
+
 Instances of abusive, harassing, or otherwise unacceptable behavior may be reported by contacting the project team privately at `jtcoronel.chmsu@gmail.com` or reaching out directly to the **Management Information Systems (MIS) Department**.
 
 All complaints will be reviewed and investigated promptly and fairly. All community leaders are obligated to respect the privacy and security of the reporter of any incident.
