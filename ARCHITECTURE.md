@@ -22,26 +22,8 @@
 
 The system is structured as a full-stack Django 5.2 application following the Model-View-Template (MVT) architecture with RESTful JSON endpoints for asynchronous UI interactions:
 
-```
-                  ┌─────────────────────────────────────────┐
-                  │          Browser / Frontend Client      │
-                  │   Tailwind CSS + SimpleDatatables + JS  │
-                  └────────────────────┬────────────────────┘
-                                       │
-                         HTTP / AJAX   │   JSON / Rendered HTML
-                                       ▼
-                  ┌─────────────────────────────────────────┐
-                  │             Django View Layer           │
-                  │   (inventory/views.py & Auth APIs)      │
-                  └───────┬──────────────────────────┬──────┘
-                          │                          │
-           ORM Operations │                          │ SMTP Email
-                          ▼                          ▼
-            ┌────────────────────────┐    ┌────────────────────┐
-            │   SQLite3 / PostgreSQL │    │   SMTP Mail Engine │
-            │   (3 Relational Tables)│    │   (6-Digit OTP)    │
-            └────────────────────────┘    └────────────────────┘
-```
+![MVT System Architecture](docs/mvt_architecture.drawio.svg)
+> ✏️ **Draw.io Source File:** [`docs/mvt_architecture.drawio`](docs/mvt_architecture.drawio) *(Editable in [Draw.io / app.diagrams.net](https://app.diagrams.net/))*
 
 ---
 
@@ -108,19 +90,8 @@ Maintains an immutable system-wide audit trail for all CRUD operations, equipmen
 
 ## 🔗 ORM Relationships & Cascade Rules
 
-```
-     ┌──────────────┐                 ┌──────────────────┐
-     │  auth_user   │◄──(SET_NULL)────│    AuditLog      │
-     └──────┬───────┘                 └──────────────────┘
-            │
-        (SET_NULL)
-            │
-            ▼
-┌───────────────────────┐            ┌──────────────────┐
-│     IssuanceLog       │──(CASCADE)►│    Inventory     │
-│  (Borrowing Tracker)  │            │  (Equipment DB)  │
-└───────────────────────┘            └──────────────────┘
-```
+![ORM Relationships Diagram](docs/orm_relationships.drawio.svg)
+> ✏️ **Draw.io Source File:** [`docs/orm_relationships.drawio`](docs/orm_relationships.drawio) *(Editable in [Draw.io / app.diagrams.net](https://app.diagrams.net/))*
 
 - **`IssuanceLog` -> `Inventory` (`CASCADE`)**: Deleting an inventory item cascades to delete its historical loan logs.
 - **`IssuanceLog` -> `User` (`SET_NULL`)**: Deleting a staff user sets `created_by` to `NULL` while preserving the borrowing record for accountability.

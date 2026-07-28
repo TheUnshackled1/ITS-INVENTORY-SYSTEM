@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" width="100%" height="100%" style="background-color: #0b0f19; font-family: system-ui, -apple-system, sans-serif;">
+  <defs>
+    <filter id="shadow" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#000000" flood-opacity="0.5"/>
+    </filter>
+    <marker id="arrow-red" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#fb7185"/>
+    </marker>
+    <marker id="arrow-yellow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#fde047"/>
+    </marker>
+  </defs>
+
+  <!-- Connectors -->
+  <path d="M 175 210 L 175 140 L 335 140 L 335 110" stroke="#fb7185" stroke-width="2.5" marker-end="url(#arrow-red)" fill="none"/>
+  <text x="175" y="130" fill="#fb7185" font-size="12" font-weight="bold">user (SET_NULL)</text>
+
+  <path d="M 625 210 L 625 140 L 465 140 L 465 110" stroke="#fb7185" stroke-width="2.5" marker-end="url(#arrow-red)" fill="none"/>
+  <text x="515" y="130" fill="#fb7185" font-size="12" font-weight="bold">created_by (SET_NULL)</text>
+
+  <path d="M 625 280 L 625 340" stroke="#fde047" stroke-width="2.5" marker-end="url(#arrow-yellow)" fill="none"/>
+  <text x="635" y="315" fill="#fde047" font-size="12" font-weight="bold">item (CASCADE)</text>
+
+  <!-- User Box -->
+  <rect x="270" y="40" width="260" height="70" rx="12" fill="#1e293b" stroke="#94a3b8" stroke-width="2" filter="url(#shadow)"/>
+  <text x="400" y="70" fill="#ffffff" font-size="16" font-weight="bold" text-anchor="middle">👤 User Model</text>
+  <text x="400" y="92" fill="#cbd5e1" font-size="12" text-anchor="middle">auth_user (Staff Account)</text>
+
+  <!-- AuditLog Box -->
+  <rect x="60" y="210" width="230" height="70" rx="12" fill="#0369a1" stroke="#38bdf8" stroke-width="2" filter="url(#shadow)"/>
+  <text x="175" y="240" fill="#ffffff" font-size="15" font-weight="bold" text-anchor="middle">📝 AuditLog Model</text>
+  <text x="175" y="262" fill="#bae6fd" font-size="12" text-anchor="middle">Action &amp; JSON State Diffs</text>
+
+  <!-- IssuanceLog Box -->
+  <rect x="510" y="210" width="230" height="70" rx="12" fill="#092E20" stroke="#34d399" stroke-width="2" filter="url(#shadow)"/>
+  <text x="625" y="240" fill="#ffffff" font-size="15" font-weight="bold" text-anchor="middle">🔄 IssuanceLog Model</text>
+  <text x="625" y="262" fill="#a7f3d0" font-size="12" text-anchor="middle">Borrowing Tracker Record</text>
+
+  <!-- Inventory Box -->
+  <rect x="510" y="340" width="230" height="70" rx="12" fill="#003B57" stroke="#38bdf8" stroke-width="2" filter="url(#shadow)"/>
+  <text x="625" y="370" fill="#ffffff" font-size="15" font-weight="bold" text-anchor="middle">📦 Inventory Model</text>
+  <text x="625" y="392" fill="#bae6fd" font-size="12" text-anchor="middle">Equipment Database Record</text>
+</svg>

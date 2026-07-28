@@ -292,7 +292,11 @@ The application will be available at `http://127.0.0.1:8000/`.
 │   ├── 📐 architecture.drawio.svg  # Overall system flow SVG diagram
 │   ├── 📐 architecture.drawio      # Editable Draw.io XML source
 │   ├── 📐 borrowing_lifecycle.drawio.svg # Borrowing lifecycle SVG diagram
-│   └── 📐 borrowing_lifecycle.drawio     # Editable Draw.io XML source
+│   ├── 📐 borrowing_lifecycle.drawio     # Editable Draw.io XML source
+│   ├── 📐 mvt_architecture.drawio.svg    # MVT architecture flow SVG diagram
+│   ├── 📐 mvt_architecture.drawio        # Editable MVT architecture Draw.io XML source
+│   ├── 📐 orm_relationships.drawio.svg  # ORM entity relationships SVG diagram
+│   └── 📐 orm_relationships.drawio      # Editable ORM relationships Draw.io XML source
 ├── 📂 env/                        🐍 Python virtual environment (local / ignored)
 ├── 📂 its_inventory/              ⚙️ Django project: settings, urls, wsgi, asgi
 │   ├── 🐍 settings.py             # Project configuration (DB, middleware, email, etc.)

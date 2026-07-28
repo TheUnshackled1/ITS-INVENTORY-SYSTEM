@@ -1,0 +1,31 @@
+<mxfile host="Electron" modified="2026-07-28T02:52:00.000Z" agent="Mozilla/5.0" version="21.6.8" type="device">
+  <diagram id="orm-rel" name="ORM Relationships & Cascade Rules">
+    <mxGraphModel dx="1000" dy="600" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="800" pageHeight="450" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="user" value="&lt;b style=&quot;font-size: 15px;&quot;&gt;👤 User Model&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;font-size: 12px; color: #cbd5e1;&quot;&gt;auth_user (Staff Account)&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;strokeColor=#94a3b8;strokeWidth=2;fontColor=#ffffff;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="270" y="40" width="260" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="audit" value="&lt;b style=&quot;font-size: 14px;&quot;&gt;📝 AuditLog Model&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;font-size: 11px; color: #bae6fd;&quot;&gt;Action &amp; JSON State Diffs&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0369a1;strokeColor=#38bdf8;strokeWidth=2;fontColor=#ffffff;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="60" y="210" width="230" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="issuance" value="&lt;b style=&quot;font-size: 14px;&quot;&gt;🔄 IssuanceLog Model&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;font-size: 11px; color: #a7f3d0;&quot;&gt;Borrowing Tracker Record&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#092E20;strokeColor=#34d399;strokeWidth=2;fontColor=#ffffff;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="510" y="210" width="230" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="inventory" value="&lt;b style=&quot;font-size: 15px;&quot;&gt;📦 Inventory Model&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;font-size: 12px; color: #bae6fd;&quot;&gt;Equipment Database Record&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#003B57;strokeColor=#38bdf8;strokeWidth=2;fontColor=#ffffff;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="510" y="340" width="230" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="e_audit_user" value="user (SET_NULL)" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.25;entryY=1;entryDx=0;entryDy=0;strokeColor=#f43f5e;strokeWidth=2;fontColor=#fb7185;fontSize=11;" edge="1" parent="1" source="audit" target="user">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_issuance_user" value="created_by (SET_NULL)" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.75;entryY=1;entryDx=0;entryDy=0;strokeColor=#f43f5e;strokeWidth=2;fontColor=#fb7185;fontSize=11;" edge="1" parent="1" source="issuance" target="user">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_issuance_inventory" value="item (CASCADE)" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeColor=#eab308;strokeWidth=2;fontColor=#fde047;fontSize=11;" edge="1" parent="1" source="issuance" target="inventory">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
