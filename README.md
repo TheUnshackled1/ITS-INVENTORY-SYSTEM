@@ -294,11 +294,12 @@ The application will be available at `http://127.0.0.1:8000/`.
 │   │   └── 📊 ITS_INVENTORY_2000_FIXED.xlsx
 │   ├── 📐 architecture.drawio.svg  # Overall system flow SVG diagram
 │   ├── 📐 borrowing_lifecycle.drawio.svg # Borrowing lifecycle SVG diagram
+│   ├── 📐 license_rights.drawio.svg    # MIT License terms & rights SVG diagram
 │   ├── 📐 mvt_architecture.drawio.svg    # MVT architecture flow SVG diagram
 │   ├── 📐 orm_relationships.drawio.svg  # ORM entity relationships SVG diagram
 │   ├── 📐 otp_state_machine.drawio.svg   # OTP authentication state machine SVG diagram
 │   ├── 📐 project_structure.drawio.svg   # Project structure breakdown SVG diagram
-│   └── 📐 (28 additional *.drawio.svg & *.drawio vector diagrams)
+│   └── 📐 (30 additional *.drawio.svg & *.drawio vector diagrams)
 ├── 📂 env/                        🐍 Python virtual environment (local / ignored)
 ├── 📂 its_inventory/              ⚙️ Django project: settings, urls, wsgi, asgi
 │   ├── 🐍 settings.py             # Project configuration (DB, middleware, email, etc.)
