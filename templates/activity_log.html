@@ -18,7 +18,6 @@
 <body class="min-h-screen font-sans text-slate-900 antialiased">
   <div class="app-shell">
     <aside class="sidebar">
-      <!-- Floating Sidebar Toggle Button -->
       <button id="sidebarToggle" class="absolute -right-4 top-1/2 -translate-y-1/2 z-50 hidden md:flex h-8 w-8 items-center justify-center rounded-full bg-blue-800 text-white shadow-[0_4px_14px_rgba(30,58,138,0.35)] ring-2 ring-blue-700/50 transition-all duration-300 hover:scale-110 hover:bg-blue-700 cursor-pointer group" aria-label="Toggle Sidebar">
         <svg class="h-4 w-4 transition-transform duration-300 group-[.collapsed]:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
           <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
@@ -78,9 +77,7 @@
         <section
           class="backdrop-card mt-4 overflow-hidden rounded-3xl border border-white/70 shadow-soft ring-1 ring-slate-200/60">
           <div class="flex flex-col gap-5 p-5 lg:p-6">
-            <!-- Header Row -->
             <div class="relative flex flex-col gap-5 lg:flex-row lg:items-center lg:justify-between min-h-[50px]">
-              <!-- Centered Title -->
               <div class="flex justify-center text-center w-full">
                 <h1
                   class="text-lg sm:text-xl md:text-2xl font-extrabold uppercase tracking-widest text-blue-800 drop-shadow-sm whitespace-nowrap">
@@ -88,10 +85,8 @@
                 </h1>
               </div>
             </div>
-            <!-- Statistics Cards -->
             <div class="stats-scene">
               <div id="stats-cards-container" class="grid grid-cols-2 gap-3 sm:grid-cols-3 xl:grid-cols-6">                
-                <!-- Added Card -->
                 <div class="stats-card stats-card--added p-4">
                   <div class="relative flex h-full flex-col gap-3">
                   <div class="flex items-center text-emerald-700 gap-2 font-medium">
@@ -106,7 +101,6 @@
                     </div>
                   </div>
                 </div>
-                <!-- Edited Card -->
                 <div class="stats-card stats-card--edited p-4">
                   <div class="relative flex h-full flex-col gap-3">
                   <div class="flex items-center text-blue-700 gap-2 font-medium">
@@ -121,7 +115,6 @@
                     </div>
                   </div>
                 </div>
-                <!-- Deleted Card -->
                 <div class="stats-card stats-card--deleted p-4">
                   <div class="relative flex h-full flex-col gap-3">
                   <div class="flex items-center text-rose-700 gap-2 font-medium">
@@ -136,7 +129,6 @@
                     </div>
                   </div>
                 </div>
-                <!-- Uploaded Card -->
                 <div class="stats-card stats-card--uploaded p-4">
                   <div class="relative flex h-full flex-col gap-3">
                   <div class="flex items-center text-purple-700 gap-2 font-medium">
@@ -151,7 +143,6 @@
                     </div>
                   </div>
                 </div>
-                <!-- Borrowed Card -->
                 <div class="stats-card stats-card--borrowed p-4">
                   <div class="relative flex h-full flex-col gap-3">
                   <div class="flex items-center text-sky-700 gap-2 font-medium">
@@ -166,7 +157,6 @@
                     </div>
                   </div>
                 </div>
-                <!-- Returned Card -->
                 <div class="stats-card stats-card--returned p-4">
                   <div class="relative flex h-full flex-col gap-3">
                   <div class="flex items-center text-slate-600 gap-2 font-medium">
@@ -264,7 +254,6 @@
                 </tr>
               </thead>
               <tbody id="logs-tbody" class="divide-y divide-slate-200 bg-white">
-                <!-- Virtual Renderer Output goes here -->
               </tbody>
             </table>
           </div>
@@ -299,16 +288,12 @@
       </main>
     </div>
   </div>
-  <!-- Log Detail Overlay Modal -->
   <div id="logDetailModalOverlay" style="display: none;" class="fixed inset-0 z-[200] flex items-center justify-center bg-slate-900/60 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300">
     <div id="logDetailModalCard" class="relative w-full max-w-[340px] bg-white rounded-3xl shadow-2xl overflow-hidden transform -translate-x-[100vw] opacity-0 transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] mx-4">
-      <!-- Close Button (X) -->
       <button type="button" id="logDetailModalCloseBtn" class="absolute top-3 right-3 w-7 h-7 flex items-center justify-center rounded-full bg-rose-600 text-white hover:bg-rose-700 transition-colors shadow-sm focus:outline-none focus:ring-4 focus:ring-rose-600/30 z-[100]">
         <svg class="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
       </button>
-      <!-- Top Blue Half -->
       <div class="bg-blue-600 px-6 pt-7 pb-6 flex flex-col items-center justify-center text-white">
-        <!-- Info Icon -->
         <div class="w-12 h-12 rounded-full border-[2.5px] border-white flex items-center justify-center mb-3 shadow-sm bg-blue-500">
           <svg class="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
             <path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -316,7 +301,6 @@
         </div>
         <h3 class="text-[14px] font-extrabold tracking-[0.25em] uppercase drop-shadow-sm text-center">Details</h3>
       </div>      
-      <!-- Bottom White Half -->
       <div class="bg-white px-6 py-7 flex flex-col items-center text-center">
         <div class="w-full bg-slate-50 rounded-xl border border-slate-100 p-5 shadow-sm">
           <div id="logDetailSummary" class="text-[13px] font-bold text-slate-800 leading-relaxed w-full"></div>
@@ -325,6 +309,5 @@
     </div>
   </div>
   <script src="https://cdn.jsdelivr.net/npm/simple-datatables@9.0.3"></script>
-  <!-- All custom scripts have been moved to static/js/inventory.js -->
 </body>
 </html>

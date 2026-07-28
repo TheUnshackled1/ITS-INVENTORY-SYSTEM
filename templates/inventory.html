@@ -96,7 +96,6 @@
   {% endif %}
   <div class="app-shell">
     <aside class="sidebar">
-      <!-- Floating Sidebar Toggle Button -->
       <button id="sidebarToggle" class="absolute -right-4 top-1/2 -translate-y-1/2 z-50 hidden md:flex h-8 w-8 items-center justify-center rounded-full bg-blue-800 text-white shadow-[0_4px_14px_rgba(30,58,138,0.35)] ring-2 ring-blue-700/50 transition-all duration-300 hover:scale-110 hover:bg-blue-700 cursor-pointer group" aria-label="Toggle Sidebar">
         <svg class="h-4 w-4 transition-transform duration-300 group-[.collapsed]:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
           <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
@@ -105,13 +104,11 @@
       <div class="sidebar__inner relative">
         <div class="sidebar__brand relative w-full flex items-center">
           <span class="sidebar__brand-mark shrink-0 transition-all duration-300 text-xl">📦</span>
-          
           <div class="sidebar__brand-text ml-3 whitespace-nowrap overflow-hidden transition-all duration-300">
             ITS Inventory
           </div>
         </div>
         <nav class="sidebar__nav mt-5" aria-label="Inventory navigation">
-          
           <a class="sidebar__link" href="{% url 'dashboard' %}">
             <span class="sidebar__icon"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><rect width="7" height="9" x="3" y="3" rx="1.5"/><rect width="7" height="5" x="14" y="3" rx="1.5"/><rect width="7" height="9" x="14" y="12" rx="1.5"/><rect width="7" height="5" x="3" y="16" rx="1.5"/></svg></span>
             <span>Dashboard</span>
@@ -158,13 +155,10 @@
         <section
           class="backdrop-card mt-4 overflow-hidden rounded-3xl border border-white/70 shadow-soft ring-1 ring-slate-200/60">
           <div class="flex flex-col gap-5 p-5 lg:p-6">
-            <!-- Header Row -->
             <div class="relative flex flex-col gap-5 lg:flex-row lg:items-center lg:justify-between min-h-[50px]">
 
-              <!-- Hidden placeholder on LG to balance flex justify-between -->
               <div class="hidden lg:block lg:w-1/3"></div>
 
-              <!-- Centered Title -->
               <div class="flex justify-center text-center lg:absolute lg:left-1/2 lg:-translate-x-1/2 lg:w-1/3">
                 <h1
                   class="text-lg sm:text-xl md:text-2xl font-extrabold uppercase tracking-widest text-blue-800 drop-shadow-sm whitespace-nowrap">
@@ -172,10 +166,8 @@
                 </h1>
               </div>
             </div>
-            <!-- Statistics Cards -->
             <div class="stats-scene">
             <div id="stats-cards-container" class="grid grid-cols-2 gap-3 sm:grid-cols-3 xl:grid-cols-5">
-              <!-- Total Items Card -->
               <div class="stats-card stats-card--total p-4 sm:col-span-1 col-span-2">
                 <div class="relative flex h-full flex-col gap-3">
                   <div class="flex items-center text-blue-700 gap-2 font-medium">
@@ -190,7 +182,6 @@
                   </div>
                 </div>
               </div>
-              <!-- Available Card -->
               <div class="stats-card stats-card--available p-4">
                 <div class="relative flex h-full flex-col gap-3">
                   <div class="flex items-center justify-between mb-1.5 w-full">
@@ -205,7 +196,6 @@
                   </div>
                 </div>
               </div>
-              <!-- Under Repair Card -->
               <div class="stats-card stats-card--repair p-4">
                 <div class="relative flex h-full flex-col gap-3">
                   <div class="flex items-center justify-between mb-1.5 w-full">
@@ -220,7 +210,6 @@
                   </div>
                 </div>
               </div>
-              <!-- Working Card -->
               <div class="stats-card stats-card--working p-4">
                 <div class="relative flex h-full flex-col gap-3">
                   <div class="flex items-center justify-between mb-1.5 w-full">
@@ -235,7 +224,6 @@
                   </div>
                 </div>
               </div>
-              <!-- Not Working Card -->
               <div class="stats-card stats-card--not-working p-4">
                 <div class="relative flex h-full flex-col gap-3">
                   <div class="flex items-center justify-between mb-1.5 w-full">
@@ -251,14 +239,13 @@
                 </div>
               </div>
             </div>
-            </div> <!-- /stats-scene -->
+            </div> 
           </div>
         </section>
         {% if messages %}
         <section class="space-y-3">
           {% for message in messages %}
             {% if message.tags == 'success' %}
-              <!-- Intercept success messages to show the modal instead of an inline banner -->
               <script>
                 window.addEventListener('load', () => {
                   if (typeof window.showSuccessModal === 'function') {
@@ -267,7 +254,6 @@
                 });
               </script>
             {% elif message.tags == 'error' %}
-              <!-- Intercept error messages to show the error modal -->
               <script>
                 window.addEventListener('load', () => {
                   if (typeof window.showErrorModal === 'function') {
@@ -345,9 +331,7 @@
               <input type="hidden" name="dir" value="{{ current_direction }}" />
               {% endif %}
             </form>
-            <!-- Action Buttons (Grouped with table controls) -->
             <div class="flex flex-wrap items-center gap-4 shrink-0 w-full xl:w-auto mt-2 pt-4 xl:mt-0 xl:pt-0 border-t xl:border-t-0 border-slate-200/60">
-              <!-- Print Report (Tertiary) -->
               <button type="button" id="printReportBtn"
                 class="inline-flex cursor-pointer items-center justify-center gap-1.5 rounded-xl bg-slate-100 border border-slate-300 px-4 h-[44px] text-sm font-bold text-slate-700 shadow-sm transition-all hover:bg-slate-200 hover:-translate-y-0.5 whitespace-nowrap">
                 <svg class="h-3.5 w-3.5 stroke-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -355,7 +339,6 @@
                 </svg>
                 Print Report
               </button>
-              <!-- Upload Excel (Secondary) -->
               <form action="{% url 'inventory-upload' %}" method="POST" enctype="multipart/form-data" class="m-0">
                 {% csrf_token %}
                 <input type="file" name="excel_file" id="excel-upload-header" accept=".xlsx, .csv" class="hidden"
@@ -368,7 +351,6 @@
                   Upload Excel
                 </label>
               </form>
-              <!-- Add Record (Primary) -->
               <button type="button" id="openAddModalBtnTop"
                 class="inline-flex cursor-pointer items-center justify-center gap-1.5 rounded-xl bg-emerald-600 px-4 h-[44px] text-sm font-bold text-white shadow-[0_4px_12px_rgba(5,150,105,0.3)] ring-1 ring-inset ring-white/20 transition-all hover:bg-emerald-500 hover:shadow-[0_8px_20px_rgba(5,150,105,0.4)] hover:-translate-y-0.5 whitespace-nowrap">
                 <svg class="h-3.5 w-3.5 stroke-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -423,7 +405,6 @@
                 </tr>
               </thead>
               <tbody id="inventory-tbody" class="divide-y divide-slate-200 bg-white">
-                <!-- Javascript will inject high-performance templated rows here asynchronously -->
               </tbody>
             </table>
           </div>
@@ -462,29 +443,22 @@
     </div>
   </div>
   <script src="https://cdn.jsdelivr.net/npm/simple-datatables@9.0.3"></script>
-  <!-- Right-Slide Drawer Modal -->
   <div id="sideDrawerModal" style="display: none;" class="fixed inset-0 z-[100] hidden">
-    <!-- Overlay -->
     <div id="sideDrawerOverlay" class="absolute inset-0 bg-slate-900/40 backdrop-blur-sm opacity-0 transition-opacity duration-300"></div>
 
-    <!-- Drawer Panel -->
     <div id="sideDrawerPanel" class="absolute inset-y-0 right-0 w-full max-w-lg bg-white shadow-[0_0_40px_rgba(0,0,0,0.1)] transform translate-x-full transition-transform duration-300 ease-[cubic-bezier(0.2,0.8,0.2,1)] flex flex-col sm:rounded-l-[2rem] overflow-hidden">
-      <!-- Header -->
       <div class="flex items-center gap-3 px-8 pt-8 pb-4 shrink-0">
         <button type="button" id="closeDrawerBtn" class="w-8 h-8 flex items-center justify-center rounded-lg text-slate-400 hover:text-slate-800 hover:bg-slate-100 transition-colors flex-shrink-0 -ml-2 focus:outline-none focus:ring-2 focus:ring-slate-900">
           <svg class="w-5 h-5 stroke-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path></svg>
         </button>
         <h2 id="modalTitle" class="text-2xl font-black tracking-tight text-slate-900">Record</h2>
       </div>
-      <!-- Scroller -->
       <div class="flex-1 overflow-y-auto px-8 py-2 custom-scrollbar">
         <form id="inventoryForm" class="space-y-7" onsubmit="event.preventDefault();">
           <input type="hidden" name="id" id="form_id" value="">
           {% csrf_token %}
-          <!-- Form Error Banner -->
           <div id="formErrorMessage" class="hidden rounded-lg bg-red-50 p-4 mb-4 text-sm font-semibold text-red-800 border border-red-200 w-full shadow-sm mt-0">
           </div>
-          <!-- ITEM INFORMATION -->
           <div>
             <div class="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 mb-3 border-b border-slate-100 pb-2">Item Information</div>
             <div class="grid grid-cols-[130px_1fr] items-center gap-y-4 text-sm w-full">
@@ -514,7 +488,6 @@
               </div>
             </div>
           </div>
-          <!-- INVENTORY INFORMATION -->
           <div>
             <div class="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 mb-3 border-b border-slate-100 pb-2">Inventory Information</div>
             <div class="grid grid-cols-[130px_1fr] items-center gap-y-4 text-sm w-full">
@@ -555,7 +528,6 @@
               </div>
             </div>
           </div>
-          <!-- ADDITIONAL INFORMATION -->
           <div>
             <div class="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 mb-3 border-b border-slate-100 pb-2">Additional Information</div>
             <div class="space-y-4">
@@ -574,12 +546,10 @@
               <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg> Active Borrowing Logs
             </h4>
             <div id="active_borrowings_list" class="flex flex-col gap-2 mt-1">
-              <!-- Dynamically populated via JS -->
             </div>
           </div>
         </form>
       </div>
-      <!-- Footer Action -->
       <div class="p-8 pt-0 shrink-0 flex flex-col items-center justify-center gap-4 w-full">
         <div class="flex flex-col md:flex-row items-center justify-center gap-3 w-full">
           <button type="submit" id="saveRecordBtn" form="inventoryForm" class="flex-1 w-full h-12 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-xl shadow-[0_8px_20px_rgba(5,150,105,0.3)] hover:shadow-[0_12px_24px_rgba(5,150,105,0.4)] hover:-translate-y-0.5 transition-all outline-none focus:ring-4 focus:ring-emerald-600/30 text-sm tracking-wide">
@@ -592,7 +562,6 @@
             Borrow Item
           </button>
         </div>
-        <!-- Metadata Audit Footer -->
         <div id="auditFooter" class="hidden w-full flex items-center justify-between px-4 py-3.5 rounded-xl bg-slate-50 border border-slate-200">
           <div class="flex flex-col text-left">
              <span class="text-[9px] font-black uppercase text-slate-400 tracking-[0.15em] mb-0.5">Created</span>
@@ -612,12 +581,9 @@
       </div>
     </div>
   </div>
-  <!-- Delete Confirmation Modal -->
   <div id="deleteConfirmModalOverlay" style="display: none;" class="fixed inset-0 z-[300] flex items-center justify-center bg-slate-900/60 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300">
     <div id="deleteConfirmModalCard" class="relative w-full max-w-[340px] bg-white rounded-3xl shadow-2xl overflow-hidden transform -translate-x-[100vw] opacity-0 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] mx-4">
-      <!-- Top Red Half -->
       <div class="bg-rose-600 px-6 pt-7 pb-6 flex flex-col items-center justify-center text-white">
-        <!-- Warning Icon -->
         <div class="w-12 h-12 rounded-full border-[2.5px] border-white flex items-center justify-center mb-3 shadow-sm bg-rose-500">
           <svg class="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
             <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
@@ -625,7 +591,6 @@
         </div>
         <h3 class="text-[14px] font-extrabold tracking-[0.25em] uppercase drop-shadow-sm text-center">Confirm Deletion</h3>
       </div>
-      <!-- Bottom White Half -->
       <div class="px-6 py-7 text-center bg-white flex flex-col items-center">
         <div class="w-full bg-slate-50 rounded-xl border border-slate-100 p-5 mb-5 shadow-sm">
           <p class="text-[13px] text-slate-700 font-bold leading-relaxed">
@@ -643,10 +608,8 @@
       </div>
     </div>
   </div>
-  <!-- Borrow Item Modal -->
   <div id="borrowModalOverlay" style="display: none;" class="fixed inset-0 z-[300] flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300">
     <div id="borrowModalCard" class="relative w-full max-w-md bg-white rounded-3xl shadow-2xl overflow-hidden transform -translate-x-[100vw] opacity-0 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]">
-      <!-- Top Blue Header -->
       <div class="bg-blue-600 px-6 pt-7 pb-6 flex flex-col items-center justify-center text-white">
         <div class="w-12 h-12 rounded-full border-[2.5px] border-white flex items-center justify-center mb-3 shadow-sm bg-blue-500">
           <svg class="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
@@ -656,7 +619,6 @@
         <h3 class="text-[14px] font-extrabold tracking-[0.25em] uppercase drop-shadow-sm text-center">Issue Item</h3>
         <p id="borrowModalItemName" class="text-white text-[12px] mt-1 font-semibold text-center"></p>
       </div>
-      <!-- Bottom White Half -->
       <div class="bg-white px-6 py-7 flex flex-col items-center">
         <form id="borrowForm" class="w-full space-y-3" novalidate>
           {% csrf_token %}
@@ -698,12 +660,9 @@
       </div>
     </div>
   </div>
-  <!-- Success Overlay Modal -->
   <div id="successModalOverlay" style="display: none;" class="fixed inset-0 z-[400] flex items-center justify-center bg-slate-900/60 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300">
     <div id="successModalCard" class="relative w-full max-w-[340px] bg-white rounded-3xl shadow-2xl overflow-hidden transform -translate-x-[100vw] opacity-0 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] mx-4">
-      <!-- Top Green Half -->
       <div class="bg-emerald-600 px-6 pt-7 pb-6 flex flex-col items-center justify-center text-white">
-        <!-- Circular Check Icon -->
         <div class="w-12 h-12 rounded-full border-[2.5px] border-white flex items-center justify-center mb-3 shadow-sm">
           <svg class="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
             <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
@@ -711,7 +670,6 @@
         </div>
         <h3 class="text-[14px] font-extrabold tracking-[0.25em] uppercase drop-shadow-sm text-center">Success</h3>
       </div>
-      <!-- Bottom White Half -->
       <div class="px-6 py-7 text-center bg-white flex flex-col items-center">
         <div class="w-full bg-slate-50 rounded-xl border border-slate-100 p-5 mb-5 shadow-sm">
           <p id="successModalMessage" class="text-[13px] text-slate-800 font-bold leading-relaxed">
@@ -724,12 +682,9 @@
       </div>
     </div>
   </div>
-  <!-- Error Overlay Modal -->
   <div id="errorModalOverlay" style="display: none;" class="fixed inset-0 z-[400] flex items-center justify-center bg-slate-900/60 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300">
     <div id="errorModalCard" class="relative w-full max-w-[340px] bg-white rounded-3xl shadow-2xl overflow-hidden transform -translate-x-[100vw] opacity-0 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] mx-4">
-      <!-- Top Red Half -->
       <div class="bg-rose-600 px-6 pt-7 pb-6 flex flex-col items-center justify-center text-white">
-        <!-- Circular X Icon -->
         <div class="w-12 h-12 rounded-full border-[2.5px] border-white flex items-center justify-center mb-3 shadow-sm">
           <svg class="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
             <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
@@ -737,7 +692,6 @@
         </div>
         <h3 class="text-[14px] font-extrabold tracking-[0.25em] uppercase drop-shadow-sm text-center">Error</h3>
       </div>
-      <!-- Bottom White Half -->
       <div class="px-6 py-7 text-center bg-white flex flex-col items-center">
         <div class="w-full bg-slate-50 rounded-xl border border-slate-100 p-5 mb-5 shadow-sm">
           <p id="errorModalMessage" class="text-[13px] text-slate-800 font-bold leading-relaxed">
@@ -753,12 +707,9 @@
       </div>
     </div>
   </div>
-  <!-- Info Overlay Modal -->
   <div id="infoModalOverlay" style="display: none;" class="fixed inset-0 z-[400] flex items-center justify-center bg-slate-900/60 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300">
     <div id="infoModalCard" class="relative w-full max-w-[340px] bg-white rounded-3xl shadow-2xl overflow-hidden transform -translate-x-[100vw] opacity-0 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] mx-4">
-      <!-- Top Blue Half -->
       <div class="bg-blue-600 px-6 pt-7 pb-6 flex flex-col items-center justify-center text-white">
-        <!-- Circular Info Icon -->
         <div class="w-12 h-12 rounded-full border-[2.5px] border-white flex items-center justify-center mb-3 shadow-sm bg-blue-500">
           <svg class="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
             <path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -766,7 +717,6 @@
         </div>
         <h3 class="text-[14px] font-extrabold tracking-[0.25em] uppercase drop-shadow-sm text-center">Info</h3>
       </div>
-      <!-- Bottom White Half -->
       <div class="px-6 py-7 text-center bg-white flex flex-col items-center">
         <div class="w-full bg-slate-50 rounded-xl border border-slate-100 p-5 mb-5 shadow-sm">
           <p id="infoModalMessage" class="text-[13px] text-slate-800 font-bold leading-relaxed">
@@ -779,7 +729,6 @@
       </div>
     </div>
   </div>
-  <!-- Print Report Hidden Section -->
   <div id="print-report-area">
     <div class="print-header">
       <h1>ITS Inventory Equipment Report</h1>
@@ -803,7 +752,6 @@
         </tr>
       </thead>
       <tbody id="print-tbody">
-        <!-- Populated by JS before printing -->
       </tbody>
       <tfoot>
         <tr>
@@ -873,6 +821,5 @@
       window.print();
     });
   </script>
-  <!-- All custom scripts have been moved to static/js/inventory.js -->
 </body>
 </html>
