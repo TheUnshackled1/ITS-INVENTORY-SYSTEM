@@ -1,0 +1,31 @@
+<mxfile host="Electron" modified="2026-07-28T04:03:00.000Z" agent="Mozilla/5.0" version="21.6.8" type="device">
+  <diagram id="cite-arch" name="Citation Metadata Schema">
+    <mxGraphModel dx="1000" dy="500" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="800" pageHeight="300" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <mxCell id="root" value="&lt;b style=&quot;font-size: 15px;&quot;&gt;📄 CITATION.cff Academic Software Metadata (CFF 1.2.0)&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;font-size: 11px; color: #a7f3d0;&quot;&gt;GitHub Automatic APA &amp; BibTeX Citation Generator&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#065f46;strokeColor=#34d399;strokeWidth=2;fontColor=#ffffff;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="150" y="30" width="500" height="55" as="geometry" />
+        </mxCell>
+
+        <mxCell id="c1" value="&lt;b style=&quot;font-size: 12px;&quot;&gt;👤 Author Attribution&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;font-size: 10px; color: #bae6fd;&quot;&gt;John Tyrone Pagunsan Coronel&lt;br&gt;Alias: TheUnshackled1&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0369a1;strokeColor=#38bdf8;strokeWidth=1.5;fontColor=#ffffff;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="40" y="125" width="220" height="60" as="geometry" />
+        </mxCell>
+
+        <mxCell id="c2" value="&lt;b style=&quot;font-size: 12px;&quot;&gt;📦 Software Release&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;font-size: 10px; color: #a7f3d0;&quot;&gt;ITS Inventory System v1.0.0&lt;br&gt;Released: 2026-07-27&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#092E20;strokeColor=#34d399;strokeWidth=1.5;fontColor=#ffffff;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="290" y="125" width="220" height="60" as="geometry" />
+        </mxCell>
+
+        <mxCell id="c3" value="&lt;b style=&quot;font-size: 12px;&quot;&gt;🏷️ Metadata &amp; Keywords&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;font-size: 10px; color: #ddd6fe;&quot;&gt;Django, Audit Log, OTP Auth&lt;br&gt;License: MIT&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#581c87;strokeColor=#c084fc;strokeWidth=1.5;fontColor=#ffffff;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="540" y="125" width="220" height="60" as="geometry" />
+        </mxCell>
+
+        <!-- Edges -->
+        <mxCell id="e1" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#34d399;strokeWidth=1.5;" edge="1" parent="1" source="root" target="c1" />
+        <mxCell id="e2" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#34d399;strokeWidth=1.5;" edge="1" parent="1" source="root" target="c2" />
+        <mxCell id="e3" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#34d399;strokeWidth=1.5;" edge="1" parent="1" source="root" target="c3" />
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
