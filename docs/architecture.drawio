@@ -4,62 +4,42 @@
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
-        
-        <!-- Auth Portal -->
         <mxCell id="auth" value="&lt;b&gt;🔑 Auth Portal&lt;/b&gt;&lt;br/&gt;Login / Signup OTP / Reset OTP" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1e293b;strokeColor=#475569;fontColor=#ffffff;fontSize=13;strokeWidth=2;" vertex="1" parent="1">
           <mxGeometry x="60" y="240" width="220" height="70" as="geometry" />
         </mxCell>
-        
-        <!-- User -->
         <mxCell id="user" value="&lt;b&gt;🧑‍💼 ITS Staff&lt;/b&gt;&lt;br/&gt;Add / Edit / Delete / Import" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#092e20;strokeColor=#10b981;fontColor=#ffffff;fontSize=13;strokeWidth=2;" vertex="1" parent="1">
           <mxGeometry x="340" y="240" width="220" height="70" as="geometry" />
         </mxCell>
-        
-        <!-- DB -->
         <mxCell id="db" value="&lt;b&gt;🗄️ Inventory DB&lt;/b&gt;&lt;br/&gt;SQLite / PostgreSQL" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;fillColor=#003b57;strokeColor=#38bdf8;fontColor=#ffffff;fontSize=13;strokeWidth=2;" vertex="1" parent="1">
           <mxGeometry x="660" y="225" width="200" height="100" as="geometry" />
         </mxCell>
-        
-        <!-- Dashboard -->
         <mxCell id="dashboard" value="&lt;b&gt;📊 Inventory Dashboard&lt;/b&gt;&lt;br/&gt;Search / Filter / Sort / Export" style="rhombus;whiteSpace=wrap;html=1;fillColor=#1d4ed8;strokeColor=#60a5fa;fontColor=#ffffff;fontSize=12;strokeWidth=2;" vertex="1" parent="1">
           <mxGeometry x="640" y="40" width="240" height="130" as="geometry" />
         </mxCell>
-        
-        <!-- Borrowing -->
         <mxCell id="borrowing" value="&lt;b&gt;🔄 Borrowing Tracker&lt;/b&gt;&lt;br/&gt;Issue / Return / Overdue" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0369a1;strokeColor=#38bdf8;fontColor=#ffffff;fontSize=13;strokeWidth=2;" vertex="1" parent="1">
           <mxGeometry x="340" y="70" width="220" height="70" as="geometry" />
         </mxCell>
-
-        <!-- Activity Log -->
         <mxCell id="activity" value="&lt;b&gt;📝 Activity Log&lt;/b&gt;&lt;br/&gt;Audit Trail + Diffs" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#475569;strokeColor=#94a3b8;fontColor=#ffffff;fontSize=13;strokeWidth=2;" vertex="1" parent="1">
           <mxGeometry x="340" y="400" width="220" height="70" as="geometry" />
         </mxCell>
-        
-        <!-- Edges -->
         <mxCell id="e1" value="Authenticates" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#94a3b8;strokeWidth=2;fontColor=#e2e8f0;fontSize=11;" edge="1" parent="1" source="auth" target="user">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        
         <mxCell id="e2" value="CRUD Operations" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#10b981;strokeWidth=2;fontColor=#e2e8f0;fontSize=11;" edge="1" parent="1" source="user" target="db">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-
         <mxCell id="e3" value="Syncs Data" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#60a5fa;strokeWidth=2;fontColor=#e2e8f0;fontSize=11;" edge="1" parent="1" source="db" target="dashboard">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-
         <mxCell id="e4" value="Issue Equipment" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#60a5fa;strokeWidth=2;fontColor=#e2e8f0;fontSize=11;" edge="1" parent="1" source="dashboard" target="borrowing">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-
         <mxCell id="e5" value="Restores Quantity" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#38bdf8;strokeWidth=2;fontColor=#e2e8f0;fontSize=11;" edge="1" parent="1" source="borrowing" target="db">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-
         <mxCell id="e6" value="All Actions Logged" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#f43f5e;strokeWidth=2;fontColor=#e2e8f0;fontSize=11;" edge="1" parent="1" source="user" target="activity">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-
       </root>
     </mxGraphModel>
   </diagram>

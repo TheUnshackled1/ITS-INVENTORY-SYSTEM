@@ -4,45 +4,33 @@
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
-        
-        <!-- Nodes -->
         <mxCell id="issued" value="&lt;b&gt;📋 Issued&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1d4ed8;strokeColor=#60a5fa;fontColor=#ffffff;fontSize=13;strokeWidth=2;" vertex="1" parent="1">
           <mxGeometry x="50" y="100" width="140" height="60" as="geometry" />
         </mxCell>
-        
         <mxCell id="borrowed" value="&lt;b&gt;⏳ Borrowed&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0284c7;strokeColor=#38bdf8;fontColor=#ffffff;fontSize=13;strokeWidth=2;" vertex="1" parent="1">
           <mxGeometry x="270" y="100" width="140" height="60" as="geometry" />
         </mxCell>
-        
         <mxCell id="returned" value="&lt;b&gt;✅ Returned&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#15803d;strokeColor=#4ade80;fontColor=#ffffff;fontSize=13;strokeWidth=2;" vertex="1" parent="1">
           <mxGeometry x="520" y="30" width="140" height="60" as="geometry" />
         </mxCell>
-
         <mxCell id="overdue" value="&lt;b&gt;🚨 Overdue&lt;/b&gt;&lt;br/&gt;Past Expected Date" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#b91c1c;strokeColor=#f87171;fontColor=#ffffff;fontSize=12;strokeWidth=2;" vertex="1" parent="1">
           <mxGeometry x="520" y="170" width="160" height="60" as="geometry" />
         </mxCell>
-
         <mxCell id="returned2" value="&lt;b&gt;✅ Returned&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#15803d;strokeColor=#4ade80;fontColor=#ffffff;fontSize=13;strokeWidth=2;" vertex="1" parent="1">
           <mxGeometry x="750" y="170" width="140" height="60" as="geometry" />
         </mxCell>
-
-        <!-- Edges -->
         <mxCell id="eb1" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#60a5fa;strokeWidth=2;" edge="1" parent="1" source="issued" target="borrowed">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-
         <mxCell id="eb2" value="Returned on time" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#4ade80;strokeWidth=2;fontColor=#e2e8f0;fontSize=11;" edge="1" parent="1" source="borrowed" target="returned">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-
         <mxCell id="eb3" value="Past due date" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#f87171;strokeWidth=2;fontColor=#e2e8f0;fontSize=11;" edge="1" parent="1" source="borrowed" target="overdue">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-
         <mxCell id="eb4" value="Returned late" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#4ade80;strokeWidth=2;fontColor=#e2e8f0;fontSize=11;" edge="1" parent="1" source="overdue" target="returned2">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-
       </root>
     </mxGraphModel>
   </diagram>
