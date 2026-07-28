@@ -1,4 +1,4 @@
-# 🚀 ITS Inventory Management System — Setup & Security Instructions
+# 📖 Setup & Configuration Instructions
 
 > Detailed step-by-step guide for setting up the project on **Windows** with **Python 3.13+**, including security configuration, email setup, and API authentication endpoints.
 
