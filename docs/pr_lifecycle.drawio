@@ -1,0 +1,36 @@
+<mxfile host="Electron" modified="2026-07-28T04:02:00.000Z" agent="Mozilla/5.0" version="21.6.8" type="device">
+  <diagram id="pr-flow" name="Pull Request Review Lifecycle">
+    <mxGraphModel dx="1200" dy="500" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="900" pageHeight="300" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <mxCell id="pr1" value="&lt;b style=&quot;font-size: 13px;&quot;&gt;1. Push Branch&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;font-size: 10px; color: #bae6fd;&quot;&gt;git push origin feature/...&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0369a1;strokeColor=#38bdf8;strokeWidth=2;fontColor=#ffffff;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="20" y="80" width="150" height="75" as="geometry" />
+        </mxCell>
+
+        <mxCell id="pr2" value="&lt;b style=&quot;font-size: 13px;&quot;&gt;2. Open Pull Request&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;font-size: 10px; color: #a7f3d0;&quot;&gt;Fill PR Template Checklist&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#092E20;strokeColor=#34d399;strokeWidth=2;fontColor=#ffffff;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="200" y="80" width="160" height="75" as="geometry" />
+        </mxCell>
+
+        <mxCell id="pr3" value="&lt;b style=&quot;font-size: 13px;&quot;&gt;3. Automated CI Tests&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;font-size: 10px; color: #fde047;&quot;&gt;manage.py test &amp; check&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#854d0e;strokeColor=#fde047;strokeWidth=2;fontColor=#ffffff;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="390" y="80" width="160" height="75" as="geometry" />
+        </mxCell>
+
+        <mxCell id="pr4" value="&lt;b style=&quot;font-size: 13px;&quot;&gt;4. Maintainer Review&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;font-size: 10px; color: #ddd6fe;&quot;&gt;Code Inspection &amp; Approval&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#581c87;strokeColor=#c084fc;strokeWidth=2;fontColor=#ffffff;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="580" y="80" width="160" height="75" as="geometry" />
+        </mxCell>
+
+        <mxCell id="pr5" value="&lt;b style=&quot;font-size: 13px;&quot;&gt;5. Merge to Main&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;font-size: 10px; color: #a7f3d0;&quot;&gt;Merged into main branch&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#065f46;strokeColor=#34d399;strokeWidth=2;fontColor=#ffffff;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="770" y="80" width="140" height="75" as="geometry" />
+        </mxCell>
+
+        <!-- Edges -->
+        <mxCell id="e1" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#38bdf8;strokeWidth=2;" edge="1" parent="1" source="pr1" target="pr2" />
+        <mxCell id="e2" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#34d399;strokeWidth=2;" edge="1" parent="1" source="pr2" target="pr3" />
+        <mxCell id="e3" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#fde047;strokeWidth=2;" edge="1" parent="1" source="pr3" target="pr4" />
+        <mxCell id="e4" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#c084fc;strokeWidth=2;" edge="1" parent="1" source="pr4" target="pr5" />
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

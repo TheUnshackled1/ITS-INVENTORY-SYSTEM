@@ -97,6 +97,9 @@ We are committed to providing a welcoming, respectful, and collaborative environ
 
 ## 📤 Submitting Pull Requests
 
+![Pull Request Review Lifecycle](docs/pr_lifecycle.drawio.svg)
+> ✏️ **Draw.io Source File:** [`docs/pr_lifecycle.drawio`](docs/pr_lifecycle.drawio) *(Editable in [Draw.io / app.diagrams.net](https://app.diagrams.net/))*
+
 1. Push your feature branch to your fork:
    ```powershell
    git push origin feature/your-feature-name
