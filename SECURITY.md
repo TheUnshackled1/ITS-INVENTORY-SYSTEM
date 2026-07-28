@@ -38,6 +38,9 @@ If you discover a security vulnerability or suspect a security flaw within the a
 
 ## 🛡️ Built-in Security Measures
 
+![Security Architecture Defense Layers](docs/security_architecture.drawio.svg)
+> ✏️ **Draw.io Source File:** [`docs/security_architecture.drawio`](docs/security_architecture.drawio) *(Editable in [Draw.io / app.diagrams.net](https://app.diagrams.net/))*
+
 The system enforces several security controls out of the box:
 
 - **CSRF Protection**: `django.middleware.csrf.CsrfViewMiddleware` active with `{% csrf_token %}` tags across 100% of POST forms.

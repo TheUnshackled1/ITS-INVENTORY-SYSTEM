@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 350" width="100%" height="100%" style="background-color: #0b0f19; font-family: system-ui, -apple-system, sans-serif;">
+  <defs>
+    <filter id="shadow" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#000000" flood-opacity="0.5"/>
+    </filter>
+    <marker id="arrow-down-1" viewBox="0 0 10 10" refX="5" refY="8" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 0 L 5 10 L 10 0 z" fill="#34d399"/>
+    </marker>
+    <marker id="arrow-down-2" viewBox="0 0 10 10" refX="5" refY="8" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 0 L 5 10 L 10 0 z" fill="#fde047"/>
+    </marker>
+    <marker id="arrow-down-3" viewBox="0 0 10 10" refX="5" refY="8" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 0 L 5 10 L 10 0 z" fill="#c084fc"/>
+    </marker>
+  </defs>
+
+  <!-- Connectors -->
+  <path d="M 450 95 L 450 115" stroke="#34d399" stroke-width="2.5" marker-end="url(#arrow-down-1)" fill="none"/>
+  <path d="M 450 170 L 450 190" stroke="#fde047" stroke-width="2.5" marker-end="url(#arrow-down-2)" fill="none"/>
+  <path d="M 450 245 L 450 265" stroke="#c084fc" stroke-width="2.5" marker-end="url(#arrow-down-3)" fill="none"/>
+
+  <!-- Layer 1 -->
+  <rect x="40" y="40" width="820" height="55" rx="10" fill="#0369a1" stroke="#38bdf8" stroke-width="2" filter="url(#shadow)"/>
+  <text x="450" y="65" fill="#ffffff" font-size="14" font-weight="bold" text-anchor="middle">🌐 Transport Layer Security</text>
+  <text x="450" y="83" fill="#bae6fd" font-size="11" text-anchor="middle">HTTPS Enforced • SSL/TLS Encryption • HSTS Security Headers</text>
+
+  <!-- Layer 2 -->
+  <rect x="40" y="115" width="820" height="55" rx="10" fill="#092E20" stroke="#34d399" stroke-width="2" filter="url(#shadow)"/>
+  <text x="450" y="140" fill="#ffffff" font-size="14" font-weight="bold" text-anchor="middle">🛡️ CSRF &amp; Request Protection Layer</text>
+  <text x="450" y="158" fill="#a7f3d0" font-size="11" text-anchor="middle">CsrfViewMiddleware • {% csrf_token %} on 100% Forms • email__iexact Lookup</text>
+
+  <!-- Layer 3 -->
+  <rect x="40" y="190" width="820" height="55" rx="10" fill="#854d0e" stroke="#fde047" stroke-width="2" filter="url(#shadow)"/>
+  <text x="450" y="215" fill="#ffffff" font-size="14" font-weight="bold" text-anchor="middle">🔐 Authentication &amp; OTP Engine Layer</text>
+  <text x="450" y="233" fill="#fde047" font-size="11" text-anchor="middle">@login_required Decorators • 120s OTP Expiration • Cryptographic 6-Digit Codes</text>
+
+  <!-- Layer 4 -->
+  <rect x="40" y="265" width="820" height="55" rx="10" fill="#581c87" stroke="#c084fc" stroke-width="2" filter="url(#shadow)"/>
+  <text x="450" y="290" fill="#ffffff" font-size="14" font-weight="bold" text-anchor="middle">📝 Data Isolation &amp; Audit Log Layer</text>
+  <text x="450" y="308" fill="#ddd6fe" font-size="11" text-anchor="middle">Environment Variable Isolation (.env) • Field-Level JSON Diffs • User Attribution</text>
+</svg>

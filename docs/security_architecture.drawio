@@ -1,0 +1,31 @@
+<mxfile host="Electron" modified="2026-07-28T03:58:00.000Z" agent="Mozilla/5.0" version="21.6.8" type="device">
+  <diagram id="sec-arch" name="Security Architecture Defense Layers">
+    <mxGraphModel dx="1200" dy="550" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="900" pageHeight="350" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <mxCell id="l1" value="&lt;b style=&quot;font-size: 14px;&quot;&gt;🌐 Transport Layer Security&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;font-size: 11px; color: #bae6fd;&quot;&gt;HTTPS Enforced • SSL/TLS Encryption • HSTS Headers&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0369a1;strokeColor=#38bdf8;strokeWidth=2;fontColor=#ffffff;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="40" y="40" width="820" height="55" as="geometry" />
+        </mxCell>
+
+        <mxCell id="l2" value="&lt;b style=&quot;font-size: 14px;&quot;&gt;🛡️ CSRF &amp; Request Protection Layer&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;font-size: 11px; color: #a7f3d0;&quot;&gt;CsrfViewMiddleware • {% csrf_token %} on 100% Forms • email__iexact Lookup&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#092E20;strokeColor=#34d399;strokeWidth=2;fontColor=#ffffff;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="40" y="115" width="820" height="55" as="geometry" />
+        </mxCell>
+
+        <mxCell id="l3" value="&lt;b style=&quot;font-size: 14px;&quot;&gt;🔐 Authentication &amp; OTP Engine Layer&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;font-size: 11px; color: #fde047;&quot;&gt;@login_required Decorators • 120s OTP Expiration • Cryptographic 6-Digit Codes&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#854d0e;strokeColor=#fde047;strokeWidth=2;fontColor=#ffffff;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="40" y="190" width="820" height="55" as="geometry" />
+        </mxCell>
+
+        <mxCell id="l4" value="&lt;b style=&quot;font-size: 14px;&quot;&gt;📝 Data Isolation &amp; Audit Log Layer&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;font-size: 11px; color: #ddd6fe;&quot;&gt;Environment Variable Isolation (.env) • Field-Level JSON Diffs • User Attribution&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#581c87;strokeColor=#c084fc;strokeWidth=2;fontColor=#ffffff;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="40" y="265" width="820" height="55" as="geometry" />
+        </mxCell>
+
+        <!-- Connectors -->
+        <mxCell id="e1" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#38bdf8;strokeWidth=2;" edge="1" parent="1" source="l1" target="l2" />
+        <mxCell id="e2" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#34d399;strokeWidth=2;" edge="1" parent="1" source="l2" target="l3" />
+        <mxCell id="e3" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#fde047;strokeWidth=2;" edge="1" parent="1" source="l3" target="l4" />
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
