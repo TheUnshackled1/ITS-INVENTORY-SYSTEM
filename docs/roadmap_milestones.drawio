@@ -1,0 +1,31 @@
+<mxfile host="Electron" modified="2026-07-28T03:34:00.000Z" agent="Mozilla/5.0" version="21.6.8" type="device">
+  <diagram id="roadmap-flow" name="System Release Roadmap">
+    <mxGraphModel dx="1200" dy="500" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="900" pageHeight="300" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <mxCell id="v100" value="&lt;b style=&quot;font-size: 14px;&quot;&gt;🚀 v1.0.0 (Released)&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;font-size: 11px; color: #a7f3d0;&quot;&gt;Full CRUD • Borrowing Tracker&lt;br&gt;OTP Auth • Audit Trail Diffs&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#065f46;strokeColor=#34d399;strokeWidth=2;fontColor=#ffffff;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="30" y="80" width="200" height="85" as="geometry" />
+        </mxCell>
+
+        <mxCell id="v110" value="&lt;b style=&quot;font-size: 14px;&quot;&gt;⚡ v1.1.0 (Q3 2026)&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;font-size: 11px; color: #bae6fd;&quot;&gt;QR Scanner • Overdue Emails&lt;br&gt;PDF Reports • Multi-Exports&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0369a1;strokeColor=#38bdf8;strokeWidth=2;fontColor=#ffffff;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="270" y="80" width="200" height="85" as="geometry" />
+        </mxCell>
+
+        <mxCell id="v120" value="&lt;b style=&quot;font-size: 14px;&quot;&gt;🛡️ v1.2.0 (Q4 2026)&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;font-size: 11px; color: #ddd6fe;&quot;&gt;Multi-Dept Scoping &amp; RBAC&lt;br&gt;Repair Tickets &amp; Depreciation&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#3730a3;strokeColor=#818cf8;strokeWidth=2;fontColor=#ffffff;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="510" y="80" width="200" height="85" as="geometry" />
+        </mxCell>
+
+        <mxCell id="v200" value="&lt;b style=&quot;font-size: 14px;&quot;&gt;🔮 v2.0.0 (2027 Vision)&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;font-size: 11px; color: #f5d0fe;&quot;&gt;Mobile Offline PWA&lt;br&gt;JWT REST API • WebSockets&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#701a75;strokeColor=#f0abfc;strokeWidth=2;fontColor=#ffffff;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="750" y="80" width="200" height="85" as="geometry" />
+        </mxCell>
+
+        <!-- Edges -->
+        <mxCell id="e1" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#34d399;strokeWidth=2.5;" edge="1" parent="1" source="v100" target="v110" />
+        <mxCell id="e2" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#38bdf8;strokeWidth=2.5;" edge="1" parent="1" source="v110" target="v120" />
+        <mxCell id="e3" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#818cf8;strokeWidth=2.5;" edge="1" parent="1" source="v120" target="v200" />
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

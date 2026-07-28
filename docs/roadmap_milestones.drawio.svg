@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 220" width="100%" height="100%" style="background-color: #0b0f19; font-family: system-ui, -apple-system, sans-serif;">
+  <defs>
+    <filter id="shadow" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#000000" flood-opacity="0.5"/>
+    </filter>
+    <marker id="arrow-green" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#34d399"/>
+    </marker>
+    <marker id="arrow-blue" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#38bdf8"/>
+    </marker>
+    <marker id="arrow-indigo" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#818cf8"/>
+    </marker>
+  </defs>
+
+  <!-- Connectors -->
+  <path d="M 220 110 L 260 110" stroke="#34d399" stroke-width="3" marker-end="url(#arrow-green)" fill="none"/>
+  <path d="M 460 110 L 500 110" stroke="#38bdf8" stroke-width="3" marker-end="url(#arrow-blue)" fill="none"/>
+  <path d="M 700 110 L 740 110" stroke="#818cf8" stroke-width="3" marker-end="url(#arrow-indigo)" fill="none"/>
+
+  <!-- Milestone Nodes -->
+  <rect x="20" y="65" width="200" height="90" rx="12" fill="#065f46" stroke="#34d399" stroke-width="2" filter="url(#shadow)"/>
+  <text x="120" y="95" fill="#ffffff" font-size="14" font-weight="bold" text-anchor="middle">🚀 v1.0.0 (Released)</text>
+  <text x="120" y="118" fill="#a7f3d0" font-size="11" text-anchor="middle">Full CRUD • Borrowing Tracker</text>
+  <text x="120" y="135" fill="#a7f3d0" font-size="11" text-anchor="middle">OTP Auth • Audit Trail Diffs</text>
+
+  <rect x="260" y="65" width="200" height="90" rx="12" fill="#0369a1" stroke="#38bdf8" stroke-width="2" filter="url(#shadow)"/>
+  <text x="360" y="95" fill="#ffffff" font-size="14" font-weight="bold" text-anchor="middle">⚡ v1.1.0 (Q3 2026)</text>
+  <text x="360" y="118" fill="#bae6fd" font-size="11" text-anchor="middle">QR Scanner • Overdue Emails</text>
+  <text x="360" y="135" fill="#bae6fd" font-size="11" text-anchor="middle">PDF Reports • Multi-Exports</text>
+
+  <rect x="500" y="65" width="200" height="90" rx="12" fill="#3730a3" stroke="#818cf8" stroke-width="2" filter="url(#shadow)"/>
+  <text x="600" y="95" fill="#ffffff" font-size="14" font-weight="bold" text-anchor="middle">🛡️ v1.2.0 (Q4 2026)</text>
+  <text x="600" y="118" fill="#ddd6fe" font-size="11" text-anchor="middle">Multi-Dept Scoping &amp; RBAC</text>
+  <text x="600" y="135" fill="#ddd6fe" font-size="11" text-anchor="middle">Repair Tickets &amp; Depreciation</text>
+
+  <rect x="740" y="65" width="200" height="90" rx="12" fill="#701a75" stroke="#f0abfc" stroke-width="2" filter="url(#shadow)"/>
+  <text x="840" y="95" fill="#ffffff" font-size="14" font-weight="bold" text-anchor="middle">🔮 v2.0.0 (2027 Vision)</text>
+  <text x="840" y="118" fill="#f5d0fe" font-size="11" text-anchor="middle">Mobile Offline PWA</text>
+  <text x="840" y="135" fill="#f5d0fe" font-size="11" text-anchor="middle">JWT REST API • WebSockets</text>
+</svg>

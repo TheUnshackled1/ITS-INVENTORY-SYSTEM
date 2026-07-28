@@ -8,13 +8,8 @@
 
 This roadmap outlines planned enhancements, feature additions, and architectural upgrades categorized by upcoming release milestones.
 
-```
-┌───────────────────────────┐    ┌───────────────────────────┐    ┌───────────────────────────┐
-│     v1.0.0 (Released)     │───►│    v1.1.0 (Q3 2026)       │───►│    v2.0.0 (2027 Vision)    │
-│  Full CRUD, Borrowing,    │    │  QR Scanning, Overdue     │    │  Mobile PWA, JWT API,     │
-│  OTP Auth, Audit Trail    │    │  Emails, PDF Reports      │    │  Real-Time WebSockets     │
-└───────────────────────────┘    └───────────────────────────┘    └───────────────────────────┘
-```
+![System Release Roadmap](docs/roadmap_milestones.drawio.svg)
+> ✏️ **Draw.io Source File:** [`docs/roadmap_milestones.drawio`](docs/roadmap_milestones.drawio) *(Editable in [Draw.io / app.diagrams.net](https://app.diagrams.net/))*
 
 ---
 
