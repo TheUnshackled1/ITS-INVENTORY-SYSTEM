@@ -8,6 +8,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [1.0.0] - 2026-07-27
 
+![System Version History](docs/changelog_timeline.drawio.svg)
+> ✏️ **Draw.io Source File:** [`docs/changelog_timeline.drawio`](docs/changelog_timeline.drawio) *(Editable in [Draw.io / app.diagrams.net](https://app.diagrams.net/))*
+
 ### 🚀 Initial Production Release
 
 #### 📊 Inventory Management
