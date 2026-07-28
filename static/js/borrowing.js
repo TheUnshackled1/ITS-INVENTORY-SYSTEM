@@ -1,6 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
     const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]')?.value;
-    // ─── Step 1: Condition Modal elements ─────────────────────────────────────
     const conditionOverlay  = document.getElementById('returnConditionModalOverlay');
     const conditionCard     = document.getElementById('returnConditionModalCard');
     const conditionSubtitle = document.getElementById('returnConditionSubtitle');
@@ -8,7 +7,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const conditionNotes    = document.getElementById('returnConditionNotes');
     const cancelConditionBtn = document.getElementById('cancelConditionBtn');
     const nextConditionBtn  = document.getElementById('nextConditionBtn');
-    // ─── Step 2: Confirm Return Modal elements ────────────────────────────────
     const returnOverlay    = document.getElementById('returnConfirmModalOverlay');
     const returnCard       = document.getElementById('returnConfirmModalCard');
     const returnText       = document.getElementById('returnConfirmText');
@@ -16,7 +14,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const returnIdInput    = document.getElementById('returnIssuanceId');
     const cancelReturnBtn  = document.getElementById('cancelReturnBtn');
     const confirmReturnBtn = document.getElementById('confirmReturnBtn');
-    // Friendly labels for the condition summary line
     const statusLabels = {
         available:   'Condition: Available (Good)',
         repair:      'Condition: Under Repair',
@@ -24,17 +21,14 @@ document.addEventListener('DOMContentLoaded', function() {
         lost:        'Condition: Lost',
         disposed:    'Condition: Disposed',
     };
-    // ─── Open / Close helpers ─────────────────────────────────────────────────
     function openModal(overlay, card) {
         overlay.style.display = 'flex';
         overlay.classList.remove('hidden', 'pointer-events-none');
-        // Instantly snap card to far left
         card.style.transition = 'none';
         card.classList.remove('translate-x-0', 'translate-x-[100vw]', 'opacity-100');
         card.classList.add('-translate-x-[100vw]', 'opacity-0');
         void overlay.offsetWidth;
         void card.offsetWidth;
-        // Slide into center
         card.style.transition = '';
         overlay.classList.remove('opacity-0');
         card.classList.remove('-translate-x-[100vw]', 'opacity-0');
@@ -43,26 +37,21 @@ document.addEventListener('DOMContentLoaded', function() {
     function closeModal(overlay, card, cb) {
         overlay.classList.add('opacity-0', 'pointer-events-none');
         card.classList.remove('translate-x-0', 'opacity-100');
-        // Slide out to the right
         card.classList.add('translate-x-[100vw]', 'opacity-0');
         setTimeout(() => {
             overlay.style.display = 'none';
             if (cb) cb();
         }, 300);
     }
-    // ─── Step 1: open condition modal ─────────────────────────────────────────
     function openConditionModal(id, borrower, item, qty, location) {
         returnIdInput.value = id;
-        // Pre-populate subtitle
         conditionSubtitle.textContent = `Return ${qty}x "${item}" from ${borrower}`;
-        // Reset to defaults
         conditionStatus.value = 'available';
         conditionNotes.value  = '';
         const locationInput = document.getElementById('returnConditionLocation');
         if (locationInput) locationInput.value = location || ''; 
         openModal(conditionOverlay, conditionCard);
     }
-    // ─── Cancel condition modal ───────────────────────────────────────────────
     if (cancelConditionBtn) {
         cancelConditionBtn.addEventListener('click', () => closeModal(conditionOverlay, conditionCard));
     }
@@ -71,22 +60,18 @@ document.addEventListener('DOMContentLoaded', function() {
             if (e.target === conditionOverlay) closeModal(conditionOverlay, conditionCard);
         });
     }
-    // ─── Next → : go from step 1 to step 2 ────────────────────────────────────
     if (nextConditionBtn) {
         nextConditionBtn.addEventListener('click', () => {
             const selectedStatus = conditionStatus.value;
             const notes          = conditionNotes.value.trim();
-            // Build confirm summary text (carried from condition subtitle)
-            const subtitle = conditionSubtitle.textContent; // "Return Nx "Item" from Borrower"
+            const subtitle = conditionSubtitle.textContent;
             returnText.textContent = subtitle + '?';
             returnConditionLine.textContent = statusLabels[selectedStatus] || '';
-            // Close step 1, open step 2
             closeModal(conditionOverlay, conditionCard, () => {
                 openModal(returnOverlay, returnCard);
             });
         });
     }
-    // ─── Cancel confirm modal ("Back" button) ─────────────────────────────────
     if (cancelReturnBtn) {
         cancelReturnBtn.addEventListener('click', () => {
             closeModal(returnOverlay, returnCard, () => {
@@ -99,7 +84,6 @@ document.addEventListener('DOMContentLoaded', function() {
             if (e.target === returnOverlay) closeModal(returnOverlay, returnCard);
         });
     }
-    // ─── Attach .return-btn clicks (event delegation for datatable DOM regen) ─
     document.body.addEventListener('click', function(e) {
         const btn = e.target.closest('.return-btn');
         if (btn) {
@@ -112,7 +96,6 @@ document.addEventListener('DOMContentLoaded', function() {
             );
         }
     });
-    // ─── Attach .log-item-details-trigger clicks (item details modal popup) ───
     document.body.addEventListener('click', function(e) {
         const trigger = e.target.closest('.log-item-details-trigger');
         if (trigger) {
@@ -135,7 +118,6 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
     });
-    // ─── Confirm Return: send to backend ─────────────────────────────────────
     if (confirmReturnBtn) {
         confirmReturnBtn.addEventListener('click', function() {
             const id             = returnIdInput.value;
@@ -184,10 +166,8 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
     }
-    // ─── Initialize SimpleDatatables ─────────────────────────────────────────
     const tableEl = document.getElementById('borrowing-table');
     if (tableEl && window.simpleDatatables) {
-        // Load ALL rows into DOM at once for custom pagination engine
         const dataTable = new window.simpleDatatables.DataTable(tableEl, {
             searchable: false,
             sortable: false,
@@ -195,10 +175,8 @@ document.addEventListener('DOMContentLoaded', function() {
             perPageSelect: false,
             perPage: 100000,
         });
-        // ----- Custom Pagination Engine -----
         const PAGE_SIZE = 15;
         let currentPage = 1;
-
         function getAllRows() {
             const tbody = tableEl.querySelector("tbody");
             return tbody ? Array.from(tbody.querySelectorAll("tr:not(.no-results-row)")) : [];
@@ -221,7 +199,6 @@ document.addEventListener('DOMContentLoaded', function() {
             } else {
                 const noRow = tableEl.querySelector(".no-results-row");
                 if (noRow) noRow.remove();
-
                 const start = (currentPage - 1) * PAGE_SIZE;
                 activeRows.slice(start, start + PAGE_SIZE).forEach(r => r.style.display = "");
             }
@@ -314,7 +291,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 });
             }
         }
-        // Let Simple Datatables build the DOM, then render our engine immediately
         dataTable.on('datatable.init', () => {
             renderPage();
         });

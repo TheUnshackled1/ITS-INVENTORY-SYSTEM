@@ -19,10 +19,9 @@ document.addEventListener("DOMContentLoaded", () => {
         if (valElem) {
             const targetStr = valElem.textContent.trim().replace(/,/g, '');
             const target = parseInt(targetStr, 10);
-            
             if (!isNaN(target) && target > 0) {
                 valElem.innerText = "0";
-                countUpAnimation(target, 600, valElem); // slightly extended duration to 600ms for smoothness
+                countUpAnimation(target, 600, valElem);
             }
         }
     });
@@ -38,7 +37,7 @@ document.addEventListener("DOMContentLoaded", () => {
             console.error("Dashboard charts JSON parse error:", e);
         }
         Chart.defaults.font.family = "'Inter', sans-serif";
-        Chart.defaults.color = "#64748b"; // slate-500
+        Chart.defaults.color = "#64748b";
         const trendWipePlugin = {
             id: 'trendWipe',
             beforeDatasetDraw: (chart) => {
@@ -51,7 +50,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 const elapsed = performance.now() - chart.trendWipeStart;
                 const duration = 2000; 
                 let progress = Math.min(elapsed / duration, 1);
-                progress = 1 - Math.pow(1 - progress, 4); // easeOutQuart
+                progress = 1 - Math.pow(1 - progress, 4);
                 ctx.save();
                 ctx.beginPath();
                 const totalWipeDistance = chartArea.width + 40;
@@ -74,8 +73,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 datasets: [{
                     label: 'Items Borrowed',
                     data: trendData.data,
-                    borderColor: '#2563eb', // blue-600
-                    backgroundColor: 'rgba(37, 99, 235, 0.1)', // blue-600 with opacity
+                    borderColor: '#2563eb',
+                    backgroundColor: 'rgba(37, 99, 235, 0.1)',
                     borderWidth: 3,
                     pointBackgroundColor: '#ffffff',
                     pointBorderColor: '#2563eb',
@@ -83,7 +82,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     pointRadius: 4,
                     pointHoverRadius: 6,
                     fill: true,
-                    tension: 0.4 // subtle curve
+                    tension: 0.4
                 }]
             },
             options: {
@@ -130,7 +129,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         animation: {
                             duration: 150
                         },
-                        backgroundColor: 'rgba(15, 23, 42, 0.9)', // slate-900
+                        backgroundColor: 'rgba(15, 23, 42, 0.9)',
                         titleFont: { size: 13, weight: 'bold' },
                         bodyFont: { size: 12, weight: 'bold' },
                         padding: 12,
@@ -145,7 +144,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     },
                     y: {
                         beginAtZero: true,
-                        grid: { color: '#f1f5f9', drawBorder: false }, // slate-100
+                        grid: { color: '#f1f5f9', drawBorder: false },
                         ticks: { padding: 10, precision: 0 }
                     }
                 }
@@ -157,7 +156,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 const ctx = chart.ctx;
                 const chartArea = chart.chartArea;
                 if (!chartArea) return;
-                
                 if (!chart.donutSpinStart) {
                     chart.donutSpinStart = performance.now();
                 }
@@ -227,7 +225,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         }
                     },
                     tooltip: {
-                        backgroundColor: 'rgba(15, 23, 42, 0.9)', // slate-900
+                        backgroundColor: 'rgba(15, 23, 42, 0.9)',
                         titleFont: { size: 13 },
                         bodyFont: { size: 13, weight: 'bold' },
                         padding: 12,

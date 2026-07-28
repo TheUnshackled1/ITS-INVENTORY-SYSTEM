@@ -365,12 +365,12 @@ table {
 .datatable-table tbody tr:hover,
 #inventory-table tbody tr:hover,
 #activity-log-table tbody tr:hover {
-    background-color: #f1f5f9 !important; /* slate-100 */
+    background-color: #f1f5f9 !important; 
 }
 .datatable-table tbody tr:nth-child(even),
 #inventory-table tbody tr:nth-child(even),
 #activity-log-table tbody tr:nth-child(even) {
-    background-color: #f8fafc; /* slate-50 */
+    background-color: #f8fafc; 
 }
 .datatable-bottom {
     display: flex !important;

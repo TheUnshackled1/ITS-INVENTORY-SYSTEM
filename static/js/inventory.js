@@ -196,8 +196,8 @@ document.addEventListener("DOMContentLoaded", function () {
           let splitIdx = dateRaw.lastIndexOf(", ");
           let dateFmt = dateRaw;
           if (splitIdx !== -1) {
-             let d1 = dateRaw.substring(0, splitIdx).replace(".", ""); // "Jul 16, 2026"
-             let d2 = dateRaw.substring(splitIdx + 2).toUpperCase().replace(/\./g, ""); // "10:28 AM"
+             let d1 = dateRaw.substring(0, splitIdx).replace(".", "");
+             let d2 = dateRaw.substring(splitIdx + 2).toUpperCase().replace(/\./g, "");
              dateFmt = `${escapeHtml(d1)}<br/><span class="text-[10px] font-bold text-slate-500 mt-0.5 inline-block">${escapeHtml(d2)}</span>`;
           } else {
              dateFmt = escapeHtml(dateRaw);
@@ -466,9 +466,8 @@ document.addEventListener("DOMContentLoaded", function () {
   let editingRow = null;
   function openDrawer(title = "Add Inventory Record") {
     modalTitle.textContent = title;
-    sideDrawerModal.style.display = "block"; // Remove inline display:none
+    sideDrawerModal.style.display = "block";
     sideDrawerModal.classList.remove("hidden");
-    // Trigger reflow for transitions
     void sideDrawerModal.offsetWidth;
     sideDrawerOverlay.classList.remove("opacity-0");
     sideDrawerOverlay.classList.add("opacity-100");
@@ -482,7 +481,7 @@ document.addEventListener("DOMContentLoaded", function () {
     sideDrawerPanel.classList.add("translate-x-full");
     setTimeout(() => {
       sideDrawerModal.classList.add("hidden");
-      sideDrawerModal.style.display = "none"; // Re-hide perfectly
+      sideDrawerModal.style.display = "none";
       inventoryForm.reset();
       document.querySelectorAll('textarea').forEach(ta => ta.style.height = 'auto');
       document.getElementById("form_id").value = "";
@@ -794,7 +793,6 @@ document.addEventListener("DOMContentLoaded", function () {
           } else {
              statusSelect.classList.add('bg-blue-50', 'text-blue-800', 'border-blue-300', 'focus:border-blue-600', 'focus:ring-blue-600');
           }
-          
           defectField.disabled = false;
       }
       handleDefectState();
@@ -841,7 +839,6 @@ document.addEventListener("DOMContentLoaded", function () {
         document.getElementById("auditUpdatedBy").textContent = row.dataset.audit_user || "System";
         auditFooter.classList.remove("hidden");
       }
-
       openDrawer("Edit Inventory Item");
     }
   });
@@ -922,14 +919,12 @@ document.addEventListener("DOMContentLoaded", function () {
   const confirmDeleteActionBtn = document.getElementById("confirmDeleteActionBtn");
   let deleteTargetItemId = null;
   let deleteTargetBtn = null;
-
   function closeDeleteConfirmModal() {
     if (deleteConfirmModalOverlay && deleteConfirmModalCard) {
       animateModalClose(deleteConfirmModalOverlay, deleteConfirmModalCard);
     }
   }
   if (cancelDeleteActionBtn) cancelDeleteActionBtn.addEventListener("click", closeDeleteConfirmModal);
-
   if (deleteRecordBtn && inventoryForm) {
     deleteRecordBtn.addEventListener("click", () => {
       const formData = new FormData(inventoryForm);
