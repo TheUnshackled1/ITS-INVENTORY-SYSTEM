@@ -283,7 +283,7 @@ The application will be available at `http://127.0.0.1:8000/`.
 │   │   ├── 🐛 bug_report.md       # Bug report issue template
 │   │   └── 💡 feature_request.md  # Feature request issue template
 │   └── 📄 PULL_REQUEST_TEMPLATE.md# Pre-populated PR review template
-├── 📂 docs/                       📐 System Architecture & Draw.io diagrams & templates
+├── 📂 docs/                       📐 System Architecture, Draw.io diagrams & templates
 │   ├── 📂 assets/                 📸 UI Screenshots & Visual Snapshots
 │   │   ├── 📸 dashboard_snapshot.png
 │   │   ├── 📸 borrowing_snapshot.png
@@ -293,41 +293,12 @@ The application will be available at `http://127.0.0.1:8000/`.
 │   │   ├── 📊 ITS_INVENTORY_10000.xlsx
 │   │   └── 📊 ITS_INVENTORY_2000_FIXED.xlsx
 │   ├── 📐 architecture.drawio.svg  # Overall system flow SVG diagram
-│   ├── 📐 architecture.drawio      # Editable Draw.io XML source
 │   ├── 📐 borrowing_lifecycle.drawio.svg # Borrowing lifecycle SVG diagram
-│   ├── 📐 borrowing_lifecycle.drawio     # Editable Draw.io XML source
-│   ├── 📐 changelog_timeline.drawio.svg  # System version history timeline SVG diagram
-│   ├── 📐 changelog_timeline.drawio      # Editable version history Draw.io XML source
-│   ├── 📐 citation_structure.drawio.svg   # Software citation metadata SVG diagram
-│   ├── 📐 citation_structure.drawio      # Editable citation metadata Draw.io XML source
-│   ├── 📐 conduct_enforcement.drawio.svg  # Code of conduct enforcement process SVG diagram
-│   ├── 📐 conduct_enforcement.drawio      # Editable code of conduct enforcement Draw.io XML source
-│   ├── 📐 contribution_workflow.drawio.svg# Developer contribution workflow SVG diagram
-│   ├── 📐 contribution_workflow.drawio   # Editable contribution workflow Draw.io XML source
-│   ├── 📐 deployment_architecture.drawio.svg# Production deployment topology SVG diagram
-│   ├── 📐 deployment_architecture.drawio   # Editable deployment topology Draw.io XML source
-│   ├── 📐 local_setup_pipeline.drawio.svg# Local setup & installation pipeline SVG diagram
-│   ├── 📐 local_setup_pipeline.drawio    # Editable local setup pipeline Draw.io XML source
 │   ├── 📐 mvt_architecture.drawio.svg    # MVT architecture flow SVG diagram
-│   ├── 📐 mvt_architecture.drawio        # Editable MVT architecture Draw.io XML source
 │   ├── 📐 orm_relationships.drawio.svg  # ORM entity relationships SVG diagram
-│   ├── 📐 orm_relationships.drawio      # Editable ORM relationships Draw.io XML source
 │   ├── 📐 otp_state_machine.drawio.svg   # OTP authentication state machine SVG diagram
-│   ├── 📐 otp_state_machine.drawio       # Editable OTP state machine Draw.io XML source
 │   ├── 📐 project_structure.drawio.svg   # Project structure breakdown SVG diagram
-│   ├── 📐 project_structure.drawio       # Editable project structure Draw.io XML source
-│   ├── 📐 pr_lifecycle.drawio.svg        # Pull request review lifecycle SVG diagram
-│   ├── 📐 pr_lifecycle.drawio            # Editable pull request lifecycle Draw.io XML source
-│   ├── 📐 pythonanywhere_pipeline.drawio.svg# PythonAnywhere deployment pipeline SVG diagram
-│   ├── 📐 pythonanywhere_pipeline.drawio # Editable PythonAnywhere deployment pipeline Draw.io XML source
-│   ├── 📐 roadmap_milestones.drawio.svg  # System release roadmap milestones SVG diagram
-│   ├── 📐 roadmap_milestones.drawio      # Editable release roadmap Draw.io XML source
-│   ├── 📐 security_architecture.drawio.svg# Security defense layers SVG diagram
-│   ├── 📐 security_architecture.drawio   # Editable security architecture Draw.io XML source
-│   ├── 📐 support_channels.drawio.svg    # Support escalation channels SVG diagram
-│   ├── 📐 support_channels.drawio        # Editable support channels Draw.io XML source
-│   ├── 📐 test_suite_architecture.drawio.svg# Automated test suite architecture SVG diagram
-│   └── 📐 test_suite_architecture.drawio # Editable test suite architecture Draw.io XML source
+│   └── 📐 (28 additional *.drawio.svg & *.drawio vector diagrams)
 ├── 📂 env/                        🐍 Python virtual environment (local / ignored)
 ├── 📂 its_inventory/              ⚙️ Django project: settings, urls, wsgi, asgi
 │   ├── 🐍 settings.py             # Project configuration (DB, middleware, email, etc.)
