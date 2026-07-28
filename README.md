@@ -6,6 +6,7 @@
 
 📄 **Quick File Links:**
 [![Setup Instructions](https://img.shields.io/badge/📖_Setup_Guide-INSTRUCTIONS.md-2563eb?style=flat-square)](INSTRUCTIONS.md)
+[![Architecture Deep Dive](https://img.shields.io/badge/🏗️_Architecture-ARCHITECTURE.md-6366f1?style=flat-square)](ARCHITECTURE.md)
 [![Deployment Guide](https://img.shields.io/badge/🌐_Deployment-DEPLOYMENT.md-0891b2?style=flat-square)](DEPLOYMENT.md)
 [![Changelog](https://img.shields.io/badge/📜_Changelog-CHANGELOG.md-059669?style=flat-square)](CHANGELOG.md)
 [![Support Resources](https://img.shields.io/badge/💬_Support-SUPPORT.md-0284c7?style=flat-square)](SUPPORT.md)
@@ -310,6 +311,7 @@ The application will be available at `http://127.0.0.1:8000/`.
 ├── 🐍 manage.py                   # Django management CLI
 ├── ⚙️ requirements.txt            # Python dependencies
 ├── 📄 INSTRUCTIONS.md             # Detailed setup & security documentation
+├── 📄 ARCHITECTURE.md           # Deep-dive data models, ORM & API architecture
 ├── 📄 DEPLOYMENT.md               # Production deployment guide (PythonAnywhere & Linux)
 ├── 📄 CHANGELOG.md                # System version release history
 ├── 📄 SUPPORT.md                  # Support resources & institutional contacts
