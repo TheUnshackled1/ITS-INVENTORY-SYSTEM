@@ -1,0 +1,43 @@
+<mxfile host="Electron" modified="2026-07-28T02:56:00.000Z" agent="Mozilla/5.0" version="21.6.8" type="device">
+  <diagram id="otp-state" name="Email OTP State Machine">
+    <mxGraphModel dx="1000" dy="600" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="550" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="client" value="&lt;b style=&quot;font-size: 14px;&quot;&gt;🌐 Unauthenticated Client&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;font-size: 11px; color: #cbd5e1;&quot;&gt;Signup / Reset Password Form&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0f172a;strokeColor=#38bdf8;strokeWidth=2;fontColor=#ffffff;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="40" y="40" width="220" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="gen_otp" value="&lt;b style=&quot;font-size: 14px;&quot;&gt;⚙️ Generate 6-Digit OTP&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;font-size: 11px; color: #a7f3d0;&quot;&gt;Validate Availability &amp; Email&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#092E20;strokeColor=#34d399;strokeWidth=2;fontColor=#ffffff;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="320" y="40" width="220" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="session" value="&lt;b style=&quot;font-size: 14px;&quot;&gt;⏱️ Django Session Store&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;font-size: 11px; color: #fde047;&quot;&gt;Code &amp; Expiry (120s Lifespan)&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#854d0e;strokeColor=#fde047;strokeWidth=2;fontColor=#ffffff;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="590" y="40" width="220" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="smtp" value="&lt;b style=&quot;font-size: 14px;&quot;&gt;📧 SMTP Email Delivery&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;font-size: 11px; color: #ddd6fe;&quot;&gt;Send Code to User Inbox&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#581c87;strokeColor=#c084fc;strokeWidth=2;fontColor=#ffffff;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="590" y="190" width="220" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="submit" value="&lt;b style=&quot;font-size: 14px;&quot;&gt;🔑 User Submits OTP&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;font-size: 11px; color: #bae6fd;&quot;&gt;POST /api/verify-otp/&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0369a1;strokeColor=#38bdf8;strokeWidth=2;fontColor=#ffffff;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="320" y="190" width="220" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="decision" value="&lt;b style=&quot;font-size: 13px;&quot;&gt;Matches Code &amp;&lt;br&gt;&amp;lt; 120s Expiry?&lt;/b&gt;" style="rhombus;whiteSpace=wrap;html=1;fillColor=#1e293b;strokeColor=#94a3b8;strokeWidth=2;fontColor=#ffffff;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="345" y="310" width="170" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="valid" value="&lt;b style=&quot;font-size: 14px;&quot;&gt;✅ [ VALID ]&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;font-size: 11px; color: #a7f3d0;&quot;&gt;Create User Account &amp; Log Session&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#065f46;strokeColor=#34d399;strokeWidth=2;fontColor=#ffffff;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="120" y="440" width="240" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="invalid" value="&lt;b style=&quot;font-size: 14px;&quot;&gt;❌ [ INVALID / EXPIRED ]&lt;/b&gt;&lt;br&gt;&lt;span style=&quot;font-size: 11px; color: #fecdd3;&quot;&gt;Return 400 Bad Request JSON&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#9f1239;strokeColor=#f43f5e;strokeWidth=2;fontColor=#ffffff;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="500" y="440" width="240" height="70" as="geometry" />
+        </mxCell>
+
+        <!-- Edges -->
+        <mxCell id="e1" value="POST /api/send-otp/" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeColor=#38bdf8;strokeWidth=2;fontColor=#38bdf8;fontSize=11;" edge="1" parent="1" source="client" target="gen_otp" />
+        <mxCell id="e2" value="Save Session State" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeColor=#fde047;strokeWidth=2;fontColor=#fde047;fontSize=11;" edge="1" parent="1" source="gen_otp" target="session" />
+        <mxCell id="e3" value="Dispatch Mail" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeColor=#c084fc;strokeWidth=2;fontColor=#c084fc;fontSize=11;" edge="1" parent="1" source="session" target="smtp" />
+        <mxCell id="e4" value="User Receives OTP" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;strokeColor=#38bdf8;strokeWidth=2;fontColor=#38bdf8;fontSize=11;" edge="1" parent="1" source="smtp" target="submit" />
+        <mxCell id="e5" value="Verify" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeColor=#94a3b8;strokeWidth=2;fontColor=#94a3b8;fontSize=11;" edge="1" parent="1" source="submit" target="decision" />
+        <mxCell id="e6" value="YES" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeColor=#34d399;strokeWidth=2;fontColor=#34d399;fontSize=11;fontStyle=1;" edge="1" parent="1" source="decision" target="valid" />
+        <mxCell id="e7" value="NO" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeColor=#f43f5e;strokeWidth=2;fontColor=#f43f5e;fontSize=11;fontStyle=1;" edge="1" parent="1" source="decision" target="invalid" />
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

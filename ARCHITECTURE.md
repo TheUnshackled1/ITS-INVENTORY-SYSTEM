@@ -103,23 +103,8 @@ Maintains an immutable system-wide audit trail for all CRUD operations, equipmen
 
 The registration and password recovery flows use a session-based state machine:
 
-```
-[ Unauthenticated Client ] ──POST /api/send-otp/──► Validate Availability ──► Generate 6-Digit OTP
-                                                                                   │
-                                                                           Store Code & Timestamp
-                                                                           in Django Session (120s)
-                                                                                   │
-                                                                                   ▼
-[ User Submits OTP ] ◄──POST /api/verify-otp/─── Verify Expiration (<120s) ◄── Send SMTP Email
-         │
-    Matches Code?
-   ┌─────┴─────┐
-   ▼           ▼
-[ VALID ]   [ INVALID / EXPIRED ]
-   │           │
-Create User   Return 400 JSON Error
-Log Session
-```
+![Email OTP State Machine Diagram](docs/otp_state_machine.drawio.svg)
+> ✏️ **Draw.io Source File:** [`docs/otp_state_machine.drawio`](docs/otp_state_machine.drawio) *(Editable in [Draw.io / app.diagrams.net](https://app.diagrams.net/))*
 
 Key Logic:
 1. **6-Digit Cryptographic Code**: Generated via `random.randint(100000, 999999)`.
