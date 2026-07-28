@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 300" width="100%" height="100%" style="background-color: #0b0f19; font-family: system-ui, -apple-system, sans-serif;">
+  <defs>
+    <filter id="shadow" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#000000" flood-opacity="0.5"/>
+    </filter>
+  </defs>
+
+  <!-- Connectors -->
+  <path d="M 450 85 L 165 125" stroke="#34d399" stroke-width="2" fill="none"/>
+  <path d="M 450 85 L 450 125" stroke="#34d399" stroke-width="2" fill="none"/>
+  <path d="M 450 85 L 735 125" stroke="#34d399" stroke-width="2" fill="none"/>
+
+  <!-- Root Header -->
+  <rect x="200" y="30" width="500" height="55" rx="12" fill="#065f46" stroke="#34d399" stroke-width="2" filter="url(#shadow)"/>
+  <text x="450" y="55" fill="#ffffff" font-size="15" font-weight="bold" text-anchor="middle">🧪 Django Automated Unit Test Suite (inventory/tests.py)</text>
+  <text x="450" y="73" fill="#a7f3d0" font-size="11" text-anchor="middle">Ran 6 tests in ~1.8s • 100% OK Success Rate</text>
+
+  <!-- Level 1 Cards -->
+  <rect x="40" y="125" width="250" height="60" rx="10" fill="#0369a1" stroke="#38bdf8" stroke-width="1.5" filter="url(#shadow)"/>
+  <text x="165" y="150" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle">📦 InventoryModelTest</text>
+  <text x="165" y="168" fill="#bae6fd" font-size="10" text-anchor="middle">Defaults, serial uniqueness, __str__</text>
+
+  <rect x="325" y="125" width="250" height="60" rx="10" fill="#092E20" stroke="#34d399" stroke-width="1.5" filter="url(#shadow)"/>
+  <text x="450" y="150" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle">🛡️ InventoryViewsTest</text>
+  <text x="450" y="168" fill="#a7f3d0" font-size="10" text-anchor="middle">@login_required guards &amp; 302 redirects</text>
+
+  <rect x="610" y="125" width="250" height="60" rx="10" fill="#854d0e" stroke="#fde047" stroke-width="1.5" filter="url(#shadow)"/>
+  <text x="735" y="150" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle">🔄 BorrowingViewsTest</text>
+  <text x="735" y="168" fill="#fde047" font-size="10" text-anchor="middle">Stock decrements &amp; return restoration</text>
+
+  <!-- Level 2 Cards -->
+  <rect x="40" y="215" width="250" height="60" rx="10" fill="#581c87" stroke="#c084fc" stroke-width="1.5" filter="url(#shadow)"/>
+  <text x="165" y="240" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle">📝 AuditLogTest</text>
+  <text x="165" y="258" fill="#ddd6fe" font-size="10" text-anchor="middle">CREATE, UPDATE JSON diffs, DELETE</text>
+
+  <rect x="325" y="215" width="250" height="60" rx="10" fill="#0f172a" stroke="#38bdf8" stroke-width="1.5" filter="url(#shadow)"/>
+  <text x="450" y="240" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle">🔐 OTPAuthAPITest</text>
+  <text x="450" y="258" fill="#bae6fd" font-size="10" text-anchor="middle">6-digit OTP, 120s expiry, email__iexact</text>
+
+  <rect x="610" y="215" width="250" height="60" rx="10" fill="#065f46" stroke="#34d399" stroke-width="1.5" filter="url(#shadow)"/>
+  <text x="735" y="240" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle">📧 Mock SMTP &amp; Outbox</text>
+  <text x="735" y="258" fill="#a7f3d0" font-size="10" text-anchor="middle">django.core.mail.outbox verification</text>
+</svg>

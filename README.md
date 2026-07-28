@@ -319,7 +319,9 @@ The application will be available at `http://127.0.0.1:8000/`.
 │   ├── 📐 security_architecture.drawio.svg# Security defense layers SVG diagram
 │   ├── 📐 security_architecture.drawio   # Editable security architecture Draw.io XML source
 │   ├── 📐 support_channels.drawio.svg    # Support escalation channels SVG diagram
-│   └── 📐 support_channels.drawio        # Editable support channels Draw.io XML source
+│   ├── 📐 support_channels.drawio        # Editable support channels Draw.io XML source
+│   ├── 📐 test_suite_architecture.drawio.svg# Automated test suite architecture SVG diagram
+│   └── 📐 test_suite_architecture.drawio # Editable test suite architecture Draw.io XML source
 ├── 📂 env/                        🐍 Python virtual environment (local / ignored)
 ├── 📂 its_inventory/              ⚙️ Django project: settings, urls, wsgi, asgi
 │   ├── 🐍 settings.py             # Project configuration (DB, middleware, email, etc.)

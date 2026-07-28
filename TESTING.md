@@ -67,6 +67,9 @@ python manage.py test inventory.tests.InventoryViewsTest.test_dashboard_requires
 
 ## 📂 Test Suite Architecture (`inventory/tests.py`)
 
+![Automated Test Suite Architecture](docs/test_suite_architecture.drawio.svg)
+> ✏️ **Draw.io Source File:** [`docs/test_suite_architecture.drawio`](docs/test_suite_architecture.drawio) *(Editable in [Draw.io / app.diagrams.net](https://app.diagrams.net/))*
+
 The test suite in `inventory/tests.py` is divided into logical test cases:
 
 ### 1. Inventory Model Tests (`InventoryModelTest`)
