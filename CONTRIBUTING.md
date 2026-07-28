@@ -65,6 +65,9 @@ We are committed to providing a welcoming, respectful, and collaborative environ
 
 ## 🔄 Development Workflow
 
+![Developer Contribution Workflow](docs/contribution_workflow.drawio.svg)
+> ✏️ **Draw.io Source File:** [`docs/contribution_workflow.drawio`](docs/contribution_workflow.drawio) *(Editable in [Draw.io / app.diagrams.net](https://app.diagrams.net/))*
+
 1. **Create a Feature Branch**:
    ```powershell
    git checkout -b feature/your-feature-name
